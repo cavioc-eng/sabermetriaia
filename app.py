@@ -20,7 +20,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Estilos CSS personalizados para una portada más compacta y profesional
+# Estilos CSS personalizados para una portada optimizada
 st.markdown("""
     <style>
     .main {
@@ -127,26 +127,29 @@ def registrar_usuario_tiktok(usuario):
     else:
         nuevo_registro.to_csv(db_usuarios_path, index=False)
 
-# 1. Control de Acceso (Portada Optimizada y Visible de Un Vistazo)
+# 1. Control de Acceso (Portada con 3 columnas: Logo, Cancha NBA y Bienvenida)
 if "autenticado" not in st.session_state:
     st.session_state.autenticado = False
 
 if not st.session_state.autenticado:
-    # Usamos columnas para poner el logo optimizado y la bienvenida lado a lado en pantallas grandes
-    col_logo, col_info = st.columns([1, 2])
+    col_logo, col_cancha, col_info = st.columns([1, 1, 1.5])
     
     with col_logo:
         if os.path.exists(logo_path):
-            st.image(logo_path, width=280) # Logo con ancho controlado para que no domine toda la pantalla
+            st.image(logo_path, width=220)
+            
+    with col_cancha:
+        # Imagen representativa de una cancha de la NBA con diseño moderno
+        st.image("https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=600&auto=format&fit=crop", width=260)
+        st.markdown("<p style='text-align: center; color: #00FF66; font-weight: bold; margin-top: -5px;'>🏀 Temporada Oficial NBA</p>", unsafe_allow_html=True)
             
     with col_info:
-        st.title("🏀 SABERMETRÍA IA")
+        st.title("SABERMETRÍA IA")
         st.subheader("Analítica Avanzada de Básquetbol")
         st.write("Para desbloquear el portal exclusivo, las proyecciones científicas y la jugada fija del día, sigue estos dos simples pasos:")
     
     st.markdown("---")
     
-    # Diseño en dos columnas para los pasos de acceso (más compacto y visual)
     col_paso1, col_paso2 = st.columns(2)
     
     with col_paso1:
