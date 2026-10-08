@@ -303,4 +303,35 @@ else:
         
         st.markdown("""
         * **Pace (Ritmo):** Mide la cantidad estimada de posesiones que un equipo disputa por cada 48 minutos de juego. Un ritmo alto indica un juego vertiginoso de transiciones rápidas; un ritmo bajo refleja control de posesión y media cancha.
-        * **True Shooting Percentage - TS% (Porcentaje de Tiro Verdadero):** Una métrica de eficiencia ofensiva mucho más precisa que el porcentaje de campo
+        * **True Shooting Percentage - TS% (Porcentaje de Tiro Verdadero):** Una métrica de eficiencia ofensiva mucho más precisa que el porcentaje de campo tradicional, ya que toma en cuenta los tiros de dos puntos, los triples y los tiros libres.
+        * **Effective Field Goal Percentage - eFG% (Porcentaje de Tiro Efectivo):** Evalúa la eficacia en los lanzamientos de campo otorgando un valor adicional del 50% a los triples encestados en comparación con los dobles.
+        * **Turnover Percentage - TOV% (Tasa de Pérdidas):** Estima el porcentaje de posesiones de un equipo que terminan en pérdida de balón. Un número bajo denota orden táctico y cuidado de la posesión.
+        * **Net Rating (Rating Neto):** Representa la diferencia entre los puntos anotados y los puntos permitidos por cada 100 posesiones. Es el indicador definitivo de la superioridad real de un equipo.
+        * **Pick-and-Roll Efficiency:** Mide el rendimiento ofensivo y defensivo cuando se ejecuta la jugada clásica de bloqueo y continuación, clave para descifrar defensas en el perímetro.
+        """)
+
+    elif menu == "🔐 Panel de Administración":
+        st.header("🔐 Panel de Control de Usuarios - Sabermetría IA")
+        st.write("Visualiza el control de seguidores de TikTok que han ingresado y validado su acceso a la plataforma.")
+        
+        clave_admin = st.text_input("Ingresa la clave de administrador:", type="password")
+        
+        if clave_admin == "sabermetria2026":
+            st.success("¡Acceso de administrador concedido!")
+            
+            if os.path.exists(db_usuarios_path):
+                df_usuarios = pd.read_csv(db_usuarios_path)
+                st.metric(label="Total de Usuarios Registrados", value=len(df_usuarios))
+                st.dataframe(df_usuarios, use_container_width=True)
+                
+                with open(db_usuarios_path, "rb") as f:
+                    st.download_button(
+                        label="📥 Descargar Base de Registros en CSV",
+                        data=f,
+                        file_name="registros_tiktok_sabermetria.csv",
+                        mime="text/csv"
+                    )
+            else:
+                st.info("Aún no hay usuarios registrados en el sistema.")
+        elif clave_admin != "":
+            st.error("❌ Clave de administrador incorrecta.")
