@@ -20,7 +20,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Estilos CSS personalizados para las siglas gigantes de la NBA y la portada
+# Estilos CSS personalizados para alinear y estilizar la portada
 st.markdown("""
     <style>
     .main {
@@ -63,32 +63,6 @@ st.markdown("""
         border-radius: 12px;
         border: 1px solid #30363d;
         margin-bottom: 15px;
-    }
-    .nba-badge {
-        background: linear-gradient(135deg, #161b22 0%, #1f2937 100%);
-        border: 2px solid #30363d;
-        border-radius: 16px;
-        text-align: center;
-        padding: 25px 10px;
-        box-shadow: 0 4px 20px rgba(0, 255, 102, 0.1);
-    }
-    .nba-title {
-        font-size: 64px;
-        font-weight: 900;
-        letter-spacing: 4px;
-        color: #ffffff;
-        margin: 0;
-        text-shadow: 0 0 15px rgba(0, 255, 102, 0.3);
-        font-family: sans-serif;
-    }
-    .nba-subtitle {
-        font-size: 14px;
-        font-weight: 700;
-        color: #00FF66;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-top: 5px;
-        margin-bottom: 0;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -153,30 +127,26 @@ def registrar_usuario_tiktok(usuario):
     else:
         nuevo_registro.to_csv(db_usuarios_path, index=False)
 
-# 1. Control de Acceso (Portada optimizada con siglas NBA gigantes)
+# 1. Control de Acceso (Portada con 3 columnas: Izquierda Logo, Centro Textos, Derecha Imagen NBA)
 if "autenticado" not in st.session_state:
     st.session_state.autenticado = False
 
 if not st.session_state.autenticado:
-    col_logo, col_nba, col_info = st.columns([1, 1, 1.5])
+    col_izq, col_centro, col_der = st.columns([1.2, 1.8, 1])
     
-    with col_logo:
+    with col_izq:
         if os.path.exists(logo_path):
             st.image(logo_path, width=220)
             
-    with col_nba:
-        # Siglas NBA gigantes estilizadas en el centro
-        st.markdown("""
-        <div class="nba-badge">
-            <p class="nba-title">NBA</p>
-            <p class="nba-subtitle">🏀 Temporada Oficial</p>
-        </div>
-        """, unsafe_allow_html=True)
-            
-    with col_info:
+    with col_centro:
+        st.markdown("<br>", unsafe_allow_html=True)
         st.title("SABERMETRÍA IA")
         st.subheader("Analítica Avanzada de Básquetbol")
         st.write("Para desbloquear el portal exclusivo, las proyecciones científicas y la jugada fija del día, sigue estos dos simples pasos:")
+            
+    with col_der:
+        # Imagen oficial y limpia de las siglas de la NBA a la derecha
+        st.image("https://upload.wikimedia.org/wikipedia/en/0/03/National_Basketball_Association_logo.svg", width=180)
     
     st.markdown("---")
     
@@ -357,7 +327,7 @@ else:
         * **Effective Field Goal Percentage - eFG% (Porcentaje de Tiro Efectivo):** Evalúa la eficacia en los lanzamientos de campo otorgando un valor adicional del 50% a los triples encestados en comparación con los dobles.
         * **Turnover Percentage - TOV% (Tasa de Pérdidas):** Estima el porcentaje de posesiones de un equipo que terminan en pérdida de balón. Un número bajo denota orden táctico y cuidado de la posesión.
         * **Net Rating (Rating Neto):** Representa la diferencia entre los puntos anotados y los puntos permitidos por cada 100 posesiones. Es el indicador definitivo de la superioridad real de un equipo.
-        * **Pick-and-Roll Efficiency:** Mide el rendimiento ofensivo y defensivo cuando se ejecuta la jugada clásica de bloqueo y continuación, clave para descifrar defensas en el perímetro.
+        * **Pick-and-Roll Efficiency:** Mide le rendimiento ofensivo y defensivo cuando se ejecuta la jugada clásica de bloqueo y continuación, clave para descifrar defensas en el perímetro.
         """)
 
     elif menu == "🔐 Panel de Administración":
