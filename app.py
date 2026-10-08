@@ -303,6 +303,4 @@ else:
         
         st.markdown("""
         * **Pace (Ritmo):** Mide la cantidad estimada de posesiones que un equipo disputa por cada 48 minutos de juego. Un ritmo alto indica un juego vertiginoso de transiciones rápidas; un ritmo bajo refleja control de posesión y media cancha.
-        * **True Shooting Percentage - TS% (Porcentaje de Tiro Verdadero):** Una métrica de eficiencia ofensiva mucho más precisa que el porcentaje de campo tradicional, ya que toma en cuenta los tiros de dos puntos, los triples y los tiros libres.
-        * **Effective Field Goal Percentage - eFG% (Porcentaje de Tiro Efectivo):** Evalúa la eficacia en los lanzamientos de campo otorgando un valor adicional del 50% a los triples encestados en comparación con los dobles.
-        * **Turnover Percentage - TOV% (Tasa de Pérdidas):** Estima el porcentaje de posesiones de un equipo
+        * **True Shooting Percentage - TS% (Porcentaje de Tiro Verdadero):** Una métrica de eficiencia ofensiva mucho más precisa que el porcentaje de campo
