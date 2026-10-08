@@ -270,33 +270,32 @@ else:
         st.header("⭐ La Jugada Estelar del Modelo")
         st.success("Recomendación avalada estrictamente por eficiencia matemática y métricas de posesión.")
         
-        # Equipos de la Jugada Estelar con sus logos
-         equipo_estelar_1 = "Oklahoma City Thunder"
-         equipo_estelar_2 = "Dallas Mavericks"
-         logo_estelar_1 = LOGOS_EQUIPOS.get(equipo_estelar_1, "")
-         logo_estelar_2 = LOGOS_EQUIPOS.get(equipo_estelar_2, "")
+        equipo_estelar_1 = "Oklahoma City Thunder"
+        equipo_estelar_2 = "Dallas Mavericks"
+        logo_estelar_1 = LOGOS_EQUIPOS.get(equipo_estelar_1, "")
+        logo_estelar_2 = LOGOS_EQUIPOS.get(equipo_estelar_2, "")
         
-         matchup_estelar_html = f"""
-         <div class="matchup-box">
-             <div class="team-col">
-                 <img src="{logo_estelar_1}" width="100" style="margin-bottom: 10px;">
-                 <h3 style="margin: 0; color: #ffffff;">{equipo_estelar_1}</h3>
-             </div>
-             <div class="vs-col">VS</div>
-             <div class="team-col">
-                 <img src="{logo_estelar_2}" width="100" style="margin-bottom: 10px;">
-                 <h3 style="margin: 0; color: #ffffff;">{equipo_estelar_2}</h3>
-             </div>
-         </div>
-         """
-         st.markdown(matchup_estelar_html, unsafe_allow_html=True)
-         
-         st.markdown("### 📊 Fundamento Estadístico y Razonamiento del Modelo")
-         st.markdown("""
-         * **Selección Recomendada:** Oklahoma City Thunder - Spread / Altas (Over)
-         * **Nivel de Confianza del Modelo:** 88.4%
-         * **Por qué elegimos este encuentro:** Nuestro algoritmo de eficiencia neta detecta una superioridad de +4.2 puntos en posesiones de media cancha. Oklahoma City presenta un índice de acierto en *Effective Field Goal Percentage (eFG%)* superior al 56% en situaciones de pick-and-roll, combinado con un menor índice de desgaste físico en condición de local, lo que ahoga las opciones de transición rápida del rival y asegura el margen proyectado.
-         """)
+        matchup_estelar_html = f"""
+        <div class="matchup-box">
+            <div class="team-col">
+                <img src="{logo_estelar_1}" width="100" style="margin-bottom: 10px;">
+                <h3 style="margin: 0; color: #ffffff;">{equipo_estelar_1}</h3>
+            </div>
+            <div class="vs-col">VS</div>
+            <div class="team-col">
+                <img src="{logo_estelar_2}" width="100" style="margin-bottom: 10px;">
+                <h3 style="margin: 0; color: #ffffff;">{equipo_estelar_2}</h3>
+            </div>
+        </div>
+        """
+        st.markdown(matchup_estelar_html, unsafe_allow_html=True)
+        
+        st.markdown("### 📊 Fundamento Estadístico y Razonamiento del Modelo")
+        st.markdown("""
+        * **Selección Recomendada:** Oklahoma City Thunder - Spread / Altas (Over)
+        * **Nivel de Confianza del Modelo:** 88.4%
+        * **Por qué elegimos este encuentro:** Nuestro algoritmo de eficiencia neta detecta una superioridad de +4.2 puntos en posesiones de media cancha. Oklahoma City presenta un índice de acierto en *Effective Field Goal Percentage (eFG%)* superior al 56% en situaciones de pick-and-roll, combinado con un menor índice de desgaste físico en condición de local, lo que ahoga las opciones de transición rápida del rival y asegura el margen proyectado.
+        """)
 
     elif menu == "Diccionario Sabermétrico":
         st.header("📖 Diccionario de Indicadores Avanzados")
@@ -317,22 +316,4 @@ else:
         
         clave_admin = st.text_input("Ingresa la clave de administrador:", type="password")
         
-        if clave_admin == "sabermetria2026":
-            st.success("¡Acceso de administrador concedido!")
-            
-            if os.path.exists(db_usuarios_path):
-                df_usuarios = pd.read_csv(db_usuarios_path)
-                st.metric(label="Total de Usuarios Registrados", value=len(df_usuarios))
-                st.dataframe(df_usuarios, use_container_width=True)
-                
-                with open(db_usuarios_path, "rb") as f:
-                    st.download_button(
-                        label="📥 Descargar Base de Registros en CSV",
-                        data=f,
-                        file_name="registros_tiktok_sabermetria.csv",
-                        mime="text/csv"
-                    )
-            else:
-                st.info("Aún no hay usuarios registrados en el sistema.")
-        elif clave_admin != "":
-            st.error("❌ Clave de administrador incorrecta.")
+        if clave_admin
