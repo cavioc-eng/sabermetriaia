@@ -20,7 +20,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Estilos CSS personalizados
+# Estilos CSS personalizados para una portada más compacta y profesional
 st.markdown("""
     <style>
     .main {
@@ -59,10 +59,10 @@ st.markdown("""
     }
     .tiktok-card {
         background-color: #161b22;
-        padding: 20px;
+        padding: 15px 20px;
         border-radius: 12px;
         border: 1px solid #30363d;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -127,29 +127,46 @@ def registrar_usuario_tiktok(usuario):
     else:
         nuevo_registro.to_csv(db_usuarios_path, index=False)
 
-# 1. Control de Acceso (Social Gating y Registro)
+# 1. Control de Acceso (Portada Optimizada y Visible de Un Vistazo)
 if "autenticado" not in st.session_state:
     st.session_state.autenticado = False
 
 if not st.session_state.autenticado:
-    if os.path.exists(logo_path):
-        st.image(logo_path, use_container_width=True)
+    # Usamos columnas para poner el logo optimizado y la bienvenida lado a lado en pantallas grandes
+    col_logo, col_info = st.columns([1, 2])
     
-    st.title("🏀 SABERMETRÍA IA")
-    st.subheader("Analítica Avanzada de Básquetbol")
-    st.write("Para desbloquear el portal exclusivo, las proyecciones científicas y la jugada fija del día, sigue estos dos simples pasos:")
+    with col_logo:
+        if os.path.exists(logo_path):
+            st.image(logo_path, width=280) # Logo con ancho controlado para que no domine toda la pantalla
+            
+    with col_info:
+        st.title("🏀 SABERMETRÍA IA")
+        st.subheader("Analítica Avanzada de Básquetbol")
+        st.write("Para desbloquear el portal exclusivo, las proyecciones científicas y la jugada fija del día, sigue estos dos simples pasos:")
     
-    st.markdown("""
-    <div class="tiktok-card">
-        <h3 style="color: #00FF66; margin-top: 0;">Paso 1: Síguenos en TikTok</h3>
-        <p>Haz clic en el siguiente botón para abrir nuestro perfil oficial <b>@sabermetriaia</b> en una pestaña nueva y presiona el botón de <b>Seguir</b>:</p>
-        <a href="https://www.tiktok.com/@sabermetriaia" target="_blank" style="background-color: #00FF66; color: #000000; padding: 10px 20px; border-radius: 8px; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 5px;">📲 Ir a Seguir @sabermetriaia en TikTok</a>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown("---")
     
-    st.markdown("### Paso 2: Valida tu acceso")
-    tiktok_user = st.text_input("Ingresa tu usuario de TikTok (ej. @tu_usuario)")
+    # Diseño en dos columnas para los pasos de acceso (más compacto y visual)
+    col_paso1, col_paso2 = st.columns(2)
     
+    with col_paso1:
+        st.markdown("""
+        <div class="tiktok-card">
+            <h4 style="color: #00FF66; margin-top: 0;">Paso 1: Síguenos en TikTok</h4>
+            <p style="font-size: 14px; margin-bottom: 10px;">Abre nuestro perfil oficial <b>@sabermetriaia</b> y presiona el botón de Seguir:</p>
+            <a href="https://www.tiktok.com/@sabermetriaia" target="_blank" style="background-color: #00FF66; color: #000000; padding: 8px 15px; border-radius: 6px; font-weight: bold; text-decoration: none; display: inline-block;">📲 Ir a @sabermetriaia</a>
+        </div>
+        """, unsafe_allow_html=True)
+        
+    with col_paso2:
+        st.markdown("""
+        <div class="tiktok-card">
+            <h4 style="color: #00FF66; margin-top: 0;">Paso 2: Valida tu Acceso</h4>
+            <p style="font-size: 14px; margin-bottom: 5px;">Ingresa tu usuario de TikTok:</p>
+        </div>
+        """, unsafe_allow_html=True)
+        tiktok_user = st.text_input("Usuario de TikTok (ej. @tu_usuario)", label_visibility="collapsed")
+        
     if st.button("🔗 Verificar y Acceder al Portal"):
         if tiktok_user.strip() != "":
             registrar_usuario_tiktok(tiktok_user)
