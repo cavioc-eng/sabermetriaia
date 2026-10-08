@@ -1,13 +1,16 @@
 import streamlit as st
 import os
+import pandas as pd
 from datetime import datetime
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib import colors
 
-# Obtener ruta absoluta del Escritorio
+# Obtener ruta absoluta del directorio
 current_dir = os.path.dirname(os.path.abspath(__file__))
 logo_path = os.path.join(current_dir, "logo.jpeg")
+db_usuarios_path = os.path.join(current_dir, "registros_tiktok.csv")
 
 # Configuración de la página con estética oscura y futurista
 st.set_page_config(
@@ -64,7 +67,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# URLs oficiales de la NBA
+# URLs oficiales de los logos de la NBA
 LOGOS_EQUIPOS = {
     "Dallas Mavericks": "https://cdn.nba.com/logos/nba/1610612742/global/L/logo.svg",
     "Oklahoma City Thunder": "https://cdn.nba.com/logos/nba/1610612760/global/L/logo.svg",
@@ -74,7 +77,7 @@ LOGOS_EQUIPOS = {
     "Memphis Grizzlies": "https://cdn.nba.com/logos/nba/1610612763/global/L/logo.svg"
 }
 
-# Función para generar reporte en PDF
+# Función corregida para generar reporte en PDF sin errores de estilo
 def generar_pdf_analisis(partido, ganador, total_puntos, razonamiento):
     pdf_path = os.path.join(current_dir, "reporte_sabermetria.pdf")
     doc = SimpleDocTemplate(pdf_path, pagesize=letter)
@@ -84,18 +87,18 @@ def generar_pdf_analisis(partido, ganador, total_puntos, razonamiento):
     title_style = ParagraphStyle(
         'TitleStyle',
         parent=styles['Heading1'],
-        fontSize=18,
-        textColor=styles['colors'].HexColor('#00FF66'),
+        fontSize=16,
+        textColor=colors.HexColor('#00FF66'),
         spaceAfter=12
     )
     
     body_style = ParagraphStyle(
         'BodyStyle',
         parent=styles['Normal'],
-        fontSize=11,
-        textColor=styles['colors'].HexColor('#333333'),
+        fontSize=10,
+        textColor=colors.HexColor('#333333'),
         spaceAfter=10,
-        leading=15
+        leading=14
     )
 
     story.append(Paragraph("SABERMETRÍA IA - REPORTE DE ANALÍTICA AVANZADA", title_style))
@@ -111,7 +114,21 @@ def generar_pdf_analisis(partido, ganador, total_puntos, razonamiento):
     doc.build(story)
     return pdf_path
 
-# 1. Control de Acceso (Social Gating Mejorado y Visual)
+# Función para registrar el usuario de TikTok
+def registrar_usuario_tiktok(usuario):
+    fecha_hora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    nuevo_registro = pd.DataFrame([[usuario.strip(), fecha_hora]], columns=["Usuario_TikTok", "Fecha_Acceso"])
+    
+    if os.path.exists(db_usuarios_path):
+        df_existente = pd.read_csv(db_usuarios_path)
+        # Evitar duplicados seguidos del mismo usuario en la misma sesión
+        if usuario.strip() not in df_existente["Usuario_TikTok"].values:
+            df_actualizado = pd.concat([df_existente, nuevo_registro], ignore_index=True)
+            df_actualizado.to_csv(db_usuarios_path, index=False)
+    else:
+        nuevo_registro.to_csv(db_usuarios_path, index=False)
+
+# 1. Control de Acceso (Social Gating y Registro)
 if "autenticado" not in st.session_state:
     st.session_state.autenticado = False
 
@@ -123,7 +140,6 @@ if not st.session_state.autenticado:
     st.subheader("Analítica Avanzada de Básquetbol")
     st.write("Para desbloquear el portal exclusivo, las proyecciones científicas y la jugada fija del día, sigue estos dos simples pasos:")
     
-    # Tarjeta visual destacada para el paso de TikTok
     st.markdown("""
     <div class="tiktok-card">
         <h3 style="color: #00FF66; margin-top: 0;">Paso 1: Síguenos en TikTok</h3>
@@ -137,13 +153,14 @@ if not st.session_state.autenticado:
     
     if st.button("🔗 Verificar y Acceder al Portal"):
         if tiktok_user.strip() != "":
+            registrar_usuario_tiktok(tiktok_user)
             st.session_state.autenticado = True
             st.success(f"¡Bienvenido a bordo, {tiktok_user}! Acceso concedido al sistema.")
             st.rerun()
         else:
             st.warning("⚠️ Por favor ingresa tu usuario de TikTok para continuar.")
 else:
-    # 2. Barra Lateral con Logo Fijo y Menú
+    # 2. Barra Lateral con Menú Principal
     st.sidebar.title("Menú Principal")
     if os.path.exists(logo_path):
         st.sidebar.image(logo_path, use_container_width=True)
@@ -152,7 +169,8 @@ else:
         "Cartelera y Partidos", 
         "Noticias (Doble Actualización)", 
         "La Jugada Fija del Día", 
-        "Diccionario Sabermétrico"
+        "Diccionario Sabermétrico",
+        "🔐 Panel de Administración"
     ])
 
     fecha_hoy = datetime.now().strftime("%d de %B de %Y")
@@ -169,11 +187,9 @@ else:
         
         if partido_seleccionado:
             equipo1, equipo2 = partido_seleccionado.split(" vs. ")
-            
             logo1_url = LOGOS_EQUIPOS.get(equipo1, "")
             logo2_url = LOGOS_EQUIPOS.get(equipo2, "")
             
-            # Bloque visual HTML Flexbox para el enfrentamiento centrado
             matchup_html = f"""
             <div class="matchup-box">
                 <div class="team-col">
@@ -235,9 +251,9 @@ else:
         tab1, tab2 = st.tabs(["🌅 Actualización Matutina (Cierre Previo)", "🌇 Actualización de la Tarde (5:00 p.m.)"])
         
         with tab1:
-            st.write("**Resumen de la jornada anterior:** Análisis detallado del impacto de las figuras, eficiencia en la pintura y claves estadísticas de los compromisos pasados.")
+            st.write("**Resumen de la jornada anterior:** Análisis automatizado del rendimiento global, eficiencia en la pintura y métricas clave de los compromisos cerrados en la madrugada.")
         with tab2:
-            st.write("**Reporte de última hora:** Estatus de lesiones de última hora, confirmación de quintetos abridores y variaciones en las líneas de apuestas previas al salto inicial.")
+            st.write("**Reporte previo al salto inicial:** Evaluación táctica de última hora, reporte oficial de lesiones de la liga y variaciones en las líneas de apuestas en tiempo real.")
 
     elif menu == "La Jugada Fija del Día":
         st.header("⭐ La Jugada Estelar del Modelo")
@@ -254,14 +270,35 @@ else:
         
         st.markdown("""
         * **Pace (Ritmo):** Mide la cantidad estimada de posesiones que un equipo disputa por cada 48 minutos de juego. Un ritmo alto indica un juego vertiginoso de transiciones rápidas; un ritmo bajo refleja control de posesión y media cancha.
-        
         * **True Shooting Percentage - TS% (Porcentaje de Tiro Verdadero):** Una métrica de eficiencia ofensiva mucho más precisa que el porcentaje de campo tradicional, ya que toma en cuenta los tiros de dos puntos, los triples y los tiros libres.
-        
         * **Effective Field Goal Percentage - eFG% (Porcentaje de Tiro Efectivo):** Evalúa la eficacia en los lanzamientos de campo otorgando un valor adicional del 50% a los triples encestados en comparación con los dobles.
-        
         * **Turnover Percentage - TOV% (Tasa de Pérdidas):** Estima el porcentaje de posesiones de un equipo que terminan en pérdida de balón. Un número bajo denota orden táctico y cuidado de la posesión.
-        
         * **Net Rating (Rating Neto):** Representa la diferencia entre los puntos anotados y los puntos permitidos por cada 100 posesiones. Es el indicador definitivo de la superioridad real de un equipo.
-        
         * **Pick-and-Roll Efficiency:** Mide el rendimiento ofensivo y defensivo cuando se ejecuta la jugada clásica de bloqueo y continuación, clave para descifrar defensas en el perímetro.
         """)
+
+    elif menu == "🔐 Panel de Administración":
+        st.header("🔐 Panel de Control de Usuarios - Sabermetría IA")
+        st.write("Visualiza el control de seguidores de TikTok que han ingresado y validado su acceso a la plataforma.")
+        
+        clave_admin = st.text_input("Ingresa la clave de administrador:", type="password")
+        
+        if clave_admin == "sabermetria2026": # Clave de acceso interna para ti
+            st.success("¡Acceso de administrador concedido!")
+            
+            if os.path.exists(db_usuarios_path):
+                df_usuarios = pd.read_csv(db_usuarios_path)
+                st.metric(label="Total de Usuarios Registrados", value=len(df_usuarios))
+                st.dataframe(df_usuarios, use_container_width=True)
+                
+                with open(db_usuarios_path, "rb") as f:
+                    st.download_button(
+                        label="📥 Descargar Base de Registros en CSV",
+                        data=f,
+                        file_name="registros_tiktok_sabermetria.csv",
+                        mime="text/csv"
+                    )
+            else:
+                st.info("Aún no hay usuarios registrados en el sistema.")
+        elif clave_admin != "":
+            st.error("❌ Clave de administrador incorrecta.")
