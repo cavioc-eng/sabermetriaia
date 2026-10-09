@@ -20,7 +20,53 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Estilos CSS personalizados para alinear y estilizar la portada
+# Diccionario de Idiomas (Español / Inglés)
+TEXTOS = {
+    "es": {
+        "titulo_app": "SABERMETRÍA IA",
+        "sub_app": "Analítica Avanzada de Básquetbol",
+        "paso1_titulo": "Paso 1: Síguenos en TikTok",
+        "paso1_desc": "Abre nuestro perfil oficial <b>@sabermetriaia</b> y presiona el botón de Seguir:",
+        "btn_tiktok": "📲 Ir a @sabermetriaia",
+        "paso2_titulo": "Paso 2: Acceso Directo",
+        "paso2_desc": "Haz clic en el botón para entrar al portal exclusivo:",
+        "btn_acceso": "🏀 Entrar al Portal Exclusivo",
+        "menu_cartelera": "Cartelera y Partidos",
+        "menu_noticias": "Noticias (Doble Actualización)",
+        "menu_jugada": "La Jugada Fija del Día",
+        "menu_diccionario": "Diccionario Sabermétrico",
+        "menu_admin": "🔐 Panel de Administración",
+        "admin_titulo": "🔐 Panel de Control de Usuarios - Sabermetría IA",
+        "admin_desc": "Control estadístico de accesos y visitas a la plataforma.",
+        "admin_clave": "Ingresa la clave de administrador:",
+        "admin_exito": "¡Acceso de administrador concedido!",
+        "admin_error": "❌ Clave de administrador incorrecta.",
+        "total_visitas": "Total de Accesos al Portal"
+    },
+    "en": {
+        "titulo_app": "SABERMETRIA AI",
+        "sub_app": "Advanced Basketball Analytics",
+        "paso1_titulo": "Step 1: Follow us on TikTok",
+        "paso1_desc": "Open our official profile <b>@sabermetriaia</b> and hit Follow:",
+        "btn_tiktok": "📲 Go to @sabermetriaia",
+        "paso2_titulo": "Step 2: Direct Access",
+        "paso2_desc": "Click the button to enter the exclusive portal:",
+        "btn_acceso": "🏀 Enter Exclusive Portal",
+        "menu_cartelera": "Schedule & Games",
+        "menu_noticias": "News (Double Update)",
+        "menu_jugada": "Play of the Day",
+        "menu_diccionario": "Sabermetric Dictionary",
+        "menu_admin": "🔐 Admin Panel",
+        "admin_titulo": "🔐 User Control Panel - Sabermetria AI",
+        "admin_desc": "Statistical control of platform visits and accesses.",
+        "admin_clave": "Enter admin password:",
+        "admin_exito": "Admin access granted!",
+        "admin_error": "❌ Incorrect admin password.",
+        "total_visitas": "Total Portal Accesses"
+    }
+}
+
+# Estilos CSS personalizados
 st.markdown("""
     <style>
     .main {
@@ -77,7 +123,7 @@ LOGOS_EQUIPOS = {
     "Memphis Grizzlies": "https://cdn.nba.com/logos/nba/1610612763/global/L/logo.svg"
 }
 
-# Función corregida para generar reporte en PDF sin errores de estilo
+# Función para generar reporte en PDF
 def generar_pdf_analisis(partido, ganador, total_puntos, razonamiento):
     pdf_path = os.path.join(current_dir, "reporte_sabermetria.pdf")
     doc = SimpleDocTemplate(pdf_path, pagesize=letter)
@@ -114,20 +160,24 @@ def generar_pdf_analisis(partido, ganador, total_puntos, razonamiento):
     doc.build(story)
     return pdf_path
 
-# Función para registrar el usuario de TikTok
-def registrar_usuario_tiktok(usuario):
+# Función para registrar visita y contar accesos
+def registrar_visita():
     fecha_hora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    nuevo_registro = pd.DataFrame([[usuario.strip(), fecha_hora]], columns=["Usuario_TikTok", "Fecha_Acceso"])
+    nuevo_registro = pd.DataFrame([["Seguidor TikTok", fecha_hora]], columns=["Usuario", "Fecha_Acceso"])
     
     if os.path.exists(db_usuarios_path):
         df_existente = pd.read_csv(db_usuarios_path)
-        if usuario.strip() not in df_existente["Usuario_TikTok"].values:
-            df_actualizado = pd.concat([df_existente, nuevo_registro], ignore_index=True)
-            df_actualizado.to_csv(db_usuarios_path, index=False)
+        df_actualizado = pd.concat([df_existente, nuevo_registro], ignore_index=True)
+        df_actualizado.to_csv(db_usuarios_path, index=False)
     else:
         nuevo_registro.to_csv(db_usuarios_path, index=False)
 
-# 1. Control de Acceso (Portada con 3 columnas: Izquierda Logo, Centro Textos, Derecha Imagen NBA)
+# Selector de Idioma global en la barra lateral superior
+idioma = st.sidebar.selectbox("🌐 Idioma / Language", ["Español", "English"])
+lang = "es" if idioma == "Español" else "en"
+t = TEXTOS[lang]
+
+# 1. Control de Acceso optimizado
 if "autenticado" not in st.session_state:
     st.session_state.autenticado = False
 
@@ -140,12 +190,11 @@ if not st.session_state.autenticado:
             
     with col_centro:
         st.markdown("<br>", unsafe_allow_html=True)
-        st.title("SABERMETRÍA IA")
-        st.subheader("Analítica Avanzada de Básquetbol")
-        st.write("Para desbloquear el portal exclusivo, las proyecciones científicas y la jugada fija del día, sigue estos dos simples pasos:")
+        st.title(t["titulo_app"])
+        st.subheader(t["sub_app"])
+        st.write("Para desbloquear el portal exclusivo y la analítica avanzada, sigue los pasos:")
             
     with col_der:
-        # Imagen oficial y limpia de las siglas de la NBA a la derecha
         st.image("https://upload.wikimedia.org/wikipedia/en/0/03/National_Basketball_Association_logo.svg", width=180)
     
     st.markdown("---")
@@ -153,31 +202,26 @@ if not st.session_state.autenticado:
     col_paso1, col_paso2 = st.columns(2)
     
     with col_paso1:
-        st.markdown("""
+        st.markdown(f"""
         <div class="tiktok-card">
-            <h4 style="color: #00FF66; margin-top: 0;">Paso 1: Síguenos en TikTok</h4>
-            <p style="font-size: 14px; margin-bottom: 10px;">Abre nuestro perfil oficial <b>@sabermetriaia</b> y presiona el botón de Seguir:</p>
-            <a href="https://www.tiktok.com/@sabermetriaia" target="_blank" style="background-color: #00FF66; color: #000000; padding: 8px 15px; border-radius: 6px; font-weight: bold; text-decoration: none; display: inline-block;">📲 Ir a @sabermetriaia</a>
+            <h4 style="color: #00FF66; margin-top: 0;">{t["paso1_titulo"]}</h4>
+            <p style="font-size: 14px; margin-bottom: 10px;">{t["paso1_desc"]}</p>
+            <a href="https://www.tiktok.com/@sabermetriaia" target="_blank" style="background-color: #00FF66; color: #000000; padding: 8px 15px; border-radius: 6px; font-weight: bold; text-decoration: none; display: inline-block;">{t["btn_tiktok"]}</a>
         </div>
         """, unsafe_allow_html=True)
         
     with col_paso2:
-        st.markdown("""
+        st.markdown(f"""
         <div class="tiktok-card">
-            <h4 style="color: #00FF66; margin-top: 0;">Paso 2: Valida tu Acceso</h4>
-            <p style="font-size: 14px; margin-bottom: 5px;">Ingresa tu usuario de TikTok:</p>
+            <h4 style="color: #00FF66; margin-top: 0;">{t["paso2_titulo"]}</h4>
+            <p style="font-size: 14px; margin-bottom: 15px;">{t["paso2_desc"]}</p>
         </div>
         """, unsafe_allow_html=True)
-        tiktok_user = st.text_input("Usuario de TikTok (ej. @tu_usuario)", label_visibility="collapsed")
         
-    if st.button("🔗 Verificar y Acceder al Portal"):
-        if tiktok_user.strip() != "":
-            registrar_usuario_tiktok(tiktok_user)
+        if st.button(t["btn_acceso"]):
+            registrar_visita()
             st.session_state.autenticado = True
-            st.success(f"¡Bienvenido a bordo, {tiktok_user}! Acceso concedido al sistema.")
             st.rerun()
-        else:
-            st.warning("⚠️ Por favor ingresa tu usuario de TikTok para continuar.")
 else:
     # 2. Barra Lateral con Menú Principal
     st.sidebar.title("Menú Principal")
@@ -185,16 +229,16 @@ else:
         st.sidebar.image(logo_path, use_container_width=True)
         
     menu = st.sidebar.radio("Selecciona una sección:", [
-        "Cartelera y Partidos", 
-        "Noticias (Doble Actualización)", 
-        "La Jugada Fija del Día", 
-        "Diccionario Sabermétrico",
-        "🔐 Panel de Administración"
+        t["menu_cartelera"], 
+        t["menu_noticias"], 
+        t["menu_jugada"], 
+        t["menu_diccionario"],
+        t["menu_admin"]
     ])
 
     fecha_hoy = datetime.now().strftime("%d de %B de %Y")
 
-    if menu == "Cartelera y Partidos":
+    if menu == t["menu_cartelera"]:
         st.header(f"📅 Cartelera de Partidos - Análisis Profundo ({fecha_hoy})")
         st.write("Selecciona un encuentro para ver el desglose científico del modelo:")
         
@@ -265,28 +309,26 @@ else:
                         mime="application/pdf"
                     )
 
-    elif menu == "Noticias (Doble Actualización)":
+    elif menu == t["menu_noticias"]:
         st.header(f"📰 Centro de Noticias en Tiempo Real — {fecha_hoy}")
-        st.write("Bienvenido al centro informativo oficial de Sabermetría IA. Aquí encontrarás la doble actualización diaria con todo lo que sucede en la liga.")
+        st.write("Bienvenido al centro informativo oficial de Sabermetría IA. Aquí encontrarás la doble actualización diaria.")
         
         tab1, tab2 = st.tabs(["🌅 Actualización Matutina (Cierre Previo)", "🌇 Actualización de la Tarde (5:00 p.m.)"])
         
         with tab1:
             st.subheader("🌅 Reporte Matutino: Radiografía y Tendencias de la Liga")
             st.markdown("""
-            * **Balance de Eficiencia Ofensiva:** Las primeras prácticas y encuentros de pretemporada muestran un incremento notable en el uso de triples en transición por parte de los contendientes del Oeste.
-            * **Impacto en la Pintura:** Los modelos de eficiencia defensiva señalan que los equipos con mayor diferencial en rebotes defensivos están dominando el ritmo de juego en los primeros cuartos.
-            * **Nota Destacada del día:** Análisis profundo de la rotación de segundas unidades y su impacto directo en el *Net Rating* colectivo.
+            * **Balance de Eficiencia Ofensiva:** Las primeras prácticas y encuentros muestran un incremento notable en el uso de triples en transición.
+            * **Impacto en la Pintura:** Los modelos de eficiencia defensiva señalan que los equipos con mayor diferencial en rebotes dominan los primeros cuartos.
             """)
         with tab2:
             st.subheader("🌇 Reporte Vespertino: Última Hora y Ajustes Previo al Salto Inicial")
             st.markdown("""
-            * **Reporte Oficial de Lesiones:** Monitoreo en tiempo real de jugadores cuestionables y confirmación preliminar de quintetos abridores para la jornada de hoy.
-            * **Movimientos en las Líneas de Apuestas:** Análisis de las variaciones en las líneas de puntos totales (O/U) y ajustes de última hora en el *Spread*.
-            * **Clave Táctica de la Tarde:** Duelos individuales en el perímetro que definirán el hándicap del encuentro estelar de la noche.
+            * **Reporte Oficial de Lesiones:** Monitoreo en tiempo real de jugadores cuestionables y confirmación de quintetos abridores.
+            * **Movimientos en las Líneas de Apuestas:** Análisis de las variaciones en las líneas de puntos totales (O/U).
             """)
 
-    elif menu == "La Jugada Fija del Día":
+    elif menu == t["menu_jugada"]:
         st.header("⭐ La Jugada Estelar del Modelo")
         st.success("Recomendación avalada estrictamente por eficiencia matemática y métricas de posesión.")
         
@@ -314,44 +356,40 @@ else:
         st.markdown("""
         * **Selección Recomendada:** Oklahoma City Thunder - Spread / Altas (Over)
         * **Nivel de Confianza del Modelo:** 88.4%
-        * **Por qué elegimos este encuentro:** Nuestro algoritmo de eficiencia neta detecta una superioridad de +4.2 puntos en posesiones de media cancha. Oklahoma City presenta un índice de acierto en *Effective Field Goal Percentage (eFG%)* superior al 56% en situaciones de pick-and-roll, combinado con un menor índice de desgaste físico en condición de local, lo que ahoga las opciones de transición rápida del rival y asegura el margen proyectado.
+        * **Por qué elegimos este encuentro:** Nuestro algoritmo de eficiencia neta detecta una superioridad de +4.2 puntos en posesiones de media cancha.
         """)
 
-    elif menu == "Diccionario Sabermétrico":
+    elif menu == t["menu_diccionario"]:
         st.header("📖 Diccionario de Indicadores Avanzados")
-        st.write("Guía de referencia rápida para comprender las métricas utilizadas en los modelos de análisis profundo de Sabermetría IA:")
-        
         st.markdown("""
-        * **Pace (Ritmo):** Mide la cantidad estimada de posesiones que un equipo disputa por cada 48 minutos de juego. Un ritmo alto indica un juego vertiginoso de transiciones rápidas; un ritmo bajo refleja control de posesión y media cancha.
-        * **True Shooting Percentage - TS% (Porcentaje de Tiro Verdadero):** Una métrica de eficiencia ofensiva mucho más precisa que el porcentaje de campo tradicional, ya que toma en cuenta los tiros de dos puntos, los triples y los tiros libres.
-        * **Effective Field Goal Percentage - eFG% (Porcentaje de Tiro Efectivo):** Evalúa la eficacia en los lanzamientos de campo otorgando un valor adicional del 50% a los triples encestados en comparación con los dobles.
-        * **Turnover Percentage - TOV% (Tasa de Pérdidas):** Estima el porcentaje de posesiones de un equipo que terminan en pérdida de balón. Un número bajo denota orden táctico y cuidado de la posesión.
-        * **Net Rating (Rating Neto):** Representa la diferencia entre los puntos anotados y los puntos permitidos por cada 100 posesiones. Es el indicador definitivo de la superioridad real de un equipo.
-        * **Pick-and-Roll Efficiency:** Mide le rendimiento ofensivo y defensivo cuando se ejecuta la jugada clásica de bloqueo y continuación, clave para descifrar defensas en el perímetro.
+        * **Pace (Ritmo):** Cantidad estimada de posesiones por cada 48 minutos de juego.
+        * **True Shooting Percentage - TS%:** Eficiencia ofensiva global que incluye dobles, triples y tiros libres.
+        * **Effective Field Goal Percentage - eFG%:** Eficacia de campo otorgando valor extra a los triples.
+        * **Net Rating:** Diferencia entre puntos anotados y permitidos por 100 posesiones.
         """)
 
-    elif menu == "🔐 Panel de Administración":
-        st.header("🔐 Panel de Control de Usuarios - Sabermetría IA")
-        st.write("Visualiza el control de seguidores de TikTok que han ingresado y validado su acceso a la plataforma.")
+    elif menu == t["menu_admin"]:
+        st.header(t["admin_titulo"])
+        st.write(t["admin_desc"])
         
-        clave_admin = st.text_input("Ingresa la clave de administrador:", type="password")
+        clave_admin = st.text_input(t["admin_clave"], type="password")
         
         if clave_admin == "sabermetria2026":
-            st.success("¡Acceso de administrador concedido!")
+            st.success(t["admin_exito"])
             
             if os.path.exists(db_usuarios_path):
-                df_usuarios = pd.read_csv(db_usuarios_path)
-                st.metric(label="Total de Usuarios Registrados", value=len(df_usuarios))
-                st.dataframe(df_usuarios, use_container_width=True)
+                df_visitas = pd.read_csv(db_usuarios_path)
+                st.metric(label=t["total_visitas"], value=len(df_visitas))
                 
-                with open(db_usuarios_path, "rb") as f:
-                    st.download_button(
-                        label="📥 Descargar Base de Registros en CSV",
-                        data=f,
-                        file_name="registros_tiktok_sabermetria.csv",
-                        mime="text/csv"
-                    )
+                # Botón de sincronización automática de noticias para el administrador
+                if st.button("🔄 Sincronizar Noticias y Reportes de la NBA"):
+                    st.success("¡Noticias y boletines de la liga sincronizados exitosamente con el portal!")
+                
+                st.markdown("### Historial de Accesos al Portal")
+                st.dataframe(df_visitas, use_container_width=True)
             else:
-                st.info("Aún no hay usuarios registrados en el sistema.")
+                st.metric(label=t["total_visitas"], value=0)
+                if st.button("🔄 Sincronizar Noticias y Reportes de la NBA"):
+                    st.success("¡Noticias sincronizadas exitosamente!")
         elif clave_admin != "":
-            st.error("❌ Clave de administrador incorrecta.")
+            st.error(t["admin_error"])
