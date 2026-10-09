@@ -12,7 +12,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 logo_path = os.path.join(current_dir, "logo.jpeg")
 db_usuarios_path = os.path.join(current_dir, "registros_tiktok.csv")
 
-# Configuración de la página con estética oscura y futurista
+# Configuración de la página
 st.set_page_config(
     page_title="Sabermetría IA - Analítica Avanzada de Básquetbol",
     page_icon="🏀",
@@ -113,7 +113,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# URLs oficiales de los logos de la NBA
 LOGOS_EQUIPOS = {
     "Dallas Mavericks": "https://cdn.nba.com/logos/nba/1610612742/global/L/logo.svg",
     "Oklahoma City Thunder": "https://cdn.nba.com/logos/nba/1610612760/global/L/logo.svg",
@@ -123,7 +122,6 @@ LOGOS_EQUIPOS = {
     "Memphis Grizzlies": "https://cdn.nba.com/logos/nba/1610612763/global/L/logo.svg"
 }
 
-# Función para generar reporte en PDF
 def generar_pdf_analisis(partido, ganador, total_puntos, razonamiento):
     pdf_path = os.path.join(current_dir, "reporte_sabermetria.pdf")
     doc = SimpleDocTemplate(pdf_path, pagesize=letter)
@@ -131,20 +129,10 @@ def generar_pdf_analisis(partido, ganador, total_puntos, razonamiento):
     story = []
 
     title_style = ParagraphStyle(
-        'TitleStyle',
-        parent=styles['Heading1'],
-        fontSize=16,
-        textColor=colors.HexColor('#00FF66'),
-        spaceAfter=12
+        'TitleStyle', parent=styles['Heading1'], fontSize=16, textColor=colors.HexColor('#00FF66'), spaceAfter=12
     )
-    
     body_style = ParagraphStyle(
-        'BodyStyle',
-        parent=styles['Normal'],
-        fontSize=10,
-        textColor=colors.HexColor('#333333'),
-        spaceAfter=10,
-        leading=14
+        'BodyStyle', parent=styles['Normal'], fontSize=10, textColor=colors.HexColor('#333333'), spaceAfter=10, leading=14
     )
 
     story.append(Paragraph("SABERMETRÍA IA - REPORTE DE ANALÍTICA AVANZADA", title_style))
@@ -160,7 +148,6 @@ def generar_pdf_analisis(partido, ganador, total_puntos, razonamiento):
     doc.build(story)
     return pdf_path
 
-# Función para registrar visita y contar accesos
 def registrar_visita():
     fecha_hora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     nuevo_registro = pd.DataFrame([["Seguidor TikTok", fecha_hora]], columns=["Usuario", "Fecha_Acceso"])
@@ -172,12 +159,10 @@ def registrar_visita():
     else:
         nuevo_registro.to_csv(db_usuarios_path, index=False)
 
-# Selector de Idioma global en la barra lateral superior
 idioma = st.sidebar.selectbox("🌐 Idioma / Language", ["Español", "English"])
 lang = "es" if idioma == "Español" else "en"
 t = TEXTOS[lang]
 
-# 1. Control de Acceso optimizado
 if "autenticado" not in st.session_state:
     st.session_state.autenticado = False
 
@@ -195,7 +180,7 @@ if not st.session_state.autenticado:
         st.write("Para desbloquear el portal exclusivo y la analítica avanzada, sigue los pasos:")
             
     with col_der:
-        st.image("https://upload.wikimedia.org/wikipedia/en/0/03/National_Basketball_Association_logo.svg", width=180)
+        st.markdown("<h1 style='text-align: center; color: #1d4ed8; font-size: 80px; font-weight: 900; margin: 0;'>NBA</h1>", unsafe_allow_html=True)
     
     st.markdown("---")
     
@@ -223,7 +208,6 @@ if not st.session_state.autenticado:
             st.session_state.autenticado = True
             st.rerun()
 else:
-    # 2. Barra Lateral con Menú Principal
     st.sidebar.title("Menú Principal")
     if os.path.exists(logo_path):
         st.sidebar.image(logo_path, use_container_width=True)
@@ -381,7 +365,6 @@ else:
                 df_visitas = pd.read_csv(db_usuarios_path)
                 st.metric(label=t["total_visitas"], value=len(df_visitas))
                 
-                # Botón de sincronización automática de noticias para el administrador
                 if st.button("🔄 Sincronizar Noticias y Reportes de la NBA"):
                     st.success("¡Noticias y boletines de la liga sincronizados exitosamente con el portal!")
                 
