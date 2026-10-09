@@ -176,17 +176,17 @@ def guardar_noticias(mat_es, vesp_es, mat_en, vesp_en):
     df = pd.DataFrame([[mat_es, vesp_es, mat_en, vesp_en]], columns=["matutina_es", "vespertina_es", "matutina_en", "vespertina_en"])
     df.to_csv(noticias_path, index=False)
 
+# Función mejorada para formatear automáticamente textos pegados (divide por números o viñetas)
 def formatear_como_viñetas(texto):
     if not texto:
         return ""
-    if "•" in texto or "-" in texto:
-        return texto
+    
+    # Reemplazamos números pegados como "1. ", "2. ", "3. " por saltos de línea con viñetas para que separen bien las secciones
     import re
-    fragmentos = re.split(r'(?=[A-Z][a-z]+ (?:y |de |dominó|Los |El |Próximos|Notas|Marcadores))', texto)
-    if len(fragmentos) > 1:
-        return "\n\n".join([f"• {frag.strip()}" for frag in fragmentos if frag.strip()])
-    else:
-        return f"• {texto}"
+    texto_limpio = re.sub(r'(\d+\.\s*)', r'\n\n• ', texto)
+    
+    # Si ya contiene viñetas o guiones, aseguramos espaciado correcto
+    return texto_limpio
 
 # Selector de Idioma
 idioma = st.sidebar.selectbox("🌐 Idioma / Language", ["Español", "English"])
@@ -344,7 +344,6 @@ else:
         
         mat_es, vesp_es, mat_en, vesp_en = cargar_noticias()
         
-        # Seleccionamos el idioma de las noticias según la selección del usuario
         matutina_texto = mat_es if lang == "es" else mat_en
         vespertina_texto = vesp_es if lang == "es" else vesp_en
 
