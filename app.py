@@ -180,7 +180,8 @@ if not st.session_state.autenticado:
         st.write("Para desbloquear el portal exclusivo y la analítica avanzada, sigue los pasos:")
             
     with col_der:
-        st.markdown("<h1 style='text-align: center; color: #1d4ed8; font-size: 80px; font-weight: 900; margin: 0;'>NBA</h1>", unsafe_allow_html=True)
+        # Imagen oficial optimizada de la NBA
+        st.image("https://upload.wikimedia.org/wikipedia/en/0/03/National_Basketball_Association_logo.svg", width=140)
     
     st.markdown("---")
     
