@@ -159,6 +159,7 @@ def registrar_visita():
     else:
         nuevo_registro.to_csv(db_usuarios_path, index=False)
 
+# Selector de Idioma en la barra lateral
 idioma = st.sidebar.selectbox("🌐 Idioma / Language", ["Español", "English"])
 lang = "es" if idioma == "Español" else "en"
 t = TEXTOS[lang]
@@ -177,7 +178,10 @@ if not st.session_state.autenticado:
         st.markdown("<br>", unsafe_allow_html=True)
         st.title(t["titulo_app"])
         st.subheader(t["sub_app"])
-        st.write("Para desbloquear el portal exclusivo y la analítica avanzada, sigue los pasos:")
+        if lang == "es":
+            st.write("Para desbloquear el portal exclusivo y la analítica avanzada, sigue los pasos:")
+        else:
+            st.write("To unlock the exclusive portal and advanced analytics, follow the steps:")
             
     with col_der:
         st.image("https://upload.wikimedia.org/wikipedia/en/0/03/National_Basketball_Association_logo.svg", width=140)
@@ -208,11 +212,11 @@ if not st.session_state.autenticado:
             st.session_state.autenticado = True
             st.rerun()
 else:
-    st.sidebar.title("Menú Principal")
+    st.sidebar.title("Menú Principal" if lang == "es" else "Main Menu")
     if os.path.exists(logo_path):
         st.sidebar.image(logo_path, use_container_width=True)
         
-    menu = st.sidebar.radio("Selecciona una sección:", [
+    menu = st.sidebar.radio("Selecciona una sección:" if lang == "es" else "Select a section:", [
         t["menu_cartelera"], 
         t["menu_noticias"], 
         t["menu_jugada"], 
@@ -223,10 +227,11 @@ else:
     fecha_hoy = datetime.now().strftime("%d de %B de %Y")
 
     if menu == t["menu_cartelera"]:
-        st.header(f"📅 Cartelera de Partidos - Análisis Profundo ({fecha_hoy})")
-        st.write("Selecciona un encuentro para ver el desglose científico del modelo:")
+        titulo_cartelera = "📅 Cartelera de Partidos - Análisis Profundo" if lang == "es" else "📅 Game Schedule - Deep Analysis"
+        st.header(f"{titulo_cartelera} ({fecha_hoy})")
+        st.write("Selecciona un encuentro para ver el desglose científico del modelo:" if lang == "es" else "Select a matchup to view the scientific breakdown:")
         
-        partido_seleccionado = st.selectbox("Juegos de hoy:", [
+        partido_seleccionado = st.selectbox("Juegos de hoy:" if lang == "es" else "Today's Games:", [
             "Dallas Mavericks vs. Oklahoma City Thunder",
             "Philadelphia 76ers vs. Cleveland Cavaliers",
             "Minnesota Timberwolves vs. Memphis Grizzlies"
@@ -253,32 +258,42 @@ else:
             st.markdown(matchup_html, unsafe_allow_html=True)
             
             st.markdown("---")
-            st.info(f"Mostrando analítica avanzada para: **{partido_seleccionado}**")
+            st.info(f"Mostrando analítica avanzada para: **{partido_seleccionado}**" if lang == "es" else f"Showing advanced analytics for: **{partido_seleccionado}**")
             
             col1, col2 = st.columns(2)
             with col1:
-                st.metric(label="Ganador Proyectado", value="Oklahoma City Thunder", delta="+4.2 pts")
+                st.metric(label="Ganador Proyectado" if lang == "es" else "Projected Winner", value="Oklahoma City Thunder", delta="+4.2 pts")
             with col2:
-                st.metric(label="Total de Puntos (O/U)", value="230.5", delta="Altas (Over)")
+                st.metric(label="Total de Puntos (O/U)" if lang == "es" else "Total Points (O/U)", value="230.5", delta="Altas (Over)" if lang == "es" else "Over")
             
-            st.markdown("### 🧠 Razonamiento Táctico y Métricas Avanzadas")
+            st.markdown("### 🧠 Razonamiento Táctico y Métricas Avanzadas" if lang == "es" else "### 🧠 Tactical Reasoning & Advanced Metrics")
             
-            analisis_amplio = (
-                "El modelo de eficiencia neta proyecta una ventaja clave en el ritmo de posesiones (Pace). "
-                "Oklahoma City registra un índice defensivo en el perímetro que limita el acierto rival en situaciones de pick-and-roll. "
-                "Por su parte, el True Shooting Percentage (TS%) de los visitantes se eleva un 4.5% en los últimos cinco encuentros, "
-                "respaldado por una menor tasa de pérdidas (TOV%) y una alta conversión en transición rápida. "
-                "El diferencial de rebotes defensivos favorece al Oklahoma en un margen de 5.2 balones recuperados por encuentro, "
-                "lo que ahoga las segundas oportunidades del rival y consolida la proyección del modelo ganador."
-            )
+            if lang == "es":
+                analisis_amplio = (
+                    "El modelo de eficiencia neta proyecta una ventaja clave en el ritmo de posesiones (Pace). "
+                    "Oklahoma City registra un índice defensivo en el perímetro que limita el acierto rival en situaciones de pick-and-roll. "
+                    "Por su parte, el True Shooting Percentage (TS%) de los visitantes se eleva un 4.5% en los últimos cinco encuentros, "
+                    "respaldado por una menor tasa de pérdidas (TOV%) y una alta conversión en transición rápida. "
+                    "El diferencial de rebotes defensivos favorece al Oklahoma en un margen de 5.2 balones recuperados por encuentro, "
+                    "lo que ahoga las segundas oportunidades del rival y consolida la proyección del modelo ganador."
+                )
+            else:
+                analisis_amplio = (
+                    "The net efficiency model projects a key advantage in possession pace. "
+                    "Oklahoma City registers a perimeter defensive rating that limits opponent shooting in pick-and-roll situations. "
+                    "Meanwhile, the visitors' True Shooting Percentage (TS%) rises 4.5% over the last five games, "
+                    "supported by a lower turnover rate (TOV%) and high fast-break conversion. "
+                    "The defensive rebound differential favors Oklahoma by a margin of 5.2 recovered balls per game, "
+                    "suppressing second-chance opportunities and solidifying the winning model's projection."
+                )
             
             st.write(analisis_amplio)
             
             st.markdown("---")
-            st.subheader("📥 Exportar Reporte")
-            st.write("Descarga el análisis completo de este encuentro en formato PDF para consultarlo offline.")
+            st.subheader("📥 Exportar Reporte" if lang == "es" else "📥 Export Report")
+            st.write("Descarga el análisis completo de este encuentro en formato PDF para consultarlo offline." if lang == "es" else "Download the complete analysis of this matchup in PDF format for offline consultation.")
             
-            if st.button("📄 Descargar Análisis en PDF"):
+            if st.button("📄 Descargar Análisis en PDF" if lang == "es" else "📄 Download PDF Analysis"):
                 archivo_pdf = generar_pdf_analisis(
                     partido_seleccionado, 
                     "Oklahoma City Thunder (+4.2 pts)", 
@@ -287,34 +302,47 @@ else:
                 )
                 with open(archivo_pdf, "rb") as f:
                     st.download_button(
-                        label="💾 Guardar archivo PDF en tu equipo",
+                        label="💾 Guardar archivo PDF en tu equipo" if lang == "es" else "💾 Save PDF file to your device",
                         data=f,
                         file_name="reporte_sabermetria_nba.pdf",
                         mime="application/pdf"
                     )
 
     elif menu == t["menu_noticias"]:
-        st.header(f"📰 Centro de Noticias en Tiempo Real — {fecha_hoy}")
-        st.write("Bienvenido al centro informativo oficial de Sabermetría IA. Aquí encontrarás la doble actualización diaria.")
+        titulo_noticias = f"📰 Centro de Noticias en Tiempo Real — {fecha_hoy}" if lang == "es" else f"📰 Real-Time News Center — {fecha_hoy}"
+        st.header(titulo_noticias)
+        st.write("Bienvenido al centro informativo oficial de Sabermetría IA. Aquí encontrarás la doble actualización diaria." if lang == "es" else "Welcome to Sabermetria AI's official news center. Here you will find the double daily update.")
         
-        tab1, tab2 = st.tabs(["🌅 Actualización Matutina (Cierre Previo)", "🌇 Actualización de la Tarde (5:00 p.m.)"])
+        tab1, tab2 = st.tabs(["🌅 Actualización Matutina (Cierre Previo)" if lang == "es" else "🌅 Morning Update (Previous Close)", "🌇 Actualización de la Tarde (5:00 p.m.)" if lang == "es" else "🌇 Evening Update (5:00 p.m.)"])
         
         with tab1:
-            st.subheader("🌅 Reporte Matutino: Radiografía y Tendencias de la Liga")
-            st.markdown("""
-            * **Balance de Eficiencia Ofensiva:** Las primeras prácticas y encuentros muestran un incremento notable en el uso de triples en transición.
-            * **Impacto en la Pintura:** Los modelos de eficiencia defensiva señalan que los equipos con mayor diferencial en rebotes dominan los primeros cuartos.
-            """)
+            st.subheader("🌅 Reporte Matutino: Radiografía y Tendencias de la Liga" if lang == "es" else "🌅 Morning Report: League Radiography & Trends")
+            if lang == "es":
+                st.markdown("""
+                * **Balance de Eficiencia Ofensiva:** Las primeras prácticas y encuentros muestran un incremento notable en el uso de triples en transición.
+                * **Impacto en la Pintura:** Los modelos de eficiencia defensiva señalan que los equipos con mayor diferencial en rebotes dominan los primeros cuartos.
+                """)
+            else:
+                st.markdown("""
+                * **Offensive Efficiency Balance:** Early practices and matchups show a notable increase in transition three-point usage.
+                * **Paint Impact:** Defensive efficiency models indicate teams with higher rebound differentials dominate early quarters.
+                """)
         with tab2:
-            st.subheader("🌇 Reporte Vespertino: Última Hora y Ajustes Previo al Salto Inicial")
-            st.markdown("""
-            * **Reporte Oficial de Lesiones:** Monitoreo en tiempo real de jugadores cuestionables y confirmación de quintetos abridores.
-            * **Movimientos en las Líneas de Apuestas:** Análisis de las variaciones en las líneas de puntos totales (O/U).
-            """)
+            st.subheader("🌇 Reporte Vespertino: Última Hora y Ajustes Previo al Salto Inicial" if lang == "es" else "🌇 Evening Report: Breaking News & Pre-Tip Adjustments")
+            if lang == "es":
+                st.markdown("""
+                * **Reporte Oficial de Lesiones:** Monitoreo en tiempo real de jugadores cuestionables y confirmación de quintetos abridores.
+                * **Movimientos en las Líneas de Apuestas:** Análisis de las variaciones en las líneas de puntos totales (O/U).
+                """)
+            else:
+                st.markdown("""
+                * **Official Injury Report:** Real-time monitoring of questionable players and starting lineup confirmations.
+                * **Betting Line Movements:** Analysis of total points (O/U) line variations.
+                """)
 
     elif menu == t["menu_jugada"]:
-        st.header("⭐ La Jugada Estelar del Modelo")
-        st.success("Recomendación avalada estrictamente por eficiencia matemática y métricas de posesión.")
+        st.header("⭐ La Jugada Estelar del Modelo" if lang == "es" else "⭐ Model's Star Play of the Day")
+        st.success("Recomendación avalada estrictamente por eficiencia matemática y métricas de posesión." if lang == "es" else "Recommendation strictly backed by mathematical efficiency and possession metrics.")
         
         equipo_estelar_1 = "Oklahoma City Thunder"
         equipo_estelar_2 = "Dallas Mavericks"
@@ -336,16 +364,23 @@ else:
         """
         st.markdown(matchup_estelar_html, unsafe_allow_html=True)
         
-        st.markdown("### 📊 Fundamento Estadístico y Razonamiento del Modelo")
-        st.markdown("""
-        * **Selección Recomendada:** Oklahoma City Thunder - Spread / Altas (Over)
-        * **Nivel de Confianza del Modelo:** 88.4%
-        * **Por qué elegimos este encuentro:** Nuestro algoritmo de eficiencia neta detecta una superioridad de +4.2 puntos en posesiones de media cancha.
-        """)
+        st.markdown("### 📊 Fundamento Estadístico y Razonamiento del Modelo" if lang == "es" else "### 📊 Statistical Foundation & Model Reasoning")
+        if lang == "es":
+            st.markdown("""
+            * **Selección Recomendada:** Oklahoma City Thunder - Spread / Altas (Over)
+            * **Nivel de Confianza del Modelo:** 88.4%
+            * **Por qué elegimos este encuentro:** Nuestro algoritmo de eficiencia neta detecta una superioridad de +4.2 puntos en posesiones de media cancha.
+            """)
+        else:
+            st.markdown("""
+            * **Recommended Selection:** Oklahoma City Thunder - Spread / Over
+            * **Model Confidence Level:** 88.4%
+            * **Why we chose this matchup:** Our net efficiency algorithm detects a +4.2 point superiority in half-court possessions.
+            """)
 
     elif menu == t["menu_diccionario"]:
-        st.header("📖 Diccionario Sabermétrico Educativo (Básico a Avanzado)")
-        st.write("Guía completa de referencia para comprender desde los fundamentos tradicionales hasta las métricas de eficiencia más avanzadas:")
+        st.header("📖 Diccionario Sabermétrico Educativo (Básico a Avanzado)" if lang == "es" else "📖 Educational Sabermetric Dictionary (Basic to Advanced)")
+        st.write("Guía completa de referencia para comprender desde los fundamentos tradicionales hasta las métricas de eficiencia más avanzadas:" if lang == "es" else "Complete reference guide to understand everything from traditional fundamentals to advanced efficiency metrics:")
         
         if lang == "es":
             st.markdown("""
@@ -413,14 +448,19 @@ else:
                 df_visitas = pd.read_csv(db_usuarios_path)
                 st.metric(label=t["total_visitas"], value=len(df_visitas))
                 
-                if st.button("🔄 Sincronizar Noticias y Reportes de la NBA"):
-                    st.success("¡Noticias y boletines de la liga sincronizados exitosamente con el portal!")
+                btn_sinc = "🔄 Sincronizar Noticias y Reportes de la NBA" if lang == "es" else "🔄 Sync NBA News and Reports"
+                if st.button(btn_sinc):
+                    msg_sinc = "¡Noticias y boletines de la liga sincronizados exitosamente con el portal!" if lang == "es" else "Successfully synchronized NBA news and bulletins with the portal!"
+                    st.success(msg_sinc)
                 
-                st.markdown("### Historial de Accesos al Portal")
+                hist_acc = "Historial de Accesos al Portal" if lang == "es" else "Portal Access History"
+                st.markdown(f"### {hist_acc}")
                 st.dataframe(df_visitas, use_container_width=True)
             else:
                 st.metric(label=t["total_visitas"], value=0)
-                if st.button("🔄 Sincronizar Noticias y Reportes de la NBA"):
-                    st.success("¡Noticias sincronizadas exitosamente!")
+                btn_sinc = "🔄 Sincronizar Noticias y Reportes de la NBA" if lang == "es" else "🔄 Sync NBA News and Reports"
+                if st.button(btn_sinc):
+                    msg_sinc = "¡Noticias sincronizadas exitosamente!" if lang == "es" else "News successfully synchronized!"
+                    st.success(msg_sinc)
         elif clave_admin != "":
             st.error(t["admin_error"])
