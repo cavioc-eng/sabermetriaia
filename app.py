@@ -11,7 +11,7 @@ from reportlab.lib import colors
 current_dir = os.path.dirname(os.path.abspath(__file__))
 logo_path = os.path.join(current_dir, "logo.jpeg")
 db_usuarios_path = os.path.join(current_dir, "registros_tiktok.csv")
-noticias_path = os.path.join(current_dir, "noticias_admin.csv")
+noticias_path = os.path.join(current_dir, "noticias_bilingue.csv")
 
 # Configuración de la página
 st.set_page_config(
@@ -38,7 +38,7 @@ TEXTOS = {
         "menu_diccionario": "Diccionario Sabermétrico",
         "menu_admin": "🔐 Panel de Administración",
         "admin_titulo": "🔐 Panel de Control y Publicación - Sabermetría IA",
-        "admin_desc": "Control estadístico de visitas y editor de noticias en tiempo real.",
+        "admin_desc": "Control estadístico de visitas y editor de noticias bilingüe.",
         "admin_clave": "Ingresa la clave de administrador:",
         "admin_exito": "¡Acceso de administrador concedido!",
         "admin_error": "❌ Clave de administrador incorrecta.",
@@ -59,7 +59,7 @@ TEXTOS = {
         "menu_diccionario": "Sabermetric Dictionary",
         "menu_admin": "🔐 Admin Panel",
         "admin_titulo": "🔐 Control & Publishing Panel - Sabermetria AI",
-        "admin_desc": "Visit statistical control and real-time news editor.",
+        "admin_desc": "Visit statistical control and bilingual news editor.",
         "admin_clave": "Enter admin password:",
         "admin_exito": "Admin access granted!",
         "admin_error": "❌ Incorrect admin password.",
@@ -159,27 +159,29 @@ def registrar_visita():
 def cargar_noticias():
     if os.path.exists(noticias_path):
         df = pd.read_csv(noticias_path)
-        return df.iloc[0]["matutina"], df.iloc[0]["vespertina"]
+        return (
+            df.iloc[0]["matutina_es"], 
+            df.iloc[0]["vespertina_es"],
+            df.iloc[0]["matutina_en"],
+            df.iloc[0]["vespertina_en"]
+        )
     else:
-        default_mat = "• Balance de Eficiencia Ofensiva: Las primeras prácticas muestran un incremento en triples.\n• Impacto en la Pintura: Equipos con mayor diferencial de rebotes dominan."
-        default_vesp = "• Reporte de Lesiones: Monitoreo en tiempo real de jugadores.\n• Líneas de Apuestas: Análisis de puntos totales."
-        return default_mat, default_vesp
+        def_mat_es = "• Balance de Eficiencia Ofensiva: Las primeras prácticas muestran un incremento en triples.\n• Impacto en la Pintura: Equipos con mayor diferencial de rebotes dominan."
+        def_vesp_es = "• Reporte de Lesiones: Monitoreo en tiempo real de jugadores.\n• Líneas de Apuestas: Análisis de puntos totales."
+        def_mat_en = "• Offensive Efficiency Balance: Early practices show an increase in three-pointers.\n• Paint Impact: Teams with higher rebound differentials dominate."
+        def_vesp_en = "• Injury Report: Real-time player monitoring.\n• Betting Lines: Total points analysis."
+        return def_mat_es, def_vesp_es, def_mat_en, def_vesp_en
 
-def guardar_noticias(matutina, vespertina):
-    df = pd.DataFrame([[matutina, vespertina]], columns=["matutina", "vespertina"])
+def guardar_noticias(mat_es, vesp_es, mat_en, vesp_en):
+    df = pd.DataFrame([[mat_es, vesp_es, mat_en, vesp_en]], columns=["matutina_es", "vespertina_es", "matutina_en", "vespertina_en"])
     df.to_csv(noticias_path, index=False)
 
-# Función inteligente para transformar texto plano pegado en viñetas ordenadas
 def formatear_como_viñetas(texto):
     if not texto:
         return ""
-    # Si ya tiene viñetas, lo dejamos intacto
     if "•" in texto or "-" in texto:
         return texto
-    
-    # Si viene todo corrido, intentamos dividir por palabras clave comunes o puntos
     import re
-    # Buscamos patrones como "Marcadores", "Notas", "Próximos", o dividimos por puntos seguidos de mayúscula
     fragmentos = re.split(r'(?=[A-Z][a-z]+ (?:y |de |dominó|Los |El |Próximos|Notas|Marcadores))', texto)
     if len(fragmentos) > 1:
         return "\n\n".join([f"• {frag.strip()}" for frag in fragmentos if frag.strip()])
@@ -340,15 +342,24 @@ else:
         st.header(titulo_noticias)
         st.write("Bienvenido al centro informativo oficial de Sabermetría IA. Aquí encontrarás la doble actualización diaria." if lang == "es" else "Welcome to Sabermetria AI's official news center. Here you will find the double daily update.")
         
-        matutina_texto, vespertina_texto = cargar_noticias()
+        mat_es, vesp_es, mat_en, vesp_en = cargar_noticias()
+        
+        # Seleccionamos el idioma de las noticias según la selección del usuario
+        matutina_texto = mat_es if lang == "es" else mat_en
+        vespertina_texto = vesp_es if lang == "es" else vesp_en
 
-        tab1, tab2 = st.tabs(["🌅 Actualización Matutina (Cierre Previo)" if lang == "es" else "🌅 Morning Update (Previous Close)", "🌇 Actualización de la Tarde (5:00 p.m.)" if lang == "es" else "🌇 Evening Update (5:00 p.m.)"])
+        tab_mat = "🌅 Actualización Matutina (Cierre Previo)" if lang == "es" else "🌅 Morning Update (Previous Close)"
+        tab_vesp = "🌇 Actualización de la Tarde (5:00 p.m.)" if lang == "es" else "🌇 Evening Update (5:00 p.m.)"
+
+        tab1, tab2 = st.tabs([tab_mat, tab_vesp])
         
         with tab1:
-            st.subheader("🌅 Reporte Matutino: Radiografía y Tendencias de la Liga" if lang == "es" else "🌅 Morning Report: League Radiography & Trends")
+            titulo_mat = "🌅 Reporte Matutino: Radiografía y Tendencias de la Liga" if lang == "es" else "🌅 Morning Report: League Radiography & Trends"
+            st.subheader(titulo_mat)
             st.markdown(formatear_como_viñetas(matutina_texto))
         with tab2:
-            st.subheader("🌇 Reporte Vespertino: Última Hora y Ajustes Previo al Salto Inicial" if lang == "es" else "🌇 Evening Report: Breaking News & Pre-Tip Adjustments")
+            titulo_vesp = "🌇 Reporte Vespertino: Última Hora y Ajustes Previo al Salto Inicial" if lang == "es" else "🌇 Evening Report: Breaking News & Pre-Tip Adjustments"
+            st.subheader(titulo_vesp)
             st.markdown(formatear_como_viñetas(vespertina_texto))
 
     elif menu == t["menu_jugada"]:
@@ -468,20 +479,26 @@ else:
 
             st.markdown("---")
             
-            st.subheader("📰 Editor y Publicador de Noticias Diarias" if lang == "es" else "📰 Daily News Editor & Publisher")
-            st.write("Redacta o pega aquí las noticias. Aunque se peguen juntas, la app las ordenará automáticamente en viñetas limpias." if lang == "es" else "Write or paste news here. Even if pasted together, the app will automatically format them into clean bullet points.")
+            titulo_editor = "📰 Editor y Publicador de Noticias Bilingüe (Español / Inglés)" if lang == "es" else "📰 Bilingual News Editor & Publisher (Spanish / English)"
+            st.subheader(titulo_editor)
+            st.write("Actualiza los reportes tanto en español como en inglés para que la app se adapte al idioma que elija el usuario." if lang == "es" else "Update reports in both Spanish and English so the app adapts to the user's selected language.")
             
-            mat_actual, vesp_actual = cargar_noticias()
+            mat_es_act, vesp_es_act, mat_en_act, vesp_en_act = cargar_noticias()
             
-            with st.form("form_noticias"):
-                nueva_matutina = st.text_area("Edición Matutina (Mañana):" if lang == "es" else "Morning Edition:", value=mat_actual, height=150)
-                nueva_vespertina = st.text_area("Edición Vespertina (Tarde):" if lang == "es" else "Evening Edition:", value=vesp_actual, height=150)
+            with st.form("form_noticias_bilingue"):
+                st.markdown("#### 🇪🇸 Versión en Español")
+                nueva_mat_es = st.text_area("Edición Matutina (Español):", value=mat_es_act, height=130)
+                nueva_vesp_es = st.text_area("Edición Vespertina (Español):", value=vesp_es_act, height=130)
                 
-                btn_guardar = st.form_submit_button("💾 Guardar y Publicar Noticias" if lang == "es" else "💾 Save and Publish News")
+                st.markdown("#### 🇺🇸 Versión en Inglés (English Version)")
+                nueva_mat_en = st.text_area("Morning Edition (English):", value=mat_en_act, height=130)
+                nueva_vesp_en = st.text_area("Evening Edition (English):", value=vesp_en_act, height=130)
+                
+                btn_guardar = st.form_submit_button("💾 Guardar y Publicar Noticias Bilingües" if lang == "es" else "💾 Save and Publish Bilingual News")
                 
                 if btn_guardar:
-                    guardar_noticias(nueva_matutina, nueva_vespertina)
-                    st.success("¡Noticias guardadas y publicadas exitosamente en el portal!" if lang == "es" else "News successfully saved and published on the portal!")
+                    guardar_noticias(nueva_mat_es, nueva_vesp_es, nueva_mat_en, nueva_vesp_en)
+                    st.success("¡Noticias bilingües guardadas y publicadas con éxito!" if lang == "es" else "Bilingual news successfully saved and published!")
                     st.rerun()
 
         elif clave_admin != "":
