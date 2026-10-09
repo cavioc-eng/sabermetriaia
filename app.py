@@ -20,7 +20,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Diccionario de Idiomas (Español / Inglés)
+# Diccionario de Idiomas (Español / Inglés) con Glosario Completo y Educativo
 TEXTOS = {
     "es": {
         "titulo_app": "SABERMETRÍA IA",
@@ -180,7 +180,6 @@ if not st.session_state.autenticado:
         st.write("Para desbloquear el portal exclusivo y la analítica avanzada, sigue los pasos:")
             
     with col_der:
-        # Imagen oficial optimizada de la NBA
         st.image("https://upload.wikimedia.org/wikipedia/en/0/03/National_Basketball_Association_logo.svg", width=140)
     
     st.markdown("---")
@@ -345,13 +344,61 @@ else:
         """)
 
     elif menu == t["menu_diccionario"]:
-        st.header("📖 Diccionario de Indicadores Avanzados")
-        st.markdown("""
-        * **Pace (Ritmo):** Cantidad estimada de posesiones por cada 48 minutos de juego.
-        * **True Shooting Percentage - TS%:** Eficiencia ofensiva global que incluye dobles, triples y tiros libres.
-        * **Effective Field Goal Percentage - eFG%:** Eficacia de campo otorgando valor extra a los triples.
-        * **Net Rating:** Diferencia entre puntos anotados y permitidos por 100 posesiones.
-        """)
+        st.header("📖 Diccionario Sabermétrico Educativo (Básico a Avanzado)")
+        st.write("Guía completa de referencia para comprender desde los fundamentos tradicionales hasta las métricas de eficiencia más avanzadas:")
+        
+        if lang == "es":
+            st.markdown("""
+            ### 🟢 Indicadores Básicos y Tradicionales (Box Score)
+            * **PTS (Points / Puntos):** Total de puntos anotados por un jugador o equipo a través de tiros libres, dobles y triples.
+            * **REB (Rebounds / Rebotes):** Balones recuperados tras un lanzamiento fallido (se dividen en Ofensivos y Defensivos).
+            * **AST (Assists / Asistencias):** Pases que conducen directamente a una canasta anotada por un compañero.
+            * **STL (Steals / Recuperaciones):** Balones arrebatados al adversario cortando líneas de pase o robando el balón directamente.
+            * **BLK (Blocks / Tapones):** Lanzamientos rivales bloqueados de forma legal en el aire antes de que tomen trayectoria descendente hacia el aro.
+            * **TOV (Turnovers / Pérdidas):** Balones entregados al rival por errores no forzados, faltas ofensivas o malas entregas.
+            * **MIN (Minutes / Minutos):** Tiempo total que un jugador permanece disputando el encuentro en la duela.
+
+            ### 🟡 Indicadores de Eficiencia Estándar
+            * **FG% (Field Goal Percentage / Porcentaje de Campo):** Relación entre los tiros de campo encestados y los intentados.
+            * **3P% (Three-Point Percentage / Porcentaje de Triples):** Eficacia en lanzamientos de larga distancia.
+            * **FT% (Free Throw Percentage / Porcentaje de Tiros Libres):** Precisión desde la línea de castigo.
+            * **Fouls (FALTAS):** Infracciones personales cometidas que otorgan tiros libres al rival o acumulan penalización de equipo.
+
+            ### 🔴 Indicadores Avanzados y de Profundidad (Sabermetría IA)
+            * **Pace (Ritmo):** Cantidad estimada de posesiones que un equipo disputa por cada 48 minutos de juego. Mide la velocidad del encuentro.
+            * **True Shooting Percentage - TS% (Tiro Verdadero):** Eficiencia ofensiva global que pondera de forma exacta dobles, triples y tiros libres.
+            * **Effective Field Goal Percentage - eFG% (Tiro de Campo Efectivo):** Mide la eficacia de campo otorgando un valor adicional del 50% a los triples encestados.
+            * **Net Rating (Rating Neto):** Diferencia entre los puntos anotados y permitidos por cada 100 posesiones. Es el indicador definitivo de superioridad.
+            * **Usage Rate - USG% (Tasa de Uso):** Estima el porcentaje de jugadas ofensivas que concluyen un jugador (con lanzamiento, falta recibida o pérdida) mientras está en cancha.
+            * **Player Efficiency Rating - PER:** Índice global de productividad por minuto creado por John Hollinger, ajustado al ritmo de juego del equipo.
+            * **Box Plus/Minus - BPM:** Estimación de los puntos por 100 posesiones que un jugador aporta en comparación con un jugador promedio de la liga.
+            """)
+        else:
+            st.markdown("""
+            ### 🟢 Basic & Traditional Indicators (Box Score)
+            * **PTS (Points):** Total points scored by a player or team through free throws, two-pointers, and three-pointers.
+            * **REB (Rebounds):** Basketballs recovered after a missed shot (split into Offensive and Defensive).
+            * **AST (Assists):** Passes that directly lead to a teammate's field goal.
+            * **STL (Steals):** Balls taken away from the opponent by intercepting passes or stripping the ball.
+            * **BLK (Blocks):** Legal deflections of opponent shots in midair before descending toward the rim.
+            * **TOV (Turnovers):** Possessions lost due to unforced errors, offensive fouls, or bad passes.
+            * **MIN (Minutes):** Total time a player spends on the court during a game.
+
+            ### 🟡 Standard Efficiency Indicators
+            * **FG% (Field Goal Percentage):** Ratio of successful field goals made versus attempted.
+            * **3P% (Three-Point Percentage):** Shooting accuracy from beyond the arc.
+            * **FT% (Free Throw Percentage):** Accuracy from the charity stripe.
+            * **Fouls:** Personal infractions committed leading to free throws or team penalty.
+
+            ### 🔴 Advanced & Deep Analytics (Sabermetria AI)
+            * **Pace:** Estimated number of possessions a team plays per 48 minutes. Measures game speed.
+            * **True Shooting Percentage - TS%:** Comprehensive scoring efficiency weighting twos, threes, and free throws.
+            * **Effective Field Goal Percentage - eFG%:** Field goal accuracy giving 50% extra value to three-pointers.
+            * **Net Rating:** Point differential per 100 possessions. The ultimate team superiority metric.
+            * **Usage Rate - USG%:** Estimate of team plays used by a player while on the floor.
+            * **Player Efficiency Rating - PER:** Per-minute productivity rating created by John Hollinger, adjusted for team pace.
+            * **Box Plus/Minus - BPM:** Box-score estimate of points per 100 possessions a player contributes above a league-average player.
+            """)
 
     elif menu == t["menu_admin"]:
         st.header(t["admin_titulo"])
@@ -373,7 +420,4 @@ else:
                 st.dataframe(df_visitas, use_container_width=True)
             else:
                 st.metric(label=t["total_visitas"], value=0)
-                if st.button("🔄 Sincronizar Noticias y Reportes de la NBA"):
-                    st.success("¡Noticias sincronizadas exitosamente!")
-        elif clave_admin != "":
-            st.error(t["admin_error"])
+                if st.button("🔄 Sinc
