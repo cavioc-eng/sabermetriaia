@@ -11,6 +11,7 @@ from reportlab.lib import colors
 current_dir = os.path.dirname(os.path.abspath(__file__))
 logo_path = os.path.join(current_dir, "logo.jpeg")
 db_usuarios_path = os.path.join(current_dir, "registros_tiktok.csv")
+noticias_path = os.path.join(current_dir, "noticias_admin.csv")
 
 # Configuración de la página
 st.set_page_config(
@@ -20,7 +21,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Diccionario de Idiomas (Español / Inglés) con Glosario Educativo Ampliado
+# Diccionario de Idiomas (Español / Inglés)
 TEXTOS = {
     "es": {
         "titulo_app": "SABERMETRÍA IA",
@@ -36,8 +37,8 @@ TEXTOS = {
         "menu_jugada": "La Jugada Fija del Día",
         "menu_diccionario": "Diccionario Sabermétrico",
         "menu_admin": "🔐 Panel de Administración",
-        "admin_titulo": "🔐 Panel de Control de Usuarios - Sabermetría IA",
-        "admin_desc": "Control estadístico de accesos y visitas a la plataforma.",
+        "admin_titulo": "🔐 Panel de Control y Publicación - Sabermetría IA",
+        "admin_desc": "Control estadístico de visitas y editor de noticias en tiempo real.",
         "admin_clave": "Ingresa la clave de administrador:",
         "admin_exito": "¡Acceso de administrador concedido!",
         "admin_error": "❌ Clave de administrador incorrecta.",
@@ -57,8 +58,8 @@ TEXTOS = {
         "menu_jugada": "Play of the Day",
         "menu_diccionario": "Sabermetric Dictionary",
         "menu_admin": "🔐 Admin Panel",
-        "admin_titulo": "🔐 User Control Panel - Sabermetria AI",
-        "admin_desc": "Statistical control of platform visits and accesses.",
+        "admin_titulo": "🔐 Control & Publishing Panel - Sabermetria AI",
+        "admin_desc": "Visit statistical control and real-time news editor.",
         "admin_clave": "Enter admin password:",
         "admin_exito": "Admin access granted!",
         "admin_error": "❌ Incorrect admin password.",
@@ -128,12 +129,8 @@ def generar_pdf_analisis(partido, ganador, total_puntos, razonamiento):
     styles = getSampleStyleSheet()
     story = []
 
-    title_style = ParagraphStyle(
-        'TitleStyle', parent=styles['Heading1'], fontSize=16, textColor=colors.HexColor('#00FF66'), spaceAfter=12
-    )
-    body_style = ParagraphStyle(
-        'BodyStyle', parent=styles['Normal'], fontSize=10, textColor=colors.HexColor('#333333'), spaceAfter=10, leading=14
-    )
+    title_style = ParagraphStyle('TitleStyle', parent=styles['Heading1'], fontSize=16, textColor=colors.HexColor('#00FF66'), spaceAfter=12)
+    body_style = ParagraphStyle('BodyStyle', parent=styles['Normal'], fontSize=10, textColor=colors.HexColor('#333333'), spaceAfter=10, leading=14)
 
     story.append(Paragraph("SABERMETRÍA IA - REPORTE DE ANALÍTICA AVANZADA", title_style))
     story.append(Paragraph(f"<b>Encuentro:</b> {partido}", body_style))
@@ -150,7 +147,7 @@ def generar_pdf_analisis(partido, ganador, total_puntos, razonamiento):
 
 def registrar_visita():
     fecha_hora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    nuevo_registro = pd.DataFrame([["Seguidor TikTok", fecha_hora]], columns=["Usuario", "Fecha_Acceso"])
+    nuevo_registro = pd.DataFrame([["Seguidor TikTok (Acceso Directo)", fecha_hora]], columns=["Usuario", "Fecha_Acceso"])
     
     if os.path.exists(db_usuarios_path):
         df_existente = pd.read_csv(db_usuarios_path)
@@ -158,6 +155,20 @@ def registrar_visita():
         df_actualizado.to_csv(db_usuarios_path, index=False)
     else:
         nuevo_registro.to_csv(db_usuarios_path, index=False)
+
+# Funciones para leer y guardar noticias personalizadas por el administrador
+def cargar_noticias():
+    if os.path.exists(noticias_path):
+        df = pd.read_csv(noticias_path)
+        return df.iloc[0]["matutina"], df.iloc[0]["vespertina"]
+    else:
+        default_mat = "• **Balance de Eficiencia Ofensiva:** Las primeras prácticas y encuentros muestran un incremento notable en el uso de triples en transición.\n• **Impacto en la Pintura:** Los modelos de eficiencia defensiva señalan que los equipos con mayor diferencial en rebotes dominan los primeros cuartos."
+        default_vesp = "• **Reporte Oficial de Lesiones:** Monitoreo en tiempo real de jugadores cuestionables y confirmación de quintetos abridores.\n• **Movimientos en las Líneas de Apuestas:** Análisis de las variaciones en las líneas de puntos totales (O/U)."
+        return default_mat, default_vesp
+
+def guardar_noticias(matutina, vespertina):
+    df = pd.DataFrame([[matutina, vespertina]], columns=["matutina", "vespertina"])
+    df.to_csv(noticias_path, index=False)
 
 # Selector de Idioma en la barra lateral
 idioma = st.sidebar.selectbox("🌐 Idioma / Language", ["Español", "English"])
@@ -214,7 +225,7 @@ if not st.session_state.autenticado:
 else:
     st.sidebar.title("Menú Principal" if lang == "es" else "Main Menu")
     if os.path.exists(logo_path):
-        st.sidebar.image(logo_path, use_container_width=True)
+        st.sidebar.image(logo_path, width=220)
         
     menu = st.sidebar.radio("Selecciona una sección:" if lang == "es" else "Select a section:", [
         t["menu_cartelera"], 
@@ -313,32 +324,17 @@ else:
         st.header(titulo_noticias)
         st.write("Bienvenido al centro informativo oficial de Sabermetría IA. Aquí encontrarás la doble actualización diaria." if lang == "es" else "Welcome to Sabermetria AI's official news center. Here you will find the double daily update.")
         
+        # Cargamos las noticias publicadas por el administrador
+        matutina_texto, vespertina_texto = cargar_noticias()
+
         tab1, tab2 = st.tabs(["🌅 Actualización Matutina (Cierre Previo)" if lang == "es" else "🌅 Morning Update (Previous Close)", "🌇 Actualización de la Tarde (5:00 p.m.)" if lang == "es" else "🌇 Evening Update (5:00 p.m.)"])
         
         with tab1:
             st.subheader("🌅 Reporte Matutino: Radiografía y Tendencias de la Liga" if lang == "es" else "🌅 Morning Report: League Radiography & Trends")
-            if lang == "es":
-                st.markdown("""
-                * **Balance de Eficiencia Ofensiva:** Las primeras prácticas y encuentros muestran un incremento notable en el uso de triples en transición.
-                * **Impacto en la Pintura:** Los modelos de eficiencia defensiva señalan que los equipos con mayor diferencial en rebotes dominan los primeros cuartos.
-                """)
-            else:
-                st.markdown("""
-                * **Offensive Efficiency Balance:** Early practices and matchups show a notable increase in transition three-point usage.
-                * **Paint Impact:** Defensive efficiency models indicate teams with higher rebound differentials dominate early quarters.
-                """)
+            st.markdown(matutina_texto)
         with tab2:
             st.subheader("🌇 Reporte Vespertino: Última Hora y Ajustes Previo al Salto Inicial" if lang == "es" else "🌇 Evening Report: Breaking News & Pre-Tip Adjustments")
-            if lang == "es":
-                st.markdown("""
-                * **Reporte Oficial de Lesiones:** Monitoreo en tiempo real de jugadores cuestionables y confirmación de quintetos abridores.
-                * **Movimientos en las Líneas de Apuestas:** Análisis de las variaciones en las líneas de puntos totales (O/U).
-                """)
-            else:
-                st.markdown("""
-                * **Official Injury Report:** Real-time monitoring of questionable players and starting lineup confirmations.
-                * **Betting Line Movements:** Analysis of total points (O/U) line variations.
-                """)
+            st.markdown(vespertina_texto)
 
     elif menu == t["menu_jugada"]:
         st.header("⭐ La Jugada Estelar del Modelo" if lang == "es" else "⭐ Model's Star Play of the Day")
@@ -444,23 +440,36 @@ else:
         if clave_admin == "sabermetria2026":
             st.success(t["admin_exito"])
             
+            # 1. Contador y Listado de Visitas
             if os.path.exists(db_usuarios_path):
                 df_visitas = pd.read_csv(db_usuarios_path)
                 st.metric(label=t["total_visitas"], value=len(df_visitas))
-                
-                btn_sinc = "🔄 Sincronizar Noticias y Reportes de la NBA" if lang == "es" else "🔄 Sync NBA News and Reports"
-                if st.button(btn_sinc):
-                    msg_sinc = "¡Noticias y boletines de la liga sincronizados exitosamente con el portal!" if lang == "es" else "Successfully synchronized NBA news and bulletins with the portal!"
-                    st.success(msg_sinc)
                 
                 hist_acc = "Historial de Accesos al Portal" if lang == "es" else "Portal Access History"
                 st.markdown(f"### {hist_acc}")
                 st.dataframe(df_visitas, use_container_width=True)
             else:
                 st.metric(label=t["total_visitas"], value=0)
-                btn_sinc = "🔄 Sincronizar Noticias y Reportes de la NBA" if lang == "es" else "🔄 Sync NBA News and Reports"
-                if st.button(btn_sinc):
-                    msg_sinc = "¡Noticias sincronizadas exitosamente!" if lang == "es" else "News successfully synchronized!"
-                    st.success(msg_sinc)
+                st.info("Aún no hay registros de visitas." if lang == "es" else "No visit records yet.")
+
+            st.markdown("---")
+            
+            # 2. Editor de Noticias en Tiempo Real para el Administrador
+            st.subheader("📰 Editor y Publicador de Noticias Diarias" if lang == "es" else "📰 Daily News Editor & Publisher")
+            st.write("Redacta o pega aquí las noticias de la liga. Al hacer clic en guardar, se actualizarán al instante para todos los usuarios." if lang == "es" else "Write or paste league news here. Clicking save will instantly update them for all users.")
+            
+            mat_actual, vesp_actual = cargar_noticias()
+            
+            with st.form("form_noticias"):
+                nueva_matutina = st.text_area("Edición Matutina (Mañana):" if lang == "es" else "Morning Edition:", value=mat_actual, height=150)
+                nueva_vespertina = st.text_area("Edición Vespertina (Tarde):" if lang == "es" else "Evening Edition:", value=vesp_actual, height=150)
+                
+                btn_guardar = st.form_submit_button("💾 Guardar y Publicar Noticias" if lang == "es" else "💾 Save and Publish News")
+                
+                if btn_guardar:
+                    guardar_noticias(nueva_matutina, nueva_vespertina)
+                    st.success("¡Noticias guardadas y publicadas exitosamente en el portal!" if lang == "es" else "News successfully saved and published on the portal!")
+                    st.rerun()
+
         elif clave_admin != "":
             st.error(t["admin_error"])
