@@ -156,21 +156,37 @@ def registrar_visita():
     else:
         nuevo_registro.to_csv(db_usuarios_path, index=False)
 
-# Funciones para leer y guardar noticias personalizadas por el administrador
 def cargar_noticias():
     if os.path.exists(noticias_path):
         df = pd.read_csv(noticias_path)
         return df.iloc[0]["matutina"], df.iloc[0]["vespertina"]
     else:
-        default_mat = "• **Balance de Eficiencia Ofensiva:** Las primeras prácticas y encuentros muestran un incremento notable en el uso de triples en transición.\n• **Impacto en la Pintura:** Los modelos de eficiencia defensiva señalan que los equipos con mayor diferencial en rebotes dominan los primeros cuartos."
-        default_vesp = "• **Reporte Oficial de Lesiones:** Monitoreo en tiempo real de jugadores cuestionables y confirmación de quintetos abridores.\n• **Movimientos en las Líneas de Apuestas:** Análisis de las variaciones en las líneas de puntos totales (O/U)."
+        default_mat = "• Balance de Eficiencia Ofensiva: Las primeras prácticas muestran un incremento en triples.\n• Impacto en la Pintura: Equipos con mayor diferencial de rebotes dominan."
+        default_vesp = "• Reporte de Lesiones: Monitoreo en tiempo real de jugadores.\n• Líneas de Apuestas: Análisis de puntos totales."
         return default_mat, default_vesp
 
 def guardar_noticias(matutina, vespertina):
     df = pd.DataFrame([[matutina, vespertina]], columns=["matutina", "vespertina"])
     df.to_csv(noticias_path, index=False)
 
-# Selector de Idioma en la barra lateral
+# Función inteligente para transformar texto plano pegado en viñetas ordenadas
+def formatear_como_viñetas(texto):
+    if not texto:
+        return ""
+    # Si ya tiene viñetas, lo dejamos intacto
+    if "•" in texto or "-" in texto:
+        return texto
+    
+    # Si viene todo corrido, intentamos dividir por palabras clave comunes o puntos
+    import re
+    # Buscamos patrones como "Marcadores", "Notas", "Próximos", o dividimos por puntos seguidos de mayúscula
+    fragmentos = re.split(r'(?=[A-Z][a-z]+ (?:y |de |dominó|Los |El |Próximos|Notas|Marcadores))', texto)
+    if len(fragmentos) > 1:
+        return "\n\n".join([f"• {frag.strip()}" for frag in fragmentos if frag.strip()])
+    else:
+        return f"• {texto}"
+
+# Selector de Idioma
 idioma = st.sidebar.selectbox("🌐 Idioma / Language", ["Español", "English"])
 lang = "es" if idioma == "Español" else "en"
 t = TEXTOS[lang]
@@ -324,17 +340,16 @@ else:
         st.header(titulo_noticias)
         st.write("Bienvenido al centro informativo oficial de Sabermetría IA. Aquí encontrarás la doble actualización diaria." if lang == "es" else "Welcome to Sabermetria AI's official news center. Here you will find the double daily update.")
         
-        # Cargamos las noticias publicadas por el administrador
         matutina_texto, vespertina_texto = cargar_noticias()
 
         tab1, tab2 = st.tabs(["🌅 Actualización Matutina (Cierre Previo)" if lang == "es" else "🌅 Morning Update (Previous Close)", "🌇 Actualización de la Tarde (5:00 p.m.)" if lang == "es" else "🌇 Evening Update (5:00 p.m.)"])
         
         with tab1:
             st.subheader("🌅 Reporte Matutino: Radiografía y Tendencias de la Liga" if lang == "es" else "🌅 Morning Report: League Radiography & Trends")
-            st.markdown(matutina_texto)
+            st.markdown(formatear_como_viñetas(matutina_texto))
         with tab2:
             st.subheader("🌇 Reporte Vespertino: Última Hora y Ajustes Previo al Salto Inicial" if lang == "es" else "🌇 Evening Report: Breaking News & Pre-Tip Adjustments")
-            st.markdown(vespertina_texto)
+            st.markdown(formatear_como_viñetas(vespertina_texto))
 
     elif menu == t["menu_jugada"]:
         st.header("⭐ La Jugada Estelar del Modelo" if lang == "es" else "⭐ Model's Star Play of the Day")
@@ -440,7 +455,6 @@ else:
         if clave_admin == "sabermetria2026":
             st.success(t["admin_exito"])
             
-            # 1. Contador y Listado de Visitas
             if os.path.exists(db_usuarios_path):
                 df_visitas = pd.read_csv(db_usuarios_path)
                 st.metric(label=t["total_visitas"], value=len(df_visitas))
@@ -454,9 +468,8 @@ else:
 
             st.markdown("---")
             
-            # 2. Editor de Noticias en Tiempo Real para el Administrador
             st.subheader("📰 Editor y Publicador de Noticias Diarias" if lang == "es" else "📰 Daily News Editor & Publisher")
-            st.write("Redacta o pega aquí las noticias de la liga. Al hacer clic en guardar, se actualizarán al instante para todos los usuarios." if lang == "es" else "Write or paste league news here. Clicking save will instantly update them for all users.")
+            st.write("Redacta o pega aquí las noticias. Aunque se peguen juntas, la app las ordenará automáticamente en viñetas limpias." if lang == "es" else "Write or paste news here. Even if pasted together, the app will automatically format them into clean bullet points.")
             
             mat_actual, vesp_actual = cargar_noticias()
             
