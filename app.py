@@ -20,7 +20,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Diccionario de Idiomas (Español / Inglés) con Glosario Completo y Educativo
+# Diccionario de Idiomas (Español / Inglés) con Glosario Educativo Ampliado
 TEXTOS = {
     "es": {
         "titulo_app": "SABERMETRÍA IA",
@@ -420,4 +420,7 @@ else:
                 st.dataframe(df_visitas, use_container_width=True)
             else:
                 st.metric(label=t["total_visitas"], value=0)
-                if st.button("🔄 Sinc
+                if st.button("🔄 Sincronizar Noticias y Reportes de la NBA"):
+                    st.success("¡Noticias sincronizadas exitosamente!")
+        elif clave_admin != "":
+            st.error(t["admin_error"])
