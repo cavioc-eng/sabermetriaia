@@ -160,10 +160,10 @@ def cargar_noticias():
     if os.path.exists(noticias_path):
         df = pd.read_csv(noticias_path)
         return (
-            df.iloc[0]["matutina_es"], 
-            df.iloc[0]["vespertina_es"],
-            df.iloc[0]["matutina_en"],
-            df.iloc[0]["vespertina_en"]
+            str(df.iloc[0]["matutina_es"]), 
+            str(df.iloc[0]["vespertina_es"]),
+            str(df.iloc[0]["matutina_en"]),
+            str(df.iloc[0]["vespertina_en"])
         )
     else:
         def_mat_es = "• Balance de Eficiencia Ofensiva: Las primeras prácticas muestran un incremento en triples.\n• Impacto en la Pintura: Equipos con mayor diferencial de rebotes dominan."
@@ -175,18 +175,6 @@ def cargar_noticias():
 def guardar_noticias(mat_es, vesp_es, mat_en, vesp_en):
     df = pd.DataFrame([[mat_es, vesp_es, mat_en, vesp_en]], columns=["matutina_es", "vespertina_es", "matutina_en", "vespertina_en"])
     df.to_csv(noticias_path, index=False)
-
-# Función mejorada para formatear automáticamente textos pegados (divide por números o viñetas)
-def formatear_como_viñetas(texto):
-    if not texto:
-        return ""
-    
-    # Reemplazamos números pegados como "1. ", "2. ", "3. " por saltos de línea con viñetas para que separen bien las secciones
-    import re
-    texto_limpio = re.sub(r'(\d+\.\s*)', r'\n\n• ', texto)
-    
-    # Si ya contiene viñetas o guiones, aseguramos espaciado correcto
-    return texto_limpio
 
 # Selector de Idioma
 idioma = st.sidebar.selectbox("🌐 Idioma / Language", ["Español", "English"])
@@ -343,162 +331,3 @@ else:
         st.write("Bienvenido al centro informativo oficial de Sabermetría IA. Aquí encontrarás la doble actualización diaria." if lang == "es" else "Welcome to Sabermetria AI's official news center. Here you will find the double daily update.")
         
         mat_es, vesp_es, mat_en, vesp_en = cargar_noticias()
-        
-        matutina_texto = mat_es if lang == "es" else mat_en
-        vespertina_texto = vesp_es if lang == "es" else vesp_en
-
-        tab_mat = "🌅 Actualización Matutina (Cierre Previo)" if lang == "es" else "🌅 Morning Update (Previous Close)"
-        tab_vesp = "🌇 Actualización de la Tarde (5:00 p.m.)" if lang == "es" else "🌇 Evening Update (5:00 p.m.)"
-
-        tab1, tab2 = st.tabs([tab_mat, tab_vesp])
-        
-        with tab1:
-            titulo_mat = "🌅 Reporte Matutino: Radiografía y Tendencias de la Liga" if lang == "es" else "🌅 Morning Report: League Radiography & Trends"
-            st.subheader(titulo_mat)
-            st.markdown(formatear_como_viñetas(matutina_texto))
-        with tab2:
-            titulo_vesp = "🌇 Reporte Vespertino: Última Hora y Ajustes Previo al Salto Inicial" if lang == "es" else "🌇 Evening Report: Breaking News & Pre-Tip Adjustments"
-            st.subheader(titulo_vesp)
-            st.markdown(formatear_como_viñetas(vespertina_texto))
-
-    elif menu == t["menu_jugada"]:
-        st.header("⭐ La Jugada Estelar del Modelo" if lang == "es" else "⭐ Model's Star Play of the Day")
-        st.success("Recomendación avalada estrictamente por eficiencia matemática y métricas de posesión." if lang == "es" else "Recommendation strictly backed by mathematical efficiency and possession metrics.")
-        
-        equipo_estelar_1 = "Oklahoma City Thunder"
-        equipo_estelar_2 = "Dallas Mavericks"
-        logo_estelar_1 = LOGOS_EQUIPOS.get(equipo_estelar_1, "")
-        logo_estelar_2 = LOGOS_EQUIPOS.get(equipo_estelar_2, "")
-        
-        matchup_estelar_html = f"""
-        <div class="matchup-box">
-            <div class="team-col">
-                <img src="{logo_estelar_1}" width="100" style="margin-bottom: 10px;">
-                <h3 style="margin: 0; color: #ffffff;">{equipo_estelar_1}</h3>
-            </div>
-            <div class="vs-col">VS</div>
-            <div class="team-col">
-                <img src="{logo_estelar_2}" width="100" style="margin-bottom: 10px;">
-                <h3 style="margin: 0; color: #ffffff;">{equipo_estelar_2}</h3>
-            </div>
-        </div>
-        """
-        st.markdown(matchup_estelar_html, unsafe_allow_html=True)
-        
-        st.markdown("### 📊 Fundamento Estadístico y Razonamiento del Modelo" if lang == "es" else "### 📊 Statistical Foundation & Model Reasoning")
-        if lang == "es":
-            st.markdown("""
-            * **Selección Recomendada:** Oklahoma City Thunder - Spread / Altas (Over)
-            * **Nivel de Confianza del Modelo:** 88.4%
-            * **Por qué elegimos este encuentro:** Nuestro algoritmo de eficiencia neta detecta una superioridad de +4.2 puntos en posesiones de media cancha.
-            """)
-        else:
-            st.markdown("""
-            * **Recommended Selection:** Oklahoma City Thunder - Spread / Over
-            * **Model Confidence Level:** 88.4%
-            * **Why we chose this matchup:** Our net efficiency algorithm detects a +4.2 point superiority in half-court possessions.
-            """)
-
-    elif menu == t["menu_diccionario"]:
-        st.header("📖 Diccionario Sabermétrico Educativo (Básico a Avanzado)" if lang == "es" else "📖 Educational Sabermetric Dictionary (Basic to Advanced)")
-        st.write("Guía completa de referencia para comprender desde los fundamentos tradicionales hasta las métricas de eficiencia más avanzadas:" if lang == "es" else "Complete reference guide to understand everything from traditional fundamentals to advanced efficiency metrics:")
-        
-        if lang == "es":
-            st.markdown("""
-            ### 🟢 Indicadores Básicos y Tradicionales (Box Score)
-            * **PTS (Points / Puntos):** Total de puntos anotados por un jugador o equipo a través de tiros libres, dobles y triples.
-            * **REB (Rebounds / Rebotes):** Balones recuperados tras un lanzamiento fallido (se dividen en Ofensivos y Defensivos).
-            * **AST (Assists / Asistencias):** Pases que conducen directamente a una canasta anotada por un compañero.
-            * **STL (Steals / Recuperaciones):** Balones arrebatados al adversario cortando líneas de pase o robando el balón directamente.
-            * **BLK (Blocks / Tapones):** Lanzamientos rivales bloqueados de forma legal en el aire antes de que tomen trayectoria descendente hacia el aro.
-            * **TOV (Turnovers / Pérdidas):** Balones entregados al rival por errores no forzados, faltas ofensivas o malas entregas.
-            * **MIN (Minutes / Minutos):** Tiempo total que un jugador permanece disputando el encuentro en la duela.
-
-            ### 🟡 Indicadores de Eficiencia Estándar
-            * **FG% (Field Goal Percentage / Porcentaje de Campo):** Relación entre los tiros de campo encestados y los intentados.
-            * **3P% (Three-Point Percentage / Porcentaje de Triples):** Eficacia en lanzamientos de larga distancia.
-            * **FT% (Free Throw Percentage / Porcentaje de Tiros Libres):** Precisión desde la línea de castigo.
-            * **Fouls (FALTAS):** Infracciones personales cometidas que otorgan tiros libres al rival o acumulan penalización de equipo.
-
-            ### 🔴 Indicadores Avanzados y de Profundidad (Sabermetría IA)
-            * **Pace (Ritmo):** Cantidad estimada de posesiones que un equipo disputa por cada 48 minutos de juego. Mide la velocidad del encuentro.
-            * **True Shooting Percentage - TS% (Tiro Verdadero):** Eficiencia ofensiva global que pondera de forma exacta dobles, triples y tiros libres.
-            * **Effective Field Goal Percentage - eFG% (Tiro de Campo Efectivo):** Mide la eficacia de campo otorgando un valor adicional del 50% a los triples encestados.
-            * **Net Rating (Rating Neto):** Diferencia entre los puntos anotados y permitidos por cada 100 posesiones. Es el indicador definitivo de superioridad.
-            * **Usage Rate - USG% (Tasa de Uso):** Estima el porcentaje de jugadas ofensivas que concluyen un jugador (con lanzamiento, falta recibida o pérdida) mientras está en cancha.
-            * **Player Efficiency Rating - PER:** Índice global de productividad por minuto creado por John Hollinger, ajustado al ritmo de juego del equipo.
-            * **Box Plus/Minus - BPM:** Estimación de los puntos por 100 posesiones que un jugador aporta en comparación con un jugador promedio de la liga.
-            """)
-        else:
-            st.markdown("""
-            ### 🟢 Basic & Traditional Indicators (Box Score)
-            * **PTS (Points):** Total points scored by a player or team through free throws, two-pointers, and three-pointers.
-            * **REB (Rebounds):** Basketballs recovered after a missed shot (split into Offensive and Defensive).
-            * **AST (Assists):** Passes that directly lead to a teammate's field goal.
-            * **STL (Steals):** Balls taken away from the opponent by intercepting passes or stripping the ball.
-            * **BLK (Blocks):** Legal deflections of opponent shots in midair before descending toward the rim.
-            * **TOV (Turnovers):** Possessions lost due to unforced errors, offensive fouls, or bad passes.
-            * **MIN (Minutes):** Total time a player spends on the court during a game.
-
-            ### 🟡 Standard Efficiency Indicators
-            * **FG% (Field Goal Percentage):** Ratio of successful field goals made versus attempted.
-            * **3P% (Three-Point Percentage):** Shooting accuracy from beyond the arc.
-            * **FT% (Free Throw Percentage):** Accuracy from the charity stripe.
-            * **Fouls:** Personal infractions committed leading to free throws or team penalty.
-
-            ### 🔴 Advanced & Deep Analytics (Sabermetria AI)
-            * **Pace:** Estimated number of possessions a team plays per 48 minutes. Measures game speed.
-            * **True Shooting Percentage - TS%:** Comprehensive scoring efficiency weighting twos, threes, and free throws.
-            * **Effective Field Goal Percentage - eFG%:** Field goal accuracy giving 50% extra value to three-pointers.
-            * **Net Rating:** Point differential per 100 possessions. The ultimate team superiority metric.
-            * **Usage Rate - USG%:** Estimate of team plays used by a player while on the floor.
-            * **Player Efficiency Rating - PER:** Per-minute productivity rating created by John Hollinger, adjusted for team pace.
-            * **Box Plus/Minus - BPM:** Box-score estimate of points per 100 possessions a player contributes above a league-average player.
-            """)
-
-    elif menu == t["menu_admin"]:
-        st.header(t["admin_titulo"])
-        st.write(t["admin_desc"])
-        
-        clave_admin = st.text_input(t["admin_clave"], type="password")
-        
-        if clave_admin == "sabermetria2026":
-            st.success(t["admin_exito"])
-            
-            if os.path.exists(db_usuarios_path):
-                df_visitas = pd.read_csv(db_usuarios_path)
-                st.metric(label=t["total_visitas"], value=len(df_visitas))
-                
-                hist_acc = "Historial de Accesos al Portal" if lang == "es" else "Portal Access History"
-                st.markdown(f"### {hist_acc}")
-                st.dataframe(df_visitas, use_container_width=True)
-            else:
-                st.metric(label=t["total_visitas"], value=0)
-                st.info("Aún no hay registros de visitas." if lang == "es" else "No visit records yet.")
-
-            st.markdown("---")
-            
-            titulo_editor = "📰 Editor y Publicador de Noticias Bilingüe (Español / Inglés)" if lang == "es" else "📰 Bilingual News Editor & Publisher (Spanish / English)"
-            st.subheader(titulo_editor)
-            st.write("Actualiza los reportes tanto en español como en inglés para que la app se adapte al idioma que elija el usuario." if lang == "es" else "Update reports in both Spanish and English so the app adapts to the user's selected language.")
-            
-            mat_es_act, vesp_es_act, mat_en_act, vesp_en_act = cargar_noticias()
-            
-            with st.form("form_noticias_bilingue"):
-                st.markdown("#### 🇪🇸 Versión en Español")
-                nueva_mat_es = st.text_area("Edición Matutina (Español):", value=mat_es_act, height=130)
-                nueva_vesp_es = st.text_area("Edición Vespertina (Español):", value=vesp_es_act, height=130)
-                
-                st.markdown("#### 🇺🇸 Versión en Inglés (English Version)")
-                nueva_mat_en = st.text_area("Morning Edition (English):", value=mat_en_act, height=130)
-                nueva_vesp_en = st.text_area("Evening Edition (English):", value=vesp_en_act, height=130)
-                
-                btn_guardar = st.form_submit_button("💾 Guardar y Publicar Noticias Bilingües" if lang == "es" else "💾 Save and Publish Bilingual News")
-                
-                if btn_guardar:
-                    guardar_noticias(nueva_mat_es, nueva_vesp_es, nueva_mat_en, nueva_vesp_en)
-                    st.success("¡Noticias bilingües guardadas y publicadas con éxito!" if lang == "es" else "Bilingual news successfully saved and published!")
-                    st.rerun()
-
-        elif clave_admin != "":
-            st.error(t["admin_error"])
