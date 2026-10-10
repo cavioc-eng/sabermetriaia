@@ -1,56 +1,35 @@
 import streamlit as st
 import pandas as pd
-from nba_api.stats.endpoints import leaguegamelog
 
 # Configuración de la página
 st.set_page_config(page_title="Sabermetría IA - Pretemporada NBA", page_icon="🏀", layout="wide")
 
-@st.cache_data(ttl=3600)
-def cargar_pretemporada_nba(season="2026-27"):
+@st.cache_data
+def cargar_pretemporada_local():
     try:
-        # Aumentamos el timeout a 60 segundos para evitar cortes con el servidor de la NBA
-        game_log = leaguegamelog.LeagueGameLog(
-            season=season, 
-            season_type_all_star="Pre Season",
-            timeout=60
-        )
-        df = game_log.get_data_frames()[0]
-        
-        if df.empty:
-            return None
-
+        # Lee el archivo CSV sincronizado en el repositorio de GitHub
+        df = pd.read_csv("pretemporada_nba_2026_limpio.csv")
         df['GAME_DATE'] = pd.to_datetime(df['GAME_DATE'])
-        df['PTS'] = pd.to_numeric(df['PTS'])
-        
-        columnas_clave = [
-            'GAME_ID', 'GAME_DATE', 'TEAM_ABBREVIATION', 
-            'MATCHUP', 'WL', 'PTS', 'FGM', 'FGA', 'FG_PCT', 
-            'FG3M', 'FG3A', 'FG3_PCT', 'FTM', 'FTA', 'FT_PCT', 
-            'AST', 'REB', 'TOV', 'PLUS_MINUS'
-        ]
-        
-        df_limpio = df[columnas_clave].copy()
-        df_limpio = df_limpio.sort_values('GAME_DATE', ascending=False)
-        return df_limpio
-        
+        return df
     except Exception as e:
-        st.error(f"Error de conexión con la API de la NBA: {e}")
+        st.error(f"No se pudo cargar el archivo de datos: {e}")
         return None
 
 # Panel de Administrador en la barra lateral
 with st.sidebar:
     st.subheader("⚙️ Panel de Administrador")
-    if st.button("🔄 Actualizar Datos de Pretemporada"):
+    st.info("💡 **Estado:** Conectado a la base de datos local optimizada para la nube.")
+    if st.button("🔄 Recargar Datos"):
         st.cache_data.clear()
-        st.success("¡Caché limpiada con éxito!")
+        st.success("¡Caché actualizada!")
         st.rerun()
 
 # Interfaz principal
 st.title("🏀 Sabermetría IA - Monitoreo de Pretemporada")
 st.write("Seguimiento automatizado y análisis de eficiencia en tiempo real para la pretemporada de la NBA.")
 
-with st.spinner("Sincronizando registros de pretemporada (esto puede tardar unos segundos)..."):
-    df_stats = cargar_pretemporada_nba()
+# Carga de datos
+df_stats = cargar_pretemporada_local()
 
 if df_stats is not None and not df_stats.empty:
     st.metric("Total de Registros Analizados", len(df_stats))
@@ -67,4 +46,4 @@ if df_stats is not None and not df_stats.empty:
     st.subheader("Últimos Partidos Registrados")
     st.dataframe(df_mostrar[['GAME_DATE', 'TEAM_ABBREVIATION', 'MATCHUP', 'WL', 'PTS', 'PLUS_MINUS']], use_container_width=True)
 else:
-    st.warning("No se pudieron cargar los registros en este intento. Haz clic en el botón 'Actualizar Datos de Pretemporada' en la barra lateral para volver a intentar.")
+    st.warning("Asegúrate de haber subido el archivo 'pretemporada_nba_2026_limpio.csv' al repositorio principal de GitHub.")
