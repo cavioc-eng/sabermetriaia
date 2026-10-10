@@ -8,9 +8,11 @@ st.set_page_config(page_title="Sabermetría IA - Pretemporada NBA", page_icon="�
 @st.cache_data(ttl=3600)
 def cargar_pretemporada_nba(season="2026-27"):
     try:
+        # Aumentamos el timeout a 60 segundos para evitar cortes con el servidor de la NBA
         game_log = leaguegamelog.LeagueGameLog(
             season=season, 
-            season_type_all_star="Pre Season"
+            season_type_all_star="Pre Season",
+            timeout=60
         )
         df = game_log.get_data_frames()[0]
         
@@ -32,7 +34,7 @@ def cargar_pretemporada_nba(season="2026-27"):
         return df_limpio
         
     except Exception as e:
-        st.error(f"Error al conectar con la API de la NBA: {e}")
+        st.error(f"Error de conexión con la API de la NBA: {e}")
         return None
 
 # Panel de Administrador en la barra lateral
@@ -47,13 +49,13 @@ with st.sidebar:
 st.title("🏀 Sabermetría IA - Monitoreo de Pretemporada")
 st.write("Seguimiento automatizado y análisis de eficiencia en tiempo real para la pretemporada de la NBA.")
 
-with st.spinner("Sincronizando registros de pretemporada..."):
+with st.spinner("Sincronizando registros de pretemporada (esto puede tardar unos segundos)..."):
     df_stats = cargar_pretemporada_nba()
 
 if df_stats is not None and not df_stats.empty:
     st.metric("Total de Registros Analizados", len(df_stats))
     
-    # Filtro interactivo por franquicia
+    # Filtro interactivo por equipo
     equipos = sorted(df_stats['TEAM_ABBREVIATION'].unique())
     equipo_seleccionado = st.selectbox("Filtrar por Equipo:", ["Todos los equipos"] + equipos)
     
@@ -65,4 +67,4 @@ if df_stats is not None and not df_stats.empty:
     st.subheader("Últimos Partidos Registrados")
     st.dataframe(df_mostrar[['GAME_DATE', 'TEAM_ABBREVIATION', 'MATCHUP', 'WL', 'PTS', 'PLUS_MINUS']], use_container_width=True)
 else:
-    st.warning("No se encontraron registros de pretemporada disponibles en este momento.")
+    st.warning("No se pudieron cargar los registros en este intento. Haz clic en el botón 'Actualizar Datos de Pretemporada' en la barra lateral para volver a intentar.")
