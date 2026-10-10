@@ -11,7 +11,7 @@ from reportlab.lib import colors
 current_dir = os.path.dirname(os.path.abspath(__file__))
 logo_path = os.path.join(current_dir, "logo.jpeg")
 db_usuarios_path = os.path.join(current_dir, "registros_tiktok.csv")
-noticias_path = os.path.join(current_dir, "noticias_bilingue.csv")
+noticias_path = os.path.join(current_dir, "noticias_bilingue_v2.csv")
 
 # Configuración de la página
 st.set_page_config(
@@ -158,19 +158,25 @@ def registrar_visita():
 
 def cargar_noticias():
     if os.path.exists(noticias_path):
-        df = pd.read_csv(noticias_path)
-        return (
-            str(df.iloc[0]["matutina_es"]), 
-            str(df.iloc[0]["vespertina_es"]),
-            str(df.iloc[0]["matutina_en"]),
-            str(df.iloc[0]["vespertina_en"])
-        )
-    else:
-        def_mat_es = "• Balance de Eficiencia Ofensiva: Las primeras prácticas muestran un incremento en triples.\n• Impacto en la Pintura: Equipos con mayor diferencial de rebotes dominan."
-        def_vesp_es = "• Reporte de Lesiones: Monitoreo en tiempo real de jugadores.\n• Líneas de Apuestas: Análisis de puntos totales."
-        def_mat_en = "• Offensive Efficiency Balance: Early practices show an increase in three-pointers.\n• Paint Impact: Teams with higher rebound differentials dominate."
-        def_vesp_en = "• Injury Report: Real-time player monitoring.\n• Betting Lines: Total points analysis."
-        return def_mat_es, def_vesp_es, def_mat_en, def_vesp_en
+        try:
+            df = pd.read_csv(noticias_path)
+            return (
+                str(df.iloc[0]["matutina_es"]), 
+                str(df.iloc[0]["vespertina_es"]),
+                str(df.iloc[0]["matutina_en"]),
+                str(df.iloc[0]["vespertina_en"])
+            )
+        except Exception:
+            pass
+    
+    # Valores por defecto si no existe o hay error
+    def_mat_es = "• **Balance de Eficiencia Ofensiva:** Las primeras prácticas muestran un incremento en triples.\n• **Impacto en la Pintura:** Equipos con mayor diferencial de rebotes dominan."
+    def_vesp_es = "• **Reporte de Lesiones:** Monitoreo en tiempo real de jugadores.\n• **Líneas de Apuestas:** Análisis de puntos totales."
+    def_mat_en = "• **Offensive Efficiency Balance:** Early practices show an increase in three-pointers.\n• **Paint Impact:** Teams with higher rebound differentials dominate."
+    def_vesp_en = "• **Injury Report:** Real-time player monitoring.\n• **Betting Lines:** Total points analysis."
+    
+    guardar_noticias(def_mat_es, def_vesp_es, def_mat_en, def_vesp_en)
+    return def_mat_es, def_vesp_es, def_mat_en, def_vesp_en
 
 def guardar_noticias(mat_es, vesp_es, mat_en, vesp_en):
     df = pd.DataFrame([[mat_es, vesp_es, mat_en, vesp_en]], columns=["matutina_es", "vespertina_es", "matutina_en", "vespertina_en"])
@@ -331,3 +337,9 @@ else:
         st.write("Bienvenido al centro informativo oficial de Sabermetría IA. Aquí encontrarás la doble actualización diaria." if lang == "es" else "Welcome to Sabermetria AI's official news center. Here you will find the double daily update.")
         
         mat_es, vesp_es, mat_en, vesp_en = cargar_noticias()
+        
+        matutina_texto = mat_es if lang == "es" else mat_en
+        vespertina_texto = vesp_es if lang == "es" else vesp_en
+
+        tab_mat = "🌅 Actualización Matutina (Cierre Previo)" if lang == "es" else "🌅 Morning Update (Previous Close)"
+        tab_vesp = "🌇 Actualización de la Tarde (5:00 p.m.)" if
