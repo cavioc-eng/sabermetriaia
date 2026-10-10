@@ -1,10 +1,7 @@
 streamlit
-
 pandas
-
 numpy
-
 plotly
-
-matplotlib 
+matplotlib
 reportlab
+nba_api
