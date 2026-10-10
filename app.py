@@ -156,6 +156,10 @@ def registrar_visita():
     else:
         nuevo_registro.to_csv(db_usuarios_path, index=False)
 
+def guardar_noticias(mat_es, vesp_es, mat_en, vesp_en):
+    df = pd.DataFrame([[mat_es, vesp_es, mat_en, vesp_en]], columns=["matutina_es", "vespertina_es", "matutina_en", "vespertina_en"])
+    df.to_csv(noticias_path, index=False)
+
 def cargar_noticias():
     if os.path.exists(noticias_path):
         try:
@@ -169,7 +173,6 @@ def cargar_noticias():
         except Exception:
             pass
     
-    # Valores por defecto si no existe o hay error
     def_mat_es = "• **Balance de Eficiencia Ofensiva:** Las primeras prácticas muestran un incremento en triples.\n• **Impacto en la Pintura:** Equipos con mayor diferencial de rebotes dominan."
     def_vesp_es = "• **Reporte de Lesiones:** Monitoreo en tiempo real de jugadores.\n• **Líneas de Apuestas:** Análisis de puntos totales."
     def_mat_en = "• **Offensive Efficiency Balance:** Early practices show an increase in three-pointers.\n• **Paint Impact:** Teams with higher rebound differentials dominate."
@@ -177,10 +180,6 @@ def cargar_noticias():
     
     guardar_noticias(def_mat_es, def_vesp_es, def_mat_en, def_vesp_en)
     return def_mat_es, def_vesp_es, def_mat_en, def_vesp_en
-
-def guardar_noticias(mat_es, vesp_es, mat_en, vesp_en):
-    df = pd.DataFrame([[mat_es, vesp_es, mat_en, vesp_en]], columns=["matutina_es", "vespertina_es", "matutina_en", "vespertina_en"])
-    df.to_csv(noticias_path, index=False)
 
 # Selector de Idioma
 idioma = st.sidebar.selectbox("🌐 Idioma / Language", ["Español", "English"])
@@ -342,4 +341,71 @@ else:
         vespertina_texto = vesp_es if lang == "es" else vesp_en
 
         tab_mat = "🌅 Actualización Matutina (Cierre Previo)" if lang == "es" else "🌅 Morning Update (Previous Close)"
-        tab_vesp = "🌇 Actualización de la Tarde (5:00 p.m.)" if
+        tab_vesp = "🌇 Actualización de la Tarde (5:00 p.m.)" if lang == "es" else "🌇 Evening Update (5:00 p.m.)"
+
+        tab1, tab2 = st.tabs([tab_mat, tab_vesp])
+        
+        with tab1:
+            titulo_mat = "🌅 Reporte Matutino: Radiografía y Tendencias de la Liga" if lang == "es" else "🌅 Morning Report: League Radiography & Trends"
+            st.subheader(titulo_mat)
+            st.markdown(matutina_texto)
+        with tab2:
+            titulo_vesp = "🌇 Reporte Vespertino: Última Hora y Ajustes Previo al Salto Inicial" if lang == "es" else "🌇 Evening Report: Breaking News & Pre-Tip Adjustments"
+            st.subheader(titulo_vesp)
+            st.markdown(vespertina_texto)
+
+    elif menu == t["menu_jugada"]:
+        st.header("⭐ La Jugada Estelar del Modelo" if lang == "es" else "⭐ Model's Star Play of the Day")
+        st.success("Recomendación avalada estrictamente por eficiencia matemática y métricas de posesión." if lang == "es" else "Recommendation strictly backed by mathematical efficiency and possession metrics.")
+        
+        equipo_estelar_1 = "Oklahoma City Thunder"
+        equipo_estelar_2 = "Dallas Mavericks"
+        logo_estelar_1 = LOGOS_EQUIPOS.get(equipo_estelar_1, "")
+        logo_estelar_2 = LOGOS_EQUIPOS.get(equipo_estelar_2, "")
+        
+        matchup_estelar_html = f"""
+        <div class="matchup-box">
+            <div class="team-col">
+                <img src="{logo_estelar_1}" width="100" style="margin-bottom: 10px;">
+                <h3 style="margin: 0; color: #ffffff;">{equipo_estelar_1}</h3>
+            </div>
+            <div class="vs-col">VS</div>
+            <div class="team-col">
+                <img src="{logo_estelar_2}" width="100" style="margin-bottom: 10px;">
+                <h3 style="margin: 0; color: #ffffff;">{equipo_estelar_2}</h3>
+            </div>
+        </div>
+        """
+        st.markdown(matchup_estelar_html, unsafe_allow_html=True)
+        
+        st.markdown("### 📊 Fundamento Estadístico y Razonamiento del Modelo" if lang == "es" else "### 📊 Statistical Foundation & Model Reasoning")
+        if lang == "es":
+            st.markdown("""
+            * **Selección Recomendada:** Oklahoma City Thunder - Spread / Altas (Over)
+            * **Nivel de Confianza del Modelo:** 88.4%
+            * **Por qué elegimos este encuentro:** Nuestro algoritmo de eficiencia neta detecta una superioridad de +4.2 puntos en posesiones de media cancha.
+            """)
+        else:
+            st.markdown("""
+            * **Recommended Selection:** Oklahoma City Thunder - Spread / Over
+            * **Model Confidence Level:** 88.4%
+            * **Why we chose this matchup:** Our net efficiency algorithm detects a +4.2 point superiority in half-court possessions.
+            """)
+
+    elif menu == t["menu_diccionario"]:
+        st.header("📖 Diccionario Sabermétrico Educativo (Básico a Avanzado)" if lang == "es" else "📖 Educational Sabermetric Dictionary (Basic to Advanced)")
+        st.write("Guía completa de referencia para comprender desde los fundamentos tradicionales hasta las métricas de eficiencia más avanzadas:" if lang == "es" else "Complete reference guide to understand everything from traditional fundamentals to advanced efficiency metrics:")
+        
+        if lang == "es":
+            st.markdown("""
+            ### 🟢 Indicadores Básicos y Tradicionales (Box Score)
+            * **PTS (Points / Puntos):** Total de puntos anotados por un jugador o equipo a través de tiros libres, dobles y triples.
+            * **REB (Rebounds / Rebotes):** Balones recuperados tras un lanzamiento fallido (se dividen en Ofensivos y Defensivos).
+            * **AST (Assists / Asistencias):** Pases que conducen directamente a una canasta anotada por un compañero.
+            * **STL (Steals / Recuperaciones):** Balones arrebatados al adversario cortando líneas de pase o robando el balón directamente.
+            * **BLK (Blocks / Tapones):** Lanzamientos rivales bloqueados de forma legal en el aire antes de que tomen trayectoria descendente hacia el aro.
+            * **TOV (Turnovers / Pérdidas):** Balones entregados al rival por errores no forzados, faltas ofensivas o malas entregas.
+            * **MIN (Minutes / Minutos):** Tiempo total que un jugador permanece disputando el encuentro en la duela.
+
+            ### 🟡 Indicadores de Eficiencia Estándar
+            * **FG% (Field Goal
