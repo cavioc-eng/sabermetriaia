@@ -12,7 +12,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 logo_path = os.path.join(current_dir, "logo.jpeg")
 db_usuarios_path = os.path.join(current_dir, "registros_tiktok.csv")
 noticias_path = os.path.join(current_dir, "noticias_bilingue_v2.csv")
-cartelera_path = os.path.join(current_dir, "cartelera_diaria.csv")
+cartelera_path = os.path.join(current_dir, "cartelera_bilingue.csv")
 
 # Configuración de la página
 st.set_page_config(
@@ -39,7 +39,7 @@ TEXTOS = {
         "menu_diccionario": "Diccionario Sabermétrico",
         "menu_admin": "🔐 Panel de Administración",
         "admin_titulo": "🔐 Panel de Control y Publicación - Sabermetría IA",
-        "admin_desc": "Control estadístico de visitas, cartelera diaria y noticias bilingües.",
+        "admin_desc": "Control estadístico de visitas, cartelera bilingüe y noticias.",
         "admin_clave": "Ingresa la clave de administrador:",
         "admin_exito": "¡Acceso de administrador concedido!",
         "admin_error": "❌ Clave de administrador incorrecta.",
@@ -60,7 +60,7 @@ TEXTOS = {
         "menu_diccionario": "Sabermetric Dictionary",
         "menu_admin": "🔐 Admin Panel",
         "admin_titulo": "🔐 Control & Publishing Panel - Sabermetria AI",
-        "admin_desc": "Visit statistical control, daily schedule, and bilingual news editor.",
+        "admin_desc": "Visit statistical control, bilingual schedule, and news editor.",
         "admin_clave": "Enter admin password:",
         "admin_exito": "Admin access granted!",
         "admin_error": "❌ Incorrect admin password.",
@@ -116,12 +116,15 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 LOGOS_EQUIPOS = {
+    "Orlando Magic": "https://cdn.nba.com/logos/nba/1610612753/global/L/logo.svg",
+    "Cleveland Cavaliers": "https://cdn.nba.com/logos/nba/1610612739/global/L/logo.svg",
+    "Milwaukee Bucks": "https://cdn.nba.com/logos/nba/1610612749/global/L/logo.svg",
+    "Charlotte Hornets": "https://cdn.nba.com/logos/nba/1610612766/global/L/logo.svg",
+    "Chicago Bulls": "https://cdn.nba.com/logos/nba/1610612741/global/L/logo.svg",
+    "Denver Nuggets": "https://cdn.nba.com/logos/nba/1610612743/global/L/logo.svg",
     "Dallas Mavericks": "https://cdn.nba.com/logos/nba/1610612742/global/L/logo.svg",
     "Oklahoma City Thunder": "https://cdn.nba.com/logos/nba/1610612760/global/L/logo.svg",
     "Philadelphia 76ers": "https://cdn.nba.com/logos/nba/1610612755/global/L/logo.svg",
-    "Cleveland Cavaliers": "https://cdn.nba.com/logos/nba/1610612739/global/L/logo.svg",
-    "Minnesota Timberwolves": "https://cdn.nba.com/logos/nba/1610612750/global/L/logo.svg",
-    "Memphis Grizzlies": "https://cdn.nba.com/logos/nba/1610612763/global/L/logo.svg",
     "Los Angeles Lakers": "https://cdn.nba.com/logos/nba/1610612747/global/L/logo.svg",
     "Golden State Warriors": "https://cdn.nba.com/logos/nba/1610612744/global/L/logo.svg"
 }
@@ -191,33 +194,32 @@ def cargar_cartelera():
         except Exception:
             pass
     
-    # Cartelera inicial por defecto (Pretemporada / Inicio)
     data_def = [
         {
-            "equipo1": "Oklahoma City Thunder",
-            "equipo2": "Dallas Mavericks",
-            "ganador": "Oklahoma City Thunder (+4.2 pts)",
-            "total_puntos": "230.5 (Altas / Over)",
-            "analisis_es": "El modelo de eficiencia neta proyecta una ventaja clave en el ritmo de posesiones (Pace). Oklahoma City registra un índice defensivo en el perímetro que limita el acierto rival en situaciones de pick-and-roll.",
-            "analisis_en": "The net efficiency model projects a key advantage in possession pace. Oklahoma City registers a perimeter defensive rating that limits opponent shooting in pick-and-roll situations.",
+            "equipo1": "Orlando Magic",
+            "equipo2": "Cleveland Cavaliers",
+            "ganador": "Cleveland Cavaliers (-3.5 pts)",
+            "total_puntos": "218.5 (Bajas / Under)",
+            "analisis_es": "El modelo de eficiencia defensiva en la pintura de Cleveland neutraliza las penetraciones iniciales de Orlando. El ritmo proyectado se desacelera.",
+            "analisis_en": "Cleveland's interior defensive efficiency model neutralizes Orlando's early drives. The projected pace slows down.",
             "es_jugada_fija": True
         },
         {
-            "equipo1": "Philadelphia 76ers",
-            "equipo2": "Cleveland Cavaliers",
-            "ganador": "Philadelphia 76ers (-3.1 pts)",
-            "total_puntos": "224.0 (Bajas / Under)",
-            "analisis_es": "La rotación defensiva interior de Philadelphia neutraliza el eFG% del rival bajo los tableros. Alta eficiencia en transición.",
-            "analisis_en": "Philadelphia's interior defensive rotation neutralizes opponent eFG% under the boards. High transition efficiency.",
+            "equipo1": "Milwaukee Bucks",
+            "equipo2": "Charlotte Hornets",
+            "ganador": "Milwaukee Bucks (-5.0 pts)",
+            "total_puntos": "227.0 (Altas / Over)",
+            "analisis_es": "Superioridad neta en el True Shooting Percentage (TS%) de los Bucks, aprovechando las rotaciones defensivas tempranas.",
+            "analisis_en": "Net superiority in the Bucks' True Shooting Percentage (TS%), taking advantage of early defensive rotations.",
             "es_jugada_fija": False
         },
         {
-            "equipo1": "Los Angeles Lakers",
-            "equipo2": "Golden State Warriors",
-            "ganador": "Golden State Warriors (+2.5 pts)",
-            "total_puntos": "238.5 (Altas / Over)",
-            "analisis_es": "Duelo de alto ritmo (Pace elevado). El TS% exterior de Golden State marca la diferencia en el clutch del encuentro.",
-            "analisis_en": "High-pace matchup. GoldenState's perimeter TS% makes the difference in the clutch.",
+            "equipo1": "Chicago Bulls",
+            "equipo2": "Denver Nuggets",
+            "ganador": "Denver Nuggets (-6.2 pts)",
+            "total_puntos": "231.5 (Altas / Over)",
+            "analisis_es": "Denver mantiene una tasa de asistencias (AST) muy superior en el arranque, elevando su eFG% en tiros de media distancia.",
+            "analisis_en": "Denver maintains a much higher assist rate (AST) at the start, raising their eFG% on mid-range shots.",
             "es_jugada_fija": False
         }
     ]
@@ -388,7 +390,6 @@ else:
         st.header("⭐ La Jugada Estelar del Modelo" if lang == "es" else "⭐ Model's Star Play of the Day")
         st.success("Recomendación avalada estrictamente por eficiencia matemática y métricas de posesión." if lang == "es" else "Recommendation strictly backed by mathematical efficiency and possession metrics.")
         
-        # Buscamos el juego marcado como jugada fija (o el primero por defecto)
         juegos_fijos = df_cartelera[df_cartelera['es_jugada_fija'] == True]
         if not juegos_fijos.empty:
             juego_estelar = juegos_fijos.iloc[0]
@@ -416,17 +417,19 @@ else:
         st.markdown(matchup_estelar_html, unsafe_allow_html=True)
         
         st.markdown("### 📊 Fundamento Estadístico y Razonamiento del Modelo" if lang == "es" else "### 📊 Statistical Foundation & Model Reasoning")
+        analisis_jugada = juego_estelar["analisis_es"] if lang == "es" else juego_estelar["analisis_en"]
+        
         if lang == "es":
             st.markdown(f"""
             * **Selección Recomendada:** {juego_estelar["ganador"]} | Totales: {juego_estelar["total_puntos"]}
             * **Nivel de Confianza del Modelo:** 88.4%
-            * **Por qué elegimos este encuentro:** {juego_estelar["analisis_es"]}
+            * **Por qué elegimos este encuentro:** {analisis_jugada}
             """)
         else:
             st.markdown(f"""
             * **Recommended Selection:** {juego_estelar["ganador"]} | Totals: {juego_estelar["total_puntos"]}
             * **Model Confidence Level:** 88.4%
-            * **Why we chose this matchup:** {juego_estelar["analisis_en"]}
+            * **Why we chose this matchup:** {analisis_jugada}
             """)
 
     elif menu == t["menu_diccionario"]:
@@ -498,15 +501,15 @@ else:
 
             st.markdown("---")
             
-            # --- GESTOR DE CARTELERA DIARIA ---
-            st.subheader("📅 Gestor de Cartelera Diaria y Partidos")
-            st.write("Edita, añade o actualiza los encuentros de la jornada, sus proyecciones y marca cuál será la 'Jugada Fija del Día'.")
+            # --- GESTOR DE CARTELERA BILINGÜE ---
+            st.subheader("📅 Gestor de Cartelera Bilingüe (Español / Inglés)")
+            st.write("Edita los partidos, las proyecciones y los análisis tanto en **español** (`analisis_es`) como en **inglés** (`analisis_en`). Marca `True` en `es_jugada_fija` para el partido estrella del día.")
             
             edited_df = st.data_editor(df_cartelera, num_rows="dynamic", use_container_width=True)
             
-            if st.button("💾 Guardar Cambios en la Cartelera"):
+            if st.button("💾 Guardar Cambios en la Cartelera Bilingüe"):
                 guardar_cartelera(edited_df)
-                st.success("¡Cartelera diaria actualizada con éxito!")
+                st.success("¡Cartelera bilingüe actualizada con éxito!")
                 st.rerun()
 
             st.markdown("---")
