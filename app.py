@@ -13,6 +13,7 @@ logo_path = os.path.join(current_dir, "logo.jpeg")
 db_usuarios_path = os.path.join(current_dir, "registros_tiktok.csv")
 noticias_path = os.path.join(current_dir, "noticias_bilingue_v2.csv")
 cartelera_path = os.path.join(current_dir, "cartelera_bilingue.csv")
+estadisticas_path = os.path.join(current_dir, "historial_aciertos.csv")
 
 # Configuración de la página
 st.set_page_config(
@@ -39,7 +40,7 @@ TEXTOS = {
         "menu_diccionario": "Diccionario Sabermétrico",
         "menu_admin": "🔐 Panel de Administración",
         "admin_titulo": "🔐 Panel de Control y Publicación - Sabermetría IA",
-        "admin_desc": "Control estadístico de visitas, cartelera bilingüe y noticias.",
+        "admin_desc": "Control estadístico de visitas, cartelera bilingüe, efectividad y noticias.",
         "admin_clave": "Ingresa la clave de administrador:",
         "admin_exito": "¡Acceso de administrador concedido!",
         "admin_error": "❌ Clave de administrador incorrecta.",
@@ -60,7 +61,7 @@ TEXTOS = {
         "menu_diccionario": "Sabermetric Dictionary",
         "menu_admin": "🔐 Admin Panel",
         "admin_titulo": "🔐 Control & Publishing Panel - Sabermetria AI",
-        "admin_desc": "Visit statistical control, bilingual schedule, and news editor.",
+        "admin_desc": "Visit statistical control, bilingual schedule, accuracy, and news.",
         "admin_clave": "Enter admin password:",
         "admin_exito": "Admin access granted!",
         "admin_error": "❌ Incorrect admin password.",
@@ -171,6 +172,23 @@ def registrar_visita():
     else:
         nuevo_registro.to_csv(db_usuarios_path, index=False)
 
+def cargar_estadisticas():
+    if os.path.exists(estadisticas_path):
+        try:
+            df = pd.read_csv(estadisticas_path)
+            return str(df.iloc[0]["ayer"]), str(df.iloc[0]["acumulado"])
+        except Exception:
+            pass
+    
+    def_ayer = "3 / 3 (100% de Aciertos)"
+    def_acum = "3 / 3 (100% Efectividad Global)"
+    guardar_estadisticas(def_ayer, def_acum)
+    return def_ayer, def_acum
+
+def guardar_estadisticas(ayer, acumulado):
+    df = pd.DataFrame([[ayer, acumulado]], columns=["ayer", "acumulado"])
+    df.to_csv(estadisticas_path, index=False)
+
 def cargar_noticias():
     if os.path.exists(noticias_path):
         try:
@@ -200,7 +218,6 @@ def cargar_cartelera():
     if os.path.exists(cartelera_path):
         try:
             df = pd.read_csv(cartelera_path)
-            # Asegurar columnas obligatorias si faltaban
             if "hora" not in df.columns:
                 df["hora"] = "18:30 (VE)"
             if "sede" not in df.columns:
@@ -220,28 +237,6 @@ def cargar_cartelera():
             "analisis_es": "El modelo de eficiencia neta proyecta una ventaja táctica clave para Cleveland en el control del ritmo de posesiones (Pace), limitando las transiciones rápidas de Orlando. Defensivamente, los Cavaliers despliegan una estructura en la pintura que neutraliza las penetraciones al aro, forzando tiros de media distancia con baja conversión esperada (eFG%). Asimismo, el análisis del True Shooting Percentage (TS%) histórico en pretemporada muestra una caída en ambos conjuntos durante los últimos periodos, lo que respalda con solidez matemática la proyección de puntos hacia las bajas (Under). Este nivel de control defensivo convierte a este duelo en nuestra jugada estelar de alta convicción.",
             "analisis_en": "The net efficiency model projects a key tactical advantage for Cleveland in controlling possession pace, limiting Orlando's fast breaks. Defensively, the Cavaliers deploy an interior structure that neutralizes drives to the rim, forcing lower-expected mid-range shots (eFG%). Likewise, historical preseason True Shooting Percentage (TS%) analysis shows a drop in efficiency for both squads during the final periods, solidly backing the mathematical projection toward the Under. This level of defensive control establishes this matchup as our high-conviction star play of the day.",
             "es_jugada_fija": True
-        },
-        {
-            "equipo1": "Milwaukee Bucks",
-            "equipo2": "Charlotte Hornets",
-            "hora": "19:00 (VE)",
-            "sede": "Spectrum Center (Charlotte, NC)",
-            "ganador": "Milwaukee Bucks (-5.0 pts)",
-            "total_puntos": "227.0 (Altas / Over)",
-            "analisis_es": "Las métricas de profundidad de banquillo y el diferencial de eficiencia ofensiva otorgan el favoritismo a Milwaukee. El modelo detecta que los Bucks incrementan un 4.8% su efectividad en triples liberados cuando explotan situaciones de bloqueo directo (pick-and-roll), castigando las rotaciones secundarias de Charlotte. Por su parte, el ritmo dinámico que imponen ambos equipos en la primera mitad eleva el número de posesiones totales proyectadas por encima de la media de la liga, impulsando el encuentro hacia las altas (Over). Un estudio detallado de las segundas oportunidades en los tableros inclina la balanza con claridad hacia los visitantes.",
-            "analisis_en": "Bench depth metrics and offensive efficiency differentials grant the edge to Milwaukee. The model detects that the Bucks increase their uncontested three-point accuracy by 4.8% when exploiting pick-and-roll situations, punishing Charlotte's secondary rotations. Meanwhile, the dynamic pace imposed by both squads in the first half elevates the projected total possessions above league average, driving the matchup toward the Over. A detailed study of second-chance opportunities on the boards clearly tips the balance toward the visitors.",
-            "es_jugada_fija": False
-        },
-        {
-            "equipo1": "Chicago Bulls",
-            "equipo2": "Denver Nuggets",
-            "hora": "21:00 (VE)",
-            "sede": "Ball Arena (Denver, CO)",
-            "ganador": "Denver Nuggets (-6.2 pts)",
-            "total_puntos": "231.5 (Altas / Over)",
-            "analisis_es": "Denver domina ampliamente los indicadores avanzados de circulación de balón y volumen de asistencias (AST), lo que maximiza la calidad de sus lanzamientos en la zona pintada y genera un índice superior en el Net Rating. Aunque Chicago muestra chispazos de anotación exterior a través de sus perimetrales, la estabilidad táctica de los Nuggets en el manejo del reloj de posesión reduce las pérdidas no forzadas (TOV%). El modelo proyecta un encuentro abierto, de alta fluidez ofensiva y con un caudal de puntos constante que justifica la selección de las altas (Over).",
-            "analisis_en": "Denver heavily dominates advanced ball-movement indicators and assist volume (AST), maximizing the shot quality in the paint and producing a superior Net Rating. Although Chicago shows flashes of perimeter scoring through their wing players, the Nuggets' tactical stability in managing the shot clock reduces unforced turnovers (TOV%). The model projects an open, high-flowing offensive contest with a steady stream of points that justifies selecting the Over.",
-            "es_jugada_fija": False
         }
     ]
     df_def = pd.DataFrame(data_def)
@@ -318,14 +313,23 @@ else:
 
     fecha_hoy = datetime.now().strftime("%d de %B de %Y")
     df_cartelera = cargar_cartelera()
+    ayer_str, acumulado_str = cargar_estadisticas()
 
     # --- BANNER DE EFECTIVIDAD DEL MODELO ---
-    st.markdown("""
-    <div class="stats-banner">
-        <h4 style="color: #00FF66; margin: 0;">🎯 Rendimiento Histórico del Modelo Sabermétrico</h4>
-        <p style="font-size: 15px; margin: 5px 0 0 0;">Efectividad en Jugadas Fijas: <b>3 / 3 (100% de Aciertos)</b></p>
-    </div>
-    """, unsafe_allow_html=True)
+    if lang == "es":
+        st.markdown(f"""
+        <div class="stats-banner">
+            <h4 style="color: #00FF66; margin: 0;">🎯 Rendimiento Histórico del Modelo Sabermétrico</h4>
+            <p style="font-size: 15px; margin: 5px 0 0 0;">Aciertos de Ayer: <b>{ayer_str}</b> &nbsp;|&nbsp; Acumulado: <b>{acumulado_str}</b></p>
+        </div>
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown(f"""
+        <div class="stats-banner">
+            <h4 style="color: #00FF66; margin: 0;">🎯 Sabermetric Model Historical Performance</h4>
+            <p style="font-size: 15px; margin: 5px 0 0 0;">Yesterday's Hits: <b>{ayer_str}</b> &nbsp;|&nbsp; Cumulative: <b>{acumulado_str}</b></p>
+        </div>
+        """, unsafe_allow_html=True)
 
     if menu == t["menu_cartelera"]:
         titulo_cartelera = "📅 Cartelera de Partidos - Análisis Profundo" if lang == "es" else "📅 Game Schedule - Deep Analysis"
@@ -508,10 +512,4 @@ else:
                 "- **STL (Steals):** Balls taken away from the opponent.\n"
                 "- **BLK (Blocks):** Legal deflections of opponent shots.\n"
                 "- **TOV (Turnovers):** Possessions lost due to unforced errors.\n"
-                "- **MIN (Minutes):** Total time a player spends on the court.\n\n"
-                "### 🟡 Standard Efficiency Indicators\n"
-                "- **FG% (Field Goal Percentage):** Ratio of successful field goals.\n"
-                "- **3P% (Three-Point Percentage):** Shooting accuracy from beyond the arc.\n"
-                "- **FT% (Free Throw Percentage):** Accuracy from the charity stripe.\n\n"
-                "### 🔴 Advanced & Deep Analytics (Sabermetria AI)\n"
-                "- **Pace:** Estimated number of possessions per 48 minutes
+                "- **MIN (Minutes):
