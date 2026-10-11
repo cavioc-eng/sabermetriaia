@@ -12,6 +12,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 logo_path = os.path.join(current_dir, "logo.jpeg")
 db_usuarios_path = os.path.join(current_dir, "registros_tiktok.csv")
 noticias_path = os.path.join(current_dir, "noticias_bilingue_v2.csv")
+cartelera_path = os.path.join(current_dir, "cartelera_diaria.csv")
 
 # Configuración de la página
 st.set_page_config(
@@ -38,7 +39,7 @@ TEXTOS = {
         "menu_diccionario": "Diccionario Sabermétrico",
         "menu_admin": "🔐 Panel de Administración",
         "admin_titulo": "🔐 Panel de Control y Publicación - Sabermetría IA",
-        "admin_desc": "Control estadístico de visitas y editor de noticias bilingüe.",
+        "admin_desc": "Control estadístico de visitas, cartelera diaria y noticias bilingües.",
         "admin_clave": "Ingresa la clave de administrador:",
         "admin_exito": "¡Acceso de administrador concedido!",
         "admin_error": "❌ Clave de administrador incorrecta.",
@@ -59,7 +60,7 @@ TEXTOS = {
         "menu_diccionario": "Sabermetric Dictionary",
         "menu_admin": "🔐 Admin Panel",
         "admin_titulo": "🔐 Control & Publishing Panel - Sabermetria AI",
-        "admin_desc": "Visit statistical control and bilingual news editor.",
+        "admin_desc": "Visit statistical control, daily schedule, and bilingual news editor.",
         "admin_clave": "Enter admin password:",
         "admin_exito": "Admin access granted!",
         "admin_error": "❌ Incorrect admin password.",
@@ -120,7 +121,9 @@ LOGOS_EQUIPOS = {
     "Philadelphia 76ers": "https://cdn.nba.com/logos/nba/1610612755/global/L/logo.svg",
     "Cleveland Cavaliers": "https://cdn.nba.com/logos/nba/1610612739/global/L/logo.svg",
     "Minnesota Timberwolves": "https://cdn.nba.com/logos/nba/1610612750/global/L/logo.svg",
-    "Memphis Grizzlies": "https://cdn.nba.com/logos/nba/1610612763/global/L/logo.svg"
+    "Memphis Grizzlies": "https://cdn.nba.com/logos/nba/1610612763/global/L/logo.svg",
+    "Los Angeles Lakers": "https://cdn.nba.com/logos/nba/1610612747/global/L/logo.svg",
+    "Golden State Warriors": "https://cdn.nba.com/logos/nba/1610612744/global/L/logo.svg"
 }
 
 def generar_pdf_analisis(partido, ganador, total_puntos, razonamiento):
@@ -156,10 +159,6 @@ def registrar_visita():
     else:
         nuevo_registro.to_csv(db_usuarios_path, index=False)
 
-def guardar_noticias(mat_es, vesp_es, mat_en, vesp_en):
-    df = pd.DataFrame([[mat_es, vesp_es, mat_en, vesp_en]], columns=["matutina_es", "vespertina_es", "matutina_en", "vespertina_en"])
-    df.to_csv(noticias_path, index=False)
-
 def cargar_noticias():
     if os.path.exists(noticias_path):
         try:
@@ -180,6 +179,54 @@ def cargar_noticias():
     
     guardar_noticias(def_mat_es, def_vesp_es, def_mat_en, def_vesp_en)
     return def_mat_es, def_vesp_es, def_mat_en, def_vesp_en
+
+def guardar_noticias(mat_es, vesp_es, mat_en, vesp_en):
+    df = pd.DataFrame([[mat_es, vesp_es, mat_en, vesp_en]], columns=["matutina_es", "vespertina_es", "matutina_en", "vespertina_en"])
+    df.to_csv(noticias_path, index=False)
+
+def cargar_cartelera():
+    if os.path.exists(cartelera_path):
+        try:
+            return pd.read_csv(cartelera_path)
+        except Exception:
+            pass
+    
+    # Cartelera inicial por defecto (Pretemporada / Inicio)
+    data_def = [
+        {
+            "equipo1": "Oklahoma City Thunder",
+            "equipo2": "Dallas Mavericks",
+            "ganador": "Oklahoma City Thunder (+4.2 pts)",
+            "total_puntos": "230.5 (Altas / Over)",
+            "analisis_es": "El modelo de eficiencia neta proyecta una ventaja clave en el ritmo de posesiones (Pace). Oklahoma City registra un índice defensivo en el perímetro que limita el acierto rival en situaciones de pick-and-roll.",
+            "analisis_en": "The net efficiency model projects a key advantage in possession pace. Oklahoma City registers a perimeter defensive rating that limits opponent shooting in pick-and-roll situations.",
+            "es_jugada_fija": True
+        },
+        {
+            "equipo1": "Philadelphia 76ers",
+            "equipo2": "Cleveland Cavaliers",
+            "ganador": "Philadelphia 76ers (-3.1 pts)",
+            "total_puntos": "224.0 (Bajas / Under)",
+            "analisis_es": "La rotación defensiva interior de Philadelphia neutraliza el eFG% del rival bajo los tableros. Alta eficiencia en transición.",
+            "analisis_en": "Philadelphia's interior defensive rotation neutralizes opponent eFG% under the boards. High transition efficiency.",
+            "es_jugada_fija": False
+        },
+        {
+            "equipo1": "Los Angeles Lakers",
+            "equipo2": "Golden State Warriors",
+            "ganador": "Golden State Warriors (+2.5 pts)",
+            "total_puntos": "238.5 (Altas / Over)",
+            "analisis_es": "Duelo de alto ritmo (Pace elevado). El TS% exterior de Golden State marca la diferencia en el clutch del encuentro.",
+            "analisis_en": "High-pace matchup. GoldenState's perimeter TS% makes the difference in the clutch.",
+            "es_jugada_fija": False
+        }
+    ]
+    df_def = pd.DataFrame(data_def)
+    df_def.to_csv(cartelera_path, index=False)
+    return df_def
+
+def guardar_cartelera(df):
+    df.to_csv(cartelera_path, index=False)
 
 # Selector de Idioma
 idioma = st.sidebar.selectbox("🌐 Idioma / Language", ["Español", "English"])
@@ -247,20 +294,21 @@ else:
     ])
 
     fecha_hoy = datetime.now().strftime("%d de %B de %Y")
+    df_cartelera = cargar_cartelera()
 
     if menu == t["menu_cartelera"]:
         titulo_cartelera = "📅 Cartelera de Partidos - Análisis Profundo" if lang == "es" else "📅 Game Schedule - Deep Analysis"
         st.header(f"{titulo_cartelera} ({fecha_hoy})")
         st.write("Selecciona un encuentro para ver el desglose científico del modelo:" if lang == "es" else "Select a matchup to view the scientific breakdown:")
         
-        partido_seleccionado = st.selectbox("Juegos de hoy:" if lang == "es" else "Today's Games:", [
-            "Dallas Mavericks vs. Oklahoma City Thunder",
-            "Philadelphia 76ers vs. Cleveland Cavaliers",
-            "Minnesota Timberwolves vs. Memphis Grizzlies"
-        ])
+        lista_partidos = [f"{row['equipo1']} vs. {row['equipo2']}" for _, row in df_cartelera.iterrows()]
+        
+        partido_seleccionado = st.selectbox("Juegos de hoy:" if lang == "es" else "Today's Games:", lista_partidos)
         
         if partido_seleccionado:
             equipo1, equipo2 = partido_seleccionado.split(" vs. ")
+            fila_juego = df_cartelera[(df_cartelera['equipo1'] == equipo1) & (df_cartelera['equipo2'] == equipo2)].iloc[0]
+            
             logo1_url = LOGOS_EQUIPOS.get(equipo1, "")
             logo2_url = LOGOS_EQUIPOS.get(equipo2, "")
             
@@ -284,31 +332,13 @@ else:
             
             col1, col2 = st.columns(2)
             with col1:
-                st.metric(label="Ganador Proyectado" if lang == "es" else "Projected Winner", value="Oklahoma City Thunder", delta="+4.2 pts")
+                st.metric(label="Ganador Proyectado" if lang == "es" else "Projected Winner", value=fila_juego["ganador"])
             with col2:
-                st.metric(label="Total de Puntos (O/U)" if lang == "es" else "Total Points (O/U)", value="230.5", delta="Altas (Over)" if lang == "es" else "Over")
+                st.metric(label="Total de Puntos (O/U)" if lang == "es" else "Total Points (O/U)", value=fila_juego["total_puntos"])
             
             st.markdown("### 🧠 Razonamiento Táctico y Métricas Avanzadas" if lang == "es" else "### 🧠 Tactical Reasoning & Advanced Metrics")
             
-            if lang == "es":
-                analisis_amplio = (
-                    "El modelo de eficiencia neta proyecta una ventaja clave en el ritmo de posesiones (Pace). "
-                    "Oklahoma City registra un índice defensivo en el perímetro que limita el acierto rival en situaciones de pick-and-roll. "
-                    "Por su parte, el True Shooting Percentage (TS%) de los visitantes se eleva un 4.5% en los últimos cinco encuentros, "
-                    "respaldado por una menor tasa de pérdidas (TOV%) y una alta conversión en transición rápida. "
-                    "El diferencial de rebotes defensivos favorece al Oklahoma en un margen de 5.2 balones recuperados por encuentro, "
-                    "lo que ahoga las segundas oportunidades del rival y consolida la proyección del modelo ganador."
-                )
-            else:
-                analisis_amplio = (
-                    "The net efficiency model projects a key advantage in possession pace. "
-                    "Oklahoma City registers a perimeter defensive rating that limits opponent shooting in pick-and-roll situations. "
-                    "Meanwhile, the visitors' True Shooting Percentage (TS%) rises 4.5% over the last five games, "
-                    "supported by a lower turnover rate (TOV%) and high fast-break conversion. "
-                    "The defensive rebound differential favors Oklahoma by a margin of 5.2 recovered balls per game, "
-                    "suppressing second-chance opportunities and solidifying the winning model's projection."
-                )
-            
+            analisis_amplio = fila_juego["analisis_es"] if lang == "es" else fila_juego["analisis_en"]
             st.write(analisis_amplio)
             
             st.markdown("---")
@@ -318,8 +348,8 @@ else:
             if st.button("📄 Descargar Análisis en PDF" if lang == "es" else "📄 Download PDF Analysis"):
                 archivo_pdf = generar_pdf_analisis(
                     partido_seleccionado, 
-                    "Oklahoma City Thunder (+4.2 pts)", 
-                    "230.5 (Altas)", 
+                    fila_juego["ganador"], 
+                    fila_juego["total_puntos"], 
                     analisis_amplio
                 )
                 with open(archivo_pdf, "rb") as f:
@@ -358,21 +388,28 @@ else:
         st.header("⭐ La Jugada Estelar del Modelo" if lang == "es" else "⭐ Model's Star Play of the Day")
         st.success("Recomendación avalada estrictamente por eficiencia matemática y métricas de posesión." if lang == "es" else "Recommendation strictly backed by mathematical efficiency and possession metrics.")
         
-        equipo_estelar_1 = "Oklahoma City Thunder"
-        equipo_estelar_2 = "Dallas Mavericks"
-        logo_estelar_1 = LOGOS_EQUIPOS.get(equipo_estelar_1, "")
-        logo_estelar_2 = LOGOS_EQUIPOS.get(equipo_estelar_2, "")
+        # Buscamos el juego marcado como jugada fija (o el primero por defecto)
+        juegos_fijos = df_cartelera[df_cartelera['es_jugada_fija'] == True]
+        if not juegos_fijos.empty:
+            juego_estelar = juegos_fijos.iloc[0]
+        else:
+            juego_estelar = df_cartelera.iloc[0]
+            
+        estelar_eq1 = juego_estelar["equipo1"]
+        estelar_eq2 = juego_estelar["equipo2"]
+        logo_estelar_1 = LOGOS_EQUIPOS.get(estelar_eq1, "")
+        logo_estelar_2 = LOGOS_EQUIPOS.get(estelar_eq2, "")
         
         matchup_estelar_html = f"""
         <div class="matchup-box">
             <div class="team-col">
                 <img src="{logo_estelar_1}" width="100" style="margin-bottom: 10px;">
-                <h3 style="margin: 0; color: #ffffff;">{equipo_estelar_1}</h3>
+                <h3 style="margin: 0; color: #ffffff;">{estelar_eq1}</h3>
             </div>
             <div class="vs-col">VS</div>
             <div class="team-col">
                 <img src="{logo_estelar_2}" width="100" style="margin-bottom: 10px;">
-                <h3 style="margin: 0; color: #ffffff;">{equipo_estelar_2}</h3>
+                <h3 style="margin: 0; color: #ffffff;">{estelar_eq2}</h3>
             </div>
         </div>
         """
@@ -380,16 +417,16 @@ else:
         
         st.markdown("### 📊 Fundamento Estadístico y Razonamiento del Modelo" if lang == "es" else "### 📊 Statistical Foundation & Model Reasoning")
         if lang == "es":
-            st.markdown("""
-            * **Selección Recomendada:** Oklahoma City Thunder - Spread / Altas (Over)
+            st.markdown(f"""
+            * **Selección Recomendada:** {juego_estelar["ganador"]} | Totales: {juego_estelar["total_puntos"]}
             * **Nivel de Confianza del Modelo:** 88.4%
-            * **Por qué elegimos este encuentro:** Nuestro algoritmo de eficiencia neta detecta una superioridad de +4.2 puntos en posesiones de media cancha.
+            * **Por qué elegimos este encuentro:** {juego_estelar["analisis_es"]}
             """)
         else:
-            st.markdown("""
-            * **Recommended Selection:** Oklahoma City Thunder - Spread / Over
+            st.markdown(f"""
+            * **Recommended Selection:** {juego_estelar["ganador"]} | Totals: {juego_estelar["total_puntos"]}
             * **Model Confidence Level:** 88.4%
-            * **Why we chose this matchup:** Our net efficiency algorithm detects a +4.2 point superiority in half-court possessions.
+            * **Why we chose this matchup:** {juego_estelar["analisis_en"]}
             """)
 
     elif menu == t["menu_diccionario"]:
@@ -461,6 +498,20 @@ else:
 
             st.markdown("---")
             
+            # --- GESTOR DE CARTELERA DIARIA ---
+            st.subheader("📅 Gestor de Cartelera Diaria y Partidos")
+            st.write("Edita, añade o actualiza los encuentros de la jornada, sus proyecciones y marca cuál será la 'Jugada Fija del Día'.")
+            
+            edited_df = st.data_editor(df_cartelera, num_rows="dynamic", use_container_width=True)
+            
+            if st.button("💾 Guardar Cambios en la Cartelera"):
+                guardar_cartelera(edited_df)
+                st.success("¡Cartelera diaria actualizada con éxito!")
+                st.rerun()
+
+            st.markdown("---")
+            
+            # --- GESTOR DE NOTICIAS BILINGÜES ---
             titulo_editor = "📰 Editor y Publicador de Noticias Bilingüe (Español / Inglés)" if lang == "es" else "📰 Bilingual News Editor & Publisher (Spanish / English)"
             st.subheader(titulo_editor)
             st.write("Actualiza los reportes tanto en español como en inglés para que la app se adapte al idioma que elija el usuario." if lang == "es" else "Update reports in both Spanish and English so the app adapts to the user's selected language.")
