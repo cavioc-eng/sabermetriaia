@@ -436,22 +436,23 @@ else:
                     st.error(f"❌ Error al procesar CSV: {e}")
 
             st.markdown("---")
-            st.subheader("📂 Carga Directa de Noticias (Subir Archivo CSV)")
-            st.write("Sube tu archivo `noticias_bilingue_v2.csv` con las columnas: **matutina_es, vespertina_es, matutina_en, vespertina_en**.")
+            st.subheader("📰 Gestor Directo de Noticias Bilingües")
+            st.write("Escribe o pega tus boletines informativos directamente. Al presionar guardar, se actualizarán al instante.")
             
-            archivo_noticias_subido = st.file_uploader("Selecciona tu archivo CSV de noticias", type=["csv"], key="uploader_noticias")
-            if archivo_noticias_subido is not None:
-                try:
-                    df_noticias_subido = pd.read_csv(archivo_noticias_subido, encoding='utf-8')
-                    cols_requeridas = ["matutina_es", "vespertina_es", "matutina_en", "vespertina_en"]
-                    if all(col in df_noticias_subido.columns for col in cols_requeridas):
-                        df_noticias_subido.to_csv(noticias_path, index=False, encoding='utf-8')
-                        st.success("¡Noticias bilingües actualizadas con éxito desde el archivo CSV!")
-                        st.rerun()
-                    else:
-                        st.error("❌ El archivo CSV debe contener exactamente las columnas: matutina_es, vespertina_es, matutina_en, vespertina_en.")
-                except Exception as e:
-                    st.error(f"❌ Error al procesar el archivo de noticias: {e}")
+            mat_es_act, vesp_es_act, mat_en_act, vesp_en_act = cargar_noticias()
+            
+            with st.form("form_noticias_directas"):
+                st.markdown("#### 🇪🇸 Español")
+                txt_mat_es = st.text_area("Noticia Matutina (Español):", value=mat_es_act, height=140)
+                txt_vesp_es = st.text_area("Noticia Vespertina (Español):", value=vesp_es_act, height=140)
+                st.markdown("#### 🇺🇸 Inglés (English)")
+                txt_mat_en = st.text_area("Morning News (English):", value=mat_en_act, height=140)
+                txt_vesp_en = st.text_area("Evening News (English):", value=vesp_en_act, height=140)
+                
+                if st.form_submit_button("💾 Guardar Noticias y Publicar"):
+                    guardar_noticias(txt_mat_es, txt_vesp_es, txt_mat_en, txt_vesp_en)
+                    st.success("¡Noticias bilingües guardadas y publicadas con éxito!")
+                    st.rerun()
 
         elif clave_admin != "":
             st.error(t["admin_error"])
