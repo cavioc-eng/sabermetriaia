@@ -403,7 +403,7 @@ else:
     elif menu == "🔐 Panel de Administración":
         st.header(t["admin_titulo"])
         st.write(t["admin_desc"])
-        clave_admin = st.text_input(t["admin_clave"], type="password")
+        clave_admin = st.text_input(t["admin_clave"], type="password", key="input_clave_admin")
         
         if clave_admin == "sabermetria2026":
             st.success(t["admin_exito"])
@@ -436,18 +436,23 @@ else:
 
             st.markdown("---")
             st.subheader("📰 Editor y Publicador de Noticias Bilingüe")
+            
+            # Cargar noticias actuales fuera de formularios para permitir edición fluida y guardado inmediato
             mat_es_act, vesp_es_act, mat_en_act, vesp_en_act = cargar_noticias()
+            
             with st.form("form_noticias_bilingue"):
                 st.markdown("#### 🇪🇸 Español")
-                nueva_mat_es = st.text_area("Matutina (Español):", value=mat_es_act, height=130)
-                nueva_vesp_es = st.text_area("Vespertina (Español):", value=vesp_es_act, height=130)
+                nueva_mat_es = st.text_area("Matutina (Español):", value=mat_es_act, height=150)
+                nueva_vesp_es = st.text_area("Vespertina (Español):", value=vesp_es_act, height=150)
                 st.markdown("#### 🇺🇸 Inglés (English)")
-                nueva_mat_en = st.text_area("Morning Edition (English):", value=mat_en_act, height=130)
-                nueva_vesp_en = st.text_area("Evening Edition (English):", value=vesp_en_act, height=130)
+                nueva_mat_en = st.text_area("Morning Edition (English):", value=mat_en_act, height=150)
+                nueva_vesp_en = st.text_area("Evening Edition (English):", value=vesp_en_act, height=150)
                 
-                if st.form_submit_button("💾 Guardar Noticias Bilingües"):
+                btn_guardar_noticias = st.form_submit_button("💾 Guardar y Publicar Noticias Bilingües")
+                
+                if btn_guardar_noticias:
                     guardar_noticias(nueva_mat_es, nueva_vesp_es, nueva_mat_en, nueva_vesp_en)
-                    st.success("¡Noticias bilingües guardadas con éxito!")
+                    st.success("¡Noticias bilingües guardadas y publicadas con éxito!")
                     st.rerun()
 
         elif clave_admin != "":
