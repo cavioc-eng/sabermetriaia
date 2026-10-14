@@ -261,18 +261,19 @@ else:
     df_cartelera = cargar_cartelera()
     ayer_str = cargar_estadisticas()
 
+    # --- BANNER DE EFECTIVIDAD ACTUALIZADO (EVALUACIÓN DE HOY) ---
     if lang == "es":
         st.markdown(f"""
         <div class="stats-banner">
-            <h4 style="color: #00FF66; margin: 0;">🎯 Rendimiento del Modelo Sabermétrico (Jornada Anterior)</h4>
-            <p style="font-size: 15px; margin: 5px 0 0 0;">Aciertos de Ayer: <b>{ayer_str}</b></p>
+            <h4 style="color: #00FF66; margin: 0;">🎯 Rendimiento del Modelo Sabermétrico (Evaluación de la Jornada)</h4>
+            <p style="font-size: 15px; margin: 5px 0 0 0;">Aciertos del Modelo: <b>{ayer_str}</b></p>
         </div>
         """, unsafe_allow_html=True)
     else:
         st.markdown(f"""
         <div class="stats-banner">
-            <h4 style="color: #00FF66; margin: 0;">🎯 Sabermetric Model Performance (Previous Slate)</h4>
-            <p style="font-size: 15px; margin: 5px 0 0 0;">Yesterday's Hits: <b>{ayer_str}</b></p>
+            <h4 style="color: #00FF66; margin: 0;">🎯 Sabermetric Model Performance (Slate Evaluation)</h4>
+            <p style="font-size: 15px; margin: 5px 0 0 0;">Model Hits: <b>{ayer_str}</b></p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -318,6 +319,8 @@ else:
     elif menu == "Noticias (Doble Actualización)":
         st.header(f"📰 Centro de Noticias en Tiempo Real — {fecha_hoy}")
         st.write("Bienvenido al centro informativo oficial de Sabermetría IA.")
+        
+        # Carga limpia en tiempo real sin caché estática
         mat_es, vesp_es, mat_en, vesp_en = cargar_noticias()
         matutina_texto = mat_es if lang == "es" else mat_en
         vespertina_texto = vesp_es if lang == "es" else vesp_en
@@ -395,7 +398,7 @@ else:
                 "### 🔴 Advanced & Deep Analytics (Sabermetria AI)\n"
                 "- **Pace:** Estimated number of possessions per 48 minutes.\n"
                 "- **True Shooting Percentage (TS%):** Comprehensive scoring efficiency.\n"
-                "- **Net Rating:** Point differential per 100 possessions.\n"
+                "-**Net Rating:** Point differential per 100 possessions.\n"
                 "- **Usage Rate (USG%):** Estimate of team plays used by a player.\n"
                 "- **PER (Player Efficiency Rating):** Per-minute productivity rating."
             )
@@ -416,8 +419,8 @@ else:
             st.subheader("🎯 Gestor de Efectividad del Modelo")
             ayer_act = cargar_estadisticas()
             with st.form("form_estadisticas"):
-                nuevo_ayer = st.text_input("Aciertos de Ayer (Ej: 3 / 4 (75%)):", value=ayer_act)
-                if st.form_submit_button("💾 Guardar Efectividad de Ayer"):
+                nuevo_ayer = st.text_input("Aciertos de la Jornada (Ej: 3 / 4 (75%)):", value=ayer_act)
+                if st.form_submit_button("💾 Guardar Efectividad"):
                     guardar_estadisticas(nuevo_ayer)
                     st.success("¡Efectividad actualizada!")
                     st.rerun()
@@ -437,16 +440,16 @@ else:
             st.markdown("---")
             st.subheader("📰 Editor y Publicador de Noticias Bilingüe")
             
-            # Cargar noticias actuales fuera de formularios para permitir edición fluida y guardado inmediato
+            # Carga directa sin caché para asegurar que se muestre lo último guardado
             mat_es_act, vesp_es_act, mat_en_act, vesp_en_act = cargar_noticias()
             
             with st.form("form_noticias_bilingue"):
                 st.markdown("#### 🇪🇸 Español")
-                nueva_mat_es = st.text_area("Matutina (Español):", value=mat_es_act, height=150)
-                nueva_vesp_es = st.text_area("Vespertina (Español):", value=vesp_es_act, height=150)
+                nueva_mat_es = st.text_area("Matutina (Español):", value=mat_es_act, height=155)
+                nueva_vesp_es = st.text_area("Vespertina (Español):", value=vesp_es_act, height=155)
                 st.markdown("#### 🇺🇸 Inglés (English)")
-                nueva_mat_en = st.text_area("Morning Edition (English):", value=mat_en_act, height=150)
-                nueva_vesp_en = st.text_area("Evening Edition (English):", value=vesp_en_act, height=150)
+                nueva_mat_en = st.text_area("Morning Edition (English):", value=mat_en_act, height=155)
+                nueva_vesp_en = st.text_area("Evening Edition (English):", value=vesp_en_act, height=155)
                 
                 btn_guardar_noticias = st.form_submit_button("💾 Guardar y Publicar Noticias Bilingües")
                 
