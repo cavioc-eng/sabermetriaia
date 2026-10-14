@@ -129,7 +129,7 @@ def generar_pdf_analisis(partido, hora, sede, ganador, total_puntos, razonamient
 
 def registrar_visita():
     fecha_hora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    nuevo_reg = pd.DataFrame([["Seguidor TikTok (Acceso Directo", fecha_hora]], columns=["Usuario", "Fecha_Acceso"])
+    nuevo_reg = pd.DataFrame([["Seguidor TikTok (Acceso Directo)", fecha_hora]], columns=["Usuario", "Fecha_Acceso"])
     if os.path.exists(db_usuarios_path):
         df_ex = pd.read_csv(db_usuarios_path)
         pd.concat([df_ex, nuevo_reg], ignore_index=True).to_csv(db_usuarios_path, index=False, encoding='utf-8')
@@ -278,4 +278,34 @@ if not st.session_state.autenticado:
         st.subheader(t["sub_app"])
         st.write("Para desbloquear el portal exclusivo y la analítica avanzada, sigue los pasos:")
     with col_der:
-        st.image("
+        st.image("https://upload.wikimedia.org/wikipedia/en/0/03/National_Basketball_Association_logo.svg", width=140)
+    
+    st.markdown("---")
+    col_paso1, col_paso2 = st.columns(2)
+    with col_paso1:
+        st.markdown(
+            '<div class="tiktok-card">'
+            '<h4 style="color: #00FF66; margin-top: 0;">' + t["paso1_titulo"] + '</h4>'
+            '<p style="font-size: 14px; margin-bottom: 10px;">' + t["paso1_desc"] + '</p>'
+            '<a href="https://www.tiktok.com/@sabermetriaia" target="_blank" style="background-color: #00FF66; color: #000000; padding: 8px 15px; border-radius: 6px; font-weight: bold; text-decoration: none; display: inline-block;">' + t["btn_tiktok"] + '</a>'
+            '</div>', unsafe_allow_html=True
+        )
+    with col_paso2:
+        st.markdown(
+            '<div class="tiktok-card">'
+            '<h4 style="color: #00FF66; margin-top: 0;">' + t["paso2_titulo"] + '</h4>'
+            '<p style="font-size: 14px; margin-bottom: 15px;">' + t["paso2_desc"] + '</p>'
+            '</div>', unsafe_allow_html=True
+        )
+        if st.button(t["btn_acceso"]):
+            registrar_visita()
+            st.session_state.autenticado = True
+            st.rerun()
+else:
+    st.sidebar.title("Menú Principal" if lang == "es" else "Main Menu")
+    if os.path.exists(logo_path):
+        st.sidebar.image(logo_path, width=220)
+        
+    menu = st.sidebar.radio("Selecciona una sección:" if lang == "es" else "Select a section:", [
+        "Cartelera y Partidos", 
+        "Noticias (Doble Actualización)",
