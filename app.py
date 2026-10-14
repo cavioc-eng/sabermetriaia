@@ -10,7 +10,6 @@ import streamlit as st
 current_dir = os.path.dirname(os.path.abspath(__file__))
 logo_path = os.path.join(current_dir, "logo.jpeg")
 db_usuarios_path = os.path.join(current_dir, "registros_tiktok.csv")
-noticias_path = os.path.join(current_dir, "noticias_bilingue_v2.csv")
 cartelera_path = os.path.join(current_dir, "cartelera_bilingue.csv")
 estadisticas_path = os.path.join(current_dir, "historial_aciertos.csv")
 
@@ -20,6 +19,16 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# Inicializar estado en memoria para las noticias (sin depender de archivos externos problemáticos)
+if "mat_es" not in st.session_state:
+    st.session_state.mat_es = "• **Radiografía de Eficiencia Ofensiva y eFG%:** Los Celtics impulsaron su eFG% con excelente spacing.\n\n• **Impacto del Net Rating:** Los diferenciales de eficiencia neta marcaron el ritmo.\n\n• **Tendencias Defensivas:** Reducción de pérdidas de balón (TOV%)."
+if "vesp_es" not in st.session_state:
+    st.session_state.vesp_es = "• **Reporte Crítico de Lesiones:** Monitoreo estricto en Dallas y Phoenix.\n\n• **Efecto en el Pace:** Gestión de cargas físicas.\n\n• **Líneas O/U:** Ajustes de puntos totales."
+if "mat_en" not in st.session_state:
+    st.session_state.mat_en = "• **Offensive Efficiency & eFG%:** Boston Celtics fueled perimeter spacing.\n\n• **Net Rating Impact:** Advanced net rating metrics drove game dynamics.\n\n• **Transition Defense Trends:** Minimized live-ball turnovers (TOV%)."
+if "vesp_en" not in st.session_state:
+    st.session_state.vesp_en = "• **Critical Injury & Rotation Reports:** Active backcourt monitoring for Dallas and Phoenix.\n\n• **Pace Adjustments:** Workload management suppressing possession velocity.\n\n• **Preliminary O/U Insights:** Total points lines reflecting defensive variance."
 
 TEXTOS = {
     "es": {
@@ -137,31 +146,6 @@ def cargar_estadisticas():
 
 def guardar_estadisticas(ayer):
     pd.DataFrame([[ayer]], columns=["ayer"]).to_csv(estadisticas_path, index=False, encoding='utf-8')
-
-def cargar_noticias():
-    if os.path.exists(noticias_path):
-        try:
-            df = pd.read_csv(noticias_path, encoding='utf-8')
-            if not df.empty:
-                mat_es = str(df.iloc[0].get("matutina_es", "")).replace("\\n", "\n")
-                vesp_es = str(df.iloc[0].get("vespertina_es", "")).replace("\\n", "\n")
-                mat_en = str(df.iloc[0].get("matutina_en", "")).replace("\\n", "\n")
-                vesp_en = str(df.iloc[0].get("vespertina_en", "")).replace("\\n", "\n")
-                return mat_es, vesp_es, mat_en, vesp_en
-        except Exception:
-            pass
-    
-    mat_es = "• **Radiografía de Eficiencia Ofensiva y eFG%:** Los Celtics impulsaron su eFG% con excelente spacing."
-    vesp_es = "• **Reporte Crítico de Lesiones:** Monitoreo activo en la rotación."
-    mat_en = "• **Offensive Efficiency & eFG%:** Celtics fueled perimeter spacing."
-    vesp_en = "• **Critical Injury Reports:** Active roster monitoring."
-    
-    guardar_noticias(mat_es, vesp_es, mat_en, vesp_en)
-    return mat_es, vesp_es, mat_en, vesp_en
-
-def guardar_noticias(mat_es, vesp_es, mat_en, vesp_en):
-    df = pd.DataFrame([[mat_es, vesp_es, mat_en, vesp_en]], columns=["matutina_es", "vespertina_es", "matutina_en", "vespertina_en"])
-    df.to_csv(noticias_path, index=False, encoding='utf-8')
 
 def cargar_cartelera():
     if os.path.exists(cartelera_path):
@@ -319,17 +303,13 @@ else:
         st.header(f"📰 Centro de Noticias en Tiempo Real — {fecha_hoy}")
         st.write("Bienvenido al centro informativo oficial de Sabermetría IA.")
         
-        mat_es, vesp_es, mat_en, vesp_en = cargar_noticias()
-        matutina_texto = mat_es if lang == "es" else mat_en
-        vespertina_texto = vesp_es if lang == "es" else vesp_en
-
         tab1, tab2 = st.tabs(["🌅 Actualización Matutina (Cierre Previo)", "🌇 Actualización de la Tarde (5:00 p.m.)"])
         with tab1:
             st.subheader("🌅 Reporte Matutino: Radiografía y Tendencias de la Liga")
-            st.markdown(matutina_texto)
+            st.markdown(st.session_state.mat_es if lang == "es" else st.session_state.mat_en)
         with tab2:
             st.subheader("🌇 Reporte Vespertino: Última Hora y Ajustes Previo al Salto Inicial")
-            st.markdown(vespertina_texto)
+            st.markdown(st.session_state.vesp_es if lang == "es" else st.session_state.vesp_en)
 
     elif menu == "La Jugada Fija del Día":
         st.header("⭐ La Jugada Estelar del Modelo")
@@ -436,22 +416,24 @@ else:
                     st.error(f"❌ Error al procesar CSV: {e}")
 
             st.markdown("---")
-            st.subheader("📰 Gestor Directo de Noticias Bilingües")
-            st.write("Escribe o pega tus boletines informativos directamente. Al presionar guardar, se actualizarán al instante.")
+            st.subheader("📰 Editor Directo de Noticias Bilingües (En Memoria)")
+            st.write("Modifica los textos directamente y guarda los cambios para verlos de inmediato en la sección de noticias.")
             
-            mat_es_act, vesp_es_act, mat_en_act, vesp_en_act = cargar_noticias()
-            
-            with st.form("form_noticias_directas"):
+            # Formulario liviano usando el session_state directamente
+            with st.form("form_noticias_session"):
                 st.markdown("#### 🇪🇸 Español")
-                txt_mat_es = st.text_area("Noticia Matutina (Español):", value=mat_es_act, height=140)
-                txt_vesp_es = st.text_area("Noticia Vespertina (Español):", value=vesp_es_act, height=140)
+                nuevo_mat_es = st.text_area("Noticia Matutina (Español):", value=st.session_state.mat_es, height=150)
+                nuevo_vesp_es = st.text_area("Noticia Vespertina (Español):", value=st.session_state.vesp_es, height=150)
                 st.markdown("#### 🇺🇸 Inglés (English)")
-                txt_mat_en = st.text_area("Morning News (English):", value=mat_en_act, height=140)
-                txt_vesp_en = st.text_area("Evening News (English):", value=vesp_en_act, height=140)
+                nuevo_mat_en = st.text_area("Morning News (English):", value=st.session_state.mat_en, height=150)
+                nuevo_vesp_en = st.text_area("Evening News (English):", value=st.session_state.vesp_en, height=150)
                 
-                if st.form_submit_button("💾 Guardar Noticias y Publicar"):
-                    guardar_noticias(txt_mat_es, txt_vesp_es, txt_mat_en, txt_vesp_en)
-                    st.success("¡Noticias bilingües guardadas y publicadas con éxito!")
+                if st.form_submit_button("💾 Publicar Noticias en Vivo"):
+                    st.session_state.mat_es = nuevo_mat_es
+                    st.session_state.vesp_es = nuevo_vesp_es
+                    st.session_state.mat_en = nuevo_mat_en
+                    st.session_state.vesp_en = nuevo_vesp_en
+                    st.success("¡Noticias publicadas exitosamente en la aplicación!")
                     st.rerun()
 
         elif clave_admin != "":
