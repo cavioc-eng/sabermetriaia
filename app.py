@@ -12,6 +12,7 @@ logo_path = os.path.join(current_dir, "logo.jpeg")
 db_usuarios_path = os.path.join(current_dir, "registros_tiktok.csv")
 cartelera_path = os.path.join(current_dir, "cartelera_bilingue.csv")
 estadisticas_path = os.path.join(current_dir, "historial_aciertos.csv")
+noticias_txt_path = os.path.join(current_dir, "noticias.txt")
 
 st.set_page_config(
     page_title="Sabermetría IA - Analítica Avanzada de Básquetbol",
@@ -20,15 +21,34 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Inicializar estado en memoria para las noticias (ultra liviano y sin bloqueos)
-if "mat_es" not in st.session_state:
-    st.session_state.mat_es = "• **Radiografía de Eficiencia Ofensiva y eFG%:** Los Celtics impulsaron su eFG% con excelente spacing.\n\n• **Impacto del Net Rating:** Los diferenciales de eficiencia neta marcaron el ritmo.\n\n• **Tendencias Defensivas:** Reducción de pérdidas de balón (TOV%)."
-if "vesp_es" not in st.session_state:
-    st.session_state.vesp_es = "• **Reporte Crítico de Lesiones:** Monitoreo estricto en Dallas y Phoenix.\n\n• **Efecto en el Pace:** Gestión de cargas físicas.\n\n• **Líneas O/U:** Ajustes de puntos totales."
-if "mat_en" not in st.session_state:
-    st.session_state.mat_en = "• **Offensive Efficiency & eFG%:** Boston Celtics fueled perimeter spacing.\n\n• **Net Rating Impact:** Advanced net rating metrics drove game dynamics.\n\n• **Transition Defense Trends:** Minimized live-ball turnovers (TOV%)."
-if "vesp_en" not in st.session_state:
-    st.session_state.vesp_en = "• **Critical Injury & Rotation Reports:** Active backcourt monitoring for Dallas and Phoenix.\n\n• **Pace Adjustments:** Workload management suppressing possession velocity.\n\n• **Preliminary O/U Insights:** Total points lines reflecting defensive variance."
+# Sistema ultra seguro de gestión de noticias basado en archivo de texto plano o memoria
+def cargar_noticias_txt():
+    default_noticias = {
+        "mat_es": "• **Radiografía de Eficiencia Ofensiva y eFG%:** Los Celtics impulsaron su eFG% con excelente spacing perimetral.\n\n• **Impacto del Net Rating:** Los diferenciales de eficiencia neta marcaron el ritmo en los cierres ajustados.",
+        "vesp_es": "• **Reporte Crítico de Lesiones:** Monitoreo estricto en las rotaciones perimetrales de Dallas y Phoenix.\n\n• **Efecto en el Pace:** Gestión rigurosa de la carga física en la pretemporada.",
+        "mat_en": "• **Offensive Efficiency & eFG%:** Boston Celtics fueled perimeter spacing and high-value shot selection.\n\n• **Net Rating Impact:** Advanced net rating metrics drove game dynamics.",
+        "vesp_en": "• **Critical Injury Reports:** Active backcourt roster monitoring for tonight's matchups.\n\n• **Pace Adjustments:** Workload management controlling possession velocity."
+    }
+    
+    if os.path.exists(noticias_txt_path):
+        try:
+            with open(noticias_txt_path, "r", encoding="utf-8") as f:
+                lines = f.read().split("---SEPARADOR_NOTICIAS---")
+                if len(lines) == 4:
+                    return lines[0].strip(), lines[1].strip(), lines[2].strip(), lines[3].strip()
+        except Exception:
+            pass
+    
+    # Si no existe, lo creamos por defecto
+    guardar_noticias_txt(default_noticias["mat_es"], default_noticias["vesp_es"], default_noticias["mat_en"], default_noticias["vesp_en"])
+    return default_noticias["mat_es"], default_noticias["vesp_es"], default_noticias["mat_en"], default_noticias["vesp_en"]
+
+def guardar_noticias_txt(mat_es, vesp_es, mat_en, vesp_en):
+    try:
+        with open(noticias_txt_path, "w", encoding="utf-8") as f:
+            f.write(f"{mat_es}\n---SEPARADOR_NOTICIAS---\n{vesp_es}\n---SEPARADOR_NOTICIAS---\n{mat_en}\n---SEPARADOR_NOTICIAS---\n{vesp_en}")
+    except Exception:
+        pass
 
 TEXTOS = {
     "es": {
@@ -152,7 +172,6 @@ def cargar_cartelera():
         try:
             df = pd.read_csv(cartelera_path, encoding='utf-8')
             if not df.empty and "equipo1" in df.columns and "equipo2" in df.columns:
-                # Limpieza segura sin recortar filas
                 df["equipo1"] = df["equipo1"].astype(str).str.strip()
                 df["equipo2"] = df["equipo2"].astype(str).str.strip()
                 
@@ -181,7 +200,7 @@ def cargar_cartelera():
         except Exception:
             pass
     
-    # Cartelera por defecto completa con los 7 juegos de hoy
+    # Cartelera oficial completa de los 7 partidos de hoy
     data_def = [
         {"equipo1": "Boston Celtics", "equipo2": "Charlotte Hornets", "hora": "19:30 (VE)", "sede": "Spectrum Center", "ganador": "Boston Celtics (-8.5 pts)", "total_puntos": "224.5 (Over)", "analisis_es": "📊 Los Celtics dominan el espaciamiento perimetral y el eFG%.", "analisis_en": "📊 Celtics lead in perimeter spacing.", "es_jugada_fija": True},
         {"equipo1": "Miami Heat", "equipo2": "Brooklyn Nets", "hora": "19:30 (VE)", "sede": "Barclays Center", "ganador": "Miami Heat (-4.5 pts)", "total_puntos": "218.5 (Under)", "analisis_es": "📊 Intensidad defensiva y control del ritmo de posesión.", "analisis_en": "📊 Defensive intensity.", "es_jugada_fija": False},
@@ -275,13 +294,20 @@ else:
         st.header(f"📅 Cartelera de Partidos - Análisis Profundo ({fecha_hoy})")
         st.write("Selecciona un encuentro para ver el desglose científico del modelo:")
         
-        lista_partidos = [f"(Visita) {str(row['equipo1']).strip()} vs. (Local) {str(row['equipo2']).strip()}" for _, row in df_cartelera.iterrows()]
-        partido_seleccionado = st.selectbox("Juegos de hoy:", lista_partidos)
+        # Diccionario seguro para mapear la opción seleccionada con la fila exacta del DataFrame
+        opciones_dict = {}
+        for _, row in df_cartelera.iterrows():
+            e1 = str(row['equipo1']).strip()
+            e2 = str(row['equipo2']).strip()
+            label = f"{e1} vs. {e2}"
+            opciones_dict[label] = row
+            
+        partido_seleccionado = st.selectbox("Juegos de hoy:", list(opciones_dict.keys()))
         
         if partido_seleccionado:
-            limpio = partido_seleccionado.replace("(Visita) ", "").replace("(Local) ", "")
-            equipo1, equipo2 = limpio.split(" vs. ")
-            fila_juego = df_cartelera[(df_cartelera['equipo1'].str.strip() == equipo1.strip())].iloc[0]
+            fila_juego = opciones_dict[partido_seleccionado]
+            equipo1 = str(fila_juego['equipo1']).strip()
+            equipo2 = str(fila_juego['equipo2']).strip()
             
             logo1_url = LOGOS_EQUIPOS.get(equipo1, "")
             logo2_url = LOGOS_EQUIPOS.get(equipo2, "")
@@ -314,13 +340,17 @@ else:
         st.header(f"📰 Centro de Noticias en Tiempo Real — {fecha_hoy}")
         st.write("Bienvenido al centro informativo oficial de Sabermetría IA.")
         
+        mat_es, vesp_es, mat_en, vesp_en = cargar_noticias_txt()
+        matutina_texto = mat_es if lang == "es" else mat_en
+        vespertina_texto = vesp_es if lang == "es" else vesp_en
+
         tab1, tab2 = st.tabs(["🌅 Actualización Matutina (Cierre Previo)", "🌇 Actualización de la Tarde (5:00 p.m.)"])
         with tab1:
             st.subheader("🌅 Reporte Matutino: Radiografía y Tendencias de la Liga")
-            st.markdown(st.session_state.mat_es if lang == "es" else st.session_state.mat_en)
+            st.markdown(matutina_texto)
         with tab2:
             st.subheader("🌇 Reporte Vespertino: Última Hora y Ajustes Previo al Salto Inicial")
-            st.markdown(st.session_state.vesp_es if lang == "es" else st.session_state.vesp_en)
+            st.markdown(vespertina_texto)
 
     elif menu == "La Jugada Fija del Día":
         st.header("⭐ La Jugada Estelar del Modelo")
@@ -427,23 +457,22 @@ else:
                     st.error(f"❌ Error al procesar CSV: {e}")
 
             st.markdown("---")
-            st.subheader("📰 Editor Directo de Noticias Bilingües (En Memoria)")
-            st.write("Modifica los textos directamente y guarda los cambios para verlos de inmediato en la sección de noticias.")
+            st.subheader("📰 Gestor de Noticias Bilingües (Archivo Local)")
+            st.write("Modifica los textos directamente y guarda para publicarlos de inmediato en la sección de noticias.")
             
-            with st.form("form_noticias_session"):
+            mat_es_act, vesp_es_act, mat_en_act, vesp_en_act = cargar_noticias_txt()
+            
+            with st.form("form_noticias_txt"):
                 st.markdown("#### 🇪🇸 Español")
-                nuevo_mat_es = st.text_area("Noticia Matutina (Español):", value=st.session_state.mat_es, height=150)
-                nuevo_vesp_es = st.text_area("Noticia Vespertina (Español):", value=st.session_state.vesp_es, height=150)
+                txt_mat_es = st.text_area("Noticia Matutina (Español):", value=mat_es_act, height=140)
+                txt_vesp_es = st.text_area("Noticia Vespertina (Español):", value=vesp_es_act, height=140)
                 st.markdown("#### 🇺🇸 Inglés (English)")
-                nuevo_mat_en = st.text_area("Morning News (English):", value=st.session_state.mat_en, height=150)
-                nuevo_vesp_en = st.text_area("Evening News (English):", value=st.session_state.vesp_en, height=150)
+                txt_mat_en = st.text_area("Morning News (English):", value=mat_en_act, height=140)
+                txt_vesp_en = st.text_area("Evening News (English):", value=vesp_en_act, height=140)
                 
-                if st.form_submit_button("💾 Publicar Noticias en Vivo"):
-                    st.session_state.mat_es = nuevo_mat_es
-                    st.session_state.vesp_es = nuevo_vesp_es
-                    st.session_state.mat_en = nuevo_mat_en
-                    st.session_state.vesp_en = nuevo_vesp_en
-                    st.success("¡Noticias publicadas exitosamente en la aplicación!")
+                if st.form_submit_button("💾 Guardar y Publicar Noticias"):
+                    guardar_noticias_txt(txt_mat_es, txt_vesp_es, txt_mat_en, txt_vesp_en)
+                    st.success("¡Noticias bilingües guardadas y publicadas correctamente!")
                     st.rerun()
 
         elif clave_admin != "":
