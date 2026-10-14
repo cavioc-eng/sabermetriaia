@@ -665,7 +665,19 @@ else:
     logo_estelar_1 = LOGOS_EQUIPOS.get(estelar_eq1, "")
     logo_estelar_2 = LOGOS_EQUIPOS.get(estelar_eq2, "")
 
-    matchup_estelar_html = f"""
-        <div class="matchup-box">
-            <div class="team-col">
-                <img src="{
+    matchup_html = (
+          '<div class="matchup-box">'
+          '<div class="team-col">'
+          f'<img src="{logo1_url}" width="100" style="margin-bottom: 10px;">'
+          f'<h3 style="margin: 0; color: #ffffff;">{equipo1}</h3>'
+          '<span style="font-size: 12px; color: #8b949e;">(Visitante)</span>'
+          "</div>"
+          '<div class="vs-col">VS</div>'
+          '<div class="team-col">'
+          f'<img src="{logo2_url}" width="100" style="margin-bottom: 10px;">'
+          f'<h3 style="margin: 0; color: #ffffff;">{equipo2}</h3>'
+          '<span style="font-size: 12px; color: #8b949e;">(Local)</span>'
+          "</div>"
+          "</div>"
+      )
+      st.markdown(matchup_html, unsafe_allow_html=True)
