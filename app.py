@@ -359,10 +359,86 @@ else:
             logo1_url = LOGOS_EQUIPOS.get(equipo1, "")
             logo2_url = LOGOS_EQUIPOS.get(equipo2, "")
             
-            matchup_html = (
-                '<div class="matchup-box">'
-                '<div class="team-col">'
-                f'<img src="{logo1_url}" width="100" style="margin-bottom: 10px;">'
-                f'<h3 style="margin: 0; color: #ffffff;">{equipo1}</h3>'
-                '<span style="font-size: 12px; color: #8b949e;">(Visitante)</span>'
-                '</div>'
+            matchup_html = f'<div class="matchup-box"><div class="team-col"><img src="{logo1_url}" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">{equipo1}</h3><span style="font-size: 12px; color: #8b949e;">(Visitante)</span></div><div class="vs-col">VS</div><div class="team-col"><img src="{logo2_url}" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">{equipo2}</h3><span style="font-size: 12px; color: #8b949e;">(Local)</span></div></div>'
+            st.markdown(matchup_html, unsafe_allow_html=True)
+            
+            hora_val = str(fila_juego.get('hora', '18:30 (VE)'))
+            sede_val = str(fila_juego.get('sede', 'Arena Principal'))
+            st.markdown(f"🕒 **Hora (VE):** {hora_val} &nbsp;&nbsp;|&nbsp;&nbsp; 🏟️ **Sede:** {sede_val}")
+            st.markdown("---")
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                st.metric(label="Ganador Proyectado" if lang == "es" else "Projected Winner", value=fila_juego["ganador"])
+            with col2:
+                st.metric(label="Total de Puntos (O/U)" if lang == "es" else "Total Points (O/U)", value=fila_juego["total_puntos"])
+            
+            st.markdown("### 🧠 Razonamiento Táctico y Métricas Avanzadas" if lang == "es" else "### 🧠 Tactical Reasoning & Advanced Metrics")
+            
+            analisis_amplio = fila_juego["analisis_es"] if lang == "es" else fila_juego["analisis_en"]
+            st.write(analisis_amplio)
+            
+            st.markdown("---")
+            st.subheader("📥 Exportar Reporte" if lang == "es" else "📥 Export Report")
+            
+            if st.button("📄 Descargar Análisis en PDF" if lang == "es" else "📄 Download PDF Analysis"):
+                archivo_pdf = generar_pdf_analisis(
+                    f"{equipo1} vs {equipo2}", 
+                    hora_val,
+                    sede_val,
+                    fila_juego["ganador"], 
+                    fila_juego["total_puntos"], 
+                    analisis_amplio
+                )
+                with open(archivo_pdf, "rb") as f:
+                    st.download_button(
+                        label="💾 Guardar archivo PDF en tu equipo" if lang == "es" else "💾 Save PDF file to your device",
+                        data=f,
+                        file_name="reporte_sabermetria_nba.pdf",
+                        mime="application/pdf"
+                    )
+
+    elif menu == "Noticias (Doble Actualización)":
+        titulo_noticias = f"📰 Centro de Noticias en Tiempo Real — {fecha_hoy}" if lang == "es" else f"📰 Real-Time News Center — {fecha_hoy}"
+        st.header(titulo_noticias)
+        st.write("Bienvenido al centro informativo oficial de Sabermetría IA. Aquí encontrarás la doble actualización diaria." if lang == "es" else "Welcome to Sabermetria AI's official news center. Here you will find the double daily update.")
+        
+        mat_es, vesp_es, mat_en, vesp_en = cargar_noticias()
+        
+        matutina_texto = mat_es if lang == "es" else mat_en
+        vespertina_texto = vesp_es if lang == "es" else vesp_en
+
+        tab_mat = "🌅 Actualización Matutina (Cierre Previo)" if lang == "es" else "🌅 Morning Update (Previous Close)"
+        tab_vesp = "🌇 Actualización de la Tarde (5:00 p.m.)" if lang == "es" else "🌇 Evening Update (5:00 p.m.)"
+
+        tab1, tab2 = st.tabs([tab_mat, tab_vesp])
+        
+        with tab1:
+            titulo_mat = "🌅 Reporte Matutino: Radiografía y Tendencias de la Liga" if lang == "es" else "🌅 Morning Report: League Radiography & Trends"
+            st.subheader(titulo_mat)
+            st.markdown(matutina_texto)
+        with tab2:
+            titulo_vesp = "🌇 Reporte Vespertino: Última Hora y Ajustes Previo al Salto Inicial" if lang == "es" else "🌇 Evening Report: Breaking News & Pre-Tip Adjustments"
+            st.subheader(titulo_vesp)
+            st.markdown(vespertina_texto)
+
+    elif menu == "La Jugada Fija del Día":
+        st.header("⭐ La Jugada Estelar del Modelo" if lang == "es" else "⭐ Model's Star Play of the Day")
+        st.success("Recomendación avalada estrictamente por eficiencia matemática y métricas de posesión." if lang == "es" else "Recommendation strictly backed by mathematical efficiency and possession metrics.")
+        
+        juegos_fijos = df_cartelera[df_cartelera['es_jugada_fija'] == True]
+        if not juegos_fijos.empty:
+            juego_estelar = juegos_fijos.iloc[0]
+        else:
+            juego_estelar = df_cartelera.iloc[0]
+            
+        estelar_eq1 = str(juego_estelar["equipo1"]).strip()
+        estelar_eq2 = str(juego_estelar["equipo2"]).strip()
+        logo_estelar_1 = LOGOS_EQUIPOS.get(estelar_eq1, "")
+        logo_estelar_2 = LOGOS_EQUIPOS.get(estelar_eq2, "")
+        
+        matchup_estelar_html = f'<div class="matchup-box"><div class="team-col"><img src="{logo_estelar_1}" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">{estelar_eq1}</h3><span style="font-size: 12px; color: #8b949e;">(Visitante)</span></div><div class="vs-col">VS</div><div class="team-col"><img src="{logo_estelar_2}" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">{estelar_eq2}</h3><span style="font-size: 12px; color: #8b949e;">(Local)</span></div></div>'
+        st.markdown(matchup_estelar_html, unsafe_allow_html=True)
+        
+        hora_est = str(juego_estelar.get('hora', '18:30 (VE)'))
+        sede_est = str(juego_estelar.get('sede', '
