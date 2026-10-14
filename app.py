@@ -35,7 +35,7 @@ TEXTOS = {
         "paso2_desc": "Haz clic en el botón para entrar al portal exclusivo:",
         "btn_acceso": "🏀 Entrar al Portal Exclusivo",
         "admin_titulo": "🔐 Panel de Control y Publicación - Sabermetría IA",
-        "admin_desc": "Control estadístico de visitas, cartelera bilingüe, efectividad y noticias.",
+        "admin_desc": "Control estadístico de visitas, cartelera bilingüe y noticias.",
         "admin_clave": "Ingresa la clave de administrador:",
         "admin_exito": "¡Acceso de administrador concedido!",
         "admin_error": "❌ Clave de administrador incorrecta.",
@@ -51,7 +51,7 @@ TEXTOS = {
         "paso2_desc": "Click the button to enter the exclusive portal:",
         "btn_acceso": "🏀 Enter Exclusive Portal",
         "admin_titulo": "🔐 Control & Publishing Panel - Sabermetria AI",
-        "admin_desc": "Visit statistical control, bilingual schedule, accuracy, and news.",
+        "admin_desc": "Visit statistical control, bilingual schedule, and news.",
         "admin_clave": "Enter admin password:",
         "admin_exito": "Admin access granted!",
         "admin_error": "❌ Incorrect admin password.",
@@ -130,7 +130,16 @@ LOGOS_EQUIPOS = {
     "Toronto Raptors": "https://cdn.nba.com/logos/nba/1610612761/global/L/logo.svg",
     "Indiana Pacers": "https://cdn.nba.com/logos/nba/1610612754/global/L/logo.svg",
     "Sacramento Kings": "https://cdn.nba.com/logos/nba/1610612758/global/L/logo.svg",
-    "Portland Trail Blazers": "https://cdn.nba.com/logos/nba/1610612757/global/L/logo.svg"
+    "Portland Trail Blazers": "https://cdn.nba.com/logos/nba/1610612757/global/L/logo.svg",
+    "Boston Celtics": "https://cdn.nba.com/logos/nba/1610612738/global/L/logo.svg",
+    "Miami Heat": "https://cdn.nba.com/logos/nba/1610612748/global/L/logo.svg",
+    "Brooklyn Nets": "https://cdn.nba.com/logos/nba/1610612751/global/L/logo.svg",
+    "New Orleans Pelicans": "https://cdn.nba.com/logos/nba/1610612740/global/L/logo.svg",
+    "Minnesota Timberwolves": "https://cdn.nba.com/logos/nba/1610612750/global/L/logo.svg",
+    "Detroit Pistons": "https://cdn.nba.com/logos/nba/1610612765/global/L/logo.svg",
+    "San Antonio Spurs": "https://cdn.nba.com/logos/nba/1610612759/global/L/logo.svg",
+    "Phoenix Suns": "https://cdn.nba.com/logos/nba/1610612756/global/L/logo.svg",
+    "Los Angeles Clippers": "https://cdn.nba.com/logos/nba/1610612746/global/L/logo.svg"
 }
 
 def generar_pdf_analisis(partido, hora, sede, ganador, total_puntos, razonamiento):
@@ -171,17 +180,16 @@ def cargar_estadisticas():
     if os.path.exists(estadisticas_path):
         try:
             df = pd.read_csv(estadisticas_path)
-            return str(df.iloc[0]["ayer"]), str(df.iloc[0]["acumulado"])
+            return str(df.iloc[0]["ayer"])
         except Exception:
             pass
     
-    def_ayer = "1 / 5 (20% en Jornada Volátil)"
-    def_acum = "Rendimiento Global Pretemporada"
-    guardar_estadisticas(def_ayer, def_acum)
-    return def_ayer, def_acum
+    def_ayer = "3 / 4 (75% de Aciertos)"
+    guardar_estadisticas(def_ayer)
+    return def_ayer
 
-def guardar_estadisticas(ayer, acumulado):
-    df = pd.DataFrame([[ayer, acumulado]], columns=["ayer", "acumulado"])
+def guardar_estadisticas(ayer):
+    df = pd.DataFrame([[ayer]], columns=["ayer"])
     df.to_csv(estadisticas_path, index=False)
 
 def cargar_noticias():
@@ -226,14 +234,14 @@ def cargar_cartelera():
     
     data_def = [
         {
-            "equipo1": "Orlando Magic",
-            "equipo2": "Cleveland Cavaliers",
-            "hora": "19:00 (VE)",
-            "sede": "Rocket Arena (Cleveland, OH)",
-            "ganador": "Cleveland Cavaliers (-4.5 pts)",
-            "total_puntos": "217.5 (Bajas / Under)",
-            "analisis_es": "El modelo sabermétrico de eficiencia neta y control de ritmo (Pace) ratifica la superioridad táctica de Cleveland...",
-            "analisis_en": "The sabermetric net efficiency and pace-control model confirms...",
+            "equipo1": "Boston Celtics",
+            "equipo2": "Charlotte Hornets",
+            "hora": "19:30 (VE)",
+            "sede": "Spectrum Center (Charlotte, NC)",
+            "ganador": "Boston Celtics (-8.5 pts)",
+            "total_puntos": "224.5 (Altas / Over)",
+            "analisis_es": "📊 **Desglose Box Score & Tradicional:** Los Celtics promedian 118.4 PTS...",
+            "analisis_en": "📊 **Box Score & Traditional Breakdown:** Celtics average...",
             "es_jugada_fija": True
         }
     ]
@@ -311,21 +319,21 @@ else:
 
     fecha_hoy = datetime.now().strftime("%d de %B de %Y")
     df_cartelera = cargar_cartelera()
-    ayer_str, acumulado_str = cargar_estadisticas()
+    ayer_str = cargar_estadisticas()
 
     # --- BANNER DE EFECTIVIDAD DEL MODELO ---
     if lang == "es":
         st.markdown(f"""
         <div class="stats-banner">
-            <h4 style="color: #00FF66; margin: 0;">🎯 Rendimiento Histórico del Modelo Sabermétrico</h4>
-            <p style="font-size: 15px; margin: 5px 0 0 0;">Aciertos de Ayer: <b>{ayer_str}</b> &nbsp;|&nbsp; Acumulado: <b>{acumulado_str}</b></p>
+            <h4 style="color: #00FF66; margin: 0;">🎯 Rendimiento del Modelo Sabermétrico (Jornada Anterior)</h4>
+            <p style="font-size: 15px; margin: 5px 0 0 0;">Aciertos de Ayer: <b>{ayer_str}</b></p>
         </div>
         """, unsafe_allow_html=True)
     else:
         st.markdown(f"""
         <div class="stats-banner">
-            <h4 style="color: #00FF66; margin: 0;">🎯 Sabermetric Model Historical Performance</h4>
-            <p style="font-size: 15px; margin: 5px 0 0 0;">Yesterday's Hits: <b>{ayer_str}</b> &nbsp;|&nbsp; Cumulative: <b>{acumulado_str}</b></p>
+            <h4 style="color: #00FF66; margin: 0;">🎯 Sabermetric Model Performance (Previous Slate)</h4>
+            <p style="font-size: 15px; margin: 5px 0 0 0;">Yesterday's Hits: <b>{ayer_str}</b></p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -433,8 +441,8 @@ else:
         else:
             juego_estelar = df_cartelera.iloc[0]
             
-        estelar_eq1 = juego_estelar["equipo1"]
-        estelar_eq2 = juego_estelar["equipo2"]
+        estelar_eq1 = str(juego_estelar["equipo1"]).strip()
+        estelar_eq2 = str(juego_estelar["equipo2"]).strip()
         logo_estelar_1 = LOGOS_EQUIPOS.get(estelar_eq1, "")
         logo_estelar_2 = LOGOS_EQUIPOS.get(estelar_eq2, "")
         
@@ -547,19 +555,18 @@ else:
 
             st.markdown("---")
             
-            # --- GESTOR DE ESTADÍSTICAS DE ACIERTOS ---
-            st.subheader("🎯 Gestor de Efectividad y Aciertos del Modelo")
-            st.write("Actualiza el rendimiento diario y acumulado que se muestra en el banner principal de la app.")
+            # --- GESTOR DE ESTADÍSTICAS DE ACIERTOS (SIMPLIFICADO SOLO AYER) ---
+            st.subheader("🎯 Gestor de Efectividad del Modelo")
+            st.write("Actualiza el rendimiento diario que se muestra en el banner principal de la app.")
             
-            ayer_act, acumulado_act = cargar_estadisticas()
+            ayer_act = cargar_estadisticas()
             with st.form("form_estadisticas"):
-                nuevo_ayer = st.text_input("Aciertos de Ayer (Ej: 3 / 3 (100%)):", value=ayer_act)
-                nuevo_acumulado = st.text_input("Récord Acumulado (Ej: 12 / 14 (85.7%)):", value=acumulado_act)
+                nuevo_ayer = st.text_input("Aciertos de Ayer (Ej: 3 / 4 (75%)):", value=ayer_act)
                 
-                btn_guardar_stats = st.form_submit_button("💾 Guardar Estadísticas de Aciertos")
+                btn_guardar_stats = st.form_submit_button("💾 Guardar Efectividad de Ayer")
                 if btn_guardar_stats:
-                    guardar_estadisticas(nuevo_ayer, nuevo_acumulado)
-                    st.success("¡Estadísticas de aciertos actualizadas con éxito!")
+                    guardar_estadisticas(nuevo_ayer)
+                    st.success("¡Efectividad actualizada con éxito!")
                     st.rerun()
 
             st.markdown("---")
@@ -584,112 +591,6 @@ else:
 
             st.markdown("---")
             
-            # --- GESTOR DE CARTELERA CON HORA Y SEDE ---
-            st.subheader("📅 Editor Individual de Cartelera, Horarios y Sedes")
-            st.write("Edita o agrega encuentros indicando el equipo visitante, local, hora, sede y los análisis bilingües.")
-            
-            nombres_partidos = [f"{r['equipo1']} vs {r['equipo2']}" for _, r in df_cartelera.iterrows()] + ["➕ Agregar Nuevo Partido"]
-            seleccion_edicion = st.selectbox("Selecciona encuentro a editar:", nombres_partidos)
-            
-            if seleccion_edicion != "➕ Agregar Nuevo Partido":
-                idx_sel = nombres_partidos.index(seleccion_edicion)
-                row_sel = df_cartelera.iloc[idx_sel]
-                
-                with st.form("form_editar_partido"):
-                    col_e1, col_e2 = st.columns(2)
-                    with col_e1:
-                        ed_eq1 = st.text_input("Equipo Visitante:", value=str(row_sel["equipo1"]))
-                    with col_e2:
-                        ed_eq2 = st.text_input("Equipo Local:", value=str(row_sel["equipo2"]))
-                    
-                    col_h1, col_h2 = st.columns(2)
-                    with col_h1:
-                        ed_hora = st.text_input("Hora (Ej: 18:30 (VE)):", value=str(row_sel["hora"]) if "hora" in row_sel and pd.notna(row_sel["hora"]) else "18:30 (VE)")
-                    with col_h2:
-                        ed_sede = st.text_input("Sede / Arena:", value=str(row_sel["sede"]) if "sede" in row_sel and pd.notna(row_sel["sede"]) else "Rocket Arena (Cleveland, OH)")
-
-                    col_g1, col_g2 = st.columns(2)
-                    with col_g1:
-                        ed_ganador = st.text_input("Ganador Proyectado:", value=str(row_sel["ganador"]))
-                    with col_g2:
-                        ed_puntos = st.text_input("Total Puntos (O/U):", value=str(row_sel["total_puntos"]))
-                    
-                    ed_analisis_es = st.text_area("Análisis Profundo (Español):", value=str(row_sel["analisis_es"]), height=130)
-                    ed_analisis_en = st.text_area("Advanced Analysis (English):", value=str(row_sel["analisis_en"]), height=130)
-                    ed_es_fija = st.checkbox("⭐ Marcar como 'Jugada Fija del Día'", value=bool(row_sel["es_jugada_fija"]))
-                    
-                    btn_actualizar = st.form_submit_button("💾 Actualizar Este Partido")
-                    
-                    if btn_actualizar:
-                        if ed_es_fija:
-                            df_cartelera["es_jugada_fija"] = False
-                        df_cartelera.at[idx_sel, "equipo1"] = ed_eq1
-                        df_cartelera.at[idx_sel, "equipo2"] = ed_eq2
-                        df_cartelera.at[idx_sel, "hora"] = ed_hora
-                        df_cartelera.at[idx_sel, "sede"] = ed_sede
-                        df_cartelera.at[idx_sel, "ganador"] = ed_ganador
-                        df_cartelera.at[idx_sel, "total_puntos"] = ed_puntos
-                        df_cartelera.at[idx_sel, "analisis_es"] = ed_analisis_es
-                        df_cartelera.at[idx_sel, "analisis_en"] = ed_analisis_en
-                        df_cartelera.at[idx_sel, "es_jugada_fija"] = ed_es_fija
-                        
-                        guardar_cartelera(df_cartelera)
-                        st.success("¡Partido actualizado con éxito!")
-                        st.rerun()
-                
-                if st.button("🗑️ Eliminar este partido"):
-                    df_cartelera = df_cartelera.drop(idx_sel).reset_index(drop=True)
-                    guardar_cartelera(df_cartelera)
-                    st.success("¡Partido eliminado!")
-                    st.rerun()
-
-            else:
-                with st.form("form_nuevo_partido"):
-                    col_ne1, col_ne2 = st.columns(2)
-                    with col_ne1:
-                        nuevo_eq1 = st.text_input("Equipo Visitante:")
-                    with col_ne2:
-                        nuevo_eq2 = st.text_input("Equipo Local:")
-                    
-                    col_nh1, col_nh2 = st.columns(2)
-                    with col_nh1:
-                        nuevo_hora = st.text_input("Hora (Ej: 19:00 (VE)):", value="19:00 (VE)")
-                    with col_nh2:
-                        nuevo_sede = st.text_input("Sede / Arena:", value="Spectrum Center (Charlotte, NC)")
-
-                    col_ng1, col_ng2 = st.columns(2)
-                    with col_ng1:
-                        nuevo_ganador = st.text_input("Ganador Proyectado:")
-                    with col_ng2:
-                        nuevo_puntos = st.text_input("Total Puntos (O/U):")
-                    
-                    nuevo_analisis_es = st.text_area("Análisis Profundo (Español):", height=130)
-                    nuevo_analisis_en = st.text_area("Advanced Analysis (English):", height=130)
-                    nuevo_es_fija = st.checkbox("⭐ Marcar como 'Jugada Fija del Día'")
-                    
-                    btn_crear = st.form_submit_button("➕ Guardar Nuevo Partido")
-                    
-                    if btn_crear:
-                        if nuevo_es_fija:
-                            df_cartelera["es_jugada_fija"] = False
-                        nuevo_registro = pd.DataFrame([{
-                            "equipo1": nuevo_eq1,
-                            "equipo2": nuevo_eq2,
-                            "hora": nuevo_hora,
-                            "sede": nuevo_sede,
-                            "ganador": nuevo_ganador,
-                            "total_puntos": nuevo_puntos,
-                            "analisis_es": nuevo_analisis_es,
-                            "analisis_en": nuevo_analisis_en,
-                            "es_jugada_fija": nuevo_es_fija
-                        }])
-                        df_cartelera = pd.concat([df_cartelera, nuevo_registro], ignore_index=True)
-                        guardar_cartelera(df_cartelera)
-                        st.success("¡Nuevo partido agregado con éxito!")
-                        st.rerun()
-
-            st.markdown("---")
-            
             # --- GESTOR DE NOTICIAS BILINGÜES ---
             titulo_editor = "📰 Editor y Publicador de Noticias Bilingüe (Español / Inglés)" if lang == "es" else "📰 Bilingual News Editor & Publisher (Spanish / English)"
             st.subheader(titulo_editor)
@@ -710,7 +611,7 @@ else:
                 
                 if btn_guardar:
                     guardar_noticias(nueva_mat_es, nueva_vesp_es, nueva_mat_en, nueva_vesp_en)
-                    st.success("¡Noticias bilingües guardadas y publicadas con éxito!" if lang == "es" else "Bilingual news successfully saved and published!")
+                    st.success("¡Noticias bilingües guardadas y publicaciones exitosas!" if lang == "es" else "Bilingual news successfully saved!")
                     st.rerun()
 
         elif clave_admin != "":
