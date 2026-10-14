@@ -20,7 +20,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Inicializar estado en memoria para las noticias (sin depender de archivos externos problemáticos)
+# Inicializar estado en memoria para las noticias (ultra liviano y sin bloqueos)
 if "mat_es" not in st.session_state:
     st.session_state.mat_es = "• **Radiografía de Eficiencia Ofensiva y eFG%:** Los Celtics impulsaron su eFG% con excelente spacing.\n\n• **Impacto del Net Rating:** Los diferenciales de eficiencia neta marcaron el ritmo.\n\n• **Tendencias Defensivas:** Reducción de pérdidas de balón (TOV%)."
 if "vesp_es" not in st.session_state:
@@ -151,34 +151,45 @@ def cargar_cartelera():
     if os.path.exists(cartelera_path):
         try:
             df = pd.read_csv(cartelera_path, encoding='utf-8')
-            if not df.empty and "equipo1" in df.columns:
-                df["equipo2"] = df["equipo2"].astype(str).apply(lambda x: x.split(" (")[0].replace("19:30", "").replace("20:00", "").replace("22:30", "").strip() if any(t in x for t in ["(", "19:", "20:", "22:"]) else x)
-                df["equipo2"] = df["equipo2"].apply(lambda x: "Charlotte Hornets" if len(x) < 3 else x)
+            if not df.empty and "equipo1" in df.columns and "equipo2" in df.columns:
+                # Limpieza segura sin recortar filas
+                df["equipo1"] = df["equipo1"].astype(str).str.strip()
+                df["equipo2"] = df["equipo2"].astype(str).str.strip()
                 
-                if "hora" not in df.columns or df["hora"].isnull().all():
+                if "hora" not in df.columns:
                     df["hora"] = "19:30 (VE)"
                 else:
                     df["hora"] = df["hora"].fillna("19:30 (VE)")
+                
                 if "sede" not in df.columns:
                     df["sede"] = "Spectrum Center"
+                else:
+                    df["sede"] = df["sede"].fillna("Spectrum Center")
+                
+                if "ganador" not in df.columns:
+                    df["ganador"] = "Por definir"
+                if "total_puntos" not in df.columns:
+                    df["total_puntos"] = "224.5"
+                if "analisis_es" not in df.columns:
+                    df["analisis_es"] = "Análisis táctico en desarrollo."
+                if "analisis_en" not in df.columns:
+                    df["analisis_en"] = "Tactical analysis under development."
                 if "es_jugada_fija" not in df.columns:
                     df["es_jugada_fija"] = False
+                
                 return df
         except Exception:
             pass
     
+    # Cartelera por defecto completa con los 7 juegos de hoy
     data_def = [
-        {
-            "equipo1": "Boston Celtics",
-            "equipo2": "Charlotte Hornets",
-            "hora": "19:30 (VE)",
-            "sede": "Spectrum Center (Charlotte, NC)",
-            "ganador": "Boston Celtics (-8.5 pts)",
-            "total_puntos": "224.5 (Altas / Over)",
-            "analisis_es": "📊 **Desglose Box Score & Tradicional:** Los Celtics promedian 118.4 PTS...",
-            "analisis_en": "📊 **Box Score & Traditional Breakdown:** Celtics average...",
-            "es_jugada_fija": True
-        }
+        {"equipo1": "Boston Celtics", "equipo2": "Charlotte Hornets", "hora": "19:30 (VE)", "sede": "Spectrum Center", "ganador": "Boston Celtics (-8.5 pts)", "total_puntos": "224.5 (Over)", "analisis_es": "📊 Los Celtics dominan el espaciamiento perimetral y el eFG%.", "analisis_en": "📊 Celtics lead in perimeter spacing.", "es_jugada_fija": True},
+        {"equipo1": "Miami Heat", "equipo2": "Brooklyn Nets", "hora": "19:30 (VE)", "sede": "Barclays Center", "ganador": "Miami Heat (-4.5 pts)", "total_puntos": "218.5 (Under)", "analisis_es": "📊 Intensidad defensiva y control del ritmo de posesión.", "analisis_en": "📊 Defensive intensity.", "es_jugada_fija": False},
+        {"equipo1": "Dallas Mavericks", "equipo2": "New Orleans Pelicans", "hora": "20:00 (VE)", "sede": "Smoothie King Center", "ganador": "Dallas Mavericks (-3.0 pts)", "total_puntos": "230.5 (Over)", "analisis_es": "📊 Alto volumen de pick-and-roll y eficiencia en transición.", "analisis_en": "📊 High pick-and-roll volume.", "es_jugada_fija": False},
+        {"equipo1": "Milwaukee Bucks", "equipo2": "Chicago Bulls", "hora": "20:00 (VE)", "sede": "United Center", "ganador": "Milwaukee Bucks (-6.0 pts)", "total_puntos": "226.0 (Over)", "analisis_es": "📊 Dominio en la pintura y captura de rebotes.", "analisis_en": "📊 Paint dominance.", "es_jugada_fija": False},
+        {"equipo1": "Minnesota Timberwolves", "equipo2": "Detroit Pistons", "hora": "20:00 (VE)", "sede": "Little Caesars Arena", "ganador": "Minnesota Timberwolves (-7.5 pts)", "total_puntos": "215.0 (Under)", "analisis_es": "📊 Excelente rating defensivo y reducción de pérdidas.", "analisis_en": "📊 Elite defensive rating.", "es_jugada_fija": False},
+        {"equipo1": "San Antonio Spurs", "equipo2": "Phoenix Suns", "hora": "20:00 (VE)", "sede": "Footprint Center", "ganador": "Phoenix Suns (-5.0 pts)", "total_puntos": "228.0 (Over)", "analisis_es": "📊 Eficiencia en tiro de media distancia y aislamiento.", "analisis_en": "📊 Mid-range efficiency.", "es_jugada_fija": False},
+        {"equipo1": "Los Angeles Clippers", "equipo2": "Denver Nuggets", "hora": "22:30 (VE)", "sede": "Ball Arena", "ganador": "Denver Nuggets (-4.0 pts)", "total_puntos": "222.0 (Over)", "analisis_es": "📊 Duelo estelar de altares tácticos y control del ritmo.", "analisis_en": "📊 Star tactical showdown.", "es_jugada_fija": False}
     ]
     df_def = pd.DataFrame(data_def)
     df_def.to_csv(cartelera_path, index=False, encoding='utf-8')
@@ -419,7 +430,6 @@ else:
             st.subheader("📰 Editor Directo de Noticias Bilingües (En Memoria)")
             st.write("Modifica los textos directamente y guarda los cambios para verlos de inmediato en la sección de noticias.")
             
-            # Formulario liviano usando el session_state directamente
             with st.form("form_noticias_session"):
                 st.markdown("#### 🇪🇸 Español")
                 nuevo_mat_es = st.text_area("Noticia Matutina (Español):", value=st.session_state.mat_es, height=150)
