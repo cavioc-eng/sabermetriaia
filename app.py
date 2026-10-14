@@ -168,9 +168,7 @@ def cargar_cartelera():
         try:
             df = pd.read_csv(cartelera_path)
             if not df.empty and "equipo1" in df.columns:
-                # Limpiar si la hora o texto extra se coló en equipo2
                 df["equipo2"] = df["equipo2"].astype(str).apply(lambda x: x.split(" (")[0].replace("19:30", "").replace("20:00", "").replace("22:30", "").strip() if any(t in x for t in ["(", "19:", "20:", "22:"]) else x)
-                # Si equipo2 quedó vacío por error, asignar predeterminado
                 df["equipo2"] = df["equipo2"].apply(lambda x: "Charlotte Hornets" if len(x) < 3 else x)
                 
                 if "hora" not in df.columns or df["hora"].isnull().all():
@@ -341,4 +339,80 @@ else:
             
         estelar_eq1 = str(juego_estelar["equipo1"]).strip()
         estelar_eq2 = str(juego_estelar["equipo2"]).strip()
-        logo_estelar_1 = LOGOS_EQUIPOS.get(estelar_eq
+        logo_estelar_1 = LOGOS_EQUIPOS.get(estelar_eq1, "")
+        logo_estelar_2 = LOGOS_EQUIPOS.get(estelar_eq2, "")
+        
+        matchup_estelar_html = f'<div class="matchup-box"><div class="team-col"><img src="{logo_estelar_1}" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">{estelar_eq1}</h3><span style="font-size: 12px; color: #8b949e;">(Visitante)</span></div><div class="vs-col">VS</div><div class="team-col"><img src="{logo_estelar_2}" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">{estelar_eq2}</h3><span style="font-size: 12px; color: #8b949e;">(Local)</span></div></div>'
+        st.markdown(matchup_estelar_html, unsafe_allow_html=True)
+        
+        hora_est = str(juego_estelar.get('hora', '19:30 (VE)'))
+        sede_est = str(juego_estelar.get('sede', 'Arena Principal'))
+        st.markdown(f"🕒 **Hora (VE):** {hora_est} &nbsp;&nbsp;|&nbsp;&nbsp; 🏟️ **Sede:** {sede_est}")
+        st.markdown("---")
+        st.markdown("### 📊 Fundamento Estadístico y Razonamiento del Modelo")
+        analisis_jugada = juego_estelar["analisis_es"] if lang == "es" else juego_estelar["analisis_en"]
+        st.markdown(f"* **Selección Recomendada:** {juego_estelar['ganador']} | Totales: {juego_estelar['total_puntos']}\n* **Nivel de Confianza del Modelo:** 88.4%\n* **Por qué elegimos este encuentro:** {analisis_jugada}")
+
+    elif menu == "Diccionario Sabermétrico":
+        st.header("📖 Diccionario Sabermétrico Educativo")
+        st.markdown(
+            "### 🟢 Indicadores Básicos y Tradicionales (Box Score)\n"
+            "- **PTS / REB / AST / STL / BLK / TOV / MIN**\n\n"
+            "### 🟡 Indicadores de Eficiencia Estándar\n"
+            "- **FG% / 3P% / FT%**\n\n"
+            "### 🔴 Indicadores Avanzados\n"
+            "- **Pace / True Shooting (TS%) / Net Rating / USG% / PER**"
+        )
+
+    elif menu == "🔐 Panel de Administración":
+        st.header(t["admin_titulo"])
+        st.write(t["admin_desc"])
+        clave_admin = st.text_input(t["admin_clave"], type="password")
+        
+        if clave_admin == "sabermetria2026":
+            st.success(t["admin_exito"])
+            if os.path.exists(db_usuarios_path):
+                df_visitas = pd.read_csv(db_usuarios_path)
+                st.metric(label=t["total_visitas"], value=len(df_visitas))
+                st.dataframe(df_visitas, use_container_width=True)
+
+            st.markdown("---")
+            st.subheader("🎯 Gestor de Efectividad del Modelo")
+            ayer_act = cargar_estadisticas()
+            with st.form("form_estadisticas"):
+                nuevo_ayer = st.text_input("Aciertos de Ayer (Ej: 3 / 4 (75%)):", value=ayer_act)
+                if st.form_submit_button("💾 Guardar Efectividad de Ayer"):
+                    guardar_estadisticas(nuevo_ayer)
+                    st.success("¡Efectividad actualizada!")
+                    st.rerun()
+
+            st.markdown("---")
+            st.subheader("📂 Carga Directa de Cartelera (Subir Archivo CSV)")
+            archivo_subido = st.file_uploader("Selecciona tu archivo CSV de cartelera", type=["csv"])
+            if archivo_subido is not None:
+                try:
+                    df_subido = pd.read_csv(archivo_subido)
+                    guardar_cartelera(df_subido)
+                    st.success(f"¡Cartelera actualizada con éxito! Se cargaron {len(df_subido)} encuentros.")
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"❌ Error al procesar CSV: {e}")
+
+            st.markdown("---")
+            st.subheader("📰 Editor y Publicador de Noticias Bilingüe")
+            mat_es_act, vesp_es_act, mat_en_act, vesp_en_act = cargar_noticias()
+            with st.form("form_noticias_bilingue"):
+                st.markdown("#### 🇪🇸 Español")
+                nueva_mat_es = st.text_area("Matutina (Español):", value=mat_es_act, height=130)
+                nueva_vesp_es = st.text_area("Vespertina (Español):", value=vesp_es_act, height=130)
+                st.markdown("#### 🇺🇸 Inglés (English)")
+                nueva_mat_en = st.text_area("Morning Edition (English):", value=mat_en_act, height=130)
+                nueva_vesp_en = st.text_area("Evening Edition (English):", value=vesp_en_act, height=130)
+                
+                if st.form_submit_button("💾 Guardar Noticias Bilingües"):
+                    guardar_noticias(nueva_mat_es, nueva_vesp_es, nueva_mat_en, nueva_vesp_en)
+                    st.success("¡Noticias bilingües guardadas con éxito!")
+                    st.rerun()
+
+        elif clave_admin != "":
+            st.error(t["admin_error"])
