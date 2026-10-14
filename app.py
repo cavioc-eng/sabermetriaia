@@ -10,7 +10,6 @@ import streamlit as st
 current_dir = os.path.dirname(os.path.abspath(__file__))
 logo_path = os.path.join(current_dir, "logo.jpeg")
 db_usuarios_path = os.path.join(current_dir, "registros_tiktok.csv")
-cartelera_path = os.path.join(current_dir, "cartelera_bilingue.csv")
 estadisticas_path = os.path.join(current_dir, "historial_aciertos.csv")
 noticias_txt_path = os.path.join(current_dir, "noticias.txt")
 
@@ -22,12 +21,10 @@ st.set_page_config(
 )
 
 def cargar_noticias_txt():
-    default_noticias = {
-        "mat_es": "• **Radiografía de Eficiencia Ofensiva y eFG%:** Los Celtics impulsaron su eFG% con excelente spacing perimetral.\n\n• **Impacto del Net Rating:** Los diferenciales de eficiencia neta marcaron el ritmo en los cierres ajustados.",
-        "vesp_es": "• **Reporte Crítico de Lesiones:** Monitoreo estricto en las rotaciones perimetrales de Dallas y Phoenix.\n\n• **Efecto en el Pace:** Gestión rigurosa de la carga física en la pretemporada.",
-        "mat_en": "• **Offensive Efficiency & eFG%:** Boston Celtics fueled perimeter spacing and high-value shot selection.\n\n• **Net Rating Impact:** Advanced net rating metrics drove game dynamics.",
-        "vesp_en": "• **Critical Injury Reports:** Active backcourt roster monitoring for tonight's matchups.\n\n• **Pace Adjustments:** Workload management controlling possession velocity."
-    }
+    default_mat_es = "• **Radiografía de Eficiencia Ofensiva y eFG%:** Los Celtics impulsaron su eFG% con excelente spacing perimetral.\n\n• **Impacto del Net Rating:** Los diferenciales de eficiencia neta marcaron el ritmo en los cierres ajustados."
+    default_vesp_es = "• **Reporte Crítico de Lesiones:** Monitoreo estricto en las rotaciones perimetrales de Dallas y Phoenix.\n\n• **Efecto en el Pace:** Gestión rigurosa de la carga física en la pretemporada."
+    default_mat_en = "• **Offensive Efficiency & eFG%:** Boston Celtics fueled perimeter spacing and high-value shot selection.\n\n• **Net Rating Impact:** Advanced net rating metrics drove game dynamics."
+    default_vesp_en = "• **Critical Injury Reports:** Active backcourt roster monitoring for tonight's matchups.\n\n• **Pace Adjustments:** Workload management controlling possession velocity."
     
     if os.path.exists(noticias_txt_path):
         try:
@@ -37,9 +34,7 @@ def cargar_noticias_txt():
                     return lines[0].strip(), lines[1].strip(), lines[2].strip(), lines[3].strip()
         except Exception:
             pass
-    
-    guardar_noticias_txt(default_noticias["mat_es"], default_noticias["vesp_es"], default_noticias["mat_en"], default_noticias["vesp_en"])
-    return default_noticias["mat_es"], default_noticias["vesp_es"], default_noticias["mat_en"], default_noticias["vesp_en"]
+    return default_mat_es, default_vesp_es, default_mat_en, default_vesp_en
 
 def guardar_noticias_txt(mat_es, vesp_es, mat_en, vesp_en):
     try:
@@ -59,7 +54,7 @@ TEXTOS = {
         "paso2_desc": "Haz clic en el botón para entrar al portal exclusivo:",
         "btn_acceso": "🏀 Entrar al Portal Exclusivo",
         "admin_titulo": "🔐 Panel de Control y Publicación - Sabermetría IA",
-        "admin_desc": "Control estadístico de visitas, cartelera bilingüe y noticias.",
+        "admin_desc": "Control estadístico de visitas y noticias.",
         "admin_clave": "Ingresa la clave de administrador:",
         "admin_exito": "¡Acceso de administrador concedido!",
         "admin_error": "❌ Clave de administrador incorrecta.",
@@ -75,7 +70,7 @@ TEXTOS = {
         "paso2_desc": "Click the button to enter the exclusive portal:",
         "btn_acceso": "🏀 Enter Exclusive Portal",
         "admin_titulo": "🔐 Control & Publishing Panel - Sabermetria AI",
-        "admin_desc": "Visit statistical control, bilingual schedule, and news.",
+        "admin_desc": "Visit statistical control and news.",
         "admin_clave": "Enter admin password:",
         "admin_exito": "Admin access granted!",
         "admin_error": "❌ Incorrect admin password.",
@@ -96,31 +91,20 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 LOGOS_EQUIPOS = {
-    "Orlando Magic": "https://cdn.nba.com/logos/nba/1610612753/global/L/logo.svg",
-    "Cleveland Cavaliers": "https://cdn.nba.com/logos/nba/1610612739/global/L/logo.svg",
-    "Milwaukee Bucks": "https://cdn.nba.com/logos/nba/1610612749/global/L/logo.svg",
-    "Charlotte Hornets": "https://cdn.nba.com/logos/nba/1610612766/global/L/logo.svg",
-    "Chicago Bulls": "https://cdn.nba.com/logos/nba/1610612741/global/L/logo.svg",
-    "Denver Nuggets": "https://cdn.nba.com/logos/nba/1610612743/global/L/logo.svg",
-    "Dallas Mavericks": "https://cdn.nba.com/logos/nba/1610612742/global/L/logo.svg",
-    "Oklahoma City Thunder": "https://cdn.nba.com/logos/nba/1610612760/global/L/logo.svg",
-    "Philadelphia 76ers": "https://cdn.nba.com/logos/nba/1610612755/global/L/logo.svg",
-    "Los Angeles Lakers": "https://cdn.nba.com/logos/nba/1610612747/global/L/logo.svg",
-    "Golden State Warriors": "https://cdn.nba.com/logos/nba/1610612744/global/L/logo.svg",
-    "New York Knicks": "https://cdn.nba.com/logos/nba/1610612752/global/L/logo.svg",
-    "Toronto Raptors": "https://cdn.nba.com/logos/nba/1610612761/global/L/logo.svg",
-    "Indiana Pacers": "https://cdn.nba.com/logos/nba/1610612754/global/L/logo.svg",
-    "Sacramento Kings": "https://cdn.nba.com/logos/nba/1610612758/global/L/logo.svg",
-    "Portland Trail Blazers": "https://cdn.nba.com/logos/nba/1610612757/global/L/logo.svg",
     "Boston Celtics": "https://cdn.nba.com/logos/nba/1610612738/global/L/logo.svg",
+    "Charlotte Hornets": "https://cdn.nba.com/logos/nba/1610612766/global/L/logo.svg",
     "Miami Heat": "https://cdn.nba.com/logos/nba/1610612748/global/L/logo.svg",
     "Brooklyn Nets": "https://cdn.nba.com/logos/nba/1610612751/global/L/logo.svg",
+    "Dallas Mavericks": "https://cdn.nba.com/logos/nba/1610612742/global/L/logo.svg",
     "New Orleans Pelicans": "https://cdn.nba.com/logos/nba/1610612740/global/L/logo.svg",
+    "Milwaukee Bucks": "https://cdn.nba.com/logos/nba/1610612749/global/L/logo.svg",
+    "Chicago Bulls": "https://cdn.nba.com/logos/nba/1610612741/global/L/logo.svg",
     "Minnesota Timberwolves": "https://cdn.nba.com/logos/nba/1610612750/global/L/logo.svg",
     "Detroit Pistons": "https://cdn.nba.com/logos/nba/1610612765/global/L/logo.svg",
     "San Antonio Spurs": "https://cdn.nba.com/logos/nba/1610612759/global/L/logo.svg",
     "Phoenix Suns": "https://cdn.nba.com/logos/nba/1610612756/global/L/logo.svg",
-    "Los Angeles Clippers": "https://cdn.nba.com/logos/nba/1610612746/global/L/logo.svg"
+    "Los Angeles Clippers": "https://cdn.nba.com/logos/nba/1610612746/global/L/logo.svg",
+    "Denver Nuggets": "https://cdn.nba.com/logos/nba/1610612743/global/L/logo.svg"
 }
 
 def generar_pdf_analisis(partido, hora, sede, ganador, total_puntos, razonamiento):
@@ -276,6 +260,7 @@ def cargar_cartelera():
     ]
     return pd.DataFrame(data_def)
 
+# Selector de idioma global en la barra lateral
 idioma = st.sidebar.selectbox("🌐 Idioma / Language", ["Español", "English"])
 lang = "es" if idioma == "Español" else "en"
 t = TEXTOS[lang]
@@ -355,4 +340,76 @@ else:
         
         opciones_dict = {}
         for _, row in df_cartelera.iterrows():
-            e1 = str
+            e1 = str(row['equipo1']).strip()
+            e2 = str(row['equipo2']).strip()
+            label = f"{e1} vs. {e2}"
+            opciones_dict[label] = row
+            
+        partido_seleccionado = st.selectbox("Juegos de hoy:", list(opciones_dict.keys()))
+        
+        if partido_seleccionado:
+            fila_juego = opciones_dict[partido_seleccionado]
+            equipo1 = str(fila_juego['equipo1']).strip()
+            equipo2 = str(fila_juego['equipo2']).strip()
+            
+            logo1_url = LOGOS_EQUIPOS.get(equipo1, "")
+            logo2_url = LOGOS_EQUIPOS.get(equipo2, "")
+            
+            matchup_html = f'<div class="matchup-box"><div class="team-col"><img src="{logo1_url}" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">{equipo1}</h3><span style="font-size: 12px; color: #8b949e;">(Visitante)</span></div><div class="vs-col">VS</div><div class="team-col"><img src="{logo2_url}" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">{equipo2}</h3><span style="font-size: 12px; color: #8b949e;">(Local)</span></div></div>'
+            st.markdown(matchup_html, unsafe_allow_html=True)
+            
+            hora_val = str(fila_juego.get('hora', '19:30 (VE)'))
+            sede_val = str(fila_juego.get('sede', 'Arena Principal'))
+            st.markdown(f"🕒 **Hora (VE):** {hora_val} &nbsp;&nbsp;|&nbsp;&nbsp; 🏟️ **Sede:** {sede_val}")
+            st.markdown("---")
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                st.metric(label="Ganador Proyectado", value=fila_juego["ganador"])
+            with col2:
+                st.metric(label="Total de Puntos (O/U)", value=fila_juego["total_puntos"])
+            
+            st.markdown("### 🧠 Razonamiento Táctico y Métricas Avanzadas")
+            analisis_amplio = fila_juego["analisis_es"] if lang == "es" else fila_juego["analisis_en"]
+            st.markdown(analisis_amplio, unsafe_allow_html=True)
+            
+            st.markdown("---")
+            if st.button("📄 Descargar Análisis en PDF"):
+                archivo_pdf = generar_pdf_analisis(f"{equipo1} vs {equipo2}", hora_val, sede_val, fila_juego["ganador"], fila_juego["total_puntos"], analisis_amplio)
+                with open(archivo_pdf, "rb") as f:
+                    st.download_button("💾 Guardar archivo PDF en tu equipo", data=f, file_name="reporte_sabermetria_nba.pdf", mime="application/pdf")
+
+    elif menu == "Noticias (Doble Actualización)":
+        st.header(f"📰 Centro de Noticias en Tiempo Real — {fecha_hoy}")
+        st.write("Bienvenido al centro informativo oficial de Sabermetría IA.")
+        
+        mat_es, vesp_es, mat_en, vesp_en = cargar_noticias_txt()
+        matutina_texto = mat_es if lang == "es" else mat_en
+        vespertina_texto = vesp_es if lang == "es" else vesp_en
+
+        tab1, tab2 = st.tabs(["🌅 Actualización Matutina (Cierre Previo)", "🌇 Actualización de la Tarde (5:00 p.m.)"])
+        with tab1:
+            st.subheader("🌅 Reporte Matutino: Radiografía y Tendencias de la Liga")
+            st.markdown(matutina_texto)
+        with tab2:
+            st.subheader("🌇 Reporte Vespertino: Última Hora y Ajustes Previo al Salto Inicial")
+            st.markdown(vespertina_texto)
+
+    elif menu == "La Jugada Fija del Día":
+        st.header("⭐ La Jugada Estelar del Modelo")
+        st.success("Recomendación avalada estrictamente por eficiencia matemática y métricas de posesión.")
+        
+        juegos_fijos = df_cartelera[df_cartelera['es_jugada_fija'] == True]
+        juego_estelar = juegos_fijos.iloc[0] if not juegos_fijos.empty else df_cartelera.iloc[0]
+            
+        estelar_eq1 = str(juego_estelar["equipo1"]).strip()
+        estelar_eq2 = str(juego_estelar["equipo2"]).strip()
+        logo_estelar_1 = LOGOS_EQUIPOS.get(estelar_eq1, "")
+        logo_estelar_2 = LOGOS_EQUIPOS.get(estelar_eq2, "")
+        
+        matchup_estelar_html = f'<div class="matchup-box"><div class="team-col"><img src="{logo_estelar_1}" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">{estelar_eq1}</h3><span style="font-size: 12px; color: #8b949e;">(Visitante)</span></div><div class="vs-col">VS</div><div class="team-col"><img src="{logo_estelar_2}" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">{estelar_eq2}</h3><span style="font-size: 12px; color: #8b949e;">(Local)</span></div></div>'
+        st.markdown(matchup_estelar_html, unsafe_allow_html=True)
+        
+        hora_est = str(juego_estelar.get('hora', '19:30 (VE)'))
+        sede_est = str(juego_estelar.get('sede', 'Arena Principal'))
+        st.markdown(f"🕒 **Hora (
