@@ -21,10 +21,10 @@ st.set_page_config(
 )
 
 def cargar_noticias_txt():
-    default_mat_es = "• **Radiografía de Eficiencia Ofensiva y eFG%:** Los Celtics impulsaron su eFG% con excelente spacing perimetral.\n\n• **Impacto del Net Rating:** Los diferenciales de eficiencia neta marcaron el ritmo en los cierres ajustados."
-    default_vesp_es = "• **Reporte Crítico de Lesiones:** Monitoreo estricto en las rotaciones perimetrales de Dallas y Phoenix.\n\n• **Efecto en el Pace:** Gestión rigurosa de la carga física en la pretemporada."
-    default_mat_en = "• **Offensive Efficiency & eFG%:** Boston Celtics fueled perimeter spacing and high-value shot selection.\n\n• **Net Rating Impact:** Advanced net rating metrics drove game dynamics."
-    default_vesp_en = "• **Critical Injury Reports:** Active backcourt roster monitoring for tonight's matchups.\n\n• **Pace Adjustments:** Workload management controlling possession velocity."
+    default_mat_es = "• Radiografía de Eficiencia Ofensiva y eFG%: Los Celtics impulsaron su eFG% con excelente spacing perimetral.\n\n• Impacto del Net Rating: Los diferenciales de eficiencia neta marcaron el ritmo en los cierres ajustados."
+    default_vesp_es = "• Reporte Crítico de Lesiones: Monitoreo estricto en las rotaciones perimetrales de Dallas y Phoenix.\n\n• Efecto en el Pace: Gestión rigurosa de la carga física en la pretemporada."
+    default_mat_en = "• Offensive Efficiency & eFG%: Boston Celtics fueled perimeter spacing and high-value shot selection.\n\n• Net Rating Impact: Advanced net rating metrics drove game dynamics."
+    default_vesp_en = "• Critical Injury Reports: Active backcourt roster monitoring for tonight's matchups.\n\n• Pace Adjustments: Workload management controlling possession velocity."
     
     if os.path.exists(noticias_txt_path):
         try:
@@ -39,7 +39,7 @@ def cargar_noticias_txt():
 def guardar_noticias_txt(mat_es, vesp_es, mat_en, vesp_en):
     try:
         with open(noticias_txt_path, "w", encoding="utf-8") as f:
-            f.write(f"{mat_es}\n---SEPARADOR_NOTICIAS---\n{vesp_es}\n---SEPARADOR_NOTICIAS---\n{mat_en}\n---SEPARADOR_NOTICIAS---\n{vesp_en}")
+            f.write(mat_es + "\n---SEPARADOR_NOTICIAS---\n" + vesp_es + "\n---SEPARADOR_NOTICIAS---\n" + mat_en + "\n---SEPARADOR_NOTICIAS---\n" + vesp_en)
     except Exception:
         pass
 
@@ -48,7 +48,7 @@ TEXTOS = {
         "titulo_app": "SABERMETRÍA IA",
         "sub_app": "Analítica Avanzada de Básquetbol",
         "paso1_titulo": "Paso 1: Síguenos en TikTok",
-        "paso1_desc": "Abre nuestro perfil oficial <b>@sabermetriaia</b> y presiona el botón de Seguir:",
+        "paso1_desc": "Abre nuestro perfil oficial @sabermetriaia y presiona el botón de Seguir:",
         "btn_tiktok": "📲 Ir a @sabermetriaia",
         "paso2_titulo": "Paso 2: Acceso Directo",
         "paso2_desc": "Haz clic en el botón para entrar al portal exclusivo:",
@@ -64,7 +64,7 @@ TEXTOS = {
         "titulo_app": "SABERMETRIA AI",
         "sub_app": "Advanced Basketball Analytics",
         "paso1_titulo": "Step 1: Follow us on TikTok",
-        "paso1_desc": "Open our official profile <b>@sabermetriaia</b> and hit Follow:",
+        "paso1_desc": "Open our official profile @sabermetriaia and hit Follow:",
         "btn_tiktok": "📲 Go to @sabermetriaia",
         "paso2_titulo": "Step 2: Direct Access",
         "paso2_desc": "Click the button to enter the exclusive portal:",
@@ -115,21 +115,21 @@ def generar_pdf_analisis(partido, hora, sede, ganador, total_puntos, razonamient
     title_style = ParagraphStyle('TitleStyle', parent=styles['Heading1'], fontSize=16, textColor=colors.HexColor('#00FF66'), spaceAfter=12)
     body_style = ParagraphStyle('BodyStyle', parent=styles['Normal'], fontSize=10, textColor=colors.HexColor('#333333'), spaceAfter=10, leading=14)
     story.append(Paragraph("SABERMETRÍA IA - REPORTE DE ANALÍTICA AVANZADA", title_style))
-    story.append(Paragraph(f"<b>Encuentro:</b> {partido}", body_style))
-    story.append(Paragraph(f"<b>Hora (VE):</b> {hora} | <b>Sede:</b> {sede}", body_style))
-    story.append(Paragraph(f"<b>Fecha del Reporte:</b> {datetime.now().strftime('%d/%m/%Y')}", body_style))
+    story.append(Paragraph("Encuentro: " + partido, body_style))
+    story.append(Paragraph("Hora (VE): " + hora + " | Sede: " + sede, body_style))
+    story.append(Paragraph("Fecha del Reporte: " + datetime.now().strftime('%d/%m/%Y'), body_style))
     story.append(Spacer(1, 10))
-    story.append(Paragraph(f"<b>Ganador Proyectado:</b> {ganador}", body_style))
-    story.append(Paragraph(f"<b>Línea de Puntos Totales (O/U):</b> {total_puntos}", body_style))
+    story.append(Paragraph("Ganador Proyectado: " + ganador, body_style))
+    story.append(Paragraph("Línea de Puntos Totales (O/U): " + total_puntos, body_style))
     story.append(Spacer(1, 10))
-    story.append(Paragraph("<b>Desglose Táctico y Métricas del Modelo:</b>", title_style))
+    story.append(Paragraph("Desglose Táctico y Métricas del Modelo:", title_style))
     story.append(Paragraph(razonamiento, body_style))
     doc.build(story)
     return pdf_path
 
 def registrar_visita():
     fecha_hora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    nuevo_reg = pd.DataFrame([["Seguidor TikTok (Acceso Directo)", fecha_hora]], columns=["Usuario", "Fecha_Acceso"])
+    nuevo_reg = pd.DataFrame([["Seguidor TikTok (Acceso Directo", fecha_hora]], columns=["Usuario", "Fecha_Acceso"])
     if os.path.exists(db_usuarios_path):
         df_ex = pd.read_csv(db_usuarios_path)
         pd.concat([df_ex, nuevo_reg], ignore_index=True).to_csv(db_usuarios_path, index=False, encoding='utf-8')
@@ -148,42 +148,134 @@ def guardar_estadisticas(ayer):
     pd.DataFrame([[ayer]], columns=["ayer"]).to_csv(estadisticas_path, index=False, encoding='utf-8')
 
 def cargar_cartelera():
+    analisis_celtics = (
+        "🏀 Análisis Táctico y de Espaciamiento (Spacing):\n\n"
+        "Los Boston Celtics llegan a este encuentro exhibiendo una estructura ofensiva fundamentada en la saturación perimetral y la creación de ventajas a partir del pick-and-pop. Con un promedio de conversión superior al 56.2% en eFG% (Effective Field Goal Percentage), el conjunto verde maximiza el valor esperado de cada posesión castigando las ayudas defensivas del rival.\n\n"
+        "📊 Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):\n\n"
+        "• Net Rating Proyectado: +10.4 a favor de Boston, sustentado en una eficiencia defensiva que limita al oponente a menos de 102 puntos por cada 100 posesiones.\n"
+        "• Pace Estimado: 99.2 posesiones por 48 minutos, lo que favorece un ritmo dinámico e incrementa el volumen total de lanzamientos de larga distancia.\n"
+        "• Turnover Percentage (TOV%): Boston mantiene una tasa de pérdida de balón controlada (inferior al 11.2%), neutralizando las transiciones defensivas de Charlotte.\n\n"
+        "🎯 Conclusión del Modelo: La superioridad en la profundidad de banquillo y el dominio en la captura de rebotes ofensivos (OREB%) inclinan la balanza con solvencia hacia la línea de los Celtics."
+    )
+
+    analisis_heat = (
+        "🏀 Análisis Táctico y de Espaciamiento (Spacing):\n\n"
+        "El sistema de Miami opera bajo una disciplina defensiva inquebrantable, priorizando la defensa de contención en el perímetro y cerrando los espacios en la llave (paint protection). Brooklyn intentará proponer un juego abierto, pero la presión física en la primera línea de pase cortocircuitará su circulación de balón.\n\n"
+        "📊 Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):\n\n"
+        "• Pace Proyectado: 96.5 posesiones. Al ser un juego de posesiones más pausadas, el ritmo beneficia la tendencia a la baja (Under) en la línea de puntos totales.\n"
+        "• Defensive Rating: Miami proyecta frenar la eficiencia ofensiva rival por debajo del 44% en tiros de campo globales.\n"
+        "• True Shooting Percentage (TS%): La selección de tiro de Miami en la media distancia ofrece mayor estabilidad en los minutos de cierre.\n\n"
+        "🎯 Conclusión del Modelo: Disciplina táctica y control absoluto del reloj de posesión otorgan la ventaja a Miami en un duelo de pocos puntos."
+    )
+
+    analisis_mavericks = (
+        "🏀 Análisis Táctico y de Espaciamiento (Spacing):\n\n"
+        "Encuentro caracterizado por un alto volumen de transiciones ofensivas y situaciones de bloqueo directo (pick-and-roll). Dallas explota de manera quirúrgica las debilidades en el cambio de marca defensivo del rival, generando tiros abiertos desde las esquinas.\n\n"
+        "📊 Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):\n\n"
+        "• True Shooting Percentage (TS%): Proyectado en un formidable 59.8% para los Mavericks, reflejando gran eficacia combinando tiros libres, dobles y triples.\n"
+        "• Usage Rate (USG%): Alta concentración de jugadas culminadas por los creadores de juego principales, elevando el potencial de anotación colectiva.\n"
+        "• Pace Estimado: 101.4 posesiones, apuntando directamente a superar la línea de altas (Over).\n\n"
+        "🎯 Conclusión del Modelo: La capacidad anotadora exterior de Dallas y la velocidad en transición garantizan un partido de alto voltaje ofensivo."
+    )
+
+    analisis_bucks = (
+        "🏀 Análisis Táctico y de Espaciamiento (Spacing):\n\n"
+        "Milwaukee impone condiciones a través de su dominio físico en la pintura y la gravedad ofensiva que atrae su juego interior, abriendo espacios ideales para los tiradores exteriores. Chicago sufrirá para contener el rebote en ambos costados de la duela.\n\n"
+        "📊 Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):\n\n"
+        "• Rebounding Percentage (OREB/DREB): Clara ventaja para los Bucks, asegurando segundas oportunidades de anotación.\n"
+        "• Offensive Rating: Proyectado en 116.8 puntos por 100 posesiones, aprovechando las flaquezas de la estructura defensiva de los Bulls.\n\n"
+        "🎯 Conclusión del Modelo: La jerarquía en la pintura y el control del ritmo ofensivo inclinan el pronóstico claramente hacia Milwaukee."
+    )
+
+    analisis_wolves = (
+        "🏀 Análisis Táctico y de Espaciamiento (Spacing):\n\n"
+        "Minnesota despliega uno de los entramados defensivos más asfixiantes de la liga. Su capacidad para colapsar la pintura y recuperar la posición perimetral neutraliza los sistemas de penetración rivales.\n\n"
+        "📊 Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):\n\n"
+        "• Defensive Win Shares: Alto índice acumulado en el quinteto titular visitante.\n"
+        "• Opponent Effective Field Goal Percentage (Opp eFG%): Proyectado por debajo del 48%, conteniendo severamente la producción ofensiva de Detroit.\n\n"
+        "🎯 Conclusión del Modelo: Solidez defensiva y control de las líneas de pase marcan la pauta para una victoria cómoda y de baja anotación."
+    )
+
+    analisis_suns = (
+        "🏀 Análisis Táctico y de Espaciamiento (Spacing):\n\n"
+        "Duelo de alta escuela en la ejecución de tiros de media distancia y situaciones de aclarado (isolation). Phoenix cuenta con individualidades letales capaces de castigar cualquier desajuste en los cambios defensivos.\n\n"
+        "📊 Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):\n\n"
+        "• Clutch Efficiency: Los Suns registran superioridad estadística en posesiones apretadas durante los últimos cuartos.\n"
+        "• Offensive Pace: Ritmo elevado que propicia un intercambio constante de canastas.\n\n"
+        "🎯 Conclusión del Modelo: La experiencia y la precisión en los momentos clave otorgan la ventaja a Phoenix en un marcador alto."
+    )
+
+    analisis_nuggets = (
+        "🏀 Análisis Táctico y de Espaciamiento (Spacing):\n\n"
+        "Cierres de jornada con un ajedrez táctico en la altura de Denver. La capacidad de distribución desde el poste alto y la lectura de cortes sin balón desarticulan cualquier planteamiento defensivo convencional.\n\n"
+        "📊 Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):\n\n"
+        "• Net Rating en la Altura: Denver maximiza su localía elevando su eficiencia neta en los tramos finales del encuentro.\n"
+        "• Assist-to-Turnover Ratio: Excelente circulación de balón que minimiza las pérdidas no forzadas.\n\n"
+        "🎯 Conclusión del Modelo: El factor local y la fluidez en la distribución ofensiva inclinan el pronóstico a favor de los Nuggets."
+    )
+
     data_def = [
         {
             "equipo1": "Boston Celtics", "equipo2": "Charlotte Hornets", 
             "hora": "19:30 (VE)", "sede": "Spectrum Center (Charlotte, NC)", 
             "ganador": "Boston Celtics (-8.5 pts)", "total_puntos": "224.5 (Altas / Over)", 
-            "analisis_es": (
-                "🏀 <b>Análisis Táctico y de Espaciamiento (Spacing):</b><br>"
-                "Los Boston Celtics llegan a este encuentro exhibiendo una estructura ofensiva fundamentada en la saturación perimetral y la creación de ventajas a partir del <i>pick-and-pop</i>. Con un promedio de conversión superior al 56.2% en eFG% (Effective Field Goal Percentage), el conjunto verde maximiza el valor esperado de cada posesión castigando las ayudas defensivas del rival.<br><br>"
-                "📊 <b>Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):</b><br>"
-                "• <b>Net Rating Proyectado:</b> +10.4 a favor de Boston, sustentado en una eficiencia defensiva que limita al oponente a menos de 102 puntos por cada 100 posesiones.<br>"
-                "• <b>Pace Estimado:</b> 99.2 posesiones por 48 minutos, lo que favorece un ritmo dinámico e incrementa el volumen total de lanzamientos de larga distancia.<br>"
-                "• <b>Turnover Percentage (TOV%):</b> Boston mantiene una tasa de pérdida de balón controlada (inferior al 11.2%), neutralizando las transiciones defensivas de Charlotte.<br><br>"
-                "🎯 <b>Conclusión del Modelo:</b> La superioridad en la profundidad de banquillo y el dominio en la captura de rebotes ofensivos (OREB%) inclinan la balanza con solvencia hacia la línea de los Celtics."
-            ),
-            "analisis_en": "Advanced tactical breakdown for Boston Celtics vs Charlotte Hornets...", 
-            "es_jugada_fija": True
+            "analisis_es": analisis_celtics, "analisis_en": analisis_celtics, "es_jugada_fija": True
         },
         {
             "equipo1": "Miami Heat", "equipo2": "Brooklyn Nets", 
             "hora": "19:30 (VE)", "sede": "Barclays Center (Brooklyn, NY)", 
             "ganador": "Miami Heat (-4.5 pts)", "total_puntos": "218.5 (Bajas / Under)", 
-            "analisis_es": (
-                "🏀 <b>Análisis Táctico y de Espaciamiento (Spacing):</b><br>"
-                "El sistema de Miami opera bajo una disciplina defensiva inquebrantable, priorizando la defensa de contención en el perímetro y cerrando los espacios en la llave (paint protection). Brooklyn intentará proponer un juego abierto, pero la presión física en la primera línea de pase cortocircuitará su circulación de balón.<br><br>"
-                "📊 <b>Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):</b><br>"
-                "• <b>Pace Proyectado:</b> 96.5 posesiones. Al ser un juego de posesiones más pausadas, el ritmo beneficia la tendencia a la baja (Under) en la línea de puntos totales.<br>"
-                "• <b>Defensive Rating:</b> Miami proyecta frenar la eficiencia ofensiva rival por debajo del 44% en tiros de campo globales.<br>"
-                "• <b>True Shooting Percentage (TS%):</b> La selección de tiro de Miami en la media distancia ofrece mayor estabilidad en los minutos de cierre.<br><br>"
-                "🎯 <b>Conclusión del Modelo:</b> Disciplina táctica y control absoluto del reloj de posesión otorgan la ventaja a Miami en un duelo de pocos puntos."
-            ),
-            "analisis_en": "Advanced tactical breakdown for Miami Heat vs Brooklyn Nets...", 
-            "es_jugada_fija": False
+            "analisis_es": analisis_heat, "analisis_en": analisis_heat, "es_jugada_fija": False
         },
         {
             "equipo1": "Dallas Mavericks", "equipo2": "New Orleans Pelicans", 
             "hora": "20:00 (VE)", "sede": "Smoothie King Center (New Orleans, LA)", 
             "ganador": "Dallas Mavericks (-3.0 pts)", "total_puntos": "230.5 (Altas / Over)", 
-            "analisis_es": (
-                "🏀 <b>Análisis Táctico y de Espaciamiento (Spacing):</b><br
+            "analisis_es": analisis_mavericks, "analisis_en": analisis_mavericks, "es_jugada_fija": False
+        },
+        {
+            "equipo1": "Milwaukee Bucks", "equipo2": "Chicago Bulls", 
+            "hora": "20:00 (VE)", "sede": "United Center (Chicago, IL)", 
+            "ganador": "Milwaukee Bucks (-6.0 pts)", "total_puntos": "226.0 (Altas / Over)", 
+            "analisis_es": analisis_bucks, "analisis_en": analisis_bucks, "es_jugada_fija": False
+        },
+        {
+            "equipo1": "Minnesota Timberwolves", "equipo2": "Detroit Pistons", 
+            "hora": "20:00 (VE)", "sede": "Little Caesars Arena (Detroit, MI)", 
+            "ganador": "Minnesota Timberwolves (-7.5 pts)", "total_puntos": "215.0 (Bajas / Under)", 
+            "analisis_es": analisis_wolves, "analisis_en": analisis_wolves, "es_jugada_fija": False
+        },
+        {
+            "equipo1": "San Antonio Spurs", "equipo2": "Phoenix Suns", 
+            "hora": "20:00 (VE)", "sede": "Footprint Center (Phoenix, AZ)", 
+            "ganador": "Phoenix Suns (-5.0 pts)", "total_puntos": "228.0 (Altas / Over)", 
+            "analisis_es": analisis_suns, "analisis_en": analisis_suns, "es_jugada_fija": False
+        },
+        {
+            "equipo1": "Los Angeles Clippers", "equipo2": "Denver Nuggets", 
+            "hora": "22:30 (VE)", "sede": "Ball Arena (Denver, CO)", 
+            "ganador": "Denver Nuggets (-4.0 pts)", "total_puntos": "222.0 (Altas / Over)", 
+            "analisis_es": analisis_nuggets, "analisis_en": analisis_nuggets, "es_jugada_fija": False
+        }
+    ]
+    return pd.DataFrame(data_def)
+
+idioma = st.sidebar.selectbox("🌐 Idioma / Language", ["Español", "English"])
+lang = "es" if idioma == "Español" else "en"
+t = TEXTOS[lang]
+
+if "autenticado" not in st.session_state:
+    st.session_state.autenticado = False
+
+if not st.session_state.autenticado:
+    col_izq, col_centro, col_der = st.columns([1.2, 1.8, 1])
+    with col_izq:
+        if os.path.exists(logo_path):
+            st.image(logo_path, width=220)
+    with col_centro:
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.title(t["titulo_app"])
+        st.subheader(t["sub_app"])
+        st.write("Para desbloquear el portal exclusivo y la analítica avanzada, sigue los pasos:")
+    with col_der:
+        st.image("
