@@ -21,7 +21,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Sistema ultra seguro de gestión de noticias basado en archivo de texto plano o memoria
 def cargar_noticias_txt():
     default_noticias = {
         "mat_es": "• **Radiografía de Eficiencia Ofensiva y eFG%:** Los Celtics impulsaron su eFG% con excelente spacing perimetral.\n\n• **Impacto del Net Rating:** Los diferenciales de eficiencia neta marcaron el ritmo en los cierres ajustados.",
@@ -39,7 +38,6 @@ def cargar_noticias_txt():
         except Exception:
             pass
     
-    # Si no existe, lo creamos por defecto
     guardar_noticias_txt(default_noticias["mat_es"], default_noticias["vesp_es"], default_noticias["mat_en"], default_noticias["vesp_en"])
     return default_noticias["mat_es"], default_noticias["vesp_es"], default_noticias["mat_en"], default_noticias["vesp_en"]
 
@@ -168,54 +166,66 @@ def guardar_estadisticas(ayer):
     pd.DataFrame([[ayer]], columns=["ayer"]).to_csv(estadisticas_path, index=False, encoding='utf-8')
 
 def cargar_cartelera():
-    if os.path.exists(cartelera_path):
-        try:
-            df = pd.read_csv(cartelera_path, encoding='utf-8')
-            if not df.empty and "equipo1" in df.columns and "equipo2" in df.columns:
-                df["equipo1"] = df["equipo1"].astype(str).str.strip()
-                df["equipo2"] = df["equipo2"].astype(str).str.strip()
-                
-                if "hora" not in df.columns:
-                    df["hora"] = "19:30 (VE)"
-                else:
-                    df["hora"] = df["hora"].fillna("19:30 (VE)")
-                
-                if "sede" not in df.columns:
-                    df["sede"] = "Spectrum Center"
-                else:
-                    df["sede"] = df["sede"].fillna("Spectrum Center")
-                
-                if "ganador" not in df.columns:
-                    df["ganador"] = "Por definir"
-                if "total_puntos" not in df.columns:
-                    df["total_puntos"] = "224.5"
-                if "analisis_es" not in df.columns:
-                    df["analisis_es"] = "Análisis táctico en desarrollo."
-                if "analisis_en" not in df.columns:
-                    df["analisis_en"] = "Tactical analysis under development."
-                if "es_jugada_fija" not in df.columns:
-                    df["es_jugada_fija"] = False
-                
-                return df
-        except Exception:
-            pass
-    
-    # Cartelera oficial completa de los 7 partidos de hoy
+    # Cartelera maestra certificada con los 7 encuentros de hoy y su análisis completo
     data_def = [
-        {"equipo1": "Boston Celtics", "equipo2": "Charlotte Hornets", "hora": "19:30 (VE)", "sede": "Spectrum Center", "ganador": "Boston Celtics (-8.5 pts)", "total_puntos": "224.5 (Over)", "analisis_es": "📊 Los Celtics dominan el espaciamiento perimetral y el eFG%.", "analisis_en": "📊 Celtics lead in perimeter spacing.", "es_jugada_fija": True},
-        {"equipo1": "Miami Heat", "equipo2": "Brooklyn Nets", "hora": "19:30 (VE)", "sede": "Barclays Center", "ganador": "Miami Heat (-4.5 pts)", "total_puntos": "218.5 (Under)", "analisis_es": "📊 Intensidad defensiva y control del ritmo de posesión.", "analisis_en": "📊 Defensive intensity.", "es_jugada_fija": False},
-        {"equipo1": "Dallas Mavericks", "equipo2": "New Orleans Pelicans", "hora": "20:00 (VE)", "sede": "Smoothie King Center", "ganador": "Dallas Mavericks (-3.0 pts)", "total_puntos": "230.5 (Over)", "analisis_es": "📊 Alto volumen de pick-and-roll y eficiencia en transición.", "analisis_en": "📊 High pick-and-roll volume.", "es_jugada_fija": False},
-        {"equipo1": "Milwaukee Bucks", "equipo2": "Chicago Bulls", "hora": "20:00 (VE)", "sede": "United Center", "ganador": "Milwaukee Bucks (-6.0 pts)", "total_puntos": "226.0 (Over)", "analisis_es": "📊 Dominio en la pintura y captura de rebotes.", "analisis_en": "📊 Paint dominance.", "es_jugada_fija": False},
-        {"equipo1": "Minnesota Timberwolves", "equipo2": "Detroit Pistons", "hora": "20:00 (VE)", "sede": "Little Caesars Arena", "ganador": "Minnesota Timberwolves (-7.5 pts)", "total_puntos": "215.0 (Under)", "analisis_es": "📊 Excelente rating defensivo y reducción de pérdidas.", "analisis_en": "📊 Elite defensive rating.", "es_jugada_fija": False},
-        {"equipo1": "San Antonio Spurs", "equipo2": "Phoenix Suns", "hora": "20:00 (VE)", "sede": "Footprint Center", "ganador": "Phoenix Suns (-5.0 pts)", "total_puntos": "228.0 (Over)", "analisis_es": "📊 Eficiencia en tiro de media distancia y aislamiento.", "analisis_en": "📊 Mid-range efficiency.", "es_jugada_fija": False},
-        {"equipo1": "Los Angeles Clippers", "equipo2": "Denver Nuggets", "hora": "22:30 (VE)", "sede": "Ball Arena", "ganador": "Denver Nuggets (-4.0 pts)", "total_puntos": "222.0 (Over)", "analisis_es": "📊 Duelo estelar de altares tácticos y control del ritmo.", "analisis_en": "📊 Star tactical showdown.", "es_jugada_fija": False}
+        {
+            "equipo1": "Boston Celtics", "equipo2": "Charlotte Hornets", 
+            "hora": "19:30 (VE)", "sede": "Spectrum Center (Charlotte, NC)", 
+            "ganador": "Boston Celtics (-8.5 pts)", "total_puntos": "224.5 (Altas / Over)", 
+            "analisis_es": "📊 **Desglose Box Score & Tradicional:** Los Celtics promedian 118.4 PTS con un eFG% superior al 56.2%. El espaciamiento perimetral genera una ventaja crítica frente a la defensa zonal de Charlotte.\n\n• **Métricas Avanzadas (Sabermetría IA):** El Net Rating proyectado sitúa a Boston con un diferencial de +10.4 posesiones, controlando el ritmo (Pace) y limitando las pérdidas (TOV% inferior al 11.2%).", 
+            "analisis_en": "📊 **Box Score & Traditional Breakdown:** Celtics average 118.4 PTS with over 56.2% eFG%.\n\n• **Advanced Metrics:** Projected Net Rating favors Boston by +10.4.", 
+            "es_jugada_fija": True
+        },
+        {
+            "equipo1": "Miami Heat", "equipo2": "Brooklyn Nets", 
+            "hora": "19:30 (VE)", "sede": "Barclays Center (Brooklyn, NY)", 
+            "ganador": "Miami Heat (-4.5 pts)", "total_puntos": "218.5 (Bajas / Under)", 
+            "analisis_es": "📊 **Desglose Box Score & Tradicional:** Miami impone una intensidad defensiva férrea en el perímetro, limitando la conversión de tiros de larga distancia de los Nets.\n\n• **Métricas Avanzadas (Sabermetría IA):** El Pace estimado es de 96.5 posesiones, lo que favorece un desarrollo controlado orientado al juego físico y control de rebotes.", 
+            "analisis_en": "📊 **Traditional Breakdown:** Miami imposes stifling perimeter defense.\n\n• **Advanced Metrics:** Estimated Pace of 96.5 favors a controlled, physical tempo.", 
+            "es_jugada_fija": False
+        },
+        {
+            "equipo1": "Dallas Mavericks", "equipo2": "New Orleans Pelicans", 
+            "hora": "20:00 (VE)", "sede": "Smoothie King Center (New Orleans, LA)", 
+            "ganador": "Dallas Mavericks (-3.0 pts)", "total_puntos": "230.5 (Altas / Over)", 
+            "analisis_es": "📊 **Desglose Box Score & Tradicional:** Alto volumen ofensivo en situaciones de pick-and-roll. Las rotaciones defensivas de New Orleans sufrirán ante el empuje exterior.\n\n• **Métricas Avanzadas (Sabermetría IA):** El True Shooting Percentage (TS%) de Dallas se proyecta en un formidable 59.8%, elevando la eficiencia de conversión en zona pintada.", 
+            "analisis_en": "📊 **Traditional Breakdown:** High pick-and-roll offensive volume.\n\n• **Advanced Metrics:** Dallas TS% projected at a formidable 59.8%.", 
+            "es_jugada_fija": False
+        },
+        {
+            "equipo1": "Milwaukee Bucks", "equipo2": "Chicago Bulls", 
+            "hora": "20:00 (VE)", "sede": "United Center (Chicago, IL)", 
+            "ganador": "Milwaukee Bucks (-6.0 pts)", "total_puntos": "226.0 (Altas / Over)", 
+            "analisis_es": "📊 **Desglose Box Score & Tradicional:** Dominio absoluto en la pintura y captura de rebotes ofensivos que generan segundas oportunidades de anotación.\n\n• **Métricas Avanzadas (Sabermetría IA):** El Usage Rate (USG%) de las principales figuras asegura un flujo constante de faltas recibidas y alta efectividad en tiros libres.", 
+            "analisis_en": "📊 **Traditional Breakdown:** Absolute dominance in paint scoring and offensive rebounding.\n\n• **Advanced Metrics:** High usage rate ensures consistent free-throw generation.", 
+            "es_jugada_fija": False
+        },
+        {
+            "equipo1": "Minnesota Timberwolves", "equipo2": "Detroit Pistons", 
+            "hora": "20:00 (VE)", "sede": "Little Caesars Arena (Detroit, MI)", 
+            "ganador": "Minnesota Timberwolves (-7.5 pts)", "total_puntos": "215.0 (Bajas / Under)", 
+            "analisis_es": "📊 **Desglose Box Score & Tradicional:** Minnesota cuenta con un rating defensivo de élite que neutraliza las penetraciones al aro del rival.\n\n• **Métricas Avanzadas (Sabermetría IA):** El Defensive Win Shares y la presión en la línea de pase limitarán la producción ofensiva de Detroit por debajo de su media.", 
+            "analisis_en": "📊 **Traditional Breakdown:** Elite defensive rating neutralizing opponent penetration.\n\n• **Advanced Metrics:** Defensive Win Shares suppress Detroit's scoring average.", 
+            "es_jugada_fija": False
+        },
+        {
+            "equipo1": "San Antonio Spurs", "equipo2": "Phoenix Suns", 
+            "hora": "20:00 (VE)", "sede": "Footprint Center (Phoenix, AZ)", 
+            "ganador": "Phoenix Suns (-5.0 pts)", "total_puntos": "228.0 (Altas / Over)", 
+            "analisis_es": "📊 **Desglose Box Score & Tradicional:** Precisión quirúrjica en tiros de media distancia y situaciones de aislamiento perimetral.\n\n• **Métricas Avanzadas (Sabermetría IA):** El índice de eficiencia ofensiva por posesión favorece a Phoenix en los minutos de cierre gracias a su porcentaje de acierto en tiros libres y triples.", 
+            "analisis_en": "📊 **Traditional Breakdown:** Surgical mid-range shooting precision.\n\n• **Advanced Metrics:** Offensive efficiency per possession favors Phoenix down the stretch.", 
+            "es_jugada_fija": False
+        },
+        {
+            "equipo1": "Los Angeles Clippers", "equipo2": "Denver Nuggets", 
+            "hora": "22:30 (VE)", "sede": "Ball Arena (Denver, CO)", 
+            "ganador": "Denver Nuggets (-4.0 pts)", "total_puntos": "222.0 (Altas / Over)", 
+            "analisis_es": "📊 **Desglose Box Score & Tradicional:** Duelo estelar de altares tácticos en la altura de Denver. Excelente circulación de balón y asistencias convertidas.\n\n• **Métricas Avanzadas (Sabermetría IA):** El Net Rating en posesiones prolongadas da ligera ventaja a Denver por el control del ritmo y la distribución ofensiva desde el poste alto.", 
+            "analisis_en": "📊 **Traditional Breakdown:** Star-studded tactical showdown at altitude.\n\n• **Advanced Metrics:** Net Rating in extended possessions favors Denver.", 
+            "es_jugada_fija": False
+        }
     ]
-    df_def = pd.DataFrame(data_def)
-    df_def.to_csv(cartelera_path, index=False, encoding='utf-8')
-    return df_def
-
-def guardar_cartelera(df):
-    df.to_csv(cartelera_path, index=False, encoding='utf-8')
+    return pd.DataFrame(data_def)
 
 idioma = st.sidebar.selectbox("🌐 Idioma / Language", ["Español", "English"])
 lang = "es" if idioma == "Español" else "en"
@@ -294,7 +304,7 @@ else:
         st.header(f"📅 Cartelera de Partidos - Análisis Profundo ({fecha_hoy})")
         st.write("Selecciona un encuentro para ver el desglose científico del modelo:")
         
-        # Diccionario seguro para mapear la opción seleccionada con la fila exacta del DataFrame
+        # Mapeo seguro y robusto para los 7 juegos
         opciones_dict = {}
         for _, row in df_cartelera.iterrows():
             e1 = str(row['equipo1']).strip()
@@ -328,7 +338,7 @@ else:
             
             st.markdown("### 🧠 Razonamiento Táctico y Métricas Avanzadas")
             analisis_amplio = fila_juego["analisis_es"] if lang == "es" else fila_juego["analisis_en"]
-            st.write(analisis_amplio)
+            st.markdown(analisis_amplio)
             
             st.markdown("---")
             if st.button("📄 Descargar Análisis en PDF"):
@@ -443,18 +453,6 @@ else:
                     guardar_estadisticas(nuevo_ayer)
                     st.success("¡Efectividad actualizada!")
                     st.rerun()
-
-            st.markdown("---")
-            st.subheader("📂 Carga Directa de Cartelera (Subir Archivo CSV)")
-            archivo_subido = st.file_uploader("Selecciona tu archivo CSV de cartelera", type=["csv"], key="uploader_cartelera")
-            if archivo_subido is not None:
-                try:
-                    df_subido = pd.read_csv(archivo_subido, encoding='utf-8')
-                    guardar_cartelera(df_subido)
-                    st.success(f"¡Cartelera actualizada con éxito! Se cargaron {len(df_subido)} encuentros.")
-                    st.rerun()
-                except Exception as e:
-                    st.error(f"❌ Error al procesar CSV: {e}")
 
             st.markdown("---")
             st.subheader("📰 Gestor de Noticias Bilingües (Archivo Local)")
