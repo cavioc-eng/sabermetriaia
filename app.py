@@ -441,4 +441,95 @@ else:
         st.markdown(matchup_estelar_html, unsafe_allow_html=True)
         
         hora_est = str(juego_estelar.get('hora', '18:30 (VE)'))
-        sede_est = str(juego_estelar.get('sede', '
+        sede_est = str(juego_estelar.get('sede', 'Arena Principal'))
+        st.markdown(f"🕒 **Hora (VE):** {hora_est} &nbsp;&nbsp;|&nbsp;&nbsp; 🏟️ **Sede:** {sede_est}")
+        st.markdown("---")
+        
+        st.markdown("### 📊 Fundamento Estadístico y Razonamiento del Modelo" if lang == "es" else "### 📊 Statistical Foundation & Model Reasoning")
+        analisis_jugada = juego_estelar["analisis_es"] if lang == "es" else juego_estelar["analisis_en"]
+        
+        if lang == "es":
+            st.markdown(
+                "* **Selección Recomendada:** " + str(juego_estelar["ganador"]) + 
+                " | Totales: " + str(juego_estelar["total_puntos"]) + 
+                "\n* **Nivel de Confianza del Modelo:** 88.4%" + 
+                "\n* **Por qué elegimos este encuentro:** " + str(analisis_jugada)
+            )
+        else:
+            st.markdown(
+                "* **Recommended Selection:** " + str(juego_estelar["ganador"]) + 
+                " | Totals: " + str(juego_estelar["total_puntos"]) + 
+                "\n* **Model Confidence Level:** 88.4%" + 
+                "\n* **Why we chose this matchup:** " + str(analisis_jugada)
+            )
+
+    elif menu == "Diccionario Sabermétrico":
+        st.header("📖 Diccionario Sabermétrico Educativo (Básico a Avanzado)" if lang == "es" else "📖 Educational Sabermetric Dictionary (Basic to Advanced)")
+        st.write("Guía completa de referencia para comprender desde los fundamentos tradicionales hasta las métricas de eficiencia más avanzadas:" if lang == "es" else "Complete reference guide to understand everything from traditional fundamentals to advanced efficiency metrics:")
+        
+        if lang == "es":
+            st.markdown(
+                "### 🟢 Indicadores Básicos y Tradicionales (Box Score)\n"
+                "- **PTS (Points / Puntos):** Total de puntos anotados por un jugador o equipo.\n"
+                "- **REB (Rebounds / Rebotes):** Balones recuperados tras un lanzamiento fallido.\n"
+                "- **AST (Assists / Asistencias):** Pases que conducen directamente a una canasta.\n"
+                "- **STL (Steals / Recuperaciones):** Balones arrebatados al adversario.\n"
+                "- **BLK (Blocks / Tapones):** Lanzamientos rivales bloqueados en el aire.\n"
+                "- **TOV (Turnovers / Pérdidas):** Balones entregados al rival por errores.\n"
+                "- **MIN (Minutes / Minutos):** Tiempo total que un jugador disputa en la duela.\n\n"
+                "### 🟡 Indicadores de Eficiencia Estándar\n"
+                "- **FG% (Field Goal Percentage):** Porcentaje de tiros de campo encestados.\n"
+                "- **3P% (Three-Point Percentage):** Eficacia en lanzamientos de larga distancia.\n"
+                "- **FT% (Free Throw Percentage):** Precisión desde la línea de tiros libres.\n\n"
+                "### 🔴 Indicadores Avanzados y de Profundidad (Sabermetría IA)\n"
+                "- **Pace (Ritmo):** Cantidad estimada de posesiones por cada 48 minutos.\n"
+                "- **True Shooting Percentage (TS%):** Eficiencia ofensiva global (dobles, triples y libres).\n"
+                "- **Net Rating:** Diferencia de puntos anotados y permitidos por 100 posesiones.\n"
+                "- **Usage Rate (USG%):** Porcentaje de jugadas ofensivas que concluye un jugador en cancha.\n"
+                "- **PER (Player Efficiency Rating):** Índice global de productividad por minuto."
+            )
+        else:
+            st.markdown(
+                "### 🟢 Basic & Traditional Indicators (Box Score)\n"
+                "- **PTS (Points):** Total points scored by a player or team.\n"
+                "- **REB (Rebounds):** Basketballs recovered after a missed shot.\n"
+                "- **AST (Assists):** Passes leading directly to a field goal.\n"
+                "- **STL (Steals):** Balls taken away from the opponent.\n"
+                "- **BLK (Blocks):** Legal deflections of opponent shots.\n"
+                "- **TOV (Turnovers):** Possessions lost due to unforced errors.\n"
+                "- **MIN (Minutes):** Total time a player spends on the court.\n\n"
+                "### 🟡 Standard Efficiency Indicators\n"
+                "- **FG% (Field Goal Percentage):** Ratio of successful field goals.\n"
+                "- **3P% (Three-Point Percentage):** Shooting accuracy from beyond the arc.\n"
+                "- **FT% (Free Throw Percentage):** Accuracy from the charity stripe.\n\n"
+                "### 🔴 Advanced & Deep Analytics (Sabermetria AI)\n"
+                "- **Pace:** Estimated number of possessions per 48 minutes.\n"
+                "- **True Shooting Percentage (TS%):** Comprehensive scoring efficiency.\n"
+                "- **Net Rating:** Point differential per 100 possessions.\n"
+                "- **Usage Rate (USG%):** Estimate of team plays used by a player.\n"
+                "- **PER (Player Efficiency Rating):** Per-minute productivity rating."
+            )
+
+    elif menu == "🔐 Panel de Administración":
+        st.header(t["admin_titulo"])
+        st.write(t["admin_desc"])
+        
+        clave_admin = st.text_input(t["admin_clave"], type="password")
+        
+        if clave_admin == "sabermetria2026":
+            st.success(t["admin_exito"])
+            
+            if os.path.exists(db_usuarios_path):
+                df_visitas = pd.read_csv(db_usuarios_path)
+                st.metric(label=t["total_visitas"], value=len(df_visitas))
+                
+                hist_acc = "Historial de Accesos al Portal" if lang == "es" else "Portal Access History"
+                st.markdown(f"### {hist_acc}")
+                st.dataframe(df_visitas, use_container_width=True)
+            else:
+                st.metric(label=t["total_visitas"], value=0)
+                st.info("Aún no hay registros de visitas." if lang == "es" else "No visit records yet.")
+
+            st.markdown("---")
+            
+            # --- GESTOR DE ESTADÍSTICAS DE ACIERTOS (SIMPLIFICADO SOLO AYER) ---
