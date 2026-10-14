@@ -327,4 +327,42 @@ else:
     if lang == "es":
         st.markdown(f"""
         <div class="stats-banner">
-            <h4 style="color: #00FF66; margin: 0;">
+            <h4 style="color: #00FF66; margin: 0;">🎯 Rendimiento Histórico del Modelo Sabermétrico</h4>
+            <p style="font-size: 15px; margin: 5px 0 0 0;">Aciertos de Ayer: <b>{ayer_str}</b> &nbsp;|&nbsp; Acumulado: <b>{acumulado_str}</b></p>
+        </div>
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown(f"""
+        <div class="stats-banner">
+            <h4 style="color: #00FF66; margin: 0;">🎯 Sabermetric Model Historical Performance</h4>
+            <p style="font-size: 15px; margin: 5px 0 0 0;">Yesterday's Hits: <b>{ayer_str}</b> &nbsp;|&nbsp; Cumulative: <b>{acumulado_str}</b></p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    if menu == t["menu_cartelera"]:
+        titulo_cartelera = "📅 Cartelera de Partidos - Análisis Profundo" if lang == "es" else "📅 Game Schedule - Deep Analysis"
+        st.header(f"{titulo_cartelera} ({fecha_hoy})")
+        st.write("Selecciona un encuentro para ver el desglose científico del modelo:" if lang == "es" else "Select a matchup to view the scientific breakdown:")
+        
+        lista_partidos = [f"(Visita) {row['equipo1']} vs. (Local) {row['equipo2']}" for _, row in df_cartelera.iterrows()]
+        
+        partido_seleccionado = st.selectbox("Juegos de hoy:" if lang == "es" else "Today's Games:", lista_partidos)
+        
+        if partido_seleccionado:
+            limpio = partido_seleccionado.replace("(Visita) ", "").replace("(Local) ", "")
+            equipo1, equipo2 = limpio.split(" vs. ")
+            fila_juego = df_cartelera[(df_cartelera['equipo1'] == equipo1) & (df_cartelera['equipo2'] == equipo2)].iloc[0]
+            
+            logo1_url = LOGOS_EQUIPOS.get(equipo1, "")
+            logo2_url = LOGOS_EQUIPOS.get(equipo2, "")
+            
+            matchup_html = (
+                '<div class="matchup-box">'
+                '<div class="team-col">'
+                f'<img src="{logo1_url}" width="100" style="margin-bottom: 10px;">'
+                f'<h3 style="margin: 0; color: #ffffff;">{equipo1}</h3>'
+                '<span style="font-size: 12px; color: #8b949e;">(Visitante)</span>'
+                '</div>'
+                '<div class="vs-col">VS</div>'
+                '<div class="team-col">'
+                f'<img src="{logo2_url}" width="100" style="margin-bottom:
