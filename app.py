@@ -143,10 +143,10 @@ def cargar_noticias():
         try:
             df = pd.read_csv(noticias_path, encoding='utf-8')
             if not df.empty:
-                mat_es = str(df.iloc[0].get("matutina_es", ""))
-                vesp_es = str(df.iloc[0].get("vespertina_es", ""))
-                mat_en = str(df.iloc[0].get("matutina_en", ""))
-                vesp_en = str(df.iloc[0].get("vespertina_en", ""))
+                mat_es = str(df.iloc[0].get("matutina_es", "")).replace("\\n", "\n")
+                vesp_es = str(df.iloc[0].get("vespertina_es", "")).replace("\\n", "\n")
+                mat_en = str(df.iloc[0].get("matutina_en", "")).replace("\\n", "\n")
+                vesp_en = str(df.iloc[0].get("vespertina_en", "")).replace("\\n", "\n")
                 return mat_es, vesp_es, mat_en, vesp_en
         except Exception:
             pass
@@ -320,7 +320,6 @@ else:
         st.header(f"📰 Centro de Noticias en Tiempo Real — {fecha_hoy}")
         st.write("Bienvenido al centro informativo oficial de Sabermetría IA.")
         
-        # Carga limpia en tiempo real sin caché estática
         mat_es, vesp_es, mat_en, vesp_en = cargar_noticias()
         matutina_texto = mat_es if lang == "es" else mat_en
         vespertina_texto = vesp_es if lang == "es" else vesp_en
@@ -398,7 +397,7 @@ else:
                 "### 🔴 Advanced & Deep Analytics (Sabermetria AI)\n"
                 "- **Pace:** Estimated number of possessions per 48 minutes.\n"
                 "- **True Shooting Percentage (TS%):** Comprehensive scoring efficiency.\n"
-                "-**Net Rating:** Point differential per 100 possessions.\n"
+                "- **Net Rating:** Point differential per 100 possessions.\n"
                 "- **Usage Rate (USG%):** Estimate of team plays used by a player.\n"
                 "- **PER (Player Efficiency Rating):** Per-minute productivity rating."
             )
@@ -438,25 +437,22 @@ else:
                     st.error(f"❌ Error al procesar CSV: {e}")
 
             st.markdown("---")
-            st.subheader("📰 Editor y Publicador de Noticias Bilingüe")
+            st.subheader("📂 Carga Directa de Noticias (Subir Archivo CSV)")
+            st.write("Sube tu archivo `noticias_bilingue_v2.csv` con las columnas: **matutina_es, vespertina_es, matutina_en, vespertina_en**.")
             
-            # Carga directa sin caché para asegurar que se muestre lo último guardado
-            mat_es_act, vesp_es_act, mat_en_act, vesp_en_act = cargar_noticias()
-            
-            with st.form("form_noticias_bilingue"):
-                st.markdown("#### 🇪🇸 Español")
-                nueva_mat_es = st.text_area("Matutina (Español):", value=mat_es_act, height=155)
-                nueva_vesp_es = st.text_area("Vespertina (Español):", value=vesp_es_act, height=155)
-                st.markdown("#### 🇺🇸 Inglés (English)")
-                nueva_mat_en = st.text_area("Morning Edition (English):", value=mat_en_act, height=155)
-                nueva_vesp_en = st.text_area("Evening Edition (English):", value=vesp_en_act, height=155)
-                
-                btn_guardar_noticias = st.form_submit_button("💾 Guardar y Publicar Noticias Bilingües")
-                
-                if btn_guardar_noticias:
-                    guardar_noticias(nueva_mat_es, nueva_vesp_es, nueva_mat_en, nueva_vesp_en)
-                    st.success("¡Noticias bilingües guardadas y publicadas con éxito!")
-                    st.rerun()
+            archivo_noticias_subido = st.file_uploader("Selecciona tu archivo CSV de noticias", type=["csv"], key="uploader_noticias")
+            if archivo_noticias_subido is not None:
+                try:
+                    df_noticias_subido = pd.read_csv(archivo_noticias_subido, encoding='utf-8')
+                    cols_requeridas = ["matutina_es", "vespertina_es", "matutina_en", "vespertina_en"]
+                    if all(col in df_noticias_subido.columns for col in cols_requeridas):
+                        df_noticias_subido.to_csv(noticias_path, index=False, encoding='utf-8')
+                        st.success("¡Noticias bilingües actualizadas con éxito desde el archivo CSV!")
+                        st.rerun()
+                    else:
+                        st.error("❌ El archivo CSV debe contener exactamente las columnas: matutina_es, vespertina_es, matutina_en, vespertina_en.")
+                except Exception as e:
+                    st.error(f"❌ Error al procesar el archivo de noticias: {e}")
 
         elif clave_admin != "":
             st.error(t["admin_error"])
