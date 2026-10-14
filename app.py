@@ -533,3 +533,63 @@ else:
             st.markdown("---")
             
             # --- GESTOR DE ESTADÍSTICAS DE ACIERTOS (SIMPLIFICADO SOLO AYER) ---
+            st.subheader("🎯 Gestor de Efectividad del Modelo")
+            st.write("Actualiza el rendimiento diario que se muestra en el banner principal de la app.")
+            
+            ayer_act = cargar_estadisticas()
+            with st.form("form_estadisticas"):
+                nuevo_ayer = st.text_input("Aciertos de Ayer (Ej: 3 / 4 (75%)):", value=ayer_act)
+                
+                btn_guardar_stats = st.form_submit_button("💾 Guardar Efectividad de Ayer")
+                if btn_guardar_stats:
+                    guardar_estadisticas(nuevo_ayer)
+                    st.success("¡Efectividad actualizada con éxito!")
+                    st.rerun()
+
+            st.markdown("---")
+            
+            # --- GESTOR DIRECTO DE ARCHIVO CSV PARA LA CARTELERA ---
+            st.subheader("📂 Carga Directa de Cartelera (Subir Archivo CSV)")
+            st.write("Sube tu archivo cartelera_bilingue.csv actualizado para reemplazar toda la cartelera de forma automática y sin errores manuales.")
+            
+            archivo_subido = st.file_uploader("Selecciona tu archivo CSV de cartelera", type=["csv"])
+            if archivo_subido is not None:
+                try:
+                    df_subido = pd.read_csv(archivo_subido)
+                    columnas_necesarias = ["equipo1", "equipo2", "ganador", "total_puntos", "analisis_es", "analisis_en"]
+                    if all(col in df_subido.columns for col in columnas_necesarias):
+                        guardar_cartelera(df_subido)
+                        st.success(f"¡Cartelera actualizada con éxito! Se cargaron {len(df_subido)} encuentros desde el archivo.")
+                        st.rerun()
+                    else:
+                        st.error("❌ El archivo CSV no tiene las columnas requeridas. Asegúrate de incluir: equipo1, equipo2, ganador, total_puntos, analisis_es, analisis_en.")
+                except Exception as e:
+                    st.error(f"❌ Ocurrió un error al procesar el archivo CSV. Detalle: {e}")
+
+            st.markdown("---")
+            
+            # --- GESTOR DE NOTICIAS BILINGÜES ---
+            titulo_editor = "📰 Editor y Publicador de Noticias Bilingüe (Español / Inglés)" if lang == "es" else "📰 Bilingual News Editor & Publisher (Spanish / English)"
+            st.subheader(titulo_editor)
+            st.write("Actualiza los reportes tanto en español como en inglés para que la app se adapte al idioma que elija el usuario." if lang == "es" else "Update reports in both Spanish and English so the app adapts to the user's selected language.")
+            
+            mat_es_act, vesp_es_act, mat_en_act, vesp_en_act = cargar_noticias()
+            
+            with st.form("form_noticias_bilingue"):
+                st.markdown("#### 🇪🇸 Versión en Español")
+                nueva_mat_es = st.text_area("Edición Matutina (Español):", value=mat_es_act, height=130)
+                nueva_vesp_es = st.text_area("Edición Vespertina (Español):", value=vesp_es_act, height=130)
+                
+                st.markdown("#### 🇺🇸 Versión en Inglés (English Version)")
+                nueva_mat_en = st.text_area("Morning Edition (English):", value=mat_en_act, height=130)
+                nueva_vesp_en = st.text_area("Evening Edition (English):", value=vesp_en_act, height=130)
+                
+                btn_guardar = st.form_submit_button("💾 Guardar y Publicar Noticias Bilingües" if lang == "es" else "💾 Save and Publish Bilingual News")
+                
+                if btn_guardar:
+                    guardar_noticias(nueva_mat_es, nueva_vesp_es, nueva_mat_en, nueva_vesp_en)
+                    st.success("¡Noticias bilingües guardadas y publicaciones exitosas!" if lang == "es" else "Bilingual news successfully saved!")
+                    st.rerun()
+
+        elif clave_admin != "":
+            st.error(t["admin_error"])
