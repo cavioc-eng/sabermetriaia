@@ -143,19 +143,18 @@ def cargar_noticias():
         try:
             df = pd.read_csv(noticias_path)
             if not df.empty:
-                return (
-                    str(df.iloc[0].get("matutina_es", "")), 
-                    str(df.iloc[0].get("vespertina_es", "")),
-                    str(df.iloc[0].get("matutina_en", "")),
-                    str(df.iloc[0].get("vespertina_en", ""))
-                )
+                mat_es = str(df.iloc[0].get("matutina_es", "")).replace("\\n", "\n")
+                vesp_es = str(df.iloc[0].get("vespertina_es", "")).replace("\\n", "\n")
+                mat_en = str(df.iloc[0].get("matutina_en", "")).replace("\\n", "\n")
+                vesp_en = str(df.iloc[0].get("vespertina_en", "")).replace("\\n", "\n")
+                return mat_es, vesp_es, mat_en, vesp_en
         except Exception:
             pass
     
-    mat_es = "• **Radiografía de Eficiencia Ofensiva y eFG%:** Los Boston Celtics impulsaron su eFG% con excelente spacing.\n• **Impacto del Net Rating:** Los diferenciales de eficiencia neta marcaron el ritmo.\n• **Tendencias Defensivas:** Reducción de pérdidas de balón (TOV%)."
-    vesp_es = "• **Reporte Crítico de Lesiones:** Monitoreo estricto en Dallas y Phoenix.\n• **Efecto en el Pace:** Gestión de cargas físicas.\n• **Líneas O/U:** Ajustes de puntos totales."
-    mat_en = "• **Offensive Efficiency & eFG%:** Boston Celtics fueled perimeter spacing.\n• **Net Rating Impact:** Advanced net rating metrics drove game dynamics.\n• **Transition Defense Trends:** Minimized live-ball turnovers (TOV%)."
-    vesp_en = "• **Critical Injury & Rotation Reports:** Active backcourt monitoring for Dallas and Phoenix.\n• **Pace Adjustments:** Workload management suppressing possession velocity.\n• **Preliminary O/U Insights:** Total points lines reflecting defensive variance."
+    mat_es = "• **Radiografía de Eficiencia Ofensiva y eFG%:** Los Boston Celtics impulsaron su eFG% con excelente spacing.\n\n• **Impacto del Net Rating:** Los diferenciales de eficiencia neta marcaron el ritmo.\n\n• **Tendencias Defensivas:** Reducción de pérdidas de balón (TOV%)."
+    vesp_es = "• **Reporte Crítico de Lesiones:** Monitoreo estricto en Dallas y Phoenix.\n\n• **Efecto en el Pace:** Gestión de cargas físicas.\n\n• **Líneas O/U:** Ajustes de puntos totales."
+    mat_en = "• **Offensive Efficiency & eFG%:** Boston Celtics fueled perimeter spacing.\n\n• **Net Rating Impact:** Advanced net rating metrics drove game dynamics.\n\n• **Transition Defense Trends:** Minimized live-ball turnovers (TOV%)."
+    vesp_en = "• **Critical Injury & Rotation Reports:** Active backcourt monitoring for Dallas and Phoenix.\n\n• **Pace Adjustments:** Workload management suppressing possession velocity.\n\n• **Preliminary O/U Insights:** Total points lines reflecting defensive variance."
     
     guardar_noticias(mat_es, vesp_es, mat_en, vesp_en)
     return mat_es, vesp_es, mat_en, vesp_en
