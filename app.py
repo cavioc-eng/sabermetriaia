@@ -578,4 +578,45 @@ else:
             
             # --- GESTOR DIRECTO DE ARCHIVO CSV PARA LA CARTELERA ---
             st.subheader("📂 Carga Directa de Cartelera (Subir Archivo CSV)")
-            st.write("Sube tu archivo `cartelera_bilingue.csv` actualizado para reemplazar toda la
+           # --- GESTOR DIRECTO DE ARCHIVO CSV PARA LA CARTELERA ---
+            st.subheader(
+                "📂 Carga Directa de Cartelera (Subir Archivo CSV)"
+            )
+            st.write(
+                "Sube tu archivo cartelera_bilingue.csv actualizado para"
+                " reemplazar toda la cartelera de forma automática y sin"
+                " errores manuales."
+            )
+
+            archivo_subido = st.file_uploader(
+                "Selecciona tu archivo CSV de cartelera", type=["csv"]
+            )
+            if archivo_subido is not None:
+              try:
+                df_subido = pd.read_csv(archivo_subido)
+                columnas_necesarias = [
+                    "equipo1",
+                    "equipo2",
+                    "ganador",
+                    "total_puntos",
+                    "analisis_es",
+                    "analisis_en",
+                ]
+                if all(col in df_subido.columns for col in columnas_necesarias):
+                  guardar_cartelera(df_subido)
+                  st.success(
+                      f"¡Cartelera actualizada con éxito! Se cargaron"
+                      f" {len(df_subido)} encuentros desde el archivo."
+                  )
+                  st.rerun()
+                else:
+                  st.error(
+                      "❌ El archivo CSV no tiene las columnas requeridas."
+                      " Asegúrate de incluir: equipo1, equipo2, ganador,"
+                      " total_puntos, analisis_es, analisis_en."
+                  )
+              except Exception as e:
+                st.error(
+                    "❌ Ocurrió un error al procesar el archivo CSV. Detalle:"
+                    f" {e}"
+                )
