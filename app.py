@@ -342,14 +342,14 @@ else:
         st.header(f"{titulo_cartelera} ({fecha_hoy})")
         st.write("Selecciona un encuentro para ver el desglose científico del modelo:" if lang == "es" else "Select a matchup to view the scientific breakdown:")
         
-        lista_partidos = [f"(Visita) {row['equipo1']} vs. (Local) {row['equipo2']}" for _, row in df_cartelera.iterrows()]
+        lista_partidos = [f"(Visita) {str(row['equipo1']).strip()} vs. (Local) {str(row['equipo2']).strip()}" for _, row in df_cartelera.iterrows()]
         
         partido_seleccionado = st.selectbox("Juegos de hoy:" if lang == "es" else "Today's Games:", lista_partidos)
         
         if partido_seleccionado:
             limpio = partido_seleccionado.replace("(Visita) ", "").replace("(Local) ", "")
             equipo1, equipo2 = limpio.split(" vs. ")
-            fila_juego = df_cartelera[(df_cartelera['equipo1'] == equipo1) & (df_cartelera['equipo2'] == equipo2)].iloc[0]
+            fila_juego = df_cartelera[(df_cartelera['equipo1'].str.strip() == equipo1.strip()) & (df_cartelera['equipo2'].str.strip() == equipo2.strip())].iloc[0]
             
             logo1_url = LOGOS_EQUIPOS.get(equipo1, "")
             logo2_url = LOGOS_EQUIPOS.get(equipo2, "")
