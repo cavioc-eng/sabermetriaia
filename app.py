@@ -122,31 +122,31 @@ def registrar_visita():
     if os.path.exists(db_usuarios_path):
         df_existente = pd.read_csv(db_usuarios_path)
         df_actualizado = pd.concat([df_existente, nuevo_registro], ignore_index=True)
-        df_actualizado.to_csv(db_usuarios_path, index=False)
+        df_actualizado.to_csv(db_usuarios_path, index=False, encoding='utf-8')
     else:
-        nuevo_registro.to_csv(db_usuarios_path, index=False)
+        nuevo_registro.to_csv(db_usuarios_path, index=False, encoding='utf-8')
 
 def cargar_estadisticas():
     if os.path.exists(estadisticas_path):
         try:
-            df = pd.read_csv(estadisticas_path)
+            df = pd.read_csv(estadisticas_path, encoding='utf-8')
             return str(df.iloc[0]["ayer"])
         except Exception:
             pass
     return "3 / 4 (75% de Aciertos)"
 
 def guardar_estadisticas(ayer):
-    pd.DataFrame([[ayer]], columns=["ayer"]).to_csv(estadisticas_path, index=False)
+    pd.DataFrame([[ayer]], columns=["ayer"]).to_csv(estadisticas_path, index=False, encoding='utf-8')
 
 def cargar_noticias():
     if os.path.exists(noticias_path):
         try:
-            df = pd.read_csv(noticias_path)
+            df = pd.read_csv(noticias_path, encoding='utf-8')
             if not df.empty:
-                mat_es = str(df.iloc[0].get("matutina_es", "")).replace("\\n", "\n")
-                vesp_es = str(df.iloc[0].get("vespertina_es", "")).replace("\\n", "\n")
-                mat_en = str(df.iloc[0].get("matutina_en", "")).replace("\\n", "\n")
-                vesp_en = str(df.iloc[0].get("vespertina_en", "")).replace("\\n", "\n")
+                mat_es = str(df.iloc[0].get("matutina_es", ""))
+                vesp_es = str(df.iloc[0].get("vespertina_es", ""))
+                mat_en = str(df.iloc[0].get("matutina_en", ""))
+                vesp_en = str(df.iloc[0].get("vespertina_en", ""))
                 return mat_es, vesp_es, mat_en, vesp_en
         except Exception:
             pass
@@ -161,12 +161,12 @@ def cargar_noticias():
 
 def guardar_noticias(mat_es, vesp_es, mat_en, vesp_en):
     df = pd.DataFrame([[mat_es, vesp_es, mat_en, vesp_en]], columns=["matutina_es", "vespertina_es", "matutina_en", "vespertina_en"])
-    df.to_csv(noticias_path, index=False)
+    df.to_csv(noticias_path, index=False, encoding='utf-8')
 
 def cargar_cartelera():
     if os.path.exists(cartelera_path):
         try:
-            df = pd.read_csv(cartelera_path)
+            df = pd.read_csv(cartelera_path, encoding='utf-8')
             if not df.empty and "equipo1" in df.columns:
                 df["equipo2"] = df["equipo2"].astype(str).apply(lambda x: x.split(" (")[0].replace("19:30", "").replace("20:00", "").replace("22:30", "").strip() if any(t in x for t in ["(", "19:", "20:", "22:"]) else x)
                 df["equipo2"] = df["equipo2"].apply(lambda x: "Charlotte Hornets" if len(x) < 3 else x)
@@ -197,11 +197,11 @@ def cargar_cartelera():
         }
     ]
     df_def = pd.DataFrame(data_def)
-    df_def.to_csv(cartelera_path, index=False)
+    df_def.to_csv(cartelera_path, index=False, encoding='utf-8')
     return df_def
 
 def guardar_cartelera(df):
-    df.to_csv(cartelera_path, index=False)
+    df.to_csv(cartelera_path, index=False, encoding='utf-8')
 
 idioma = st.sidebar.selectbox("🌐 Idioma / Language", ["Español", "English"])
 lang = "es" if idioma == "Español" else "en"
@@ -408,7 +408,7 @@ else:
         if clave_admin == "sabermetria2026":
             st.success(t["admin_exito"])
             if os.path.exists(db_usuarios_path):
-                df_visitas = pd.read_csv(db_usuarios_path)
+                df_visitas = pd.read_csv(db_usuarios_path, encoding='utf-8')
                 st.metric(label=t["total_visitas"], value=len(df_visitas))
                 st.dataframe(df_visitas, use_container_width=True)
 
@@ -427,7 +427,7 @@ else:
             archivo_subido = st.file_uploader("Selecciona tu archivo CSV de cartelera", type=["csv"])
             if archivo_subido is not None:
                 try:
-                    df_subido = pd.read_csv(archivo_subido)
+                    df_subido = pd.read_csv(archivo_subido, encoding='utf-8')
                     guardar_cartelera(df_subido)
                     st.success(f"¡Cartelera actualizada con éxito! Se cargaron {len(df_subido)} encuentros.")
                     st.rerun()
