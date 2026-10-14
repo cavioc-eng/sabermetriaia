@@ -184,4 +184,185 @@ def cargar_estadisticas():
         except Exception:
             pass
     
-    def_ayer = "3 / 4 (75% de A
+    def_ayer = "3 / 4 (75% de Aciertos)"
+    guardar_estadisticas(def_ayer)
+    return def_ayer
+
+def guardar_estadisticas(ayer):
+    df = pd.DataFrame([[ayer]], columns=["ayer"])
+    df.to_csv(estadisticas_path, index=False)
+
+def cargar_noticias():
+    if os.path.exists(noticias_path):
+        try:
+            df = pd.read_csv(noticias_path)
+            return (
+                str(df.iloc[0]["matutina_es"]), 
+                str(df.iloc[0]["vespertina_es"]),
+                str(df.iloc[0]["matutina_en"]),
+                str(df.iloc[0]["vespertina_en"])
+            )
+        except Exception:
+            pass
+    
+    def_mat_es = "• **Balance de Eficiencia Ofensiva:** Las primeras prácticas muestran un incremento en triples.\n• **Impacto en la Pintura:** Equipos con mayor diferencial de rebotes dominan."
+    def_vesp_es = "• **Reporte de Lesiones:** Monitoreo en tiempo real de jugadores.\n• **Líneas de Apuestas:** Análisis de puntos totales."
+    def_mat_en = "• **Offensive Efficiency Balance:** Early practices show an increase in three-pointers.\n• **Paint Impact:** Teams with higher rebound differentials dominate."
+    def_vesp_en = "• **Injury Report:** Real-time player monitoring.\n• **Betting Lines:** Total points analysis."
+    
+    guardar_noticias(def_mat_es, def_vesp_es, def_mat_en, def_vesp_en)
+    return def_mat_es, def_vesp_es, def_mat_en, def_vesp_en
+
+def guardar_noticias(mat_es, vesp_es, mat_en, vesp_en):
+    df = pd.DataFrame([[mat_es, vesp_es, mat_en, vesp_en]], columns=["matutina_es", "vespertina_es", "matutina_en", "vespertina_en"])
+    df.to_csv(noticias_path, index=False)
+
+def cargar_cartelera():
+    if os.path.exists(cartelera_path):
+        try:
+            df = pd.read_csv(cartelera_path)
+            if not df.empty and "equipo1" in df.columns:
+                df["equipo2"] = df["equipo2"].astype(str).apply(lambda x: x.split(" (")[0] if "(" in x else x)
+                
+                if "hora" not in df.columns or df["hora"].isnull().all():
+                    df["hora"] = "19:00 (VE)"
+                else:
+                    df["hora"] = df["hora"].fillna("19:00 (VE)")
+                    
+                if "sede" not in df.columns:
+                    df["sede"] = "Arena Principal"
+                if "es_jugada_fija" not in df.columns:
+                    df["es_jugada_fija"] = False
+                return df
+        except Exception:
+            pass
+    
+    data_def = [
+        {
+            "equipo1": "Boston Celtics",
+            "equipo2": "Charlotte Hornets",
+            "hora": "19:30 (VE)",
+            "sede": "Spectrum Center (Charlotte, NC)",
+            "ganador": "Boston Celtics (-8.5 pts)",
+            "total_puntos": "224.5 (Altas / Over)",
+            "analisis_es": "📊 **Desglose Box Score & Tradicional:** Los Celtics promedian 118.4 PTS...",
+            "analisis_en": "📊 **Box Score & Traditional Breakdown:** Celtics average...",
+            "es_jugada_fija": True
+        }
+    ]
+    df_def = pd.DataFrame(data_def)
+    df_def.to_csv(cartelera_path, index=False)
+    return df_def
+
+def guardar_cartelera(df):
+    df.to_csv(cartelera_path, index=False)
+
+# Selector de Idioma
+idioma = st.sidebar.selectbox("🌐 Idioma / Language", ["Español", "English"])
+lang = "es" if idioma == "Español" else "en"
+t = TEXTOS[lang]
+
+if "autenticado" not in st.session_state:
+    st.session_state.autenticado = False
+
+if not st.session_state.autenticado:
+    col_izq, col_centro, col_der = st.columns([1.2, 1.8, 1])
+    
+    with col_izq:
+        if os.path.exists(logo_path):
+            st.image(logo_path, width=220)
+            
+    with col_centro:
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.title(t["titulo_app"])
+        st.subheader(t["sub_app"])
+        if lang == "es":
+            st.write("Para desbloquear el portal exclusivo y la analítica avanzada, sigue los pasos:")
+        else:
+            st.write("To unlock the exclusive portal and advanced analytics, follow the steps:")
+            
+    with col_der:
+        st.image("https://upload.wikimedia.org/wikipedia/en/0/03/National_Basketball_Association_logo.svg", width=140)
+    
+    st.markdown("---")
+    
+    col_paso1, col_paso2 = st.columns(2)
+    
+    with col_paso1:
+        st.markdown(f"""
+        <div class="tiktok-card">
+            <h4 style="color: #00FF66; margin-top: 0;">{t["paso1_titulo"]}</h4>
+            <p style="font-size: 14px; margin-bottom: 10px;">{t["paso1_desc"]}</p>
+            <a href="https://www.tiktok.com/@sabermetriaia" target="_blank" style="background-color: #00FF66; color: #000000; padding: 8px 15px; border-radius: 6px; font-weight: bold; text-decoration: none; display: inline-block;">{t["btn_tiktok"]}</a>
+        </div>
+        """, unsafe_allow_html=True)
+        
+    with col_paso2:
+        st.markdown(f"""
+        <div class="tiktok-card">
+            <h4 style="color: #00FF66; margin-top: 0;">{t["paso2_titulo"]}</h4>
+            <p style="font-size: 14px; margin-bottom: 15px;">{t["paso2_desc"]}</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button(t["btn_acceso"]):
+            registrar_visita()
+            st.session_state.autenticado = True
+            st.rerun()
+else:
+    st.sidebar.title("Menú Principal" if lang == "es" else "Main Menu")
+    if os.path.exists(logo_path):
+        st.sidebar.image(logo_path, width=220)
+        
+    menu = st.sidebar.radio("Selecciona una sección:" if lang == "es" else "Select a section:", [
+        "Cartelera y Partidos", 
+        "Noticias (Doble Actualización)", 
+        "La Jugada Fija del Día", 
+        "Diccionario Sabermétrico",
+        "🔐 Panel de Administración"
+    ])
+
+    fecha_hoy = datetime.now().strftime("%d de %B de %Y")
+    df_cartelera = cargar_cartelera()
+    ayer_str = cargar_estadisticas()
+
+    # --- BANNER DE EFECTIVIDAD DEL MODELO ---
+    if lang == "es":
+        st.markdown(f"""
+        <div class="stats-banner">
+            <h4 style="color: #00FF66; margin: 0;">🎯 Rendimiento del Modelo Sabermétrico (Jornada Anterior)</h4>
+            <p style="font-size: 15px; margin: 5px 0 0 0;">Aciertos de Ayer: <b>{ayer_str}</b></p>
+        </div>
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown(f"""
+        <div class="stats-banner">
+            <h4 style="color: #00FF66; margin: 0;">🎯 Sabermetric Model Performance (Previous Slate)</h4>
+            <p style="font-size: 15px; margin: 5px 0 0 0;">Yesterday's Hits: <b>{ayer_str}</b></p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    if menu == "Cartelera y Partidos":
+        titulo_cartelera = "📅 Cartelera de Partidos - Análisis Profundo" if lang == "es" else "📅 Game Schedule - Deep Analysis"
+        st.header(f"{titulo_cartelera} ({fecha_hoy})")
+        st.write("Selecciona un encuentro para ver el desglose científico del modelo:" if lang == "es" else "Select a matchup to view the scientific breakdown:")
+        
+        lista_partidos = [f"(Visita) {str(row['equipo1']).strip()} vs. (Local) {str(row['equipo2']).strip()}" for _, row in df_cartelera.iterrows()]
+        
+        partido_seleccionado = st.selectbox("Juegos de hoy:" if lang == "es" else "Today's Games:", lista_partidos)
+        
+        if partido_seleccionado:
+            limpio = partido_seleccionado.replace("(Visita) ", "").replace("(Local) ", "")
+            equipo1, equipo2 = limpio.split(" vs. ")
+            fila_juego = df_cartelera[(df_cartelera['equipo1'].str.strip() == equipo1.strip()) & (df_cartelera['equipo2'].str.strip() == equipo2.strip())].iloc[0]
+            
+            logo1_url = LOGOS_EQUIPOS.get(equipo1, "")
+            logo2_url = LOGOS_EQUIPOS.get(equipo2, "")
+            
+            matchup_html = (
+                '<div class="matchup-box">'
+                '<div class="team-col">'
+                f'<img src="{logo1_url}" width="100" style="margin-bottom: 10px;">'
+                f'<h3 style="margin: 0; color: #ffffff;">{equipo1}</h3>'
+                '<span style="font-size: 12px; color: #8b949e;">(Visitante)</span>'
+                '</div>'
