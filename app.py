@@ -351,4 +351,62 @@ else:
         
         if partido_seleccionado:
             fila_juego = opciones_dict[partido_seleccionado]
-            equipo1 = str(fila_
+            equipo1 = str(fila_juego['equipo1']).strip()
+            equipo2 = str(fila_juego['equipo2']).strip()
+            
+            logo1_url = LOGOS_EQUIPOS.get(equipo1, "")
+            logo2_url = LOGOS_EQUIPOS.get(equipo2, "")
+            
+            matchup_html = '<div class="matchup-box"><div class="team-col"><img src="' + logo1_url + '" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">' + equipo1 + '</h3><span style="font-size: 12px; color: #8b949e;">(Visitante)</span></div><div class="vs-col">VS</div><div class="team-col"><img src="' + logo2_url + '" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">' + equipo2 + '</h3><span style="font-size: 12px; color: #8b949e;">(Local)</span></div></div>'
+            st.markdown(matchup_html, unsafe_allow_html=True)
+            
+            hora_val = str(fila_juego.get('hora', '19:30 (VE)'))
+            sede_val = str(fila_juego.get('sede', 'Arena Principal'))
+            st.markdown("🕒 **Hora (VE):** " + hora_val + " &nbsp;&nbsp;|&nbsp;&nbsp; 🏟️ **Sede:** " + sede_val)
+            st.markdown("---")
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                st.metric(label="Ganador Proyectado", value=fila_juego["ganador"])
+            with col2:
+                st.metric(label="Total de Puntos (O/U)", value=fila_juego["total_puntos"])
+            
+            st.markdown("### 🧠 Razonamiento Táctico y Métricas Avanzadas")
+            analisis_amplio = fila_juego["analisis_es"] if lang == "es" else fila_juego["analisis_en"]
+            st.text(analisis_amplio)
+            
+            st.markdown("---")
+            if st.button("📄 Descargar Análisis en PDF"):
+                archivo_pdf = generar_pdf_analisis(equipo1 + " vs " + equipo2, hora_val, sede_val, fila_juego["ganador"], fila_juego["total_puntos"], analisis_amplio)
+                with open(archivo_pdf, "rb") as f:
+                    st.download_button("💾 Guardar archivo PDF en tu equipo", data=f, file_name="reporte_sabermetria_nba.pdf", mime="application/pdf")
+
+    elif menu == "Noticias (Doble Actualización)":
+        st.header("📰 Centro de Noticias en Tiempo Real — " + fecha_hoy)
+        st.write("Bienvenido al centro informativo oficial de Sabermetría IA.")
+        
+        mat_es, vesp_es, mat_en, vesp_en = cargar_noticias_txt()
+        matutina_texto = mat_es if lang == "es" else mat_en
+        vespertina_texto = vesp_es if lang == "es" else vesp_en
+
+        tab1, tab2 = st.tabs(["🌅 Actualización Matutina (Cierre Previo)", "🌇 Actualización de la Tarde (5:00 p.m.)"])
+        with tab1:
+            st.subheader("🌅 Reporte Matutino: Radiografía y Tendencias de la Liga")
+            st.text(matutina_texto)
+        with tab2:
+            st.subheader("🌇 Reporte Vespertino: Última Hora y Ajustes Previo al Salto Inicial")
+            st.text(vespertina_texto)
+
+    elif menu == "La Jugada Fija del Día":
+        st.header("⭐ La Jugada Estelar del Modelo")
+        st.success("Recomendación avalada estrictamente por eficiencia matemática y métricas de posesión.")
+        
+        juegos_fijos = df_cartelera[df_cartelera['es_jugada_fija'] == True]
+        juego_estelar = juegos_fijos.iloc[0] if not juegos_fijos.empty else df_cartelera.iloc[0]
+            
+        estelar_eq1 = str(juego_estelar["equipo1"]).strip()
+        estelar_eq2 = str(juego_estelar["equipo2"]).strip()
+        logo_estelar_1 = LOGOS_EQUIPOS.get(estelar_eq1, "")
+        logo_estelar_2 = LOGOS_EQUIPOS.get(estelar_eq2, "")
+        
+        matchup_estelar_html = '<div class="matchup-box"><div class="team-col"><img src="' + logo_estelar_1 + '" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">' + estelar_
