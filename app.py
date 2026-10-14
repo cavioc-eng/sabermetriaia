@@ -357,7 +357,13 @@ else:
             logo1_url = LOGOS_EQUIPOS.get(equipo1, "")
             logo2_url = LOGOS_EQUIPOS.get(equipo2, "")
             
-            matchup_html = '<div class="matchup-box"><div class="team-col"><img src="' + logo1_url + '" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">' + equipo1 + '</h3><span style="font-size: 12px; color: #8b949e;">(Visitante)</span></div><div class="vs-col">VS</div><div class="team-col"><img src="' + logo2_url + '" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">' + equipo2 + '</h3><span style="font-size: 12px; color: #8b949e;">(Local)</span></div></div>'
+            matchup_html = (
+                '<div class="matchup-box">'
+                '<div class="team-col"><img src="' + logo1_url + '" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">' + equipo1 + '</h3><span style="font-size: 12px; color: #8b949e;">(Visitante)</span></div>'
+                '<div class="vs-col">VS</div>'
+                '<div class="team-col"><img src="' + logo2_url + '" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">' + equipo2 + '</h3><span style="font-size: 12px; color: #8b949e;">(Local)</span></div>'
+                '</div>'
+            )
             st.markdown(matchup_html, unsafe_allow_html=True)
             
             hora_val = str(fila_juego.get('hora', '19:30 (VE)'))
@@ -409,4 +415,110 @@ else:
         logo_estelar_1 = LOGOS_EQUIPOS.get(estelar_eq1, "")
         logo_estelar_2 = LOGOS_EQUIPOS.get(estelar_eq2, "")
         
-        matchup_estelar_html = '<div class="matchup-box"><div
+        matchup_estelar_html = (
+            '<div class="matchup-box">'
+            '<div class="team-col"><img src="' + logo_estelar_1 + '" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">' + estelar_eq1 + '</h3><span style="font-size: 12px; color: #8b949e;">(Visitante)</span></div>'
+            '<div class="vs-col">VS</div>'
+            '<div class="team-col"><img src="' + logo_estelar_2 + '" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">' + estelar_eq2 + '</h3><span style="font-size: 12px; color: #8b949e;">(Local)</span></div>'
+            '</div>'
+        )
+        st.markdown(matchup_estelar_html, unsafe_allow_html=True)
+        
+        hora_est = str(juego_estelar.get('hora', '19:30 (VE)'))
+        sede_est = str(juego_estelar.get('sede', 'Arena Principal'))
+        st.markdown("🕒 **Hora (VE):** " + hora_est + " &nbsp;&nbsp;|&nbsp;&nbsp; 🏟️ **Sede:** " + sede_est)
+        st.markdown("---")
+        st.markdown("### 📊 Fundamento Estadístico y Razonamiento del Modelo")
+        analisis_jugada = juego_estelar["analisis_es"] if lang == "es" else juego_estelar["analisis_en"]
+        st.text(analisis_jugada)
+
+    elif menu == "Diccionario Sabermétrico":
+        st.header("📖 Diccionario Sabermétrico Educativo (Básico a Avanzado)")
+        st.write("Guía completa de referencia para comprender desde los fundamentos tradicionales hasta las métricas de eficiencia más avanzadas:")
+        
+        if lang == "es":
+            st.markdown(
+                "### 🟢 Indicadores Básicos y Tradicionales (Box Score)\n"
+                "- **PTS (Points / Puntos):** Total de puntos anotados por un jugador o equipo.\n"
+                "- **REB (Rebounds / Rebotes):** Balones recuperados tras un lanzamiento fallido.\n"
+                "- **AST (Assists / Asistencias):** Pases que conducen directamente a una canasta.\n"
+                "- **STL (Steals / Recuperaciones):** Balones arrebatados al adversario.\n"
+                "- **BLK (Blocks / Tapones):** Lanzamientos rivales bloqueados en el aire.\n"
+                "- **TOV (Turnovers / Pérdidas):** Balones entregados al rival por errores.\n"
+                "- **MIN (Minutes / Minutos):** Tiempo total que un jugador disputa en la duela.\n\n"
+                "### 🟡 Indicadores de Eficiencia Estándar\n"
+                "- **FG% (Field Goal Percentage):** Porcentaje de tiros de campo encestados.\n"
+                "- **3P% (Three-Point Percentage):** Eficacia en lanzamientos de larga distancia.\n"
+                "- **FT% (Free Throw Percentage):** Precisión desde la línea de tiros libres.\n\n"
+                "### 🔴 Indicadores Avanzados y de Profundidad (Sabermetría IA)\n"
+                "- **Pace (Ritmo):** Cantidad estimada de posesiones por cada 48 minutos.\n"
+                "- **True Shooting Percentage (TS%):** Eficiencia ofensiva global (dobles, triples y libres).\n"
+                "- **Net Rating:** Diferencia de puntos anotados y permitidos por 100 posesiones.\n"
+                "- **Usage Rate (USG%):** Porcentaje de jugadas ofensivas que concluye un jugador en cancha.\n"
+                "- **PER (Player Efficiency Rating):** Índice global de productividad por minuto."
+            )
+        else:
+            st.markdown(
+                "### 🟢 Basic & Traditional Indicators (Box Score)\n"
+                "- **PTS (Points):** Total points scored by a player or team.\n"
+                "- **REB (Rebounds):** Basketballs recovered after a missed shot.\n"
+                "- **AST (Assists):** Passes leading directly to a field goal.\n"
+                "- **STL (Steals):** Balls taken away from the opponent.\n"
+                "- **BLK (Blocks):** Legal deflections of opponent shots.\n"
+                "- **TOV (Turnovers):** Possessions lost due to unforced errors.\n"
+                "- **MIN (Minutes):** Total time a player spends on the court.\n\n"
+                "### 🟡 Standard Efficiency Indicators\n"
+                "- **FG% (Field Goal Percentage):** Ratio of successful field goals.\n"
+                "- **3P% (Three-Point Percentage):** Shooting accuracy from beyond the arc.\n"
+                "- **FT% (Free Throw Percentage):** Accuracy from the charity stripe.\n\n"
+                "### 🔴 Advanced & Deep Analytics (Sabermetria AI)\n"
+                "- **Pace:** Estimated number of possessions per 48 minutes.\n"
+                "- **True Shooting Percentage (TS%):** Comprehensive scoring efficiency.\n"
+                "- **Net Rating:** Point differential per 100 possessions.\n"
+                "- **Usage Rate (USG%):** Estimate of team plays used by a player.\n"
+                "- **PER (Player Efficiency Rating):** Per-minute productivity rating."
+            )
+
+    elif menu == "🔐 Panel de Administración":
+        st.header(t["admin_titulo"])
+        st.write(t["admin_desc"])
+        clave_admin = st.text_input(t["admin_clave"], type="password", key="input_clave_admin")
+        
+        if clave_admin == "sabermetria2026":
+            st.success(t["admin_exito"])
+            if os.path.exists(db_usuarios_path):
+                df_visitas = pd.read_csv(db_usuarios_path, encoding='utf-8')
+                st.metric(label=t["total_visitas"], value=len(df_visitas))
+                st.dataframe(df_visitas, use_container_width=True)
+
+            st.markdown("---")
+            st.subheader("🎯 Gestor de Efectividad del Modelo")
+            ayer_act = cargar_estadisticas()
+            with st.form("form_estadisticas"):
+                nuevo_ayer = st.text_input("Aciertos de la Jornada (Ej: 3 / 4 (75%)):", value=ayer_act)
+                if st.form_submit_button("💾 Guardar Efectividad"):
+                    guardar_estadisticas(nuevo_ayer)
+                    st.success("¡Efectividad actualizada!")
+                    st.rerun()
+
+            st.markdown("---")
+            st.subheader("📰 Gestor de Noticias Bilingües (Archivo Local)")
+            st.write("Modifica los textos directamente y guarda para publicarlos de inmediato en la sección de noticias.")
+            
+            mat_es_act, vesp_es_act, mat_en_act, vesp_en_act = cargar_noticias_txt()
+            
+            with st.form("form_noticias_txt"):
+                st.markdown("#### 🇪🇸 Español")
+                txt_mat_es = st.text_area("Noticia Matutina (Español):", value=mat_es_act, height=140)
+                txt_vesp_es = st.text_area("Noticia Vespertina (Español):", value=vesp_es_act, height=140)
+                st.markdown("#### 🇺🇸 Inglés (English)")
+                txt_mat_en = st.text_area("Morning News (English):", value=mat_en_act, height=140)
+                txt_vesp_en = st.text_area("Evening News (English):", value=vesp_en_act, height=140)
+                
+                if st.form_submit_button("💾 Guardar y Publicar Noticias"):
+                    guardar_noticias_txt(txt_mat_es, txt_vesp_es, txt_mat_en, txt_vesp_en)
+                    st.success("¡Noticias bilingües guardadas y publicadas correctamente!")
+                    st.rerun()
+
+        elif clave_admin != "":
+            st.error(t["admin_error"])
