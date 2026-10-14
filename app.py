@@ -260,4 +260,95 @@ def cargar_cartelera():
     ]
     return pd.DataFrame(data_def)
 
-idioma = st.sidebar.selectbox("🌐 Idioma /
+idioma = st.sidebar.selectbox("🌐 Idioma / Language", ["Español", "English"])
+lang = "es" if idioma == "Español" else "en"
+t = TEXTOS[lang]
+
+if "autenticado" not in st.session_state:
+    st.session_state.autenticado = False
+
+if not st.session_state.autenticado:
+    col_izq, col_centro, col_der = st.columns([1.2, 1.8, 1])
+    with col_izq:
+        if os.path.exists(logo_path):
+            st.image(logo_path, width=220)
+    with col_centro:
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.title(t["titulo_app"])
+        st.subheader(t["sub_app"])
+        st.write("Para desbloquear el portal exclusivo y la analítica avanzada, sigue los pasos:")
+    with col_der:
+        st.image("https://upload.wikimedia.org/wikipedia/en/0/03/National_Basketball_Association_logo.svg", width=140)
+    
+    st.markdown("---")
+    col_paso1, col_paso2 = st.columns(2)
+    with col_paso1:
+        st.markdown(
+            '<div class="tiktok-card">'
+            '<h4 style="color: #00FF66; margin-top: 0;">' + t["paso1_titulo"] + '</h4>'
+            '<p style="font-size: 14px; margin-bottom: 10px;">' + t["paso1_desc"] + '</p>'
+            '<a href="https://www.tiktok.com/@sabermetriaia" target="_blank" style="background-color: #00FF66; color: #000000; padding: 8px 15px; border-radius: 6px; font-weight: bold; text-decoration: none; display: inline-block;">' + t["btn_tiktok"] + '</a>'
+            '</div>', unsafe_allow_html=True
+        )
+    with col_paso2:
+        st.markdown(
+            '<div class="tiktok-card">'
+            '<h4 style="color: #00FF66; margin-top: 0;">' + t["paso2_titulo"] + '</h4>'
+            '<p style="font-size: 14px; margin-bottom: 15px;">' + t["paso2_desc"] + '</p>'
+            '</div>', unsafe_allow_html=True
+        )
+        if st.button(t["btn_acceso"]):
+            registrar_visita()
+            st.session_state.autenticado = True
+            st.rerun()
+else:
+    st.sidebar.title("Menú Principal" if lang == "es" else "Main Menu")
+    if os.path.exists(logo_path):
+        st.sidebar.image(logo_path, width=220)
+        
+    menu = st.sidebar.radio(
+        "Selecciona una sección:" if lang == "es" else "Select a section:", 
+        [
+            "Cartelera y Partidos", 
+            "Noticias (Doble Actualización)", 
+            "La Jugada Fija del Día", 
+            "Diccionario Sabermétrico",
+            "🔐 Panel de Administración"
+        ]
+    )
+
+    fecha_hoy = datetime.now().strftime("%d de %B de %Y")
+    df_cartelera = cargar_cartelera()
+    ayer_str = cargar_estadisticas()
+
+    if lang == "es":
+        st.markdown(
+            '<div class="stats-banner">'
+            '<h4 style="color: #00FF66; margin: 0;">🎯 Rendimiento del Modelo Sabermétrico (Evaluación de la Jornada)</h4>'
+            '<p style="font-size: 15px; margin: 5px 0 0 0;">Aciertos del Modelo: <b>' + ayer_str + '</b></p>'
+            '</div>', unsafe_allow_html=True
+        )
+    else:
+        st.markdown(
+            '<div class="stats-banner">'
+            '<h4 style="color: #00FF66; margin: 0;">🎯 Sabermetric Model Performance (Slate Evaluation)</h4>'
+            '<p style="font-size: 15px; margin: 5px 0 0 0;">Model Hits: <b>' + ayer_str + '</b></p>'
+            '</div>', unsafe_allow_html=True
+        )
+
+    if menu == "Cartelera y Partidos":
+        st.header("📅 Cartelera de Partidos - Análisis Profundo (" + fecha_hoy + ")")
+        st.write("Selecciona un encuentro para ver el desglose científico del modelo:")
+        
+        opciones_dict = {}
+        for _, row in df_cartelera.iterrows():
+            e1 = str(row['equipo1']).strip()
+            e2 = str(row['equipo2']).strip()
+            label = e1 + " vs. " + e2
+            opciones_dict[label] = row
+            
+        partido_seleccionado = st.selectbox("Juegos de hoy:", list(opciones_dict.keys()))
+        
+        if partido_seleccionado:
+            fila_juego = opciones_dict[partido_seleccionado]
+            equipo1 = str(fila_
