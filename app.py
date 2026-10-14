@@ -169,17 +169,15 @@ def cargar_cartelera():
             "equipo1": "Boston Celtics", "equipo2": "Charlotte Hornets", 
             "hora": "19:30 (VE)", "sede": "Spectrum Center (Charlotte, NC)", 
             "ganador": "Boston Celtics (-8.5 pts)", "total_puntos": "224.5 (Altas / Over)", 
-            "analisis_es": """
-            🏀 **Análisis Táctico y de Espaciamiento (Spacing):**<br>
-            Los Boston Celtics llegan a este encuentro exhibiendo una estructura ofensiva fundamentada en la saturación perimetral y la creación de ventajas a partir del <i>pick-and-pop</i>. Con un promedio de conversión superior al 56.2% en eFG% (Effective Field Goal Percentage), el conjunto verde maximiza el valor esperado de cada posesión castigando las ayudas defensivas del rival.<br><br>
-            
-            📊 **Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):**<br>
-            • **Net Rating Proyectado:** +10.4 a favor de Boston, sustentado en una eficiencia defensiva que limita al oponente a menos de 102 puntos por cada 100 posesiones.<br>
-            • **Pace Estimado:** 99.2 posesiones por 48 minutos, lo que favorece un ritmo dinámico e incrementa el volumen total de lanzamientos de larga distancia.<br>
-            • **Turnover Percentage (TOV%):** Boston mantiene una tasa de pérdida de balón controlada (inferior al 11.2%), neutralizando las transiciones defensivas de Charlotte.<br><br>
-            
-            🎯 **Conclusión del Modelo:** La superioridad en la profundidad de banquillo y el dominio en la captura de rebotes ofensivos (OREB%) inclinan la balanza con solvencia hacia la línea de los Celtics.
-            """,
+            "analisis_es": (
+                "🏀 <b>Análisis Táctico y de Espaciamiento (Spacing):</b><br>"
+                "Los Boston Celtics llegan a este encuentro exhibiendo una estructura ofensiva fundamentada en la saturación perimetral y la creación de ventajas a partir del <i>pick-and-pop</i>. Con un promedio de conversión superior al 56.2% en eFG% (Effective Field Goal Percentage), el conjunto verde maximiza el valor esperado de cada posesión castigando las ayudas defensivas del rival.<br><br>"
+                "📊 <b>Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):</b><br>"
+                "• <b>Net Rating Proyectado:</b> +10.4 a favor de Boston, sustentado en una eficiencia defensiva que limita al oponente a menos de 102 puntos por cada 100 posesiones.<br>"
+                "• <b>Pace Estimado:</b> 99.2 posesiones por 48 minutos, lo que favorece un ritmo dinámico e incrementa el volumen total de lanzamientos de larga distancia.<br>"
+                "• <b>Turnover Percentage (TOV%):</b> Boston mantiene una tasa de pérdida de balón controlada (inferior al 11.2%), neutralizando las transiciones defensivas de Charlotte.<br><br>"
+                "🎯 <b>Conclusión del Modelo:</b> La superioridad en la profundidad de banquillo y el dominio en la captura de rebotes ofensivos (OREB%) inclinan la balanza con solvencia hacia la línea de los Celtics."
+            ),
             "analisis_en": "Advanced tactical breakdown for Boston Celtics vs Charlotte Hornets...", 
             "es_jugada_fija": True
         },
@@ -187,17 +185,15 @@ def cargar_cartelera():
             "equipo1": "Miami Heat", "equipo2": "Brooklyn Nets", 
             "hora": "19:30 (VE)", "sede": "Barclays Center (Brooklyn, NY)", 
             "ganador": "Miami Heat (-4.5 pts)", "total_puntos": "218.5 (Bajas / Under)", 
-            "analisis_es": """
-            🏀 **Análisis Táctico y de Espaciamiento (Spacing):**<br>
-            El sistema de Miami opera bajo una disciplina defensiva inquebrantable, priorizando la defensa de contención en el perímetro y cerrando los espacios en la llave (paint protection). Brooklyn intentará proponer un juego abierto, pero la presión física en la primera línea de pase cortocircuitará su circulación de balón.<br><br>
-            
-            📊 **Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):**<br>
-            • **Pace Proyectado:** 96.5 posesiones. Al ser un juego de posesiones más pausadas, el ritmo beneficia la tendencia a la baja (Under) en la línea de puntos totales.<br>
-            • **Defensive Rating:** Miami proyecta frenar la eficiencia ofensiva rival por debajo del 44% en tiros de campo globales.<br>
-            • **True Shooting Percentage (TS%):** La selección de tiro de Miami en la media distancia ofrece mayor estabilidad en los minutos de cierre.<br><br>
-            
-            🎯 **Conclusión del Modelo:** Disciplina táctica y control absoluto del reloj de posesión otorgan la ventaja a Miami en un duelo de pocos puntos.
-            """,
+            "analisis_es": (
+                "🏀 <b>Análisis Táctico y de Espaciamiento (Spacing):</b><br>"
+                "El sistema de Miami opera bajo una disciplina defensiva inquebrantable, priorizando la defensa de contención en el perímetro y cerrando los espacios en la llave (paint protection). Brooklyn intentará proponer un juego abierto, pero la presión física en la primera línea de pase cortocircuitará su circulación de balón.<br><br>"
+                "📊 <b>Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):</b><br>"
+                "• <b>Pace Proyectado:</b> 96.5 posesiones. Al ser un juego de posesiones más pausadas, el ritmo beneficia la tendencia a la baja (Under) en la línea de puntos totales.<br>"
+                "• <b>Defensive Rating:</b> Miami proyecta frenar la eficiencia ofensiva rival por debajo del 44% en tiros de campo globales.<br>"
+                "• <b>True Shooting Percentage (TS%):</b> La selección de tiro de Miami en la media distancia ofrece mayor estabilidad en los minutos de cierre.<br><br>"
+                "🎯 <b>Conclusión del Modelo:</b> Disciplina táctica y control absoluto del reloj de posesión otorgan la ventaja a Miami en un duelo de pocos puntos."
+            ),
             "analisis_en": "Advanced tactical breakdown for Miami Heat vs Brooklyn Nets...", 
             "es_jugada_fija": False
         },
@@ -205,17 +201,15 @@ def cargar_cartelera():
             "equipo1": "Dallas Mavericks", "equipo2": "New Orleans Pelicans", 
             "hora": "20:00 (VE)", "sede": "Smoothie King Center (New Orleans, LA)", 
             "ganador": "Dallas Mavericks (-3.0 pts)", "total_puntos": "230.5 (Altas / Over)", 
-            "analisis_es": """
-            🏀 **Análisis Táctico y de Espaciamiento (Spacing):**<br>
-            Encuentro caracterizado por un alto volumen de transiciones ofensivas y situaciones de bloqueo directo (pick-and-roll). Dallas explota de manera quirúrgica las debilidades en el cambio de marca defensivo del rival, generando tiros abiertos desde las esquinas.<br><br>
-            
-            📊 **Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):**<br>
-            • **True Shooting Percentage (TS%):** Proyectado en un formidable 59.8% para los Mavericks, reflejando gran eficacia combinando tiros libres, dobles y triples.<br>
-            • **Usage Rate (USG%):** Alta concentración de jugadas culminadas por los creadores de juego principales, elevando el potencial de anotación colectiva.<br>
-            • **Pace Estimado:** 101.4 posesiones, apuntando directamente a superar la línea de altas (Over).<br><br>
-            
-            🎯 **Conclusión del Modelo:** La capacidad anotadora exterior de Dallas y la velocidad en transición garantizan un partido de alto voltaje ofensivo.
-            """,
+            "analisis_es": (
+                "🏀 <b>Análisis Táctico y de Espaciamiento (Spacing):</b><br>"
+                "Encuentro caracterizado por un alto volumen de transiciones ofensivas y situaciones de bloqueo directo (pick-and-roll). Dallas explota de manera quirúrgica las debilidades en el cambio de marca defensivo del rival, generando tiros abiertos desde las esquinas.<br><br>"
+                "📊 <b>Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):</b><br>"
+                "• <b>True Shooting Percentage (TS%):</b> Proyectado en un formidable 59.8% para los Mavericks, reflejando gran eficacia combinando tiros libres, dobles y triples.<br>"
+                "• <b>Usage Rate (USG%):</b> Alta concentración de jugadas culminadas por los creadores de juego principales, elevando el potencial de anotación colectiva.<br>"
+                "• <b>Pace Estimado:</b> 101.4 posesiones, apuntando directamente a superar la línea de altas (Over).<br><br>"
+                "🎯 <b>Conclusión del Modelo:</b> La capacidad anotadora exterior de Dallas y la velocidad en transición garantizan un partido de alto voltaje ofensivo."
+            ),
             "analisis_en": "Advanced tactical breakdown for Dallas vs New Orleans...", 
             "es_jugada_fija": False
         },
@@ -223,16 +217,14 @@ def cargar_cartelera():
             "equipo1": "Milwaukee Bucks", "equipo2": "Chicago Bulls", 
             "hora": "20:00 (VE)", "sede": "United Center (Chicago, IL)", 
             "ganador": "Milwaukee Bucks (-6.0 pts)", "total_puntos": "226.0 (Altas / Over)", 
-            "analisis_es": """
-            🏀 **Análisis Táctico y de Espaciamiento (Spacing):**<br>
-            Milwaukee impone condiciones a través de su dominio físico en la pintura y la gravedad ofensiva que atrae su juego interior, abriendo espacios ideales para los tiradores exteriores. Chicago sufrirá para contener el rebote en ambos costados de la duela.<br><br>
-            
-            📊 **Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):**<br>
-            • **Rebounding Percentage (OREB/DREB):** Clara ventaja para los Bucks, asegurando segundas oportunidades de anotación.<br>
-            • **Offensive Rating:** Proyectado en 116.8 puntos por 100 posesiones, aprovechando las flaquezas de la estructura defensiva de los Bulls.<br><br>
-            
-            🎯 **Conclusión del Modelo:** La jerarquía en la pintura y el control del ritmo ofensivo inclinan el pronóstico claramente hacia Milwaukee.
-            """,
+            "analisis_es": (
+                "🏀 <b>Análisis Táctico y de Espaciamiento (Spacing):</b><br>"
+                "Milwaukee impone condiciones a través de su dominio físico en la pintura y la gravedad ofensiva que atrae su juego interior, abriendo espacios ideales para los tiradores exteriores. Chicago sufrirá para contener el rebote en ambos costados de la duela.<br><br>"
+                "📊 <b>Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):</b><br>"
+                "• <b>Rebounding Percentage (OREB/DREB):</b> Clara ventaja para los Bucks, asegurando segundas oportunidades de anotación.<br>"
+                "• <b>Offensive Rating:</b> Proyectado en 116.8 puntos por 100 posesiones, aprovechando las flaquezas de la estructura defensiva de los Bulls.<br><br>"
+                "🎯 <b>Conclusión del Modelo:</b> La jerarquía en la pintura y el control del ritmo ofensivo inclinan el pronóstico claramente hacia Milwaukee."
+            ),
             "analisis_en": "Advanced tactical breakdown for Milwaukee vs Chicago...", 
             "es_jugada_fija": False
         },
@@ -240,4 +232,127 @@ def cargar_cartelera():
             "equipo1": "Minnesota Timberwolves", "equipo2": "Detroit Pistons", 
             "hora": "20:00 (VE)", "sede": "Little Caesars Arena (Detroit, MI)", 
             "ganador": "Minnesota Timberwolves (-7.5 pts)", "total_puntos": "215.0 (Bajas / Under)", 
-            "anal
+            "analisis_es": (
+                "🏀 <b>Análisis Táctico y de Espaciamiento (Spacing):</b><br>"
+                "Minnesota despliega uno de los entramados defensivos más asfixiantes de la liga. Su capacidad para colapsar la pintura y recuperar la posición perimetral neutraliza los sistemas de penetración rivales.<br><br>"
+                "📊 <b>Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):</b><br>"
+                "• <b>Defensive Win Shares:</b> Alto índice acumulado en el quinteto titular visitante.<br>"
+                "• <b>Opponent Effective Field Goal Percentage (Opp eFG%):</b> Proyectado por debajo del 48%, conteniendo severamente la producción ofensiva de Detroit.<br><br>"
+                "🎯 <b>Conclusión del Modelo:</b> Solidez defensiva y control de las líneas de pase marcan la pauta para una victoria cómoda y de baja anotación."
+            ),
+            "analisis_en": "Advanced tactical breakdown for Minnesota vs Detroit...", 
+            "es_jugada_fija": False
+        },
+        {
+            "equipo1": "San Antonio Spurs", "equipo2": "Phoenix Suns", 
+            "hora": "20:00 (VE)", "sede": "Footprint Center (Phoenix, AZ)", 
+            "ganador": "Phoenix Suns (-5.0 pts)", "total_puntos": "228.0 (Altas / Over)", 
+            "analisis_es": (
+                "🏀 <b>Análisis Táctico y de Espaciamiento (Spacing):</b><br>"
+                "Duelo de alta escuela en la ejecución de tiros de media distancia y situaciones de aclarado (isolation). Phoenix cuenta con individualidades letales capaces de castigar cualquier desajuste en los cambios defensivos.<br><br>"
+                "📊 <b>Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):</b><br>"
+                "• <b>Clutch Efficiency:</b> Los Suns registran superioridad estadística en posesiones apretadas durante los últimos cuartos.<br>"
+                "• <b>Offensive Pace:</b> Ritmo elevado que propicia un intercambio constante de canastas.<br><br>"
+                "🎯 <b>Conclusión del Modelo:</b> La experiencia y la precisión en los momentos clave otorgan la ventaja a Phoenix en un marcador alto."
+            ),
+            "analisis_en": "Advanced tactical breakdown for San Antonio vs Phoenix...", 
+            "es_jugada_fija": False
+        },
+        {
+            "equipo1": "Los Angeles Clippers", "equipo2": "Denver Nuggets", 
+            "hora": "22:30 (VE)", "sede": "Ball Arena (Denver, CO)", 
+            "ganador": "Denver Nuggets (-4.0 pts)", "total_puntos": "222.0 (Altas / Over)", 
+            "analisis_es": (
+                "🏀 <b>Análisis Táctico y de Espaciamiento (Spacing):</b><br>"
+                "Cierres de jornada con un ajedrez táctico en la altura de Denver. La capacidad de distribución desde el poste alto y la lectura de cortes sin balón desarticulan cualquier planteamiento defensivo convencional.<br><br>"
+                "📊 <b>Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):</b><br>"
+                "• <b>Net Rating en la Altura:</b> Denver maximiza su localía elevando su eficiencia neta en los tramos finales del encuentro.<br>"
+                "• <b>Assist-to-Turnover Ratio:</b> Excelente circulación de balón que minimiza las pérdidas no forzadas.<br><br>"
+                "🎯 <b>Conclusión del Modelo:</b> El factor local y la fluidez en la distribución ofensiva inclinan el pronóstico a favor de los Nuggets."
+            ),
+            "analisis_en": "Advanced tactical breakdown for Clippers vs Nuggets...", 
+            "es_jugada_fija": False
+        }
+    ]
+    return pd.DataFrame(data_def)
+
+idioma = st.sidebar.selectbox("🌐 Idioma / Language", ["Español", "English"])
+lang = "es" if idioma == "Español" else "en"
+t = TEXTOS[lang]
+
+if "autenticado" not in st.session_state:
+    st.session_state.autenticado = False
+
+if not st.session_state.autenticado:
+    col_izq, col_centro, col_der = st.columns([1.2, 1.8, 1])
+    with col_izq:
+        if os.path.exists(logo_path):
+            st.image(logo_path, width=220)
+    with col_centro:
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.title(t["titulo_app"])
+        st.subheader(t["sub_app"])
+        st.write("Para desbloquear el portal exclusivo y la analítica avanzada, sigue los pasos:")
+    with col_der:
+        st.image("https://upload.wikimedia.org/wikipedia/en/0/03/National_Basketball_Association_logo.svg", width=140)
+    
+    st.markdown("---")
+    col_paso1, col_paso2 = st.columns(2)
+    with col_paso1:
+        st.markdown(f"""
+        <div class="tiktok-card">
+            <h4 style="color: #00FF66; margin-top: 0;">{t["paso1_titulo"]}</h4>
+            <p style="font-size: 14px; margin-bottom: 10px;">{t["paso1_desc"]}</p>
+            <a href="https://www.tiktok.com/@sabermetriaia" target="_blank" style="background-color: #00FF66; color: #000000; padding: 8px 15px; border-radius: 6px; font-weight: bold; text-decoration: none; display: inline-block;">{t["btn_tiktok"]}</a>
+        </div>
+        """, unsafe_allow_html=True)
+    with col_paso2:
+        st.markdown(f"""
+        <div class="tiktok-card">
+            <h4 style="color: #00FF66; margin-top: 0;">{t["paso2_titulo"]}</h4>
+            <p style="font-size: 14px; margin-bottom: 15px;">{t["paso2_desc"]}</p>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button(t["btn_acceso"]):
+            registrar_visita()
+            st.session_state.autenticado = True
+            st.rerun()
+else:
+    st.sidebar.title("Menú Principal" if lang == "es" else "Main Menu")
+    if os.path.exists(logo_path):
+        st.sidebar.image(logo_path, width=220)
+        
+    menu = st.sidebar.radio("Selecciona una sección:" if lang == "es" else "Select a section:", [
+        "Cartelera y Partidos", 
+        "Noticias (Doble Actualización)", 
+        "La Jugada Fija del Día", 
+        "Diccionario Sabermétrico",
+        "🔐 Panel de Administración"
+    ])
+
+    fecha_hoy = datetime.now().strftime("%d de %B de %Y")
+    df_cartelera = cargar_cartelera()
+    ayer_str = cargar_estadisticas()
+
+    if lang == "es":
+        st.markdown(f"""
+        <div class="stats-banner">
+            <h4 style="color: #00FF66; margin: 0;">🎯 Rendimiento del Modelo Sabermétrico (Evaluación de la Jornada)</h4>
+            <p style="font-size: 15px; margin: 5px 0 0 0;">Aciertos del Modelo: <b>{ayer_str}</b></p>
+        </div>
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown(f"""
+        <div class="stats-banner">
+            <h4 style="color: #00FF66; margin: 0;">🎯 Sabermetric Model Performance (Slate Evaluation)</h4>
+            <p style="font-size: 15px; margin: 5px 0 0 0;">Model Hits: <b>{ayer_str}</b></p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    if menu == "Cartelera y Partidos":
+        st.header(f"📅 Cartelera de Partidos - Análisis Profundo ({fecha_hoy})")
+        st.write("Selecciona un encuentro para ver el desglose científico del modelo:")
+        
+        opciones_dict = {}
+        for _, row in df_cartelera.iterrows():
+            e1 = str
