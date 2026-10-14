@@ -34,11 +34,6 @@ TEXTOS = {
         "paso2_titulo": "Paso 2: Acceso Directo",
         "paso2_desc": "Haz clic en el botón para entrar al portal exclusivo:",
         "btn_acceso": "🏀 Entrar al Portal Exclusivo",
-        "menu_cartelera": "Cartelera y Partidos",
-        "menu_noticias": "Noticias (Doble Actualización)",
-        "menu_jugada": "La Jugada Fija del Día",
-        "menu_diccionario": "Diccionario Sabermétrico",
-        "menu_admin": "🔐 Panel de Administración",
         "admin_titulo": "🔐 Panel de Control y Publicación - Sabermetría IA",
         "admin_desc": "Control estadístico de visitas, cartelera bilingüe, efectividad y noticias.",
         "admin_clave": "Ingresa la clave de administrador:",
@@ -55,11 +50,6 @@ TEXTOS = {
         "paso2_titulo": "Step 2: Direct Access",
         "paso2_desc": "Click the button to enter the exclusive portal:",
         "btn_acceso": "🏀 Enter Exclusive Portal",
-        "menu_cartelera": "Schedule & Games",
-        "menu_noticias": "News (Double Update)",
-        "menu_jugada": "Play of the Day",
-        "menu_diccionario": "Sabermetric Dictionary",
-        "menu_admin": "🔐 Admin Panel",
         "admin_titulo": "🔐 Control & Publishing Panel - Sabermetria AI",
         "admin_desc": "Visit statistical control, bilingual schedule, accuracy, and news.",
         "admin_clave": "Enter admin password:",
@@ -312,11 +302,11 @@ else:
         st.sidebar.image(logo_path, width=220)
         
     menu = st.sidebar.radio("Selecciona una sección:" if lang == "es" else "Select a section:", [
-        t["menu_cartelera"], 
-        t["menu_noticias"], 
-        t["menu_jugada"], 
-        t["menu_diccionario"],
-        t["menu_admin"]
+        "Cartelera y Partidos", 
+        "Noticias (Doble Actualización)", 
+        "La Jugada Fija del Día", 
+        "Diccionario Sabermétrico",
+        "🔐 Panel de Administración"
     ])
 
     fecha_hoy = datetime.now().strftime("%d de %B de %Y")
@@ -339,7 +329,7 @@ else:
         </div>
         """, unsafe_allow_html=True)
 
-    if menu == t["menu_cartelera"]:
+    if menu == "Cartelera y Partidos":
         titulo_cartelera = "📅 Cartelera de Partidos - Análisis Profundo" if lang == "es" else "📅 Game Schedule - Deep Analysis"
         st.header(f"{titulo_cartelera} ({fecha_hoy})")
         st.write("Selecciona un encuentro para ver el desglose científico del modelo:" if lang == "es" else "Select a matchup to view the scientific breakdown:")
@@ -409,7 +399,7 @@ else:
                         mime="application/pdf"
                     )
 
-    elif menu == t["menu_noticias"]:
+    elif menu == "Noticias (Doble Actualización)":
         titulo_noticias = f"📰 Centro de Noticias en Tiempo Real — {fecha_hoy}" if lang == "es" else f"📰 Real-Time News Center — {fecha_hoy}"
         st.header(titulo_noticias)
         st.write("Bienvenido al centro informativo oficial de Sabermetría IA. Aquí encontrarás la doble actualización diaria." if lang == "es" else "Welcome to Sabermetria AI's official news center. Here you will find the double daily update.")
@@ -425,4 +415,303 @@ else:
         tab1, tab2 = st.tabs([tab_mat, tab_vesp])
         
         with tab1:
-            titulo_mat = "🌅 Reporte Matutino: Radiografía y Tendencias de la Liga"
+            titulo_mat = "🌅 Reporte Matutino: Radiografía y Tendencias de la Liga" if lang == "es" else "🌅 Morning Report: League Radiography & Trends"
+            st.subheader(titulo_mat)
+            st.markdown(matutina_texto)
+        with tab2:
+            titulo_vesp = "🌇 Reporte Vespertino: Última Hora y Ajustes Previo al Salto Inicial" if lang == "es" else "🌇 Evening Report: Breaking News & Pre-Tip Adjustments"
+            st.subheader(titulo_vesp)
+            st.markdown(vespertina_texto)
+
+    elif menu == "La Jugada Fija del Día":
+        st.header("⭐ La Jugada Estelar del Modelo" if lang == "es" else "⭐ Model's Star Play of the Day")
+        st.success("Recomendación avalada estrictamente por eficiencia matemática y métricas de posesión." if lang == "es" else "Recommendation strictly backed by mathematical efficiency and possession metrics.")
+        
+        juegos_fijos = df_cartelera[df_cartelera['es_jugada_fija'] == True]
+        if not juegos_fijos.empty:
+            juego_estelar = juegos_fijos.iloc[0]
+        else:
+            juego_estelar = df_cartelera.iloc[0]
+            
+        estelar_eq1 = juego_estelar["equipo1"]
+        estelar_eq2 = juego_estelar["equipo2"]
+        logo_estelar_1 = LOGOS_EQUIPOS.get(estelar_eq1, "")
+        logo_estelar_2 = LOGOS_EQUIPOS.get(estelar_eq2, "")
+        
+        matchup_estelar_html = (
+            '<div class="matchup-box">'
+            '<div class="team-col">'
+            f'<img src="{logo_estelar_1}" width="100" style="margin-bottom: 10px;">'
+            f'<h3 style="margin: 0; color: #ffffff;">{estelar_eq1}</h3>'
+            '<span style="font-size: 12px; color: #8b949e;">(Visitante)</span>'
+            '</div>'
+            '<div class="vs-col">VS</div>'
+            '<div class="team-col">'
+            f'<img src="{logo_estelar_2}" width="100" style="margin-bottom: 10px;">'
+            f'<h3 style="margin: 0; color: #ffffff;">{estelar_eq2}</h3>'
+            '<span style="font-size: 12px; color: #8b949e;">(Local)</span>'
+            '</div>'
+            '</div>'
+        )
+        st.markdown(matchup_estelar_html, unsafe_allow_html=True)
+        
+        hora_est = str(juego_estelar.get('hora', '18:30 (VE)'))
+        sede_est = str(juego_estelar.get('sede', 'Arena Principal'))
+        st.markdown(f"🕒 **Hora (VE):** {hora_est} &nbsp;&nbsp;|&nbsp;&nbsp; 🏟️ **Sede:** {sede_est}")
+        st.markdown("---")
+        
+        st.markdown("### 📊 Fundamento Estadístico y Razonamiento del Modelo" if lang == "es" else "### 📊 Statistical Foundation & Model Reasoning")
+        analisis_jugada = juego_estelar["analisis_es"] if lang == "es" else juego_estelar["analisis_en"]
+        
+        if lang == "es":
+            st.markdown(
+                "* **Selección Recomendada:** " + str(juego_estelar["ganador"]) + 
+                " | Totales: " + str(juego_estelar["total_puntos"]) + 
+                "\n* **Nivel de Confianza del Modelo:** 88.4%" + 
+                "\n* **Por qué elegimos este encuentro:** " + str(analisis_jugada)
+            )
+        else:
+            st.markdown(
+                "* **Recommended Selection:** " + str(juego_estelar["ganador"]) + 
+                " | Totals: " + str(juego_estelar["total_puntos"]) + 
+                "\n* **Model Confidence Level:** 88.4%" + 
+                "\n* **Why we chose this matchup:** " + str(analisis_jugada)
+            )
+
+    elif menu == "Diccionario Sabermétrico":
+        st.header("📖 Diccionario Sabermétrico Educativo (Básico a Avanzado)" if lang == "es" else "📖 Educational Sabermetric Dictionary (Basic to Advanced)")
+        st.write("Guía completa de referencia para comprender desde los fundamentos tradicionales hasta las métricas de eficiencia más avanzadas:" if lang == "es" else "Complete reference guide to understand everything from traditional fundamentals to advanced efficiency metrics:")
+        
+        if lang == "es":
+            st.markdown(
+                "### 🟢 Indicadores Básicos y Tradicionales (Box Score)\n"
+                "- **PTS (Points / Puntos):** Total de puntos anotados por un jugador o equipo.\n"
+                "- **REB (Rebounds / Rebotes):** Balones recuperados tras un lanzamiento fallido.\n"
+                "- **AST (Assists / Asistencias):** Pases que conducen directamente a una canasta.\n"
+                "- **STL (Steals / Recuperaciones):** Balones arrebatados al adversario.\n"
+                "- **BLK (Blocks / Tapones):** Lanzamientos rivales bloqueados en el aire.\n"
+                "- **TOV (Turnovers / Pérdidas):** Balones entregados al rival por errores.\n"
+                "- **MIN (Minutes / Minutos):** Tiempo total que un jugador disputa en la duela.\n\n"
+                "### 🟡 Indicadores de Eficiencia Estándar\n"
+                "- **FG% (Field Goal Percentage):** Porcentaje de tiros de campo encestados.\n"
+                "- **3P% (Three-Point Percentage):** Eficacia en lanzamientos de larga distancia.\n"
+                "- **FT% (Free Throw Percentage):** Precisión desde la línea de tiros libres.\n\n"
+                "### 🔴 Indicadores Avanzados y de Profundidad (Sabermetría IA)\n"
+                "- **Pace (Ritmo):** Cantidad estimada de posesiones por cada 48 minutos.\n"
+                "- **True Shooting Percentage (TS%):** Eficiencia ofensiva global (dobles, triples y libres).\n"
+                "- **Net Rating:** Diferencia de puntos anotados y permitidos por 100 posesiones.\n"
+                "- **Usage Rate (USG%):** Porcentaje de jugadas ofensivas que concluye un jugador en cancha.\n"
+                "- **PER (Player Efficiency Rating):** Índice global de productividad por minuto."
+            )
+        else:
+            st.markdown(
+                "### 🟢 Basic & Traditional Indicators (Box Score)\n"
+                "- **PTS (Points):** Total points scored by a player or team.\n"
+                "- **REB (Rebounds):** Basketballs recovered after a missed shot.\n"
+                "- **AST (Assists):** Passes leading directly to a field goal.\n"
+                "- **STL (Steals):** Balls taken away from the opponent.\n"
+                "- **BLK (Blocks):** Legal deflections of opponent shots.\n"
+                "- **TOV (Turnovers):** Possessions lost due to unforced errors.\n"
+                "- **MIN (Minutes):** Total time a player spends on the court.\n\n"
+                "### 🟡 Standard Efficiency Indicators\n"
+                "- **FG% (Field Goal Percentage):** Ratio of successful field goals.\n"
+                "- **3P% (Three-Point Percentage):** Shooting accuracy from beyond the arc.\n"
+                "- **FT% (Free Throw Percentage):** Accuracy from the charity stripe.\n\n"
+                "### 🔴 Advanced & Deep Analytics (Sabermetria AI)\n"
+                "- **Pace:** Estimated number of possessions per 48 minutes.\n"
+                "- **True Shooting Percentage (TS%):** Comprehensive scoring efficiency.\n"
+                "- **Net Rating:** Point differential per 100 possessions.\n"
+                "- **Usage Rate (USG%):** Estimate of team plays used by a player.\n"
+                "- **PER (Player Efficiency Rating):** Per-minute productivity rating."
+            )
+
+    elif menu == "🔐 Panel de Administración":
+        st.header(t["admin_titulo"])
+        st.write(t["admin_desc"])
+        
+        clave_admin = st.text_input(t["admin_clave"], type="password")
+        
+        if clave_admin == "sabermetria2026":
+            st.success(t["admin_exito"])
+            
+            if os.path.exists(db_usuarios_path):
+                df_visitas = pd.read_csv(db_usuarios_path)
+                st.metric(label=t["total_visitas"], value=len(df_visitas))
+                
+                hist_acc = "Historial de Accesos al Portal" if lang == "es" else "Portal Access History"
+                st.markdown(f"### {hist_acc}")
+                st.dataframe(df_visitas, use_container_width=True)
+            else:
+                st.metric(label=t["total_visitas"], value=0)
+                st.info("Aún no hay registros de visitas." if lang == "es" else "No visit records yet.")
+
+            st.markdown("---")
+            
+            # --- GESTOR DE ESTADÍSTICAS DE ACIERTOS ---
+            st.subheader("🎯 Gestor de Efectividad y Aciertos del Modelo")
+            st.write("Actualiza el rendimiento diario y acumulado que se muestra en el banner principal de la app.")
+            
+            ayer_act, acumulado_act = cargar_estadisticas()
+            with st.form("form_estadisticas"):
+                nuevo_ayer = st.text_input("Aciertos de Ayer (Ej: 3 / 3 (100%)):", value=ayer_act)
+                nuevo_acumulado = st.text_input("Récord Acumulado (Ej: 12 / 14 (85.7%)):", value=acumulado_act)
+                
+                btn_guardar_stats = st.form_submit_button("💾 Guardar Estadísticas de Aciertos")
+                if btn_guardar_stats:
+                    guardar_estadisticas(nuevo_ayer, nuevo_acumulado)
+                    st.success("¡Estadísticas de aciertos actualizadas con éxito!")
+                    st.rerun()
+
+            st.markdown("---")
+            
+            # --- GESTOR DIRECTO DE ARCHIVO CSV PARA LA CARTELERA ---
+            st.subheader("📂 Carga Directa de Cartelera (Subir Archivo CSV)")
+            st.write("Sube tu archivo cartelera_bilingue.csv actualizado para reemplazar toda la cartelera de forma automática y sin errores manuales.")
+            
+            archivo_subido = st.file_uploader("Selecciona tu archivo CSV de cartelera", type=["csv"])
+            if archivo_subido is not None:
+                try:
+                    df_subido = pd.read_csv(archivo_subido)
+                    columnas_necesarias = ["equipo1", "equipo2", "ganador", "total_puntos", "analisis_es", "analisis_en"]
+                    if all(col in df_subido.columns for col in columnas_necesarias):
+                        guardar_cartelera(df_subido)
+                        st.success(f"¡Cartelera actualizada con éxito! Se cargaron {len(df_subido)} encuentros desde el archivo.")
+                        st.rerun()
+                    else:
+                        st.error("❌ El archivo CSV no tiene las columnas requeridas. Asegúrate de incluir: equipo1, equipo2, ganador, total_puntos, analisis_es, analisis_en.")
+                except Exception as e:
+                    st.error(f"❌ Ocurrió un error al procesar el archivo CSV. Detalle: {e}")
+
+            st.markdown("---")
+            
+            # --- GESTOR DE CARTELERA CON HORA Y SEDE ---
+            st.subheader("📅 Editor Individual de Cartelera, Horarios y Sedes")
+            st.write("Edita o agrega encuentros indicando el equipo visitante, local, hora, sede y los análisis bilingües.")
+            
+            nombres_partidos = [f"{r['equipo1']} vs {r['equipo2']}" for _, r in df_cartelera.iterrows()] + ["➕ Agregar Nuevo Partido"]
+            seleccion_edicion = st.selectbox("Selecciona encuentro a editar:", nombres_partidos)
+            
+            if seleccion_edicion != "➕ Agregar Nuevo Partido":
+                idx_sel = nombres_partidos.index(seleccion_edicion)
+                row_sel = df_cartelera.iloc[idx_sel]
+                
+                with st.form("form_editar_partido"):
+                    col_e1, col_e2 = st.columns(2)
+                    with col_e1:
+                        ed_eq1 = st.text_input("Equipo Visitante:", value=str(row_sel["equipo1"]))
+                    with col_e2:
+                        ed_eq2 = st.text_input("Equipo Local:", value=str(row_sel["equipo2"]))
+                    
+                    col_h1, col_h2 = st.columns(2)
+                    with col_h1:
+                        ed_hora = st.text_input("Hora (Ej: 18:30 (VE)):", value=str(row_sel["hora"]) if "hora" in row_sel and pd.notna(row_sel["hora"]) else "18:30 (VE)")
+                    with col_h2:
+                        ed_sede = st.text_input("Sede / Arena:", value=str(row_sel["sede"]) if "sede" in row_sel and pd.notna(row_sel["sede"]) else "Rocket Arena (Cleveland, OH)")
+
+                    col_g1, col_g2 = st.columns(2)
+                    with col_g1:
+                        ed_ganador = st.text_input("Ganador Proyectado:", value=str(row_sel["ganador"]))
+                    with col_g2:
+                        ed_puntos = st.text_input("Total Puntos (O/U):", value=str(row_sel["total_puntos"]))
+                    
+                    ed_analisis_es = st.text_area("Análisis Profundo (Español):", value=str(row_sel["analisis_es"]), height=130)
+                    ed_analisis_en = st.text_area("Advanced Analysis (English):", value=str(row_sel["analisis_en"]), height=130)
+                    ed_es_fija = st.checkbox("⭐ Marcar como 'Jugada Fija del Día'", value=bool(row_sel["es_jugada_fija"]))
+                    
+                    btn_actualizar = st.form_submit_button("💾 Actualizar Este Partido")
+                    
+                    if btn_actualizar:
+                        if ed_es_fija:
+                            df_cartelera["es_jugada_fija"] = False
+                        df_cartelera.at[idx_sel, "equipo1"] = ed_eq1
+                        df_cartelera.at[idx_sel, "equipo2"] = ed_eq2
+                        df_cartelera.at[idx_sel, "hora"] = ed_hora
+                        df_cartelera.at[idx_sel, "sede"] = ed_sede
+                        df_cartelera.at[idx_sel, "ganador"] = ed_ganador
+                        df_cartelera.at[idx_sel, "total_puntos"] = ed_puntos
+                        df_cartelera.at[idx_sel, "analisis_es"] = ed_analisis_es
+                        df_cartelera.at[idx_sel, "analisis_en"] = ed_analisis_en
+                        df_cartelera.at[idx_sel, "es_jugada_fija"] = ed_es_fija
+                        
+                        guardar_cartelera(df_cartelera)
+                        st.success("¡Partido actualizado con éxito!")
+                        st.rerun()
+                
+                if st.button("🗑️ Eliminar este partido"):
+                    df_cartelera = df_cartelera.drop(idx_sel).reset_index(drop=True)
+                    guardar_cartelera(df_cartelera)
+                    st.success("¡Partido eliminado!")
+                    st.rerun()
+
+            else:
+                with st.form("form_nuevo_partido"):
+                    col_ne1, col_ne2 = st.columns(2)
+                    with col_ne1:
+                        nuevo_eq1 = st.text_input("Equipo Visitante:")
+                    with col_ne2:
+                        nuevo_eq2 = st.text_input("Equipo Local:")
+                    
+                    col_nh1, col_nh2 = st.columns(2)
+                    with col_nh1:
+                        nuevo_hora = st.text_input("Hora (Ej: 19:00 (VE)):", value="19:00 (VE)")
+                    with col_nh2:
+                        nuevo_sede = st.text_input("Sede / Arena:", value="Spectrum Center (Charlotte, NC)")
+
+                    col_ng1, col_ng2 = st.columns(2)
+                    with col_ng1:
+                        nuevo_ganador = st.text_input("Ganador Proyectado:")
+                    with col_ng2:
+                        nuevo_puntos = st.text_input("Total Puntos (O/U):")
+                    
+                    nuevo_analisis_es = st.text_area("Análisis Profundo (Español):", height=130)
+                    nuevo_analisis_en = st.text_area("Advanced Analysis (English):", height=130)
+                    nuevo_es_fija = st.checkbox("⭐ Marcar como 'Jugada Fija del Día'")
+                    
+                    btn_crear = st.form_submit_button("➕ Guardar Nuevo Partido")
+                    
+                    if btn_crear:
+                        if nuevo_es_fija:
+                            df_cartelera["es_jugada_fija"] = False
+                        nuevo_registro = pd.DataFrame([{
+                            "equipo1": nuevo_eq1,
+                            "equipo2": nuevo_eq2,
+                            "hora": nuevo_hora,
+                            "sede": nuevo_sede,
+                            "ganador": nuevo_ganador,
+                            "total_puntos": nuevo_puntos,
+                            "analisis_es": nuevo_analisis_es,
+                            "analisis_en": nuevo_analisis_en,
+                            "es_jugada_fija": nuevo_es_fija
+                        }])
+                        df_cartelera = pd.concat([df_cartelera, nuevo_registro], ignore_index=True)
+                        guardar_cartelera(df_cartelera)
+                        st.success("¡Nuevo partido agregado con éxito!")
+                        st.rerun()
+
+            st.markdown("---")
+            
+            # --- GESTOR DE NOTICIAS BILINGÜES ---
+            titulo_editor = "📰 Editor y Publicador de Noticias Bilingüe (Español / Inglés)" if lang == "es" else "📰 Bilingual News Editor & Publisher (Spanish / English)"
+            st.subheader(titulo_editor)
+            st.write("Actualiza los reportes tanto en español como en inglés para que la app se adapte al idioma que elija el usuario." if lang == "es" else "Update reports in both Spanish and English so the app adapts to the user's selected language.")
+            
+            mat_es_act, vesp_es_act, mat_en_act, vesp_en_act = cargar_noticias()
+            
+            with st.form("form_noticias_bilingue"):
+                st.markdown("#### 🇪🇸 Versión en Español")
+                nueva_mat_es = st.text_area("Edición Matutina (Español):", value=mat_es_act, height=130)
+                nueva_vesp_es = st.text_area("Edición Vespertina (Español):", value=vesp_es_act, height=130)
+                
+                st.markdown("#### 🇺🇸 Versión en Inglés (English Version)")
+                nueva_mat_en = st.text_area("Morning Edition (English):", value=mat_en_act, height=130)
+                nueva_vesp_en = st.text_area("Evening Edition (English):", value=vesp_en_act, height=130)
+                
+                btn_guardar = st.form_submit_button("💾 Guardar y Publicar Noticias Bilingües" if lang == "es" else "💾 Save and Publish Bilingual News")
+                
+                if btn_guardar:
+                    guardar_noticias(nueva_mat_es, nueva_vesp_es, nueva_mat_en, nueva_vesp_en)
+                    st.success("¡Noticias bilingües guardadas y publicadas con éxito!" if lang == "es" else "Bilingual news successfully saved and published!")
+                    st.rerun()
+
+        elif clave_admin != "":
+            st.error(t["admin_error"])
