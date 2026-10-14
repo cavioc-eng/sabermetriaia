@@ -578,45 +578,101 @@ else:
             
             # --- GESTOR DIRECTO DE ARCHIVO CSV PARA LA CARTELERA ---
             st.subheader("📂 Carga Directa de Cartelera (Subir Archivo CSV)")
-           # --- GESTOR DIRECTO DE ARCHIVO CSV PARA LA CARTELERA ---
-            st.subheader(
-                "📂 Carga Directa de Cartelera (Subir Archivo CSV)"
-            )
-            st.write(
-                "Sube tu archivo cartelera_bilingue.csv actualizado para"
-                " reemplazar toda la cartelera de forma automática y sin"
-                " errores manuales."
-            )
-
-            archivo_subido = st.file_uploader(
-                "Selecciona tu archivo CSV de cartelera", type=["csv"]
-            )
+            st.write("Sube tu archivo cartelera_bilingue.csv actualizado para reemplazar toda la cartelera de forma automática y sin errores manuales.")
+            
+            archivo_subido = st.file_uploader("Selecciona tu archivo CSV de cartelera", type=["csv"])
             if archivo_subido is not None:
-              try:
-                df_subido = pd.read_csv(archivo_subido)
-                columnas_necesarias = [
-                    "equipo1",
-                    "equipo2",
-                    "ganador",
-                    "total_puntos",
-                    "analisis_es",
-                    "analisis_en",
-                ]
-                if all(col in df_subido.columns for col in columnas_necesarias):
-                  guardar_cartelera(df_subido)
-                  st.success(
-                      f"¡Cartelera actualizada con éxito! Se cargaron"
-                      f" {len(df_subido)} encuentros desde el archivo."
-                  )
-                  st.rerun()
-                else:
-                  st.error(
-                      "❌ El archivo CSV no tiene las columnas requeridas."
-                      " Asegúrate de incluir: equipo1, equipo2, ganador,"
-                      " total_puntos, analisis_es, analisis_en."
-                  )
-              except Exception as e:
-                st.error(
-                    "❌ Ocurrió un error al procesar el archivo CSV. Detalle:"
-                    f" {e}"
-                )
+                try:
+                    df_subido = pd.read_csv(archivo_subido)
+                    columnas_necesarias = ["equipo1", "equipo2", "ganador", "total_puntos", "analisis_es", "analisis_en"]
+                    if all(col in df_subido.columns for col in columnas_necesarias):
+                        guardar_cartelera(df_subido)
+                        st.success(f"¡Cartelera actualizada con éxito! Se cargaron {len(df_subido)} encuentros desde el archivo.")
+                        st.rerun()
+                    else:
+                        st.error("❌ El archivo CSV no tiene las columnas requeridas. Asegúrate de incluir: equipo1, equipo2, ganador, total_puntos, analisis_es, analisis_en.")
+                except Exception as e:
+                    st.error(f"❌ Ocurrió un error al procesar el archivo CSV. Detalle: {e}")
+
+            st.markdown("---")
+            
+            # --- GESTOR DE CARTELERA CON HORA Y SEDE ---
+            st.subheader("📅 Editor Individual de Cartelera, Horarios y Sedes")
+            st.write("Edita o agrega encuentros indicando el equipo visitante, local, hora, sede y los análisis bilingües.")
+            
+            nombres_partidos = [f"{r['equipo1']} vs {r['equipo2']}" for _, r in df_cartelera.iterrows()] + ["➕ Agregar Nuevo Partido"]
+            seleccion_edicion = st.selectbox("Selecciona encuentro a editar:", nombres_partidos)
+            
+            if seleccion_edicion != "➕ Agregar Nuevo Partido":
+                idx_sel = nombres_partidos.index(seleccion_edicion)
+                row_sel = df_cartelera.iloc[idx_sel]
+                
+                with st.form("form_editar_partido"):
+                    col_e1, col_e2 = st.columns(2)
+                    with col_e1:
+                        ed_eq1 = st.text_input("Equipo Visitante:", value=str(row_sel["equipo1"]))
+                    with col_e2:
+                        ed_eq2 = st.text_input("Equipo Local:", value=str(row_sel["equipo2"]))
+                    
+                    col_h1, col_h2 = st.columns(2)
+                    with col_h1:
+                        ed_hora = st.text_input("Hora (Ej: 18:30 (VE)):", value=str(row_sel["hora"]) if "hora" in row_sel and pd.notna(row_sel["hora"]) else "18:30 (VE)")
+                    with col_h2:
+                        ed_sede = st.text_input("Sede / Arena:", value=str(row_sel["sede"]) if "sede" in row_sel and pd.notna(row_sel["sede"]) else "Rocket Arena (Cleveland, OH)")
+
+                    col_g1, col_g2 = st.columns(2)
+                    with col_g1:
+                        ed_ganador = st.text_input("Ganador Proyectado:", value=str(row_sel["ganador"]))
+                    with col_g2:
+                        ed_puntos = st.text_input("Total Puntos (O/U):", value=str(row_sel["total_puntos"]))
+                    
+                    ed_analisis_es = st.text_area("Análisis Profundo (Español):", value=str(row_sel["analisis_es"]), height=130)
+                    ed_analisis_en = st.text_area("Advanced Analysis (English):", value=str(row_sel["analisis_en"]), height=130)
+                    ed_es_fija = st.checkbox("⭐ Marcar como 'Jugada Fija del Día'", value=bool(row_sel["es_jugada_fija"]))
+                    
+                    btn_actualizar = st.form_submit_button("💾 Actualizar Este Partido")
+                    
+                    if btn_actualizar:
+                        if ed_es_fija:
+                            df_cartelera["es_jugada_fija"] = False
+                        df_cartelera.at[idx_sel, "equipo1"] = ed_eq1
+                        df_cartelera.at[idx_sel, "equipo2"] = ed_eq2
+                        df_cartelera.at[idx_sel, "hora"] = ed_hora
+                        df_cartelera.at[idx_sel, "sede"] = ed_sede
+                        df_cartelera.at[idx_sel, "ganador"] = ed_ganador
+                        df_cartelera.at[idx_sel, "total_puntos"] = ed_puntos
+                        df_cartelera.at[idx_sel, "analisis_es"] = ed_analisis_es
+                        df_cartelera.at[idx_sel, "analisis_en"] = ed_analisis_en
+                        df_cartelera.at[idx_sel, "es_jugada_fija"] = ed_es_fija
+                        
+                        guardar_cartelera(df_cartelera)
+                        st.success("¡Partido actualizado con éxito!")
+                        st.rerun()
+                
+                if st.button("🗑️ Eliminar este partido"):
+                    df_cartelera = df_cartelera.drop(idx_sel).reset_index(drop=True)
+                    guardar_cartelera(df_cartelera)
+                    st.success("¡Partido eliminado!")
+                    st.rerun()
+
+            else:
+                with st.form("form_nuevo_partido"):
+                    col_ne1, col_ne2 = st.columns(2)
+                    with col_ne1:
+                        nuevo_eq1 = st.text_input("Equipo Visitante:")
+                    with col_ne2:
+                        nuevo_eq2 = st.text_input("Equipo Local:")
+                    
+                    col_nh1, col_nh2 = st.columns(2)
+                    with col_nh1:
+                        nuevo_hora = st.text_input("Hora (Ej: 19:00 (VE)):", value="19:00 (VE)")
+                    with col_nh2:
+                        nuevo_sede = st.text_input("Sede / Arena:", value="Spectrum Center (Charlotte, NC)")
+
+                    col_ng1, col_ng2 = st.columns(2)
+                    with col_ng1:
+                        nuevo_ganador = st.text_input("Ganador Proyectado:")
+                    with col_ng2:
+                        nuevo_puntos = st.text_input("Total Puntos (O/U):")
+                    
+                    nuevo_analisis_es = st.text_area("Análisis Profundo (Español):", height
