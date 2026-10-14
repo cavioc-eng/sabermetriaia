@@ -409,32 +409,4 @@ else:
         logo_estelar_1 = LOGOS_EQUIPOS.get(estelar_eq1, "")
         logo_estelar_2 = LOGOS_EQUIPOS.get(estelar_eq2, "")
         
-        matchup_estelar_html = '<div class="matchup-box"><div class="team-col"><img src="' + logo_estelar_1 + '" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">' + estelar_eq1 + '</h3><span style="font-size: 12px; color: #8b949e;">(Visitante)</span></div><div class="vs-col">VS</div><div class="team-col"><img src="' + logo_estelar_2 + '" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">' + estelar_eq2 + '</h3><span style="font-size: 12px; color: #8b949e;">(Local)</span></div></div>'
-        st.markdown(matchup_estelar_html, unsafe_allow_html=True)
-        
-        hora_est = str(juego_estelar.get('hora', '19:30 (VE)'))
-        sede_est = str(juego_estelar.get('sede', 'Arena Principal'))
-        st.markdown("🕒 **Hora (VE):** " + hora_est + " &nbsp;&nbsp;|&nbsp;&nbsp; 🏟️ **Sede:** " + sede_est)
-        st.markdown("---")
-        st.markdown("### 📊 Fundamento Estadístico y Razonamiento del Modelo")
-        analisis_jugada = juego_estelar["analisis_es"] if lang == "es" else juego_estelar["analisis_en"]
-        st.text(analisis_jugada)
-
-    elif menu == "Diccionario Sabermétrico":
-        st.header("📖 Diccionario Sabermétrico Educativo (Básico a Avanzado)")
-        st.write("Guía completa de referencia para comprender desde los fundamentos tradicionales hasta las métricas de eficiencia más avanzadas:")
-        
-        if lang == "es":
-            st.markdown(
-                "### 🟢 Indicadores Básicos y Tradicionales (Box Score)\n"
-                "- **PTS (Points / Puntos):** Total de puntos anotados por un jugador o equipo.\n"
-                "- **REB (Rebounds / Rebotes):** Balones recuperados tras un lanzamiento fallido.\n"
-                "- **AST (Assists / Asistencias):** Pases que conducen directamente a una canasta.\n"
-                "- **STL (Steals / Recuperaciones):** Balones arrebatados al adversario.\n"
-                "- **BLK (Blocks / Tapones):** Lanzamientos rivales bloqueados en el aire.\n"
-                "- **TOV (Turnovers / Pérdidas):** Balones entregados al rival por errores.\n"
-                "- **MIN (Minutes / Minutos):** Tiempo total que un jugador disputa en la duela.\n\n"
-                "### 🟡 Indicadores de Eficiencia Estándar\n"
-                "- **FG% (Field Goal Percentage):** Porcentaje de tiros de campo encestados.\n"
-                "- **3P% (Three-Point Percentage):** Eficacia en lanzamientos de larga distancia.\n"
-                "-
+        matchup_estelar_html = '<div class="matchup-box"><div
