@@ -151,4 +151,68 @@ def cargar_noticias():
         except Exception:
             pass
     
-    mat_es = "• **Radiografía de Eficiencia Ofensiva y eFG%:** El rendimiento de los **Boston Celtics** en la jornada previa dejó en evidencia cómo el incremento en el eFG% impulsó una
+    mat_es = "• **Radiografía de Eficiencia Ofensiva y eFG%:** Los Celtics impulsaron su eFG% con excelente spacing."
+    vesp_es = "• **Reporte Crítico de Lesiones:** Monitoreo activo en la rotación."
+    mat_en = "• **Offensive Efficiency & eFG%:** Celtics fueled perimeter spacing."
+    vesp_en = "• **Critical Injury Reports:** Active roster monitoring."
+    
+    guardar_noticias(mat_es, vesp_es, mat_en, vesp_en)
+    return mat_es, vesp_es, mat_en, vesp_en
+
+def guardar_noticias(mat_es, vesp_es, mat_en, vesp_en):
+    df = pd.DataFrame([[mat_es, vesp_es, mat_en, vesp_en]], columns=["matutina_es", "vespertina_es", "matutina_en", "vespertina_en"])
+    df.to_csv(noticias_path, index=False, encoding='utf-8')
+
+def cargar_cartelera():
+    if os.path.exists(cartelera_path):
+        try:
+            df = pd.read_csv(cartelera_path, encoding='utf-8')
+            if not df.empty and "equipo1" in df.columns:
+                df["equipo2"] = df["equipo2"].astype(str).apply(lambda x: x.split(" (")[0].replace("19:30", "").replace("20:00", "").replace("22:30", "").strip() if any(t in x for t in ["(", "19:", "20:", "22:"]) else x)
+                df["equipo2"] = df["equipo2"].apply(lambda x: "Charlotte Hornets" if len(x) < 3 else x)
+                
+                if "hora" not in df.columns or df["hora"].isnull().all():
+                    df["hora"] = "19:30 (VE)"
+                else:
+                    df["hora"] = df["hora"].fillna("19:30 (VE)")
+                if "sede" not in df.columns:
+                    df["sede"] = "Spectrum Center"
+                if "es_jugada_fija" not in df.columns:
+                    df["es_jugada_fija"] = False
+                return df
+        except Exception:
+            pass
+    
+    data_def = [
+        {
+            "equipo1": "Boston Celtics",
+            "equipo2": "Charlotte Hornets",
+            "hora": "19:30 (VE)",
+            "sede": "Spectrum Center (Charlotte, NC)",
+            "ganador": "Boston Celtics (-8.5 pts)",
+            "total_puntos": "224.5 (Altas / Over)",
+            "analisis_es": "📊 **Desglose Box Score & Tradicional:** Los Celtics promedian 118.4 PTS...",
+            "analisis_en": "📊 **Box Score & Traditional Breakdown:** Celtics average...",
+            "es_jugada_fija": True
+        }
+    ]
+    df_def = pd.DataFrame(data_def)
+    df_def.to_csv(cartelera_path, index=False, encoding='utf-8')
+    return df_def
+
+def guardar_cartelera(df):
+    df.to_csv(cartelera_path, index=False, encoding='utf-8')
+
+idioma = st.sidebar.selectbox("🌐 Idioma / Language", ["Español", "English"])
+lang = "es" if idioma == "Español" else "en"
+t = TEXTOS[lang]
+
+if "autenticado" not in st.session_state:
+    st.session_state.autenticado = False
+
+if not st.session_state.autenticado:
+    col_izq, col_centro, col_der = st.columns([1.2, 1.8, 1])
+    with col_izq:
+        if os.path.exists(logo_path):
+            st.image(logo_path, width=220)
+    with col_centro:
