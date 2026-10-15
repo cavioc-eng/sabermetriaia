@@ -55,7 +55,7 @@ TEXTOS = {
         "paso2_desc": "Haz clic en el botón para entrar al portal exclusivo:",
         "btn_acceso": "🏀 Entrar al Portal Exclusivo",
         "admin_titulo": "🔐 Panel de Control y Publicación - Sabermetría IA",
-        "admin_desc": "Control estadístico de visitas, cartelera de juegos y noticias.",
+        "admin_desc": "Control estadístico de visitas, cartelera masiva por CSV y noticias.",
         "admin_clave": "Ingresa la clave de administrador:",
         "admin_exito": "¡Acceso de administrador concedido!",
         "admin_error": "❌ Clave de administrador incorrecta.",
@@ -71,7 +71,7 @@ TEXTOS = {
         "paso2_desc": "Click the button to enter the exclusive portal:",
         "btn_acceso": "🏀 Enter Exclusive Portal",
         "admin_titulo": "🔐 Control & Publishing Panel - Sabermetria AI",
-        "admin_desc": "Visit statistical control, game slate and news.",
+        "admin_desc": "Visit statistical control, CSV slate upload and news.",
         "admin_clave": "Enter admin password:",
         "admin_exito": "Admin access granted!",
         "admin_error": "❌ Incorrect admin password.",
@@ -169,16 +169,6 @@ def cargar_cartelera():
         "🎯 Conclusión del Modelo: Disciplina táctica y control absoluto del reloj de posesión otorgan la ventaja a Miami en un duelo de pocos puntos."
     )
 
-    analisis_mavericks = (
-        "🏀 Análisis Táctico y de Espaciamiento (Spacing):\n\n"
-        "Encuentro caracterizado por un alto volumen de transiciones ofensivas y situaciones de bloqueo directo (pick-and-roll). Dallas explota de manera quirúrgica las debilidades en el cambio de marca defensivo del rival, generando tiros abiertos desde las esquinas.\n\n"
-        "📊 Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):\n\n"
-        "• True Shooting Percentage (TS%): Proyectado en un formidable 59.8% para los Mavericks, reflejando gran eficacia combinando tiros libres, dobles y triples.\n"
-        "• Usage Rate (USG%): Alta concentración de jugadas culminadas por los creadores de juego principales, elevando el potencial de anotación colectiva.\n"
-        "• Pace Estimado: 101.4 posesiones, apuntando directamente a superar la línea de altas (Over).\n\n"
-        "🎯 Conclusión del Modelo: La capacidad anotadora exterior de Dallas y la velocidad en transición garantizan un partido de alto voltaje ofensivo."
-    )
-
     data_def = [
         {
             "equipo1": "Boston Celtics", "equipo2": "Charlotte Hornets", 
@@ -191,12 +181,6 @@ def cargar_cartelera():
             "hora": "19:30 (VE)", "sede": "Barclays Center (Brooklyn, NY)", 
             "ganador": "Miami Heat (-4.5 pts)", "total_puntos": "218.5 (Bajas / Under)", 
             "analisis_es": analisis_heat, "analisis_en": analisis_heat, "es_jugada_fija": False
-        },
-        {
-            "equipo1": "Dallas Mavericks", "equipo2": "New Orleans Pelicans", 
-            "hora": "20:00 (VE)", "sede": "Smoothie King Center (New Orleans, LA)", 
-            "ganador": "Dallas Mavericks (-3.0 pts)", "total_puntos": "230.5 (Altas / Over)", 
-            "analisis_es": analisis_mavericks, "analisis_en": analisis_mavericks, "es_jugada_fija": False
         }
     ]
     df_default = pd.DataFrame(data_def)
@@ -457,53 +441,41 @@ else:
                 st.metric(label="📊 Total de Ingresos Acumulados al Portal", value=0)
 
             st.markdown("---")
-            st.subheader("🏀 Gestor de Cartelera y Partidos")
-            st.write("Agrega, edita o elimina los encuentros programados para las jornadas:")
+            st.subheader("📤 Carga Masiva de Cartelera por Archivo CSV")
+            st.write("Sube tu archivo .csv con la programación de los partidos para actualizar toda la cartelera instantáneamente sin errores manuales.")
             
-            lista_equipos = list(LOGOS_EQUIPOS.keys())
-            
-            with st.form("form_agregar_partido"):
-                st.markdown("#### ➕ Registrar Nuevo Encuentro")
-                col_g1, col_g2 = st.columns(2)
-                with col_g1:
-                    eq1_nuevo = st.selectbox("Equipo Visitante:", lista_equipos, index=0)
-                    hora_nuevo = st.text_input("Hora (Ej: 19:30 (VE)):", value="19:30 (VE)")
-                    ganador_nuevo = st.text_input("Ganador Proyectado (Ej: Boston Celtics (-8.5 pts)):", value="Boston Celtics (-8.5 pts)")
-                with col_g2:
-                    eq2_nuevo = st.selectbox("Equipo Local:", lista_equipos, index=1)
-                    sede_nuevo = st.text_input("Sede del Encuentro:", value="Arena Principal")
-                    total_nuevo = st.text_input("Línea de Puntos O/U (Ej: 224.5 (Altas / Over)):", value="224.5 (Altas / Over)")
-                
-                analisis_nuevo = st.text_area("Análisis Táctico y Métricas Avanzadas:", value="🏀 Análisis Táctico y de Espaciamiento:\n\n📊 Métricas Avanzadas y Modelo Predictivo:\n\n🎯 Conclusión del Modelo:", height=120)
-                es_fija_nuevo = st.checkbox("⭐ Marcar como 'La Jugada Fija del Día'")
-                
-                if st.form_submit_button("➕ Publicar / Agregar Partido a la Cartelera"):
-                    nuevo_juego_df = pd.DataFrame([{
-                        "equipo1": eq1_nuevo,
-                        "equipo2": eq2_nuevo,
-                        "hora": hora_nuevo,
-                        "sede": sede_nuevo,
-                        "ganador": ganador_nuevo,
-                        "total_puntos": total_nuevo,
-                        "analisis_es": analisis_nuevo,
-                        "analisis_en": analisis_nuevo,
-                        "es_jugada_fija": es_fija_nuevo
-                    }])
-                    df_actualizado = pd.concat([df_cartelera, nuevo_juego_df], ignore_index=True)
-                    guardar_cartelera(df_actualizado)
-                    st.success("¡Partido agregado y publicado exitosamente en la cartelera!")
-                    st.rerun()
+            # Botón para descargar plantilla de ejemplo
+            csv_ejemplo = df_cartelera.to_csv(index=False).encode('utf-8')
+            st.download_button(
+                label="📥 Descargar Plantilla CSV de Ejemplo",
+                data=csv_ejemplo,
+                file_name="plantilla_cartelera_ejemplo.csv",
+                mime="text/csv"
+            )
+
+            archivo_subido = st.file_uploader("Selecciona el archivo CSV de partidos:", type=["csv"])
+            if archivo_subido is not None:
+                try:
+                    df_nuevo_csv = pd.read_csv(archivo_subido, encoding='utf-8')
+                    columnas_requeridas = ["equipo1", "equipo2", "hora", "sede", "ganador", "total_puntos", "analisis_es", "analisis_en", "es_jugada_fija"]
+                    if all(col in df_nuevo_csv.columns for col in columnas_requeridas):
+                        guardar_cartelera(df_nuevo_csv)
+                        st.success("¡Cartelera actualizada masivamente con éxito desde el archivo CSV!")
+                        st.rerun()
+                    else:
+                        st.error("❌ El archivo CSV no tiene las columnas requeridas. Descarga la plantilla de ejemplo para guiarte.")
+                except Exception as e:
+                    st.error(f"❌ Error al procesar el archivo CSV: {e}")
 
             if not df_cartelera.empty:
                 st.markdown("---")
-                st.subheader("🗑️ Eliminar Partidos de la Cartelera Activa")
-                nombres_juegos = [f"{row['equipo1']} vs {row['equipo2']} ({row['hora']})" for _, row in df_cartelera.iterrows()]
-                juego_a_borrar = st.selectbox("Selecciona el encuentro a remover:", nombres_juegos)
-                if st.button("🗑️ Eliminar Partido Seleccionado"):
-                    idx_a_borrar = nombres_juegos.index(juego_a_borrar)
-                    df_cartelera = df_cartelera.drop(idx_a_borrar).reset_index(drop=True)
-                    guardar_cartelera(df_cartelera)
-                    st.success("¡Encuentro eliminado de la cartelera!")
+                st.subheader("📋 Cartelera Actual Cargada en el Sistema")
+                st.dataframe(df_cartelera, use_container_width=True)
+                
+                if st.button("🗑️ Vaciar / Borrar Toda la Cartelera"):
+                    df_vacio = pd.DataFrame(columns=["equipo1", "equipo2", "hora", "sede", "ganador", "total_puntos", "analisis_es", "analisis_en", "es_jugada_fija"])
+                    guardar_cartelera(df_vacio)
+                    st.warning("¡Se ha vaciado la cartelera!")
                     st.rerun()
 
             st.markdown("---")
