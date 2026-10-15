@@ -149,6 +149,13 @@ def guardar_estadisticas(ayer):
     pd.DataFrame([[ayer]], columns=["ayer"]).to_csv(estadisticas_path, index=False, encoding='utf-8')
 
 def cargar_cartelera():
+    if os.path.exists(cartelera_csv_path):
+        try:
+            df_saved = pd.read_csv(cartelera_csv_path, encoding='utf-8')
+            return df_saved
+        except Exception:
+            pass
+    
     analisis_celtics = (
         "🏀 Análisis Táctico y de Espaciamiento (Spacing):\n\n"
         "Los Boston Celtics llegan a este encuentro exhibiendo una estructura ofensiva fundamentada en la saturación perimetral y la creación de ventajas a partir del pick-and-pop. Con un promedio de conversión superior al 56.2% en eFG% (Effective Field Goal Percentage), el conjunto verde maximiza el valor esperado de cada posesión castigando las ayudas defensivas del rival.\n\n"
@@ -184,15 +191,6 @@ def cargar_cartelera():
         }
     ]
     df_default = pd.DataFrame(data_def)
-
-    if os.path.exists(cartelera_csv_path):
-        try:
-            df_saved = pd.read_csv(cartelera_csv_path, encoding='utf-8')
-            if not df_saved.empty and "equipo1" in df_saved.columns:
-                return df_saved
-        except Exception:
-            pass
-    
     df_default.to_csv(cartelera_csv_path, index=False, encoding='utf-8')
     return df_default
 
@@ -280,54 +278,57 @@ else:
 
     if menu == "Cartelera y Partidos":
         st.header("📅 Cartelera de Partidos - Análisis Profundo (" + fecha_hoy + ")")
-        st.write("Selecciona un encuentro para ver el desglose científico del modelo:")
-        
-        opciones_dict = {}
-        for _, row in df_cartelera.iterrows():
-            e1 = str(row['equipo1']).strip()
-            e2 = str(row['equipo2']).strip()
-            label = e1 + " vs. " + e2
-            opciones_dict[label] = row
+        if df_cartelera.empty:
+            st.warning("⚠️ No hay partidos cargados en este momento en la cartelera. Por favor, sube un archivo CSV desde el Panel de Administración.")
+        else:
+            st.write("Selecciona un encuentro para ver el desglose científico del modelo:")
             
-        partido_seleccionado = st.selectbox("Juegos de hoy:", list(opciones_dict.keys()))
-        
-        if partido_seleccionado:
-            fila_juego = opciones_dict[partido_seleccionado]
-            equipo1 = str(fila_juego['equipo1']).strip()
-            equipo2 = str(fila_juego['equipo2']).strip()
+            opciones_dict = {}
+            for _, row in df_cartelera.iterrows():
+                e1 = str(row['equipo1']).strip()
+                e2 = str(row['equipo2']).strip()
+                label = e1 + " vs. " + e2
+                opciones_dict[label] = row
+                
+            partido_seleccionado = st.selectbox("Juegos de hoy:", list(opciones_dict.keys()))
             
-            logo1_url = LOGOS_EQUIPOS.get(equipo1, "")
-            logo2_url = LOGOS_EQUIPOS.get(equipo2, "")
-            
-            matchup_html = (
-                '<div class="matchup-box">'
-                '<div class="team-col"><img src="' + logo1_url + '" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">' + equipo1 + '</h3><span style="font-size: 12px; color: #8b949e;">(Visitante)</span></div>'
-                '<div class="vs-col">VS</div>'
-                '<div class="team-col"><img src="' + logo2_url + '" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">' + equipo2 + '</h3><span style="font-size: 12px; color: #8b949e;">(Local)</span></div>'
-                '</div>'
-            )
-            st.markdown(matchup_html, unsafe_allow_html=True)
-            
-            hora_val = str(fila_juego.get('hora', '19:30 (VE)'))
-            sede_val = str(fila_juego.get('sede', 'Arena Principal'))
-            st.markdown("🕒 **Hora (VE):** " + hora_val + " &nbsp;&nbsp;|&nbsp;&nbsp; 🏟️ **Sede:** " + sede_val)
-            st.markdown("---")
-            
-            col1, col2 = st.columns(2)
-            with col1:
-                st.metric(label="Ganador Proyectado", value=str(fila_juego["ganador"]))
-            with col2:
-                st.metric(label="Total de Puntos (O/U)", value=str(fila_juego["total_puntos"]))
-            
-            st.markdown("### 🧠 Razonamiento Táctico y Métricas Avanzadas")
-            analisis_amplio = str(fila_juego["analisis_es"]) if lang == "es" else str(fila_juego["analisis_en"])
-            st.text(analisis_amplio)
-            
-            st.markdown("---")
-            if st.button("📄 Descargar Análisis en PDF"):
-                archivo_pdf = generar_pdf_analisis(equipo1 + " vs " + equipo2, hora_val, sede_val, str(fila_juego["ganador"]), str(fila_juego["total_puntos"]), analisis_amplio)
-                with open(archivo_pdf, "rb") as f:
-                    st.download_button("💾 Guardar archivo PDF en tu equipo", data=f, file_name="reporte_sabermetria_nba.pdf", mime="application/pdf")
+            if partido_seleccionado:
+                fila_juego = opciones_dict[partido_seleccionado]
+                equipo1 = str(fila_juego['equipo1']).strip()
+                equipo2 = str(fila_juego['equipo2']).strip()
+                
+                logo1_url = LOGOS_EQUIPOS.get(equipo1, "")
+                logo2_url = LOGOS_EQUIPOS.get(equipo2, "")
+                
+                matchup_html = (
+                    '<div class="matchup-box">'
+                    '<div class="team-col"><img src="' + logo1_url + '" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">' + equipo1 + '</h3><span style="font-size: 12px; color: #8b949e;">(Visitante)</span></div>'
+                    '<div class="vs-col">VS</div>'
+                    '<div class="team-col"><img src="' + logo2_url + '" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">' + equipo2 + '</h3><span style="font-size: 12px; color: #8b949e;">(Local)</span></div>'
+                    '</div>'
+                )
+                st.markdown(matchup_html, unsafe_allow_html=True)
+                
+                hora_val = str(fila_juego.get('hora', '19:30 (VE)'))
+                sede_val = str(fila_juego.get('sede', 'Arena Principal'))
+                st.markdown("🕒 **Hora (VE):** " + hora_val + " &nbsp;&nbsp;|&nbsp;&nbsp; 🏟️ **Sede:** " + sede_val)
+                st.markdown("---")
+                
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.metric(label="Ganador Proyectado", value=str(fila_juego["ganador"]))
+                with col2:
+                    st.metric(label="Total de Puntos (O/U)", value=str(fila_juego["total_puntos"]))
+                
+                st.markdown("### 🧠 Razonamiento Táctico y Métricas Avanzadas")
+                analisis_amplio = str(fila_juego["analisis_es"]) if lang == "es" else str(fila_juego["analisis_en"])
+                st.text(analisis_amplio)
+                
+                st.markdown("---")
+                if st.button("📄 Descargar Análisis en PDF"):
+                    archivo_pdf = generar_pdf_analisis(equipo1 + " vs " + equipo2, hora_val, sede_val, str(fila_juego["ganador"]), str(fila_juego["total_puntos"]), analisis_amplio)
+                    with open(archivo_pdf, "rb") as f:
+                        st.download_button("💾 Guardar archivo PDF en tu equipo", data=f, file_name="reporte_sabermetria_nba.pdf", mime="application/pdf")
 
     elif menu == "Noticias (Doble Actualización)":
         st.header("📰 Centro de Noticias en Tiempo Real — " + fecha_hoy)
@@ -347,32 +348,35 @@ else:
 
     elif menu == "La Jugada Fija del Día":
         st.header("⭐ La Jugada Estelar del Modelo")
-        st.success("Recomendación avalada estrictamente por eficiencia matemática y métricas de posesión.")
-        
-        juegos_fijos = df_cartelera[df_cartelera['es_jugada_fija'] == True]
-        juego_estelar = juegos_fijos.iloc[0] if not juegos_fijos.empty else df_cartelera.iloc[0]
+        if df_cartelera.empty:
+            st.warning("⚠️ No hay partidos cargados actualmente para mostrar la jugada fija.")
+        else:
+            st.success("Recomendación avalada estrictamente por eficiencia matemática y métricas de posesión.")
             
-        estelar_eq1 = str(juego_estelar["equipo1"]).strip()
-        estelar_eq2 = str(juego_estelar["equipo2"]).strip()
-        logo_estelar_1 = LOGOS_EQUIPOS.get(estelar_eq1, "")
-        logo_estelar_2 = LOGOS_EQUIPOS.get(estelar_eq2, "")
-        
-        matchup_estelar_html = (
-            '<div class="matchup-box">'
-            '<div class="team-col"><img src="' + logo_estelar_1 + '" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">' + estelar_eq1 + '</h3><span style="font-size: 12px; color: #8b949e;">(Visitante)</span></div>'
-            '<div class="vs-col">VS</div>'
-            '<div class="team-col"><img src="' + logo_estelar_2 + '" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">' + estelar_eq2 + '</h3><span style="font-size: 12px; color: #8b949e;">(Local)</span></div>'
-            '</div>'
-        )
-        st.markdown(matchup_estelar_html, unsafe_allow_html=True)
-        
-        hora_est = str(juego_estelar.get('hora', '19:30 (VE)'))
-        sede_est = str(juego_estelar.get('sede', 'Arena Principal'))
-        st.markdown("🕒 **Hora (VE):** " + hora_est + " &nbsp;&nbsp;|&nbsp;&nbsp; 🏟️ **Sede:** " + sede_est)
-        st.markdown("---")
-        st.markdown("### 📊 Fundamento Estadístico y Razonamiento del Modelo")
-        analisis_jugada = str(juego_estelar["analisis_es"]) if lang == "es" else str(juego_estelar["analisis_en"])
-        st.text(analisis_jugada)
+            juegos_fijos = df_cartelera[df_cartelera['es_jugada_fija'] == True]
+            juego_estelar = juegos_fijos.iloc[0] if not juegos_fijos.empty else df_cartelera.iloc[0]
+                
+            estelar_eq1 = str(juego_estelar["equipo1"]).strip()
+            estelar_eq2 = str(juego_estelar["equipo2"]).strip()
+            logo_estelar_1 = LOGOS_EQUIPOS.get(estelar_eq1, "")
+            logo_estelar_2 = LOGOS_EQUIPOS.get(estelar_eq2, "")
+            
+            matchup_estelar_html = (
+                '<div class="matchup-box">'
+                '<div class="team-col"><img src="' + logo_estelar_1 + '" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">' + estelar_eq1 + '</h3><span style="font-size: 12px; color: #8b949e;">(Visitante)</span></div>'
+                '<div class="vs-col">VS</div>'
+                '<div class="team-col"><img src="' + logo_estelar_2 + '" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">' + estelar_eq2 + '</h3><span style="font-size: 12px; color: #8b949e;">(Local)</span></div>'
+                '</div>'
+            )
+            st.markdown(matchup_estelar_html, unsafe_allow_html=True)
+            
+            hora_est = str(juego_estelar.get('hora', '19:30 (VE)'))
+            sede_est = str(juego_estelar.get('sede', 'Arena Principal'))
+            st.markdown("🕒 **Hora (VE):** " + hora_est + " &nbsp;&nbsp;|&nbsp;&nbsp; 🏟️ **Sede:** " + sede_est)
+            st.markdown("---")
+            st.markdown("### 📊 Fundamento Estadístico y Razonamiento del Modelo")
+            analisis_jugada = str(juego_estelar["analisis_es"]) if lang == "es" else str(juego_estelar["analisis_en"])
+            st.text(analisis_jugada)
 
     elif menu == "Diccionario Sabermétrico":
         st.header("📖 Diccionario Sabermétrico Educativo (Básico a Avanzado)")
@@ -467,16 +471,23 @@ else:
                 except Exception as e:
                     st.error(f"❌ Error al procesar el archivo CSV: {e}")
 
-            if not df_cartelera.empty:
-                st.markdown("---")
-                st.subheader("📋 Cartelera Actual Cargada en el Sistema")
+            st.markdown("---")
+            st.subheader("📋 Cartelera Actual Cargada en el Sistema")
+            if df_cartelera.empty:
+                st.info("ℹ️ La cartelera se encuentra actualmente vacía.")
+            else:
                 st.dataframe(df_cartelera, use_container_width=True)
                 
-                if st.button("🗑️ Vaciar / Borrar Toda la Cartelera"):
-                    df_vacio = pd.DataFrame(columns=["equipo1", "equipo2", "hora", "sede", "ganador", "total_puntos", "analisis_es", "analisis_en", "es_jugada_fija"])
-                    guardar_cartelera(df_vacio)
-                    st.success("¡Se ha vaciado la cartelera exitosamente!")
-                    st.rerun()
+            if st.button("🗑️ Vaciar / Borrar Toda la Cartelera"):
+                if os.path.exists(cartelera_csv_path):
+                    try:
+                        os.remove(cartelera_csv_path)
+                    except Exception:
+                        pass
+                df_vacio = pd.DataFrame(columns=["equipo1", "equipo2", "hora", "sede", "ganador", "total_puntos", "analisis_es", "analisis_en", "es_jugada_fija"])
+                guardar_cartelera(df_vacio)
+                st.success("¡Se ha vaciado la cartelera y borrado el archivo local exitosamente!")
+                st.rerun()
 
             st.markdown("---")
             st.subheader("🎯 Gestor de Efectividad del Modelo")
