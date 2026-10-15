@@ -12,6 +12,7 @@ logo_path = os.path.join(current_dir, "logo.jpeg")
 db_usuarios_path = os.path.join(current_dir, "registros_tiktok.csv")
 estadisticas_path = os.path.join(current_dir, "historial_aciertos.csv")
 noticias_txt_path = os.path.join(current_dir, "noticias.txt")
+cartelera_csv_path = os.path.join(current_dir, "cartelera_juegos.csv")
 
 st.set_page_config(
     page_title="Sabermetría IA - Analítica Avanzada de Básquetbol",
@@ -54,7 +55,7 @@ TEXTOS = {
         "paso2_desc": "Haz clic en el botón para entrar al portal exclusivo:",
         "btn_acceso": "🏀 Entrar al Portal Exclusivo",
         "admin_titulo": "🔐 Panel de Control y Publicación - Sabermetría IA",
-        "admin_desc": "Control estadístico de visitas y noticias.",
+        "admin_desc": "Control estadístico de visitas, cartelera de juegos y noticias.",
         "admin_clave": "Ingresa la clave de administrador:",
         "admin_exito": "¡Acceso de administrador concedido!",
         "admin_error": "❌ Clave de administrador incorrecta.",
@@ -70,7 +71,7 @@ TEXTOS = {
         "paso2_desc": "Click the button to enter the exclusive portal:",
         "btn_acceso": "🏀 Enter Exclusive Portal",
         "admin_titulo": "🔐 Control & Publishing Panel - Sabermetria AI",
-        "admin_desc": "Visit statistical control and news.",
+        "admin_desc": "Visit statistical control, game slate and news.",
         "admin_clave": "Enter admin password:",
         "admin_exito": "Admin access granted!",
         "admin_error": "❌ Incorrect admin password.",
@@ -178,42 +179,6 @@ def cargar_cartelera():
         "🎯 Conclusión del Modelo: La capacidad anotadora exterior de Dallas y la velocidad en transición garantizan un partido de alto voltaje ofensivo."
     )
 
-    analisis_bucks = (
-        "🏀 Análisis Táctico y de Espaciamiento (Spacing):\n\n"
-        "Milwaukee impone condiciones a través de su dominio físico en la pintura y la gravedad ofensiva que atrae su juego interior, abriendo espacios ideales para los tiradores exteriores. Chicago sufrirá para contener el rebote en ambos costados de la duela.\n\n"
-        "📊 Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):\n\n"
-        "• Rebounding Percentage (OREB/DREB): Clara ventaja para los Bucks, asegurando segundas oportunidades de anotación.\n"
-        "• Offensive Rating: Proyectado en 116.8 puntos por 100 posesiones, aprovechando las flaquezas de la estructura defensiva de los Bulls.\n\n"
-        "🎯 Conclusión del Modelo: La jerarquía en la pintura y el control del ritmo ofensivo inclinan el pronóstico claramente hacia Milwaukee."
-    )
-
-    analisis_wolves = (
-        "🏀 Análisis Táctico y de Espaciamiento (Spacing):\n\n"
-        "Minnesota despliega uno de los entramados defensivos más asfixiantes de la liga. Su capacidad para colapsar la pintura y recuperar la posición perimetral neutraliza los sistemas de penetración rivales.\n\n"
-        "📊 Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):\n\n"
-        "• Defensive Win Shares: Alto índice acumulado en el quinteto titular visitante.\n"
-        "• Opponent Effective Field Goal Percentage (Opp eFG%): Proyectado por debajo del 48%, conteniendo severamente la producción ofensiva de Detroit.\n\n"
-        "🎯 Conclusión del Modelo: Solidez defensiva y control de las líneas de pase marcan la pauta para una victoria cómoda y de baja anotación."
-    )
-
-    analisis_suns = (
-        "🏀 Análisis Táctico y de Espaciamiento (Spacing):\n\n"
-        "Duelo de alta escuela en la ejecución de tiros de media distancia y situaciones de aclarado (isolation). Phoenix cuenta con individualidades letales capaces de castigar cualquier desajuste en los cambios defensivos.\n\n"
-        "📊 Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):\n\n"
-        "• Clutch Efficiency: Los Suns registran superioridad estadística en posesiones apretadas durante los últimos cuartos.\n"
-        "• Offensive Pace: Ritmo elevado que propicia un intercambio constante de canastas.\n\n"
-        "🎯 Conclusión del Modelo: La experiencia y la precisión en los momentos clave otorgan la ventaja a Phoenix en un marcador alto."
-    )
-
-    analisis_nuggets = (
-        "🏀 Análisis Táctico y de Espaciamiento (Spacing):\n\n"
-        "Cierres de jornada con un ajedrez táctico en la altura de Denver. La capacidad de distribución desde el poste alto y la lectura de cortes sin balón desarticulan cualquier planteamiento defensivo convencional.\n\n"
-        "📊 Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):\n\n"
-        "• Net Rating en la Altura: Denver maximiza su localía elevando su eficiencia neta en los tramos finales del encuentro.\n"
-        "• Assist-to-Turnover Ratio: Excelente circulación de balón que minimiza las pérdidas no forzadas.\n\n"
-        "🎯 Conclusión del Modelo: El factor local y la fluidez en la distribución ofensiva inclinan el pronóstico a favor de los Nuggets."
-    )
-
     data_def = [
         {
             "equipo1": "Boston Celtics", "equipo2": "Charlotte Hornets", 
@@ -232,33 +197,26 @@ def cargar_cartelera():
             "hora": "20:00 (VE)", "sede": "Smoothie King Center (New Orleans, LA)", 
             "ganador": "Dallas Mavericks (-3.0 pts)", "total_puntos": "230.5 (Altas / Over)", 
             "analisis_es": analisis_mavericks, "analisis_en": analisis_mavericks, "es_jugada_fija": False
-        },
-        {
-            "equipo1": "Milwaukee Bucks", "equipo2": "Chicago Bulls", 
-            "hora": "20:00 (VE)", "sede": "United Center (Chicago, IL)", 
-            "ganador": "Milwaukee Bucks (-6.0 pts)", "total_puntos": "226.0 (Altas / Over)", 
-            "analisis_es": analisis_bucks, "analisis_en": analisis_bucks, "es_jugada_fija": False
-        },
-        {
-            "equipo1": "Minnesota Timberwolves", "equipo2": "Detroit Pistons", 
-            "hora": "20:00 (VE)", "sede": "Little Caesars Arena (Detroit, MI)", 
-            "ganador": "Minnesota Timberwolves (-7.5 pts)", "total_puntos": "215.0 (Bajas / Under)", 
-            "analisis_es": analisis_wolves, "analisis_en": analisis_wolves, "es_jugada_fija": False
-        },
-        {
-            "equipo1": "San Antonio Spurs", "equipo2": "Phoenix Suns", 
-            "hora": "20:00 (VE)", "sede": "Footprint Center (Phoenix, AZ)", 
-            "ganador": "Phoenix Suns (-5.0 pts)", "total_puntos": "228.0 (Altas / Over)", 
-            "analisis_es": analisis_suns, "analisis_en": analisis_suns, "es_jugada_fija": False
-        },
-        {
-            "equipo1": "Los Angeles Clippers", "equipo2": "Denver Nuggets", 
-            "hora": "22:30 (VE)", "sede": "Ball Arena (Denver, CO)", 
-            "ganador": "Denver Nuggets (-4.0 pts)", "total_puntos": "222.0 (Altas / Over)", 
-            "analisis_es": analisis_nuggets, "analisis_en": analisis_nuggets, "es_jugada_fija": False
         }
     ]
-    return pd.DataFrame(data_def)
+    df_default = pd.DataFrame(data_def)
+
+    if os.path.exists(cartelera_csv_path):
+        try:
+            df_saved = pd.read_csv(cartelera_csv_path, encoding='utf-8')
+            if not df_saved.empty and "equipo1" in df_saved.columns:
+                return df_saved
+        except Exception:
+            pass
+    
+    df_default.to_csv(cartelera_csv_path, index=False, encoding='utf-8')
+    return df_default
+
+def guardar_cartelera(df):
+    try:
+        df.to_csv(cartelera_csv_path, index=False, encoding='utf-8')
+    except Exception:
+        pass
 
 idioma = st.sidebar.selectbox("🌐 Idioma / Language", ["Español", "English"])
 lang = "es" if idioma == "Español" else "en"
@@ -373,17 +331,17 @@ else:
             
             col1, col2 = st.columns(2)
             with col1:
-                st.metric(label="Ganador Proyectado", value=fila_juego["ganador"])
+                st.metric(label="Ganador Proyectado", value=str(fila_juego["ganador"]))
             with col2:
-                st.metric(label="Total de Puntos (O/U)", value=fila_juego["total_puntos"])
+                st.metric(label="Total de Puntos (O/U)", value=str(fila_juego["total_puntos"]))
             
             st.markdown("### 🧠 Razonamiento Táctico y Métricas Avanzadas")
-            analisis_amplio = fila_juego["analisis_es"] if lang == "es" else fila_juego["analisis_en"]
+            analisis_amplio = str(fila_juego["analisis_es"]) if lang == "es" else str(fila_juego["analisis_en"])
             st.text(analisis_amplio)
             
             st.markdown("---")
             if st.button("📄 Descargar Análisis en PDF"):
-                archivo_pdf = generar_pdf_analisis(equipo1 + " vs " + equipo2, hora_val, sede_val, fila_juego["ganador"], fila_juego["total_puntos"], analisis_amplio)
+                archivo_pdf = generar_pdf_analisis(equipo1 + " vs " + equipo2, hora_val, sede_val, str(fila_juego["ganador"]), str(fila_juego["total_puntos"]), analisis_amplio)
                 with open(archivo_pdf, "rb") as f:
                     st.download_button("💾 Guardar archivo PDF en tu equipo", data=f, file_name="reporte_sabermetria_nba.pdf", mime="application/pdf")
 
@@ -429,7 +387,7 @@ else:
         st.markdown("🕒 **Hora (VE):** " + hora_est + " &nbsp;&nbsp;|&nbsp;&nbsp; 🏟️ **Sede:** " + sede_est)
         st.markdown("---")
         st.markdown("### 📊 Fundamento Estadístico y Razonamiento del Modelo")
-        analisis_jugada = juego_estelar["analisis_es"] if lang == "es" else juego_estelar["analisis_en"]
+        analisis_jugada = str(juego_estelar["analisis_es"]) if lang == "es" else str(juego_estelar["analisis_en"])
         st.text(analisis_jugada)
 
     elif menu == "Diccionario Sabermétrico":
@@ -486,10 +444,67 @@ else:
         
         if clave_admin == "sabermetria2026":
             st.success(t["admin_exito"])
+            
+            # Contador acumulado y registro de visitas
             if os.path.exists(db_usuarios_path):
                 df_visitas = pd.read_csv(db_usuarios_path, encoding='utf-8')
-                st.metric(label=t["total_visitas"], value=len(df_visitas))
+                total_accesos = len(df_visitas)
+                st.metric(label="📊 Total de Ingresos Acumulados al Portal", value=total_accesos)
+                st.write("---")
+                st.subheader("📋 Registro Detallado de Accesos")
                 st.dataframe(df_visitas, use_container_width=True)
+            else:
+                st.metric(label="📊 Total de Ingresos Acumulados al Portal", value=0)
+
+            st.markdown("---")
+            st.subheader("🏀 Gestor de Cartelera y Partidos")
+            st.write("Agrega, edita o elimina los encuentros programados para las jornadas:")
+            
+            lista_equipos = list(LOGOS_EQUIPOS.keys())
+            
+            with st.form("form_agregar_partido"):
+                st.markdown("#### ➕ Registrar Nuevo Encuentro")
+                col_g1, col_g2 = st.columns(2)
+                with col_g1:
+                    eq1_nuevo = st.selectbox("Equipo Visitante:", lista_equipos, index=0)
+                    hora_nuevo = st.text_input("Hora (Ej: 19:30 (VE)):", value="19:30 (VE)")
+                    ganador_nuevo = st.text_input("Ganador Proyectado (Ej: Boston Celtics (-8.5 pts)):", value="Boston Celtics (-8.5 pts)")
+                with col_g2:
+                    eq2_nuevo = st.selectbox("Equipo Local:", lista_equipos, index=1)
+                    sede_nuevo = st.text_input("Sede del Encuentro:", value="Arena Principal")
+                    total_nuevo = st.text_input("Línea de Puntos O/U (Ej: 224.5 (Altas / Over)):", value="224.5 (Altas / Over)")
+                
+                analisis_nuevo = st.text_area("Análisis Táctico y Métricas Avanzadas:", value="🏀 Análisis Táctico y de Espaciamiento:\n\n📊 Métricas Avanzadas y Modelo Predictivo:\n\n🎯 Conclusión del Modelo:", height=120)
+                es_fija_nuevo = st.checkbox("⭐ Marcar como 'La Jugada Fija del Día'")
+                
+                if st.form_submit_button("➕ Publicar / Agregar Partido a la Cartelera"):
+                    nuevo_juego_df = pd.DataFrame([{
+                        "equipo1": eq1_nuevo,
+                        "equipo2": eq2_nuevo,
+                        "hora": hora_nuevo,
+                        "sede": sede_nuevo,
+                        "ganador": ganador_nuevo,
+                        "total_puntos": total_nuevo,
+                        "analisis_es": analisis_nuevo,
+                        "analisis_en": analisis_nuevo,
+                        "es_jugada_fija": es_fija_nuevo
+                    }])
+                    df_actualizado = pd.concat([df_cartelera, nuevo_juego_df], ignore_index=True)
+                    guardar_cartelera(df_actualizado)
+                    st.success("¡Partido agregado y publicado exitosamente en la cartelera!")
+                    st.rerun()
+
+            if not df_cartelera.empty:
+                st.markdown("---")
+                st.subheader("🗑️ Eliminar Partidos de la Cartelera Activa")
+                nombres_juegos = [f"{row['equipo1']} vs {row['equipo2']} ({row['hora']})" for _, row in df_cartelera.iterrows()]
+                juego_a_borrar = st.selectbox("Selecciona el encuentro a remover:", nombres_juegos)
+                if st.button("🗑️ Eliminar Partido Seleccionado"):
+                    idx_a_borrar = nombres_juegos.index(juego_a_borrar)
+                    df_cartelera = df_cartelera.drop(idx_a_borrar).reset_index(drop=True)
+                    guardar_cartelera(df_cartelera)
+                    st.success("¡Encuentro eliminado de la cartelera!")
+                    st.rerun()
 
             st.markdown("---")
             st.subheader("🎯 Gestor de Efectividad del Modelo")
