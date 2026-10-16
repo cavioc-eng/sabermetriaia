@@ -91,21 +91,38 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# Diccionario completo con los 30 equipos de la NBA y sus logos oficiales
 LOGOS_EQUIPOS = {
+    "Atlanta Hawks": "https://cdn.nba.com/logos/nba/1610612737/global/L/logo.svg",
     "Boston Celtics": "https://cdn.nba.com/logos/nba/1610612738/global/L/logo.svg",
-    "Charlotte Hornets": "https://cdn.nba.com/logos/nba/1610612766/global/L/logo.svg",
-    "Miami Heat": "https://cdn.nba.com/logos/nba/1610612748/global/L/logo.svg",
     "Brooklyn Nets": "https://cdn.nba.com/logos/nba/1610612751/global/L/logo.svg",
-    "Dallas Mavericks": "https://cdn.nba.com/logos/nba/1610612742/global/L/logo.svg",
-    "New Orleans Pelicans": "https://cdn.nba.com/logos/nba/1610612740/global/L/logo.svg",
-    "Milwaukee Bucks": "https://cdn.nba.com/logos/nba/1610612749/global/L/logo.svg",
+    "Charlotte Hornets": "https://cdn.nba.com/logos/nba/1610612766/global/L/logo.svg",
     "Chicago Bulls": "https://cdn.nba.com/logos/nba/1610612741/global/L/logo.svg",
-    "Minnesota Timberwolves": "https://cdn.nba.com/logos/nba/1610612750/global/L/logo.svg",
+    "Cleveland Cavaliers": "https://cdn.nba.com/logos/nba/1610612739/global/L/logo.svg",
+    "Dallas Mavericks": "https://cdn.nba.com/logos/nba/1610612742/global/L/logo.svg",
+    "Denver Nuggets": "https://cdn.nba.com/logos/nba/1610612743/global/L/logo.svg",
     "Detroit Pistons": "https://cdn.nba.com/logos/nba/1610612765/global/L/logo.svg",
-    "San Antonio Spurs": "https://cdn.nba.com/logos/nba/1610612759/global/L/logo.svg",
-    "Phoenix Suns": "https://cdn.nba.com/logos/nba/1610612756/global/L/logo.svg",
+    "Golden State Warriors": "https://cdn.nba.com/logos/nba/1610612744/global/L/logo.svg",
+    "Houston Rockets": "https://cdn.nba.com/logos/nba/1610612745/global/L/logo.svg",
+    "Indiana Pacers": "https://cdn.nba.com/logos/nba/1610612754/global/L/logo.svg",
     "Los Angeles Clippers": "https://cdn.nba.com/logos/nba/1610612746/global/L/logo.svg",
-    "Denver Nuggets": "https://cdn.nba.com/logos/nba/1610612743/global/L/logo.svg"
+    "Los Angeles Lakers": "https://cdn.nba.com/logos/nba/1610612747/global/L/logo.svg",
+    "Memphis Grizzlies": "https://cdn.nba.com/logos/nba/1610612763/global/L/logo.svg",
+    "Miami Heat": "https://cdn.nba.com/logos/nba/1610612748/global/L/logo.svg",
+    "Milwaukee Bucks": "https://cdn.nba.com/logos/nba/1610612749/global/L/logo.svg",
+    "Minnesota Timberwolves": "https://cdn.nba.com/logos/nba/1610612750/global/L/logo.svg",
+    "New Orleans Pelicans": "https://cdn.nba.com/logos/nba/1610612740/global/L/logo.svg",
+    "New York Knicks": "https://cdn.nba.com/logos/nba/1610612752/global/L/logo.svg",
+    "Oklahoma City Thunder": "https://cdn.nba.com/logos/nba/1610612760/global/L/logo.svg",
+    "Orlando Magic": "https://cdn.nba.com/logos/nba/1610612753/global/L/logo.svg",
+    "Philadelphia 76ers": "https://cdn.nba.com/logos/nba/1610612755/global/L/logo.svg",
+    "Phoenix Suns": "https://cdn.nba.com/logos/nba/1610612756/global/L/logo.svg",
+    "Portland Trail Blazers": "https://cdn.nba.com/logos/nba/1610612757/global/L/logo.svg",
+    "Sacramento Kings": "https://cdn.nba.com/logos/nba/1610612758/global/L/logo.svg",
+    "San Antonio Spurs": "https://cdn.nba.com/logos/nba/1610612759/global/L/logo.svg",
+    "Toronto Raptors": "https://cdn.nba.com/logos/nba/1610612761/global/L/logo.svg",
+    "Utah Jazz": "https://cdn.nba.com/logos/nba/1610612762/global/L/logo.svg",
+    "Washington Wizards": "https://cdn.nba.com/logos/nba/1610612764/global/L/logo.svg"
 }
 
 def generar_pdf_analisis(partido, hora, sede, ganador, total_puntos, razonamiento):
@@ -152,7 +169,8 @@ def cargar_cartelera():
     if os.path.exists(cartelera_csv_path):
         try:
             df_saved = pd.read_csv(cartelera_csv_path, encoding='utf-8')
-            return df_saved
+            if not df_saved.empty and "equipo1" in df_saved.columns:
+                return df_saved
         except Exception:
             pass
     
@@ -166,28 +184,12 @@ def cargar_cartelera():
         "🎯 Conclusión del Modelo: La superioridad en la profundidad de banquillo y el dominio en la captura de rebotes ofensivos (OREB%) inclinan la balanza con solvencia hacia la línea de los Celtics."
     )
 
-    analisis_heat = (
-        "🏀 Análisis Táctico y de Espaciamiento (Spacing):\n\n"
-        "El sistema de Miami opera bajo una disciplina defensiva inquebrantable, priorizando la defensa de contención en el perímetro y cerrando los espacios en la llave (paint protection). Brooklyn intentará proponer un juego abierto, pero la presión física en la primera línea de pase cortocircuitará su circulación de balón.\n\n"
-        "📊 Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):\n\n"
-        "• Pace Proyectado: 96.5 posesiones. Al ser un juego de posesiones más pausadas, el ritmo beneficia la tendencia a la baja (Under) en la línea de puntos totales.\n"
-        "• Defensive Rating: Miami proyecta frenar la eficiencia ofensiva rival por debajo del 44% en tiros de campo globales.\n"
-        "• True Shooting Percentage (TS%): La selección de tiro de Miami en la media distancia ofrece mayor estabilidad en los minutos de cierre.\n\n"
-        "🎯 Conclusión del Modelo: Disciplina táctica y control absoluto del reloj de posesión otorgan la ventaja a Miami en un duelo de pocos puntos."
-    )
-
     data_def = [
         {
             "equipo1": "Boston Celtics", "equipo2": "Charlotte Hornets", 
             "hora": "19:30 (VE)", "sede": "Spectrum Center (Charlotte, NC)", 
             "ganador": "Boston Celtics (-8.5 pts)", "total_puntos": "224.5 (Altas / Over)", 
             "analisis_es": analisis_celtics, "analisis_en": analisis_celtics, "es_jugada_fija": True
-        },
-        {
-            "equipo1": "Miami Heat", "equipo2": "Brooklyn Nets", 
-            "hora": "19:30 (VE)", "sede": "Barclays Center (Brooklyn, NY)", 
-            "ganador": "Miami Heat (-4.5 pts)", "total_puntos": "218.5 (Bajas / Under)", 
-            "analisis_es": analisis_heat, "analisis_en": analisis_heat, "es_jugada_fija": False
         }
     ]
     df_default = pd.DataFrame(data_def)
