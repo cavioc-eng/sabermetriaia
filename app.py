@@ -169,32 +169,10 @@ def cargar_cartelera():
     if os.path.exists(cartelera_csv_path):
         try:
             df_saved = pd.read_csv(cartelera_csv_path, encoding='utf-8')
-            if not df_saved.empty and "equipo1" in df_saved.columns:
-                return df_saved
+            return df_saved
         except Exception:
             pass
-    
-    analisis_celtics = (
-        "🏀 Análisis Táctico y de Espaciamiento (Spacing):\n\n"
-        "Los Boston Celtics llegan a este encuentro exhibiendo una estructura ofensiva fundamentada en la saturación perimetral y la creación de ventajas a partir del pick-and-pop. Con un promedio de conversión superior al 56.2% en eFG% (Effective Field Goal Percentage), el conjunto verde maximiza el valor esperado de cada posesión castigando las ayudas defensivas del rival.\n\n"
-        "📊 Métricas Avanzadas y Modelo Predictivo (Sabermetría IA):\n\n"
-        "• Net Rating Proyectado: +10.4 a favor de Boston, sustentado en una eficiencia defensiva que limita al oponente a menos de 102 puntos por cada 100 posesiones.\n"
-        "• Pace Estimado: 99.2 posesiones por 48 minutos, lo que favorece un ritmo dinámico e incrementa el volumen total de lanzamientos de larga distancia.\n"
-        "• Turnover Percentage (TOV%): Boston mantiene una tasa de pérdida de balón controlada (inferior al 11.2%), neutralizando las transiciones defensivas de Charlotte.\n\n"
-        "🎯 Conclusión del Modelo: La superioridad en la profundidad de banquillo y el dominio en la captura de rebotes ofensivos (OREB%) inclinan la balanza con solvencia hacia la línea de los Celtics."
-    )
-
-    data_def = [
-        {
-            "equipo1": "Boston Celtics", "equipo2": "Charlotte Hornets", 
-            "hora": "19:30 (VE)", "sede": "Spectrum Center (Charlotte, NC)", 
-            "ganador": "Boston Celtics (-8.5 pts)", "total_puntos": "224.5 (Altas / Over)", 
-            "analisis_es": analisis_celtics, "analisis_en": analisis_celtics, "es_jugada_fija": True
-        }
-    ]
-    df_default = pd.DataFrame(data_def)
-    df_default.to_csv(cartelera_csv_path, index=False, encoding='utf-8')
-    return df_default
+    return pd.DataFrame(columns=["equipo1", "equipo2", "hora", "sede", "ganador", "total_puntos", "analisis_es", "analisis_en", "es_jugada_fija"])
 
 def guardar_cartelera(df):
     try:
