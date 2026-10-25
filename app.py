@@ -22,25 +22,23 @@ st.set_page_config(
 )
 
 def cargar_noticias_txt():
-    default_mat_es = "• Radiografía de Eficiencia Ofensiva y eFG%: Los Celtics impulsaron su eFG% con excelente spacing perimetral.\n\n• Impacto del Net Rating: Los diferenciales de eficiencia neta marcaron el ritmo en los cierres ajustados."
-    default_vesp_es = "• Reporte Crítico de Lesiones: Monitoreo estricto en las rotaciones perimetrales de Dallas y Phoenix.\n\n• Efecto en el Pace: Gestión rigurosa de la carga física en la pretemporada."
-    default_mat_en = "• Offensive Efficiency & eFG%: Boston Celtics fueled perimeter spacing and high-value shot selection.\n\n• Net Rating Impact: Advanced net rating metrics drove game dynamics."
-    default_vesp_en = "• Critical Injury Reports: Active backcourt roster monitoring for tonight's matchups.\n\n• Pace Adjustments: Workload management controlling possession velocity."
+    default_mat_es = "🏀 Épica en la Altura y Corazón de Perdedor: Las Historias Ocultas de una Noche de Ocho Batallas\n\n• La remontada de película en Denver: Nikola Jokic y Jamal Murray guiaron a los Nuggets en un infartante 141-135 en prórroga frente a unos aguerridos Pelicans.\n\n• La hazaña del novato: Caleb Wilson brilló con 30 puntos y 14 rebotes en la dura caída de los Bulls ante Washington."
+    default_mat_en = "🏀 High-Altitude Epic and Underdog Grit: The Untold Stories Behind an Eight-Game Slate\n\n• Denver's Cinematic Comeback: Nikola Jokic and Jamal Murray secured a thrilling 141-135 OT victory against New Orleans.\n\n• The Rookie's Silent Masterpiece: Caleb Wilson shined with 30 points and 14 rebounds in Chicago's razor-thin defeat."
     
     if os.path.exists(noticias_txt_path):
         try:
             with open(noticias_txt_path, "r", encoding="utf-8") as f:
                 lines = f.read().split("---SEPARADOR_NOTICIAS---")
-                if len(lines) == 4:
-                    return lines[0].strip(), lines[1].strip(), lines[2].strip(), lines[3].strip()
+                if len(lines) >= 2:
+                    return lines[0].strip(), lines[1].strip()
         except Exception:
             pass
-    return default_mat_es, default_vesp_es, default_mat_en, default_vesp_en
+    return default_mat_es, default_mat_en
 
-def guardar_noticias_txt(mat_es, vesp_es, mat_en, vesp_en):
+def guardar_noticias_txt(mat_es, mat_en):
     try:
         with open(noticias_txt_path, "w", encoding="utf-8") as f:
-            f.write(mat_es + "\n---SEPARADOR_NOTICIAS---\n" + vesp_es + "\n---SEPARADOR_NOTICIAS---\n" + mat_en + "\n---SEPARADOR_NOTICIAS---\n" + vesp_en)
+            f.write(mat_es + "\n---SEPARADOR_NOTICIAS---\n" + mat_en)
     except Exception:
         pass
 
@@ -55,7 +53,7 @@ TEXTOS = {
         "paso2_desc": "Haz clic en el botón para entrar al portal exclusivo:",
         "btn_acceso": "🏀 Entrar al Portal Exclusivo",
         "admin_titulo": "🔐 Panel de Control y Publicación - Sabermetría IA",
-        "admin_desc": "Control estadístico de visitas, cartelera masiva por CSV y noticias.",
+        "admin_desc": "Control estadístico de visitas, cartelera masiva por CSV y noticias editoriales.",
         "admin_clave": "Ingresa la clave de administrador:",
         "admin_exito": "¡Acceso de administrador concedido!",
         "admin_error": "❌ Clave de administrador incorrecta.",
@@ -71,7 +69,7 @@ TEXTOS = {
         "paso2_desc": "Click the button to enter the exclusive portal:",
         "btn_acceso": "🏀 Enter Exclusive Portal",
         "admin_titulo": "🔐 Control & Publishing Panel - Sabermetria AI",
-        "admin_desc": "Visit statistical control, CSV slate upload and news.",
+        "admin_desc": "Visit statistical control, CSV slate upload and editorial news.",
         "admin_clave": "Enter admin password:",
         "admin_exito": "Admin access granted!",
         "admin_error": "❌ Incorrect admin password.",
@@ -91,7 +89,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Diccionario completo con los 30 equipos de la NBA y sus logos oficiales
 LOGOS_EQUIPOS = {
     "Atlanta Hawks": "https://cdn.nba.com/logos/nba/1610612737/global/L/logo.svg",
     "Boston Celtics": "https://cdn.nba.com/logos/nba/1610612738/global/L/logo.svg",
@@ -230,7 +227,7 @@ else:
         "Selecciona una sección:" if lang == "es" else "Select a section:", 
         [
             "Cartelera y Partidos", 
-            "Noticias (Doble Actualización)", 
+            "El Pulso de la Duela (Noticias)", 
             "La Jugada Fija del Día", 
             "Diccionario Sabermétrico",
             "🔐 Panel de Administración"
@@ -310,21 +307,15 @@ else:
                     with open(archivo_pdf, "rb") as f:
                         st.download_button("💾 Guardar archivo PDF en tu equipo", data=f, file_name="reporte_sabermetria_nba.pdf", mime="application/pdf")
 
-    elif menu == "Noticias (Doble Actualización)":
-        st.header("📰 Centro de Noticias en Tiempo Real — " + fecha_hoy)
-        st.write("Bienvenido al centro informativo oficial de Sabermetría IA.")
+    elif menu == "El Pulso de la Duela (Noticias)":
+        st.header("🧠 El Pulso de la Duela — Crónicas de Élite (" + fecha_hoy + ")")
+        st.markdown("*Análisis con lupa, historias ocultas y periodismo deportivo de altura sobre la jornada anterior en la NBA.*")
+        st.markdown("---")
         
-        mat_es, vesp_es, mat_en, vesp_en = cargar_noticias_txt()
-        matutina_texto = mat_es if lang == "es" else mat_en
-        vespertina_texto = vesp_es if lang == "es" else vesp_en
-
-        tab1, tab2 = st.tabs(["🌅 Actualización Matutina (Cierre Previo)", "🌇 Actualización de la Tarde (5:00 p.m.)"])
-        with tab1:
-            st.subheader("🌅 Reporte Matutino: Radiografía y Tendencias de la Liga")
-            st.text(matutina_texto)
-        with tab2:
-            st.subheader("🌇 Reporte Vespertino: Última Hora y Ajustes Previo al Salto Inicial")
-            st.text(vespertina_texto)
+        mat_es, mat_en = cargar_noticias_txt()
+        cronica_texto = mat_es if lang == "es" else mat_en
+        
+        st.markdown(cronica_texto)
 
     elif menu == "La Jugada Fija del Día":
         st.header("⭐ La Jugada Estelar del Modelo")
@@ -413,7 +404,6 @@ else:
         if clave_admin == "sabermetria2026":
             st.success(t["admin_exito"])
             
-            # Contador acumulado y registro de visitas
             if os.path.exists(db_usuarios_path):
                 df_visitas = pd.read_csv(db_usuarios_path, encoding='utf-8')
                 total_accesos = len(df_visitas)
@@ -428,7 +418,6 @@ else:
             st.subheader("📤 Carga Masiva de Cartelera por Archivo CSV")
             st.write("Sube tu archivo .csv con la programación de los partidos para actualizar toda la cartelera instantáneamente sin errores manuales.")
             
-            # Botón para descargar plantilla de ejemplo
             csv_ejemplo = df_cartelera.to_csv(index=False).encode('utf-8')
             st.download_button(
                 label="📥 Descargar Plantilla CSV de Ejemplo",
@@ -480,22 +469,20 @@ else:
                     st.rerun()
 
             st.markdown("---")
-            st.subheader("📰 Gestor de Noticias Bilingües (Archivo Local)")
-            st.write("Modifica los textos directamente y guarda para publicarlos de inmediato en la sección de noticias.")
+            st.subheader("🧠 Gestor de Crónicas Editoriales ('El Pulso de la Duela')")
+            st.write("Publica la crónica diaria de élite con análisis profundo y estilo periodístico deportivo.")
             
-            mat_es_act, vesp_es_act, mat_en_act, vesp_en_act = cargar_noticias_txt()
+            mat_es_act, mat_en_act = cargar_noticias_txt()
             
             with st.form("form_noticias_txt"):
-                st.markdown("#### 🇪🇸 Español")
-                txt_mat_es = st.text_area("Noticia Matutina (Español):", value=mat_es_act, height=140)
-                txt_vesp_es = st.text_area("Noticia Vespertina (Español):", value=vesp_es_act, height=140)
-                st.markdown("#### 🇺🇸 Inglés (English)")
-                txt_mat_en = st.text_area("Morning News (English):", value=mat_en_act, height=140)
-                txt_vesp_en = st.text_area("Evening News (English):", value=vesp_en_act, height=140)
+                st.markdown("#### 🇪🇸 Español (Crónica Principal)")
+                txt_mat_es = st.text_area("Contenido de la Crónica (Español):", value=mat_es_act, height=220)
+                st.markdown("#### 🇺🇸 Inglés (English Edition)")
+                txt_mat_en = st.text_area("Editorial Content (English):", value=mat_en_act, height=220)
                 
-                if st.form_submit_button("💾 Guardar y Publicar Noticias"):
-                    guardar_noticias_txt(txt_mat_es, txt_vesp_es, txt_mat_en, txt_vesp_en)
-                    st.success("¡Noticias bilingües guardadas y publicadas correctamente!")
+                if st.form_submit_button("💾 Guardar y Publicar Crónica"):
+                    guardar_noticias_txt(txt_mat_es, txt_mat_en)
+                    st.success("¡Crónica editorial guardada y publicada exitosamente en el portal!")
                     st.rerun()
 
         elif clave_admin != "":
