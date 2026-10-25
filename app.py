@@ -1,5 +1,12 @@
 import streamlit as st
 
+# Configuración inicial de la página
+st.set_page_config(
+    page_title="Sabermetría IA",
+    page_icon="🏀",
+    layout="wide"
+)
+
 def mostrar_centro_de_noticias():
     st.markdown("---")
     st.markdown("## 🧠 El Pulso de la Duela")
@@ -40,5 +47,10 @@ def mostrar_centro_de_noticias():
     * **Devin Booker's Desert Mastery:** Outlasting Golden State 131-122 in overtime, Booker's 43-point night and stellar wing defense plunged the Warriors into an unaccustomed 0-3 start.
     """)
 
-# Llamada a la función dentro de tu app principal de Streamlit
-# mostrar_centro_de_noticias()
+def main():
+    st.title("🏀 Sabermetría IA - Analítica Avanzada de Básquetbol")
+    # Ejecutamos la función de noticias directamente en la vista principal
+    mostrar_centro_de_noticias()
+
+if __name__ == "__main__":
+    main()
