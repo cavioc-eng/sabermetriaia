@@ -441,22 +441,93 @@ else:
                     st.error(f"❌ Error al procesar el archivo CSV: {e}")
 
             st.markdown("---")
-            st.subheader("📋 Cartelera Actual Cargada en el Sistema")
-            if df_cartelera.empty:
-                st.info("ℹ️ La cartelera se encuentra actualmente vacía.")
-            else:
-                st.dataframe(df_cartelera, use_container_width=True)
-                
-            if st.button("🗑️ Vaciar / Borrar Toda la Cartelera"):
-                if os.path.exists(cartelera_csv_path):
-                    try:
-                        os.remove(cartelera_csv_path)
-                    except Exception:
-                        pass
-                df_vacio = pd.DataFrame(columns=["equipo1", "equipo2", "hora", "sede", "ganador", "total_puntos", "analisis_es", "analisis_en", "es_jugada_fija"])
-                guardar_cartelera(df_vacio)
-                st.success("¡Se ha vaciado la cartelera y borrado el archivo local exitosamente!")
-                st.rerun()
+            st.subheader("📁 Cartelera Actual Cargada en el Sistema")
+
+# 🛡️ Respaldo automático inteligente: Si la sesión está vacía, buscamos el archivo local cartelera_hoy.csv
+cartelera_csv_path = "cartelera_hoy.csv"
+
+if (
+    "df_cartelera" not in st.session_state
+    or st.session_state["df_cartelera"] is None
+    or st.session_state["df_cartelera"].empty
+):
+  if os.path.exists(cartelera_csv_path):
+    try:
+      df_cartelera = pd.read_csv(cartelera_csv_path, encoding="utf-8")
+      st.session_state["df_cartelera"] = df_cartelera
+      st.info(
+          "📂 Cartelera cargada automáticamente desde el archivo de respaldo"
+          " local."
+      )
+    except Exception as e:
+      st.error(f"Error al leer el archivo de respaldo: {e}")
+      df_cartelera = pd.DataFrame(
+          columns=[
+              "equipo1",
+              "equipo2",
+              "hora",
+              "sede",
+              "ganador",
+              "total_puntos",
+              "analisis_es",
+              "analisis_en",
+              "es_jugada_fija",
+          ]
+      )
+  else:
+    df_cartelera = pd.DataFrame(
+        columns=[
+            "equipo1",
+            "equipo2",
+            "hora",
+            "sede",
+            "ganador",
+            "total_puntos",
+            "analisis_es",
+            "analisis_en",
+            "es_jugada_fija",
+        ]
+    )
+else:
+  df_cartelera = st.session_state["df_cartelera"]
+
+# Visualización de la cartelera en la app
+if df_cartelera.empty:
+  st.info("ℹ️ La cartelera se encuentra actualmente vacía.")
+else:
+  st.dataframe(df_cartelera, use_container_width=True)
+
+# Botón para vaciar / borrar toda la cartelera
+if st.button("🗑️ Vaciar / Borrar Toda la Cartelera"):
+  if os.path.exists(cartelera_csv_path):
+    try:
+      os.remove(cartelera_csv_path)
+    except Exception:
+      pass
+
+  df_vacio = pd.DataFrame(
+      columns=[
+          "equipo1",
+          "equipo2",
+          "hora",
+          "sede",
+          "ganador",
+          "total_puntos",
+          "analisis_es",
+          "analisis_en",
+          "es_jugada_fija",
+      ]
+  )
+  st.session_state["df_cartelera"] = df_vacio
+
+  # Si tienes la función guardar_cartelera definida en tu script, la llamamos:
+  try:
+    guardar_cartelera(df_vacio)
+  except NameError:
+    pass
+
+  st.success("¡Se ha vaciado la cartelera y borrado el archivo local exitosamente!")
+  st.rerun()
 
             st.markdown("---")
             st.subheader("🎯 Gestor de Efectividad del Modelo")
