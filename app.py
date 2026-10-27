@@ -280,7 +280,7 @@ def cargar_cartelera():
         return df_saved
     except Exception:
       pass
-  # 🛡️ Respaldo automático si no existe o está vacío
+  # 🛡️ Respaldo automático inteligente si el archivo no existe o está vacío
   datos_respaldo = [
       {
           "equipo1": "Cleveland Cavaliers",
@@ -342,32 +342,23 @@ if not st.session_state.autenticado:
   col_paso1, col_paso2 = st.columns(2)
   with col_paso1:
     st.markdown(
-        '<div class="tiktok-card">'
-        + '<h4 style="color: #00FF66; margin-top: 0;">'
-        + t["paso1_titulo"]
-        + "</h4>"
-        + '<p style="font-size: 14px; margin-bottom: 10px;">'
-        + t["paso1_desc"]
-        + "</p>"
-        + '<a href="https://www.tiktok.com/@sabermetriaia" target="_blank"'
-        ' style="background-color: #00FF66; color: #000000; padding: 8px 15px;'
-        " border-radius: 6px; font-weight: bold; text-decoration: none;"
-        ' display: inline-block;">'
-        + t["btn_tiktok"]
-        + "</a>"
-        + "</div>",
+        f"""
+        <div class="tiktok-card">
+            <h4 style="color: #00FF66; margin-top: 0;">{t["paso1_titulo"]}</h4>
+            <p style="font-size: 14px; margin-bottom: 10px;">{t["paso1_desc"]}</p>
+            <a href="https://www.tiktok.com/@sabermetriaia" target="_blank" style="background-color: #00FF66; color: #000000; padding: 8px 15px; border-radius: 6px; font-weight: bold; text-decoration: none; display: inline-block;">{t["btn_tiktok"]}</a>
+        </div>
+        """,
         unsafe_allow_html=True,
     )
   with col_paso2:
     st.markdown(
-        '<div class="tiktok-card">'
-        + '<h4 style="color: #00FF66; margin-top: 0;">'
-        + t["paso2_titulo"]
-        + "</h4>"
-        + '<p style="font-size: 14px; margin-bottom: 15px;">'
-        + t["paso2_desc"]
-        + "</p>"
-        + "</div>",
+        f"""
+        <div class="tiktok-card">
+            <h4 style="color: #00FF66; margin-top: 0;">{t["paso2_titulo"]}</h4>
+            <p style="font-size: 14px; margin-bottom: 15px;">{t["paso2_desc"]}</p>
+        </div>
+        """,
         unsafe_allow_html=True,
     )
     if st.button(t["btn_acceso"]):
@@ -396,5 +387,139 @@ else:
 
   if lang == "es":
     st.markdown(
-        '<div class="stats-banner">'
-        '<h4 style="color: #
+        f"""
+        <div class="stats-banner">
+            <h4 style="color: #00FF66; margin: 0;">🎯 Rendimiento del Modelo Sabermétrico (Evaluación de la Jornada)</h4>
+            <p style="font-size: 15px; margin: 5px 0 0 0;">Aciertos del Modelo: <b>{ayer_str}</b></p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+  else:
+    st.markdown(
+        f"""
+        <div class="stats-banner">
+            <h4 style="color: #00FF66; margin: 0;">🎯 Sabermetric Model Performance (Slate Evaluation)</h4>
+            <p style="font-size: 15px; margin: 5px 0 0 0;">Model Hits: <b>{ayer_str}</b></p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+  if menu == "Cartelera y Partidos":
+    st.header(
+        "📅 Cartelera de Partidos - Análisis Profundo (" + fecha_hoy + ")"
+    )
+    if df_cartelera.empty:
+      st.warning(
+          "⚠️ No hay partidos cargados en este momento en la cartelera. Por"
+          " favor, sube un archivo CSV desde el Panel de Administración."
+      )
+    else:
+      st.write(
+          "Selecciona un encuentro para ver el desglose científico del modelo:"
+      )
+
+      opciones_dict = {}
+      for _, row in df_cartelera.iterrows():
+        e1 = str(row["equipo1"]).strip()
+        e2 = str(row["equipo2"]).strip()
+        label = e1 + " vs. " + e2
+        opciones_dict[label] = row
+
+      partido_seleccionado = st.selectbox(
+          "Juegos de hoy:", list(opciones_dict.keys())
+      )
+
+      if partido_seleccionado:
+        fila_juego = opciones_dict[partido_seleccionado]
+        equipo1 = str(fila_juego["equipo1"]).strip()
+        equipo2 = str(fila_juego["equipo2"]).strip()
+
+        logo1_url = LOGOS_EQUIPOS.get(equipo1, "")
+        logo2_url = LOGOS_EQUIPOS.get(equipo2, "")
+
+        matchup_html = f"""
+                <div class="matchup-box">
+                    <div class="team-col"><img src="{logo1_url}" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">{equipo1}</h3><span style="font-size: 12px; color: #8b949e;">(Visitante)</span></div>
+                    <div class="vs-col">VS</div>
+                    <div class="team-col"><img src="{logo2_url}" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">{equipo2}</h3><span style="font-size: 12px; color: #8b949e;">(Local)</span></div>
+                </div>
+                """
+        st.markdown(matchup_html, unsafe_allow_html=True)
+
+        hora_val = str(fila_juego.get("hora", "19:30 (VE)"))
+        sede_val = str(fila_juego.get("sede", "Arena Principal"))
+        st.markdown(
+            "🕒 **Hora (VE):** "
+            + hora_val
+            + " &nbsp;&nbsp;|&nbsp;&nbsp; 🏟️ **Sede:** "
+            + sede_val
+        )
+        st.markdown("---")
+
+        col1, col2 = st.columns(2)
+        with col1:
+          st.metric(
+              label="Ganador Proyectado", value=str(fila_juego["ganador"])
+          )
+        with col2:
+          st.metric(
+              label="Total de Puntos (O/U)",
+              value=str(fila_juego["total_puntos"]),
+          )
+
+        st.markdown("### 🧠 Razonamiento Táctico y Métricas Avanzadas")
+        analisis_amplio = (
+            str(fila_juego["analisis_es"])
+            if lang == "es"
+            else str(fila_juego["analisis_en"])
+        )
+        st.text(analisis_amplio)
+
+        st.markdown("---")
+        if st.button("📄 Descargar Análisis en PDF"):
+          archivo_pdf = generar_pdf_analisis(
+              equipo1 + " vs " + equipo2,
+              hora_val,
+              sede_val,
+              str(fila_juego["ganador"]),
+              str(fila_juego["total_puntos"]),
+              analisis_amplio,
+          )
+          with open(archivo_pdf, "rb") as f:
+            st.download_button(
+                "💾 Guardar archivo PDF en tu equipo",
+                data=f,
+                file_name="reporte_sabermetria_nba.pdf",
+                mime="application/pdf",
+            )
+
+  elif menu == "El Pulso de la Duela (Noticias)":
+    st.header(
+        "🧠 El Pulso de la Duela — Crónicas de Élite (" + fecha_hoy + ")"
+    )
+    st.markdown(
+        "*Análisis con lupa, historias ocultas y periodismo deportivo de altura"
+        " sobre la jornada anterior en la NBA.*"
+    )
+    st.markdown("---")
+
+    mat_es, mat_en = cargar_noticias_txt()
+    cronica_texto = mat_es if lang == "es" else mat_en
+
+    st.markdown(cronica_texto)
+
+  elif menu == "La Jugada Fija del Día":
+    st.header("⭐ La Jugada Estelar del Modelo")
+    if df_cartelera.empty:
+      st.warning(
+          "⚠️ No hay partidos cargados actualmente para mostrar la jugada fija."
+      )
+    else:
+      st.success(
+          "Recomendación avalada estrictamente por eficiencia matemática y"
+          " métricas de posesión."
+      )
+
+      juegos_fijos = df_cartelera[df_cartelera["es_jugada_fija"] == True]
