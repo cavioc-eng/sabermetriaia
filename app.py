@@ -9,13 +9,6 @@ st.set_page_config(
     layout="wide",
 )
 
-# Título principal de la aplicación
-st.title("🏀 SABERMETRÍA IA — Análisis Avanzado NBA")
-st.markdown(
-    "### *La ciencia de los datos, las métricas y los pronósticos milimétricos.*"
-)
-st.markdown("---")
-
 # Archivos de respaldo local
 cartelera_csv_path = "cartelera_hoy.csv"
 efectividad_txt_path = "efectividad_modelo.txt"
@@ -127,7 +120,7 @@ if (
             "total_puntos": "225.0",
             "analisis_es": (
                 "ANÁLISIS SABERMÉTRICO EXPERTO: El talento exterior de Dallas y"
-                " su alto PER quiebran la defensa física de Miami."
+                " su alto PER quiebran la defensa física di Miami."
             ),
             "analisis_en": (
                 "EXPERT ANALYSIS: Dallas star efficiency breaks through Miami's"
@@ -228,16 +221,37 @@ else:
   df_cartelera = st.session_state["df_cartelera"]
 
 # ==========================================
-# PESTAÑAS PRINCIPALES DE NAVEGACIÓN (4 SECCIONES)
+# MENÚ DE NAVEGACIÓN LATERAL (SIDEBAR)
 # ==========================================
-tab_cartelera, tab_noticias, tab_diccionario, tab_admin = st.tabs([
-    "📊 Cartelera y Pronósticos",
-    "📰 Noticias y Crónica",
-    "📖 Diccionario Sabermétrico",
-    "⚙️ Panel de Administración",
-])
+st.sidebar.image(
+    "https://img.icons8.com/color/96/basketball.png", width=80
+)  # Ícono decorativo
+st.sidebar.title("🏀 Sabermetría IA")
+st.sidebar.markdown(
+    "*Plataforma de Analítica Avanzada y Pronósticos Milimétricos.*"
+)
+st.sidebar.markdown("---")
 
-with tab_cartelera:
+menu = st.sidebar.radio(
+    "Seleccionar Sección:",
+    [
+        "📊 Cartelera y Pronósticos",
+        "📰 Noticias y Crónica",
+        "📖 Diccionario Sabermétrico",
+        "⚙️ Panel de Administración",
+    ],
+)
+
+# ==========================================
+# SECCIÓN 1: CARTELERA Y PRONÓSTICOS (Con descarga PDF por juego)
+# ==========================================
+if menu == "📊 Cartelera y Pronósticos":
+  st.title("🏀 SABERMETRÍA IA — Análisis Avanzado NBA")
+  st.markdown(
+      "### *La ciencia de los datos, las métricas y los pronósticos"
+      " milimétricos.*"
+  )
+  st.markdown("---")
   st.subheader("🔥 Partidos y Análisis Sabermétrico de la Jornada")
 
   if df_cartelera.empty:
@@ -269,15 +283,48 @@ with tab_cartelera:
         )
 
         with st.expander(
-            f"🔍 Ver Análisis Científico Detallado — {row['equipo1']} vs"
+            f"🔍 Ver Análisis Científico y Descargar PDF — {row['equipo1']} vs"
             f" {row['equipo2']}"
         ):
           st.markdown(f"**Español:**\n\n{row['analisis_es']}")
           st.markdown(f"**English:**\n\n{row['analisis_en']}")
 
+          # Botón de descarga de reporte del juego individual
+          texto_pdf = (
+              f"SABERMETRÍA IA - REPORTE DE ENCUENTRO\n"
+              f"=====================================\n"
+              f"Encuentro: {row['equipo1']} vs {row['equipo2']}\n"
+              f"Hora: {row['hora']} | Sede: {row['sede']}\n"
+              f"Pronóstico Ganador: {row['ganador']}\n"
+              f"Puntos Totales (O/U): {row['total_puntos']}\n\n"
+              f"ANÁLISIS EN ESPAÑOL:\n{row['analisis_es']}\n\n"
+              f"EXPERT ANALYSIS (ENGLISH):\n{row['analisis_en']}\n"
+          )
+          st.download_button(
+              label=(
+                  f"📥 Descargar Análisis en PDF / TXT — {row['equipo1']} vs"
+                  f" {row['equipo2']}"
+              ),
+              data=texto_pdf,
+              file_name=(
+                  f"Analisis_{row['equipo1'].replace(' ', '_')}_vs_{row['equipo2'].replace(' ', '_')}.txt"
+              ),
+              mime="text/plain",
+              key=f"pdf_btn_{idx}",
+          )
+
         st.markdown("---")
 
-with tab_noticias:
+# ==========================================
+# SECCIÓN 2: NOTICIAS Y CRÓNICA DEL DÍA
+# ==========================================
+elif menu == "📰 Noticias y Crónica":
+  st.title("🏀 SABERMETRÍA IA — Análisis Avanzado NBA")
+  st.markdown(
+      "### *La ciencia de los datos, las métricas y los pronósticos"
+      " milimétricos.*"
+  )
+  st.markdown("---")
   st.subheader("📰 El Pulso de la Duela — Crónica Editorial de Élite")
   st.markdown(
       "*Lectura profunda de rendimiento, métricas de eficiencia y lecciones"
@@ -324,7 +371,16 @@ with tab_noticias:
         **In Summary:** Yesterday’s games confirmed that teams that control the tempo, maximize efficiency per possession, and trust the depth of their rotation are the ones dominating the NBA stage.
         """)
 
-with tab_diccionario:
+# ==========================================
+# SECCIÓN 3: DICCIONARIO SABERMÉTRICO
+# ==========================================
+elif menu == "📖 Diccionario Sabermétrico":
+  st.title("🏀 SABERMETRÍA IA — Análisis Avanzado NBA")
+  st.markdown(
+      "### *La ciencia de los datos, las métricas y los pronósticos"
+      " milimétricos.*"
+  )
+  st.markdown("---")
   st.subheader("📖 Diccionario Sabermétrico y Guía de Métricas")
   st.markdown(
       "*Guía completa para comprender los indicadores científicos utilizados en"
@@ -397,7 +453,16 @@ with tab_diccionario:
       " minuto."
   )
 
-with tab_admin:
+# ==========================================
+# SECCIÓN 4: PANEL DE ADMINISTRACIÓN
+# ==========================================
+elif menu == "⚙️ Panel de Administración":
+  st.title("🏀 SABERMETRÍA IA — Análisis Avanzado NBA")
+  st.markdown(
+      "### *La ciencia de los datos, las métricas y los pronósticos"
+      " milimétricos.*"
+  )
+  st.markdown("---")
   st.subheader("🔐 Panel de Administración Protegido")
   password = st.text_input("Ingrese la clave de administrador:", type="password")
 
