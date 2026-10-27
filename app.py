@@ -24,19 +24,19 @@ st.set_page_config(
 
 def cargar_noticias_txt():
   default_mat_es = (
-      "Epica en la Altura y Corazon de Perdedor: Las Historias Ocultas de"
-      " una Noche de Ocho Batallas\n\n• La remontada de película en Denver:"
-      " Nikola Jokic y Jamal Murray guiaron a los Nuggets en un infartante"
-      " 141-135 en prórroga frente a unos aguerridos Pelicans.\n\n• La hazaña del"
-      " novato: Caleb Wilson brilló con 30 puntos y 14 rebotes en la dura caída"
-      " de los Bulls ante Washington."
+      "Una Noche de Pura Maestría Táctica: El Salto de Calidad del Modelo"
+      " Sabermétrico\n\n• Precisión en la duela: Con un contundente 7/9 en"
+      " aciertos durante la última jornada, el modelo ratificó su solidez"
+      " predictiva basada en Net Rating y True Shooting Percentage.\n\n• Duelos"
+      " de alto voltaje: Victorias memorables en prórrogas y cierres de"
+      " infarto que ponen de manifiesto la paridad de la temporada."
   )
   default_mat_en = (
-      "High-Altitude Epic and Underdog Grit: The Untold Stories Behind an"
-      " Eight-Game Slate\n\n• Denver's Cinematic Comeback: Nikola Jokic and"
-      " Jamal Murray secured a thrilling 141-135 OT victory against New"
-      " Orleans.\n\n• The Rookie's Silent Masterpiece: Caleb Wilson shined with"
-      " 30 points and 14 rebounds in Chicago's razor-thin defeat."
+      "A Night of Pure Tactical Mastery: The Sabermetric Model's"
+      " Leap\n\n• Court Precision: Delivering a stellar 7/9 hit rate in the"
+      " latest slate, validating deep Net Rating and TS% metrics.\n\n• High-Voltage"
+      " Showdowns: Thrilling overtimes and razor-thin finishes showcasing early"
+      " season parity."
   )
 
   if os.path.exists(noticias_txt_path):
@@ -200,7 +200,7 @@ def cargar_estadisticas():
       )
     except Exception:
       pass
-  return "3 / 4 (75% de Aciertos)"
+  return "7 / 9 (77.8% de Aciertos)"
 
 
 def guardar_estadisticas(ayer):
@@ -217,42 +217,78 @@ def cargar_cartelera():
         return df_saved
     except Exception:
       pass
+  # Partidos actualizados para hoy (27 de octubre de 2026)
   datos_respaldo = [
       {
-          "equipo1": "Charlotte Hornets",
-          "equipo2": "Washington Wizards",
-          "hora": "19:00 (VE)",
-          "sede": "Capital One Arena, Washington",
-          "ganador": "Charlotte Hornets",
-          "total_puntos": "231.5",
+          "equipo1": "Boston Celtics",
+          "equipo2": "Brooklyn Nets",
+          "hora": "19:30 (VE)",
+          "sede": "TD Garden, Boston",
+          "ganador": "Boston Celtics",
+          "total_puntos": "226.5",
           "analisis_es": (
-              "ANÁLISIS SABERMÉTRICO EXPERTO: Ritmo rápido y debilidad"
-              " defensiva en la pintura de Washington. Charlotte asegura la"
-              " victoria por mejor TS%."
+              "ANÁLISIS SABERMÉTRICO EXPERTO (⭐ JUGADA FIJA): Superioridad"
+              " absoluta en eficiencia perimetral (3P%) y control de pérdidas"
+              " de Boston frente a la reestructuración defensiva de Brooklyn."
           ),
           "analisis_en": (
-              "EXPERT ANALYSIS: High pace and defensive weaknesses allow"
-              " Charlotte to edge it."
+              "EXPERT ANALYSIS (LOCK OF THE DAY): Absolute perimeter"
+              " efficiency edge for Boston."
+          ),
+          "es_jugada_fija": True,
+      },
+      {
+          "equipo1": "New York Knicks",
+          "equipo2": "Detroit Pistons",
+          "hora": "20:00 (VE)",
+          "sede": "Madison Square Garden, New York",
+          "ganador": "New York Knicks",
+          "total_puntos": "218.0",
+          "analisis_es": (
+              "ANÁLISIS SABERMÉTRICO EXPERTO: Intensidad defensiva y rebote"
+              " ofensivo superior de los Knicks para dominar el ritmo en casa."
+          ),
+          "analisis_en": (
+              "EXPERT ANALYSIS: Defensive intensity and offensive rebounding"
+              " secure the win for New York."
           ),
           "es_jugada_fija": False,
       },
       {
-          "equipo1": "Cleveland Cavaliers",
-          "equipo2": "Minnesota Timberwolves",
-          "hora": "19:00 (VE)",
-          "sede": "Rocket Mortgage FieldHouse, Cleveland",
-          "ganador": "Minnesota Timberwolves",
-          "total_puntos": "221.0",
+          "equipo1": "San Antonio Spurs",
+          "equipo2": "Sacramento Kings",
+          "hora": "20:00 (VE)",
+          "sede": "Frost Bank Center, San Antonio",
+          "ganador": "Sacramento Kings",
+          "total_puntos": "235.0",
           "analisis_es": (
-              "ANÁLISIS SABERMÉTRICO EXPERTO (⭐ JUGADA FIJA): Muralla"
-              " defensiva de élite y Net Rating superior de los Wolves a"
-              " domicilio."
+              "ANÁLISIS SABERMÉTRICO EXPERTO: El alto Pace y la velocidad en"
+              " transición de Sacramento inclinan la balanza en un duelo de"
+              " muchos puntos."
           ),
           "analisis_en": (
-              "EXPERT ANALYSIS (LOCK OF THE DAY): Wolves' elite defensive"
-              " Net Rating secures the road win."
+              "EXPERT ANALYSIS: Sacramento's high pace and transition speed"
+              " push them ahead in a high-scoring affair."
           ),
-          "es_jugada_fija": True,
+          "es_jugada_fija": False,
+      },
+      {
+          "equipo1": "Los Angeles Lakers",
+          "equipo2": "Portland Trail Blazers",
+          "hora": "23:00 (VE)",
+          "sede": "Crypto.com Arena, Los Angeles",
+          "ganador": "Los Angeles Lakers",
+          "total_puntos": "230.5",
+          "analisis_es": (
+              "ANÁLISIS SABERMÉTRICO EXPERTO: Ventaja considerable en la"
+              " pintura y mayor TS% de los Lakers frente a la juventud de"
+              " Portland."
+          ),
+          "analisis_en": (
+              "EXPERT ANALYSIS: Significant paint advantage and higher TS%"
+              " for the Lakers."
+          ),
+          "es_jugada_fija": False,
       },
   ]
   df_resp = pd.DataFrame(datos_respaldo)
@@ -289,7 +325,6 @@ fecha_hoy = datetime.now().strftime("%d de %B de %Y")
 df_cartelera = cargar_cartelera()
 ayer_str = cargar_estadisticas()
 
-# Banner superior limpio con contenedores de Streamlit
 with st.container():
   st.info(
       f"🎯 **Rendimiento del Modelo Sabermétrico:** Aciertos de la Jornada:"
@@ -364,6 +399,24 @@ if menu == "Cartelera y Partidos":
           else str(fila_juego["analisis_en"])
       )
       st.text(analisis_amplio)
+
+      st.markdown("---")
+      if st.button("📄 Descargar Análisis en PDF"):
+        archivo_pdf = generar_pdf_analisis(
+            equipo1 + " vs " + equipo2,
+            hora_val,
+            sede_val,
+            str(fila_juego["ganador"]),
+            str(fila_juego["total_puntos"]),
+            analisis_amplio,
+        )
+        with open(archivo_pdf, "rb") as f:
+          st.download_button(
+              "💾 Guardar archivo PDF en tu equipo",
+              data=f,
+              file_name="reporte_sabermetria_nba.pdf",
+              mime="application/pdf",
+          )
 
 elif menu == "El Pulso de la Duela (Noticias)":
   st.header("El Pulso de la Duela - Crónicas de Élite (" + fecha_hoy + ")")
@@ -507,7 +560,21 @@ elif menu == "Panel de Administración":
       st.metric(label="Total de Ingresos Acumulados al Portal", value=0)
 
     st.markdown("---")
-    st.subheader("Carga Masiva de Cartelera por Archivo CSV")
+    st.subheader("📤 Carga Masiva de Cartelera por Archivo CSV")
+    st.write(
+        "Sube tu archivo .csv con la programación o descarga la plantilla"
+        " base:"
+    )
+
+    # Botón de descarga de plantilla CSV restaurado con éxito
+    csv_ejemplo = df_cartelera.to_csv(index=False).encode("utf-8")
+    st.download_button(
+        label="📥 Descargar Plantilla CSV de Ejemplo",
+        data=csv_ejemplo,
+        file_name="plantilla_cartelera_ejemplo.csv",
+        mime="text/csv",
+    )
+
     archivo_subido = st.file_uploader(
         "Selecciona el archivo CSV de partidos:", type=["csv"]
     )
@@ -521,20 +588,24 @@ elif menu == "Panel de Administración":
         st.error(f"Error: {e}")
 
     st.markdown("---")
-    if st.button("Vaciar / Borrar Toda la Cartelera"):
+    if st.button("🗑️ Vaciar / Borrar Toda la Cartelera"):
       if os.path.exists(cartelera_csv_path):
         os.remove(cartelera_csv_path)
-      guardar_cartelera(pd.DataFrame(columns=[
-          "equipo1",
-          "equipo2",
-          "hora",
-          "sede",
-          "ganador",
-          "total_puntos",
-          "analisis_es",
-          "analisis_en",
-          "es_jugada_fija",
-      ]))
+      guardar_cartelera(
+          pd.DataFrame(
+              columns=[
+                  "equipo1",
+                  "equipo2",
+                  "hora",
+                  "sede",
+                  "ganador",
+                  "total_puntos",
+                  "analisis_es",
+                  "analisis_en",
+                  "es_jugada_fija",
+              ]
+          )
+      )
       st.success("¡Cartelera vaciada!")
       st.rerun()
 
@@ -542,9 +613,9 @@ elif menu == "Panel de Administración":
     ayer_act = cargar_estadisticas()
     with st.form("form_estadisticas"):
       nuevo_ayer = st.text_input(
-          "Aciertos de la Jornada:", value=ayer_act
+          "Aciertos de la Jornada (Ej: 7 / 9 (77.8%)):", value=ayer_act
       )
-      if st.form_submit_button("Guardar Efectividad"):
+      if st.form_submit_button("💾 Guardar Efectividad"):
         guardar_estadisticas(nuevo_ayer)
         st.success("¡Efectividad actualizada!")
         st.rerun()
@@ -557,7 +628,7 @@ elif menu == "Panel de Administración":
       txt_mat_en = st.text_area(
           "Editorial (English):", value=mat_en_act, height=180
       )
-      if st.form_submit_button("Guardar y Publicar Crónica"):
+      if st.form_submit_button("💾 Guardar y Publicar Crónica"):
         guardar_noticias_txt(txt_mat_es, txt_mat_en)
         st.success("¡Crónica publicada con éxito!")
         st.rerun()
