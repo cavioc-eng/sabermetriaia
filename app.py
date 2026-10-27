@@ -58,32 +58,6 @@ def guardar_noticias_txt(mat_es, mat_en):
     pass
 
 
-TEXTOS = {
-    "es": {
-        "titulo_app": "SABERMETRÍA IA",
-        "sub_app": "Analítica Avanzada de Básquetbol",
-        "admin_titulo": "Panel de Control y Publicación - Sabermetría IA",
-        "admin_desc": (
-            "Control estadístico de visitas, cartelera masiva por CSV y noticias"
-            " editoriales."
-        ),
-        "admin_clave": "Ingresa la clave de administrador:",
-        "admin_exito": "¡Acceso de administrador concedido!",
-        "admin_error": "Clave de administrador incorrecta.",
-    },
-    "en": {
-        "titulo_app": "SABERMETRIA AI",
-        "sub_app": "Advanced Basketball Analytics",
-        "admin_titulo": "Control & Publishing Panel - Sabermetria AI",
-        "admin_desc": (
-            "Visit statistical control, CSV slate upload and editorial news."
-        ),
-        "admin_clave": "Enter admin password:",
-        "admin_exito": "Admin access granted!",
-        "admin_error": "Incorrect admin password.",
-    },
-}
-
 st.markdown(
     """
     <style>
@@ -284,40 +258,6 @@ def cargar_cartelera():
           ),
           "es_jugada_fija": True,
       },
-      {
-          "equipo1": "Boston Celtics",
-          "equipo2": "Chicago Bulls",
-          "hora": "19:30 (VE)",
-          "sede": "TD Garden, Boston",
-          "ganador": "Boston Celtics",
-          "total_puntos": "228.5",
-          "analisis_es": (
-              "ANÁLISIS SABERMÉTRICO EXPERTO: Eficiencia perimetral"
-              " estratosférica y control absoluto de pérdidas (TOV)."
-          ),
-          "analisis_en": (
-              "EXPERT ANALYSIS: Absolute perimeter efficiency and superior"
-              " ball security."
-          ),
-          "es_jugada_fija": False,
-      },
-      {
-          "equipo1": "Miami Heat",
-          "equipo2": "Dallas Mavericks",
-          "hora": "19:30 (VE)",
-          "sede": "Kaseya Center, Miami",
-          "ganador": "Dallas Mavericks",
-          "total_puntos": "225.0",
-          "analisis_es": (
-              "ANÁLISIS SABERMÉTRICO EXPERTO: El talento exterior de Dallas y"
-              " su alto PER quiebran la defensa física de Miami."
-          ),
-          "analisis_en": (
-              "EXPERT ANALYSIS: Dallas star efficiency breaks through Miami's"
-              " gritty defense."
-          ),
-          "es_jugada_fija": False,
-      },
   ]
   df_resp = pd.DataFrame(datos_respaldo)
   guardar_cartelera(df_resp)
@@ -328,12 +268,11 @@ def guardar_cartelera(df):
   try:
     df.to_csv(cartelera_csv_path, index=False, encoding="utf-8")
   except Exception:
-    pass
+      pass
 
 
 idioma = st.sidebar.selectbox("Idioma / Language", ["Español", "English"])
 lang = "es" if idioma == "Español" else "en"
-t = TEXTOS[lang]
 
 st.sidebar.title("Menú Principal" if lang == "es" else "Main Menu")
 if os.path.exists(logo_path):
@@ -381,7 +320,6 @@ if menu == "Cartelera y Partidos":
     st.warning("No hay partidos cargados actualmente en la cartelera.")
   else:
     st.write("Selecciona un encuentro para ver el desglose científico del modelo:")
-
     opciones_dict = {}
     for _, row in df_cartelera.iterrows():
       e1 = str(row["equipo1"]).strip()
@@ -392,12 +330,10 @@ if menu == "Cartelera y Partidos":
     partido_seleccionado = st.selectbox(
         "Juegos de hoy:", list(opciones_dict.keys())
     )
-
     if partido_seleccionado:
       fila_juego = opciones_dict[partido_seleccionado]
       equipo1 = str(fila_juego["equipo1"]).strip()
       equipo2 = str(fila_juego["equipo2"]).strip()
-
       logo1_url = LOGOS_EQUIPOS.get(equipo1, "")
       logo2_url = LOGOS_EQUIPOS.get(equipo2, "")
 
@@ -409,7 +345,6 @@ if menu == "Cartelera y Partidos":
             </div>
             """
       st.markdown(matchup_html, unsafe_allow_html=True)
-
       hora_val = str(fila_juego.get("hora", "19:30 (VE)"))
       sede_val = str(fila_juego.get("sede", "Arena Principal"))
       st.markdown(
@@ -419,7 +354,6 @@ if menu == "Cartelera y Partidos":
           + sede_val
       )
       st.markdown("---")
-
       col1, col2 = st.columns(2)
       with col1:
         st.metric(
@@ -430,7 +364,6 @@ if menu == "Cartelera y Partidos":
             label="Total de Puntos (O/U)",
             value=str(fila_juego["total_puntos"]),
         )
-
       st.markdown("### Razonamiento Táctico y Métricas Avanzadas")
       analisis_amplio = (
           str(fila_juego["analisis_es"])
@@ -439,32 +372,9 @@ if menu == "Cartelera y Partidos":
       )
       st.text(analisis_amplio)
 
-      st.markdown("---")
-      if st.button("Descargar Análisis en PDF"):
-        archivo_pdf = generar_pdf_analisis(
-            equipo1 + " vs " + equipo2,
-            hora_val,
-            sede_val,
-            str(fila_juego["ganador"]),
-            str(fila_juego["total_puntos"]),
-            analisis_amplio,
-        )
-        with open(archivo_pdf, "rb") as f:
-          st.download_button(
-              "Guardar archivo PDF en tu equipo",
-              data=f,
-              file_name="reporte_sabermetria_nba.pdf",
-              mime="application/pdf",
-          )
-
 elif menu == "El Pulso de la Duela (Noticias)":
   st.header("El Pulso de la Duela - Crónicas de Élite (" + fecha_hoy + ")")
-  st.markdown(
-      "Análisis con lupa, historias ocultas y periodismo deportivo de altura"
-      " sobre la jornada anterior en la NBA."
-  )
   st.markdown("---")
-
   mat_es, mat_en = cargar_noticias_txt()
   cronica_texto = mat_es if lang == "es" else mat_en
   st.markdown(cronica_texto)
@@ -474,11 +384,6 @@ elif menu == "La Jugada Fija del Día":
   if df_cartelera.empty:
     st.warning("No hay partidos cargados actualmente.")
   else:
-    st.success(
-        "Recomendación avalada estrictamente por eficiencia matemática y"
-        " métricas de posesión."
-    )
-
     juegos_fijos = df_cartelera[
         df_cartelera["es_jugada_fija"]
         .astype(str)
@@ -488,12 +393,10 @@ elif menu == "La Jugada Fija del Día":
     juego_estelar = (
         juegos_fijos.iloc[0] if not juegos_fijos.empty else df_cartelera.iloc[0]
     )
-
     estelar_eq1 = str(juego_estelar["equipo1"]).strip()
     estelar_eq2 = str(juego_estelar["equipo2"]).strip()
     logo_estelar_1 = LOGOS_EQUIPOS.get(estelar_eq1, "")
     logo_estelar_2 = LOGOS_EQUIPOS.get(estelar_eq2, "")
-
     matchup_estelar_html = f"""
         <div class="matchup-box">
             <div class="team-col"><img src="{logo_estelar_1}" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">{estelar_eq1}</h3><span style="font-size: 12px; color: #8b949e;">(Visitante)</span></div>
@@ -502,12 +405,6 @@ elif menu == "La Jugada Fija del Día":
         </div>
         """
     st.markdown(matchup_estelar_html, unsafe_allow_html=True)
-
-    hora_est = str(juego_estelar.get("hora", "19:30 (VE)"))
-    sede_est = str(juego_estelar.get("sede", "Arena Principal"))
-    st.markdown("Hora (VE): " + hora_est + " | Sede: " + sede_est)
-    st.markdown("---")
-    st.markdown("### Fundamento Estadístico y Razonamiento del Modelo")
     analisis_jugada = (
         str(juego_estelar["analisis_es"])
         if lang == "es"
@@ -516,213 +413,90 @@ elif menu == "La Jugada Fija del Día":
     st.text(analisis_jugada)
 
 elif menu == "Diccionario Sabermétrico":
-  st.header("Diccionario Sabermétrico Educativo (Básico a Avanzado)")
-  st.write(
-      "Guía completa de referencia para comprender desde los fundamentos"
-      " tradicionales hasta las métricas de eficiencia más avanzadas:"
+  st.header("Diccionario Sabermétrico Educativo")
+  st.markdown(
+      "### Indicadores Básicos y Avanzados\n- **PTS:** Puntos anotados.\n-"
+      " **TS%:** Eficiencia real de tiro.\n- **Net Rating:** Diferencial de"
+      " puntos por 100 posesiones."
   )
 
-  if lang == "es":
-    st.markdown(
-        "### Indicadores Básicos y Tradicionales (Box Score)\n"
-        "- **PTS (Points / Puntos):** Total de puntos anotados por un jugador o"
-        " equipo.\n"
-        "- **REB (Rebounds / Rebotes):** Balones recuperados tras un lanzamiento"
-        " fallido.\n"
-        "- **AST (Assists / Asistencias):** Pases que conducen directamente a"
-        " una canasta.\n"
-        "- **STL (Steals / Recuperaciones):** Balones arrebatados al"
-        " adversario.\n"
-        "- **BLK (Blocks / Tapones):** Lanzamientos rivales bloqueados en el"
-        " aire.\n"
-        "- **TOV (Turnovers / Pérdidas):** Balones entregados al rival por"
-        " errores.\n"
-        "- **MIN (Minutes / Minutos):** Tiempo total que un jugador disputa en"
-        " la duela.\n\n"
-        "### Indicadores de Eficiencia Estándar\n"
-        "- **FG% (Field Goal Percentage):** Porcentaje de tiros de campo"
-        " encestados.\n"
-        "- **3P% (Three-Point Percentage):** Eficacia en lanzamientos de larga"
-        " distancia.\n"
-        "- **FT% (Free Throw Percentage):** Precisión desde la línea de tiros"
-        " libres.\n\n"
-        "### Indicadores Avanzados y de Profundidad (Sabermetría IA)\n"
-        "- **Pace (Ritmo):** Cantidad estimada de posesiones por cada 48"
-        " minutos.\n"
-        "- **True Shooting Percentage (TS%):** Eficiencia ofensiva global"
-        " (dobles, triples y libres).\n"
-        "- **Net Rating:** Diferencia de puntos anotados y permitidos por 100"
-        " posesiones.\n"
-        "- **Usage Rate (USG%):** Porcentaje de jugadas ofensivas que concluye"
-        " un jugador en cancha.\n"
-        "- **PER (Player Efficiency Rating):** Índice global de productividad"
-        " por minuto."
-    )
-  else:
-    st.markdown(
-        "### Basic & Traditional Indicators (Box Score)\n"
-        "- **PTS (Points):** Total points scored by a player or team.\n"
-        "- **REB (Rebounds):** Basketballs recovered after a missed shot.\n"
-        "- **AST (Assists):** Passes leading directly to a field goal.\n"
-        "- **STL (Steals):** Balls taken away from the opponent.\n"
-        "- **BLK (Blocks):** Legal deflections of opponent shots.\n"
-        "- **TOV (Turnovers):** Possessions lost due to unforced errors.\n"
-        "- **MIN (Minutes):** Total time a player spends on the court.\n\n"
-        "### Standard Efficiency Indicators\n"
-        "- **FG% (Field Goal Percentage):** Ratio of successful field goals.\n"
-        "- **3P% (Three-Point Percentage):** Shooting accuracy from beyond the"
-        " arc.\n"
-        "- **FT% (Free Throw Percentage):** Accuracy from the charity"
-        " stripe.\n\n"
-        "### Advanced & Deep Analytics (Sabermetria AI)\n"
-        "- **Pace:** Estimated number of possessions per 48 minutes.\n"
-        "- **True Shooting Percentage (TS%):** Comprehensive scoring"
-        " efficiency.\n"
-        "- **Net Rating:** Point differential per 100 possessions.\n"
-        "- **Usage Rate (USG%):** Estimate of team plays used by a player.\n"
-        "- **PER (Player Efficiency Rating):** Per-minute productivity"
-        " rating."
-    )
+elif menu == "Panel de Administración":
+  st.header("🔐 Panel de Control y Publicación - Sabermetría IA")
+  st.write("Control estadístico, cartelera y crónicas editoriales.")
 
-elif menu == "🔐 Panel de Administración":
-  st.header(t["admin_titulo"])
-  st.write(t["admin_desc"])
   clave_admin = st.text_input(
-      t["admin_clave"], type="password", key="input_clave_admin"
+      "Ingresa la clave de administrador:",
+      type="password",
+      key="input_clave_admin",
   )
 
   if clave_admin == "sabermetria2026":
-    st.success(t["admin_exito"])
+    st.success("¡Acceso de administrador concedido!")
 
     if os.path.exists(db_usuarios_path):
       df_visitas = pd.read_csv(db_usuarios_path, encoding="utf-8")
-      total_accesos = len(df_visitas)
       st.metric(
-          label="Total de Ingresos Acumulados al Portal", value=total_accesos
+          label="Total de Ingresos Acumulados al Portal", value=len(df_visitas)
       )
-      st.write("---")
-      st.subheader("Registro Detallado de Accesos")
       st.dataframe(df_visitas, use_container_width=True)
     else:
       st.metric(label="Total de Ingresos Acumulados al Portal", value=0)
 
     st.markdown("---")
     st.subheader("Carga Masiva de Cartelera por Archivo CSV")
-    st.write(
-        "Sube tu archivo .csv con la programación de los partidos para"
-        " actualizar toda la cartelera instantáneamente sin errores manuales."
-    )
-
-    csv_ejemplo = df_cartelera.to_csv(index=False).encode("utf-8")
-    st.download_button(
-        label="Descargar Plantilla CSV de Ejemplo",
-        data=csv_ejemplo,
-        file_name="plantilla_cartelera_ejemplo.csv",
-        mime="text/csv",
-    )
-
     archivo_subido = st.file_uploader(
         "Selecciona el archivo CSV de partidos:", type=["csv"]
     )
     if archivo_subido is not None:
       try:
         df_nuevo_csv = pd.read_csv(archivo_subido, encoding="utf-8")
-        columnas_requeridas = [
-            "equipo1",
-            "equipo2",
-            "hora",
-            "sede",
-            "ganador",
-            "total_puntos",
-            "analisis_es",
-            "analisis_en",
-            "es_jugada_fija",
-        ]
-        if all(col in df_nuevo_csv.columns for col in columnas_requeridas):
-          guardar_cartelera(df_nuevo_csv)
-          st.success(
-              "¡Cartelera actualizada masivamente con éxito desde el archivo"
-              " CSV!"
-          )
-          st.rerun()
-        else:
-          st.error(
-              "El archivo CSV no tiene las columnas requeridas. Descarga la"
-              " plantilla de ejemplo para guiarte."
-          )
+        guardar_cartelera(df_nuevo_csv)
+        st.success("¡Cartelera actualizada con éxito!")
+        st.rerun()
       except Exception as e:
-        st.error(f"Error al procesar el archivo CSV: {e}")
+        st.error(f"Error: {e}")
 
     st.markdown("---")
-    st.subheader("Cartelera Actual Cargada en el Sistema")
-    if df_cartelera.empty:
-      st.info("La cartelera se encuentra actualmente vacía.")
-    else:
-      st.dataframe(df_cartelera, use_container_width=True)
-
     if st.button("Vaciar / Borrar Toda la Cartelera"):
       if os.path.exists(cartelera_csv_path):
-        try:
-          os.remove(cartelera_csv_path)
-        except Exception:
-          pass
-      df_vacio = pd.DataFrame(
-          columns=[
-              "equipo1",
-              "equipo2",
-              "hora",
-              "sede",
-              "ganador",
-              "total_puntos",
-              "analisis_es",
-              "analisis_en",
-              "es_jugada_fija",
-          ]
-      )
-      guardar_cartelera(df_vacio)
-      st.success(
-          "¡Se ha vaciado la cartelera y borrado el archivo local exitosamente!"
-      )
+        os.remove(cartelera_csv_path)
+      guardar_cartelera(pd.DataFrame(columns=[
+          "equipo1",
+          "equipo2",
+          "hora",
+          "sede",
+          "ganador",
+          "total_puntos",
+          "analisis_es",
+          "analisis_en",
+          "es_jugada_fija",
+      ]))
+      st.success("¡Cartelera vaciada!")
       st.rerun()
 
     st.markdown("---")
-    st.subheader("Gestor de Efectividad del Modelo")
     ayer_act = cargar_estadisticas()
     with st.form("form_estadisticas"):
       nuevo_ayer = st.text_input(
-          "Aciertos de la Jornada (Ej: 3 / 4 (75%)):", value=ayer_act
+          "Aciertos de la Jornada:", value=ayer_act
       )
       if st.form_submit_button("Guardar Efectividad"):
         guardar_estadisticas(nuevo_ayer)
         st.success("¡Efectividad actualizada!")
         st.rerun()
 
-    st.markdown("---")
-    st.subheader("Gestor de Crónicas Editoriales ('El Pulso de la Duela')")
-    st.write(
-        "Publica la crónica diaria de élite con análisis profundo y estilo"
-        " periodístico deportivo."
-    )
-
     mat_es_act, mat_en_act = cargar_noticias_txt()
-
     with st.form("form_noticias_txt"):
-      st.markdown("#### Español (Crónica Principal)")
       txt_mat_es = st.text_area(
-          "Contenido de la Crónica (Español):", value=mat_es_act, height=220
+          "Crónica (Español):", value=mat_es_act, height=180
       )
-      st.markdown("#### Inglés (English Edition)")
       txt_mat_en = st.text_area(
-          "Editorial Content (English):", value=mat_en_act, height=220
+          "Editorial (English):", value=mat_en_act, height=180
       )
-
       if st.form_submit_button("Guardar y Publicar Crónica"):
         guardar_noticias_txt(txt_mat_es, txt_mat_en)
-        st.success(
-            "¡Crónica editorial guardada y publicada exitosamente en el"
-            " portal!"
-        )
+        st.success("¡Crónica publicada con éxito!")
         st.rerun()
 
   elif clave_admin != "":
-    st.error(t["admin_error"])
+    st.error("❌ Clave de administrador incorrecta.")
