@@ -63,9 +63,6 @@ st.markdown(
     <style>
     .main { background-color: #0e1117; color: #ffffff; }
     .stButton>button { background-color: #00FF66; color: #000000; font-weight: bold; border-radius: 8px; }
-    .matchup-box { display: flex; align-items: center; justify-content: space-around; text-align: center; padding: 15px; background-color: #161b22; border-radius: 12px; border: 1px solid #30363d; margin-bottom: 20px; }
-    .team-col { flex: 1; display: flex; flex-direction: column; align-items: center; }
-    .vs-col { flex: 0 0 100px; font-size: 32px; font-weight: bold; color: #00FF66; text-align: center; }
     .stats-banner { background: linear-gradient(135deg, #161b22 0%, #1f2937 100%); border: 1px solid #00FF66; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px; }
     </style>
 """,
@@ -295,14 +292,68 @@ ayer_str = cargar_estadisticas()
 
 if lang == "es":
   st.markdown(
-      f"""
-    <div class="stats-banner">
-        <h4 style="color: #00FF66; margin: 0;">Rendimiento del Modelo Sabermétrico (Evaluación de la Jornada)</h4>
-        <p style="font-size: 15px; margin: 5px 0 0 0;">Aciertos del Modelo: <b>{ayer_str}</b></p>
-    </div>
-    """,
+      '<div class="stats-banner"><h4 style="color: #00FF66; margin:'
+      ' 0;">Rendimiento del Modelo Sabermétrico (Evaluación de la'
+      f' Jornada)</h4><p style="font-size: 15px; margin: 5px 0 0 0;">Aciertos'
+      f' del Modelo: <b>{ayer_str}</b></p></div>',
       unsafe_allow_html=True,
   )
 else:
   st.markdown(
-      f"""
+      '<div class="stats-banner"><h4 style="color: #00FF66; margin:'
+      " 0;">Sabermetric Model Performance (Slate Evaluation)</h4><p"
+      f' style="font-size: 15px; margin: 5px 0 0 0;">Model Hits:'
+      f' <b>{ayer_str}</b></p></div>',
+      unsafe_allow_html=True,
+  )
+
+if menu == "Cartelera y Partidos":
+  st.header("Cartelera de Partidos - Análisis Profundo (" + fecha_hoy + ")")
+  if df_cartelera.empty:
+    st.warning("No hay partidos cargados actualmente en la cartelera.")
+  else:
+    st.write("Selecciona un encuentro para ver el desglose científico del modelo:")
+    opciones_dict = {}
+    for _, row in df_cartelera.iterrows():
+      e1 = str(row["equipo1"]).strip()
+      e2 = str(row["equipo2"]).strip()
+      label = e1 + " vs. " + e2
+      opciones_dict[label] = row
+
+    partido_seleccionado = st.selectbox(
+        "Juegos de hoy:", list(opciones_dict.keys())
+    )
+    if partido_seleccionado:
+      fila_juego = opciones_dict[partido_seleccionado]
+      equipo1 = str(fila_juego["equipo1"]).strip()
+      equipo2 = str(fila_juego["equipo2"]).strip()
+      logo1_url = LOGOS_EQUIPOS.get(equipo1, "")
+      logo2_url = LOGOS_EQUIPOS.get(equipo2, "")
+
+      st.markdown(
+          f'<div style="display: flex; align-items: center; justify-content:'
+          " space-around; text-align: center; padding: 15px;"
+          " background-color: #161b22; border-radius: 12px; border: 1px solid"
+          f' #30363d; margin-bottom: 20px;"><div style="flex: 1; display:'
+          ' flex-direction: column; align-items: center;"><img src="'
+          f'{logo1_url}" width="90" style="margin-bottom:'
+          f' 8px;"><h3 style="margin: 0; color: #ffffff;">{equipo1}</h3><span'
+          ' style="font-size: 12px; color:'
+          f' #8b949e;">(Visitante)</span></div><div style="flex: 0 0 80px; font-size:'
+          ' 28px; font-weight: bold; color: #00FF66; text-align:'
+          f' center;">VS</div><div style="flex: 1; display: flex;'
+          ' flex-direction: column; align-items: center;"><img src="'
+          f'{logo2_url}" width="90" style="margin-bottom:'
+          f' 8px;"><h3 style="margin: 0; color: #ffffff;">{equipo2}</h3><span'
+          ' style="font-size: 12px; color:'
+          ' #8b949e;">(Local)</span></div></div>',
+          unsafe_allow_html=True,
+      )
+
+      hora_val = str(fila_juego.get("hora", "19:30 (VE)"))
+      sede_val = str(fila_juego.get("sede", "Arena Principal"))
+      st.markdown(
+          "Hora (VE): "
+          + hora_val
+          + " &nbsp;&nbsp;|&nbsp;&nbsp; Sede: "
+          +
