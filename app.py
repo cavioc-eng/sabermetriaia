@@ -280,8 +280,26 @@ def cargar_cartelera():
         return df_saved
     except Exception:
       pass
-  # Respaldo automático por defecto
+  # Respaldo automático con los partidos de la jornada
   datos_respaldo = [
+      {
+          "equipo1": "Charlotte Hornets",
+          "equipo2": "Washington Wizards",
+          "hora": "19:00 (VE)",
+          "sede": "Capital One Arena, Washington",
+          "ganador": "Charlotte Hornets",
+          "total_puntos": "231.5",
+          "analisis_es": (
+              "ANÁLISIS SABERMÉTRICO EXPERTO: Ritmo rápido y debilidad"
+              " defensiva en la pintura de Washington. Charlotte asegura la"
+              " victoria por mejor TS%."
+          ),
+          "analisis_en": (
+              "EXPERT ANALYSIS: High pace and defensive weaknesses allow"
+              " Charlotte to edge it."
+          ),
+          "es_jugada_fija": False,
+      },
       {
           "equipo1": "Cleveland Cavaliers",
           "equipo2": "Minnesota Timberwolves",
@@ -290,15 +308,50 @@ def cargar_cartelera():
           "ganador": "Minnesota Timberwolves",
           "total_puntos": "221.0",
           "analisis_es": (
-              "ANÁLISIS SABERMÉTRICO EXPERTO (⭐ JUGADA FIJA): Muralla defensiva"
-              " de élite y Net Rating superior de los Wolves a domicilio."
+              "ANÁLISIS SABERMÉTRICO EXPERTO (⭐ JUGADA FIJA): Muralla"
+              " defensiva de élite y Net Rating superior de los Wolves a"
+              " domicilio."
           ),
           "analisis_en": (
               "EXPERT ANALYSIS (LOCK OF THE DAY): Wolves' elite defensive"
               " Net Rating secures the road win."
           ),
           "es_jugada_fija": True,
-      }
+      },
+      {
+          "equipo1": "Boston Celtics",
+          "equipo2": "Chicago Bulls",
+          "hora": "19:30 (VE)",
+          "sede": "TD Garden, Boston",
+          "ganador": "Boston Celtics",
+          "total_puntos": "228.5",
+          "analisis_es": (
+              "ANÁLISIS SABERMÉTRICO EXPERTO: Eficiencia perimetral"
+              " estratosférica y control absoluto de pérdidas (TOV)."
+          ),
+          "analisis_en": (
+              "EXPERT ANALYSIS: Absolute perimeter efficiency and superior"
+              " ball security."
+          ),
+          "es_jugada_fija": False,
+      },
+      {
+          "equipo1": "Miami Heat",
+          "equipo2": "Dallas Mavericks",
+          "hora": "19:30 (VE)",
+          "sede": "Kaseya Center, Miami",
+          "ganador": "Dallas Mavericks",
+          "total_puntos": "225.0",
+          "analisis_es": (
+              "ANÁLISIS SABERMÉTRICO EXPERTO: El talento exterior de Dallas y"
+              " su alto PER quiebran la defensa física de Miami."
+          ),
+          "analisis_en": (
+              "EXPERT ANALYSIS: Dallas star efficiency breaks through Miami's"
+              " gritty defense."
+          ),
+          "es_jugada_fija": False,
+      },
   ]
   df_resp = pd.DataFrame(datos_respaldo)
   guardar_cartelera(df_resp)
@@ -316,10 +369,7 @@ idioma = st.sidebar.selectbox("🌐 Idioma / Language", ["Español", "English"])
 lang = "es" if idioma == "Español" else "en"
 t = TEXTOS[lang]
 
-if "autenticado" not in st.session_state:
-  st.session_state.autenticado = False
-
-# Selector global de secciones en el menú lateral para que SIEMPRE esté disponible
+# Menú lateral fijo y siempre disponible
 st.sidebar.title("Menú Principal" if lang == "es" else "Main Menu")
 if os.path.exists(logo_path):
   st.sidebar.image(logo_path, width=220)
@@ -339,198 +389,222 @@ fecha_hoy = datetime.now().strftime("%d de %B de %Y")
 df_cartelera = cargar_cartelera()
 ayer_str = cargar_estadisticas()
 
-if not st.session_state.autenticado:
-  col_izq, col_centro, col_der = st.columns([1.2, 1.8, 1])
-  with col_izq:
-    if os.path.exists(logo_path):
-      st.image(logo_path, width=220)
-  with col_centro:
-    st.markdown("<br>", unsafe_allow_html=True)
-    st.title(t["titulo_app"])
-    st.subheader(t["sub_app"])
-    st.write(
-        "Para desbloquear el portal exclusivo y la analítica avanzada, sigue los"
-        " pasos:"
-    )
-  with col_der:
-    st.image(
-        "https://upload.wikimedia.org/wikipedia/en/0/03/National_Basketball_Association_logo.svg",
-        width=140,
+# Banner superior de rendimiento
+if lang == "es":
+  st.markdown(
+      f"""
+    <div class="stats-banner">
+        <h4 style="color: #00FF66; margin: 0;">🎯 Rendimiento del Modelo Sabermétrico (Evaluación de la Jornada)</h4>
+        <p style="font-size: 15px; margin: 5px 0 0 0;">Aciertos del Modelo: <b>{ayer_str}</b></p>
+    </div>
+    """,
+      unsafe_allow_html=True,
+  )
+else:
+  st.markdown(
+      f"""
+    <div class="stats-banner">
+        <h4 style="color: #00FF66; margin: 0;">🎯 Sabermetric Model Performance (Slate Evaluation)</h4>
+        <p style="font-size: 15px; margin: 5px 0 0 0;">Model Hits: <b>{ayer_str}</b></p>
+    </div>
+    """,
+      unsafe_allow_html=True,
+  )
+
+# Lógica de las secciones
+if menu == "Cartelera y Partidos":
+  st.header("📅 Cartelera de Partidos - Análisis Profundo (" + fecha_hoy + ")")
+  if df_cartelera.empty:
+    st.warning("⚠️ No hay partidos cargados actualmente en la cartelera.")
+  else:
+    st.write("Selecciona un encuentro para ver el desglose científico del modelo:")
+
+    opciones_dict = {}
+    for _, row in df_cartelera.iterrows():
+      e1 = str(row["equipo1"]).strip()
+      e2 = str(row["equipo2"]).strip()
+      label = e1 + " vs. " + e2
+      opciones_dict[label] = row
+
+    partido_seleccionado = st.selectbox(
+        "Juegos de hoy:", list(opciones_dict.keys())
     )
 
+    if partido_seleccionado:
+      fila_juego = opciones_dict[partido_seleccionado]
+      equipo1 = str(fila_juego["equipo1"]).strip()
+      equipo2 = str(fila_juego["equipo2"]).strip()
+
+      logo1_url = LOGOS_EQUIPOS.get(equipo1, "")
+      logo2_url = LOGOS_EQUIPOS.get(equipo2, "")
+
+      matchup_html = f"""
+            <div class="matchup-box">
+                <div class="team-col"><img src="{logo1_url}" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">{equipo1}</h3><span style="font-size: 12px; color: #8b949e;">(Visitante)</span></div>
+                <div class="vs-col">VS</div>
+                <div class="team-col"><img src="{logo2_url}" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">{equipo2}</h3><span style="font-size: 12px; color: #8b949e;">(Local)</span></div>
+            </div>
+            """
+      st.markdown(matchup_html, unsafe_allow_html=True)
+
+      hora_val = str(fila_juego.get("hora", "19:30 (VE)"))
+      sede_val = str(fila_juego.get("sede", "Arena Principal"))
+      st.markdown(
+          "🕒 **Hora (VE):** "
+          + hora_val
+          + " &nbsp;&nbsp;|&nbsp;&nbsp; 🏟️ **Sede:** "
+          + sede_val
+      )
+      st.markdown("---")
+
+      col1, col2 = st.columns(2)
+      with col1:
+        st.metric(
+            label="Ganador Proyectado", value=str(fila_juego["ganador"])
+        )
+      with col2:
+        st.metric(
+            label="Total de Puntos (O/U)",
+            value=str(fila_juego["total_puntos"]),
+        )
+
+      st.markdown("### 🧠 Razonamiento Táctico y Métricas Avanzadas")
+      analisis_amplio = (
+          str(fila_juego["analisis_es"])
+          if lang == "es"
+          else str(fila_juego["analisis_en"])
+      )
+      st.text(analisis_amplio)
+
+      st.markdown("---")
+      if st.button("📄 Descargar Análisis en PDF"):
+        archivo_pdf = generar_pdf_analisis(
+            equipo1 + " vs " + equipo2,
+            hora_val,
+            sede_val,
+            str(fila_juego["ganador"]),
+            str(fila_juego["total_puntos"]),
+            analisis_amplio,
+        )
+        with open(archivo_pdf, "rb") as f:
+          st.download_button(
+              "💾 Guardar archivo PDF en tu equipo",
+              data=f,
+              file_name="reporte_sabermetria_nba.pdf",
+              mime="application/pdf",
+          )
+
+elif menu == "El Pulso de la Duela (Noticias)":
+  st.header("🧠 El Pulso de la Duela — Crónicas de Élite (" + fecha_hoy + ")")
+  st.markdown(
+      "*Análisis con lupa, historias ocultas y periodismo deportivo de altura"
+      " sobre la jornada anterior en la NBA.*"
+  )
   st.markdown("---")
-  col_paso1, col_paso2 = st.columns(2)
-  with col_paso1:
-    st.markdown(
-        f"""
-        <div class="tiktok-card">
-            <h4 style="color: #00FF66; margin-top: 0;">{t["paso1_titulo"]}</h4>
-            <p style="font-size: 14px; margin-bottom: 10px;">{t["paso1_desc"]}</p>
-            <a href="https://www.tiktok.com/@sabermetriaia" target="_blank" style="background-color: #00FF66; color: #000000; padding: 8px 15px; border-radius: 6px; font-weight: bold; text-decoration: none; display: inline-block;">{t["btn_tiktok"]}</a>
-        </div>
-        """,
-        unsafe_allow_html=True,
+
+  mat_es, mat_en = cargar_noticias_txt()
+  cronica_texto = mat_es if lang == "es" else mat_en
+  st.markdown(cronica_texto)
+
+elif menu == "La Jugada Fija del Día":
+  st.header("⭐ La Jugada Estelar del Modelo")
+  if df_cartelera.empty:
+    st.warning("⚠️ No hay partidos cargados actualmente.")
+  else:
+    st.success(
+        "Recomendación avalada estrictamente por eficiencia matemática y"
+        " métricas de posesión."
     )
-  with col_paso2:
-    st.markdown(
-        f"""
-        <div class="tiktok-card">
-            <h4 style="color: #00FF66; margin-top: 0;">{t["paso2_titulo"]}</h4>
-            <p style="font-size: 14px; margin-bottom: 15px;">{t["paso2_desc"]}</p>
-        </div>
-        """,
-        unsafe_allow_html=True,
+
+    juegos_fijos = df_cartelera[
+        df_cartelera["es_jugada_fija"]
+        .astype(str)
+        .str.lower()
+        .isin(["true", "1", "yes", "si"])
+    ]
+    juego_estelar = (
+        juegos_fijos.iloc[0] if not juegos_fijos.empty else df_cartelera.iloc[0]
     )
-    if st.button(t["btn_acceso"]):
-      registrar_visita()
-      st.session_state.autenticado = True
-      st.rerun()
-else:
+
+    estelar_eq1 = str(juego_estelar["equipo1"]).strip()
+    estelar_eq2 = str(juego_estelar["equipo2"]).strip()
+    logo_estelar_1 = LOGOS_EQUIPOS.get(estelar_eq1, "")
+    logo_estelar_2 = LOGOS_EQUIPOS.get(estelar_eq2, "")
+
+    matchup_estelar_html = f"""
+        <div class="matchup-box">
+            <div class="team-col"><img src="{logo_estelar_1}" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">{estelar_eq1}</h3><span style="font-size: 12px; color: #8b949e;">(Visitante)</span></div>
+            <div class="vs-col">VS</div>
+            <div class="team-col"><img src="{logo_estelar_2}" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">{estelar_eq2}</h3><span style="font-size: 12px; color: #8b949e;">(Local)</span></div>
+        </div>
+        """
+    st.markdown(matchup_estelar_html, unsafe_allow_html=True)
+
+    hora_est = str(juego_estelar.get("hora", "19:30 (VE)"))
+    sede_est = str(juego_estelar.get("sede", "Arena Principal"))
+    st.markdown(
+        "🕒 **Hora (VE):** "
+        + hora_est
+        + " &nbsp;&nbsp;|&nbsp;&nbsp; 🏟️ **Sede:** "
+        + sede_est
+    )
+    st.markdown("---")
+    st.markdown("### 📊 Fundamento Estadístico y Razonamiento del Modelo")
+    analisis_jugada = (
+        str(juego_estelar["analisis_es"])
+        if lang == "es"
+        else str(juego_estelar["analisis_en"])
+    )
+    st.text(analisis_jugada)
+
+elif menu == "Diccionario Sabermétrico":
+  st.header("📖 Diccionario Sabermétrico Educativo (Básico a Avanzado)")
+  st.write(
+      "Guía completa de referencia para comprender desde los fundamentos"
+      " tradicionales hasta las métricas de eficiencia más avanzadas:"
+  )
+
   if lang == "es":
     st.markdown(
-        f"""
-        <div class="stats-banner">
-            <h4 style="color: #00FF66; margin: 0;">🎯 Rendimiento del Modelo Sabermétrico (Evaluación de la Jornada)</h4>
-            <p style="font-size: 15px; margin: 5px 0 0 0;">Aciertos del Modelo: <b>{ayer_str}</b></p>
-        </div>
-        """,
-        unsafe_allow_html=True,
+        "### 🟢 Indicadores Básicos y Tradicionales (Box Score)\n"
+        "- **PTS (Points / Puntos):** Total de puntos anotados por un jugador o"
+        " equipo.\n"
+        "- **REB (Rebounds / Rebotes):** Balones recuperados tras un lanzamiento"
+        " fallido.\n"
+        "- **AST (Assists / Asistencias):** Pases que conducen directamente a"
+        " una canasta.\n"
+        "- **STL (Steals / Recuperaciones):** Balones arrebatados al"
+        " adversario.\n"
+        "- **BLK (Blocks / Tapones):** Lanzamientos rivales bloqueados en el"
+        " aire.\n"
+        "- **TOV (Turnovers / Pérdidas):** Balones entregados al rival por"
+        " errores.\n"
+        "- **MIN (Minutes / Minutos):** Tiempo total que un jugador disputa en"
+        " la duela.\n\n"
+        "### 🟡 Indicadores de Eficiencia Estándar\n"
+        "- **FG% (Field Goal Percentage):** Porcentaje de tiros de campo"
+        " encestados.\n"
+        "- **3P% (Three-Point Percentage):** Eficacia en lanzamientos de larga"
+        " distancia.\n"
+        "- **FT% (Free Throw Percentage):** Precisión desde la línea de tiros"
+        " libres.\n\n"
+        "### 🔴 Indicadores Avanzados y de Profundidad (Sabermetría IA)\n"
+        "- **Pace (Ritmo):** Cantidad estimada de posesiones por cada 48"
+        " minutos.\n"
+        "- **True Shooting Percentage (TS%):** Eficiencia ofensiva global"
+        " (dobles, triples y libres).\n"
+        "- **Net Rating:** Diferencia de puntos anotados y permitidos por 100"
+        " posesiones.\n"
+        "- **Usage Rate (USG%):** Porcentaje de jugadas ofensivas que concluye"
+        " un jugador en cancha.\n"
+        "- **PER (Player Efficiency Rating):** Índice global de productividad"
+        " por minuto."
     )
   else:
     st.markdown(
-        f"""
-        <div class="stats-banner">
-            <h4 style="color: #00FF66; margin: 0;">🎯 Sabermetric Model Performance (Slate Evaluation)</h4>
-            <p style="font-size: 15px; margin: 5px 0 0 0;">Model Hits: <b>{ayer_str}</b></p>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-  if menu == "Cartelera y Partidos":
-    st.header(
-        "📅 Cartelera de Partidos - Análisis Profundo (" + fecha_hoy + ")"
-    )
-    if df_cartelera.empty:
-      st.warning(
-          "⚠️ No hay partidos cargados en este momento en la cartelera. Por"
-          " favor, sube un archivo CSV desde el Panel de Administración."
-      )
-    else:
-      st.write(
-          "Selecciona un encuentro para ver el desglose científico del modelo:"
-      )
-
-      opciones_dict = {}
-      for _, row in df_cartelera.iterrows():
-        e1 = str(row["equipo1"]).strip()
-        e2 = str(row["equipo2"]).strip()
-        label = e1 + " vs. " + e2
-        opciones_dict[label] = row
-
-      partido_seleccionado = st.selectbox(
-          "Juegos de hoy:", list(opciones_dict.keys())
-      )
-
-      if partido_seleccionado:
-        fila_juego = opciones_dict[partido_seleccionado]
-        equipo1 = str(fila_juego["equipo1"]).strip()
-        equipo2 = str(fila_juego["equipo2"]).strip()
-
-        logo1_url = LOGOS_EQUIPOS.get(equipo1, "")
-        logo2_url = LOGOS_EQUIPOS.get(equipo2, "")
-
-        matchup_html = f"""
-                <div class="matchup-box">
-                    <div class="team-col"><img src="{logo1_url}" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">{equipo1}</h3><span style="font-size: 12px; color: #8b949e;">(Visitante)</span></div>
-                    <div class="vs-col">VS</div>
-                    <div class="team-col"><img src="{logo2_url}" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">{equipo2}</h3><span style="font-size: 12px; color: #8b949e;">(Local)</span></div>
-                </div>
-                """
-        st.markdown(matchup_html, unsafe_allow_html=True)
-
-        hora_val = str(fila_juego.get("hora", "19:30 (VE)"))
-        sede_val = str(fila_juego.get("sede", "Arena Principal"))
-        st.markdown(
-            "🕒 **Hora (VE):** "
-            + hora_val
-            + " &nbsp;&nbsp;|&nbsp;&nbsp; 🏟️ **Sede:** "
-            + sede_val
-        )
-        st.markdown("---")
-
-        col1, col2 = st.columns(2)
-        with col1:
-          st.metric(
-              label="Ganador Proyectado", value=str(fila_juego["ganador"])
-          )
-        with col2:
-          st.metric(
-              label="Total de Puntos (O/U)",
-              value=str(fila_juego["total_puntos"]),
-          )
-
-        st.markdown("### 🧠 Razonamiento Táctico y Métricas Avanzadas")
-        analisis_amplio = (
-            str(fila_juego["analisis_es"])
-            if lang == "es"
-            else str(fila_juego["analisis_en"])
-        )
-        st.text(analisis_amplio)
-
-        st.markdown("---")
-        if st.button("📄 Descargar Análisis en PDF"):
-          archivo_pdf = generar_pdf_analisis(
-              equipo1 + " vs " + equipo2,
-              hora_val,
-              sede_val,
-              str(fila_juego["ganador"]),
-              str(fila_juego["total_puntos"]),
-              analisis_amplio,
-          )
-          with open(archivo_pdf, "rb") as f:
-            st.download_button(
-                "💾 Guardar archivo PDF en tu equipo",
-                data=f,
-                file_name="reporte_sabermetria_nba.pdf",
-                mime="application/pdf",
-            )
-
-  elif menu == "El Pulso de la Duela (Noticias)":
-    st.header(
-        "🧠 El Pulso de la Duela — Crónicas de Élite (" + fecha_hoy + ")"
-    )
-    st.markdown(
-        "*Análisis con lupa, historias ocultas y periodismo deportivo de altura"
-        " sobre la jornada anterior en la NBA.*"
-    )
-    st.markdown("---")
-
-    mat_es, mat_en = cargar_noticias_txt()
-    cronica_texto = mat_es if lang == "es" else mat_en
-
-    st.markdown(cronica_texto)
-
-  elif menu == "La Jugada Fija del Día":
-    st.header("⭐ La Jugada Estelar del Modelo")
-    if df_cartelera.empty:
-      st.warning(
-          "⚠️ No hay partidos cargados actualmente para mostrar la jugada fija."
-      )
-    else:
-      st.success(
-          "Recomendación avalada estrictamente por eficiencia matemática y"
-          " métricas de posesión."
-      )
-
-      # Filtro robusto que busca booleano o string 'True'/'true'
-      juegos_fijos = df_cartelera[
-          df_cartelera["es_jugada_fija"].astype(str).str.lower().isin(["true", "1", "yes", "si"])
-      ]
-      juego_estelar = (
-          juegos_fijos.iloc[0] if not juegos_fijos.empty else df_cartelera.iloc[0]
-      )
-
-      estelar_eq1 = str(juego_estelar["equipo1"]).strip()
-      estelar_eq2 = str(juego_estelar["equipo2"]).strip()
-      logo_estelar_1 = LOGOS_EQUIPOS.get(estelar_eq1, "")
+        "### 🟢 Basic & Traditional Indicators (Box Score)\n"
+        "- **PTS (Points):** Total points scored by a player or team.\n"
+        "- **REB (Rebounds):** Basketballs recovered after a missed shot.\n"
+        "- **AST (Assists):** Passes leading directly to a field goal.\n"
+        "- **STL (Steals):** Balls taken away from the opponent.\n"
+        "-
