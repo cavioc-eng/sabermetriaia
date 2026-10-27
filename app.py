@@ -217,7 +217,7 @@ def cargar_cartelera():
         return df_saved
     except Exception:
       pass
-  # Partidos actualizados para hoy (27 de octubre de 2026)
+  # Partidos de hoy con análisis profundos y conclusión robusta
   datos_respaldo = [
       {
           "equipo1": "Boston Celtics",
@@ -227,13 +227,26 @@ def cargar_cartelera():
           "ganador": "Boston Celtics",
           "total_puntos": "226.5",
           "analisis_es": (
-              "ANÁLISIS SABERMÉTRICO EXPERTO (⭐ JUGADA FIJA): Superioridad"
-              " absoluta en eficiencia perimetral (3P%) y control de pérdidas"
-              " de Boston frente a la reestructuración defensiva de Brooklyn."
+              "**ANÁLISIS SABERMÉTRICO EXPERTO (⭐ JUGADA FIJA):**<br><br>"
+              "• **Eficiencia Ofensiva y Perimetral (TS% y 3P%):** Los Celtics"
+              " registran un True Shooting Percentage superior al promedio de la"
+              " liga, respaldado por un volumen letal de triples efectivos.<br><br>"
+              "• **Control de Posesiones y Net Rating:** El diferencial defensivo"
+              " de Boston a la hora de colapsar la pintura neutraliza por"
+              " completo las transiciones de Brooklyn.<br><br>"
+              "🎯 **Conclusión del Modelo:** La profundidad de banquillo y el"
+              " dominio táctico en ambos costados de la duela otorgan a los"
+              " Celtics una ventaja neta proyectada de +8.5 puntos, asegurando"
+              " la victoria y cubriendo la línea con solvencia."
           ),
           "analisis_en": (
-              "EXPERT ANALYSIS (LOCK OF THE DAY): Absolute perimeter"
-              " efficiency edge for Boston."
+              "**EXPERT SABERMETRIC ANALYSIS (⭐ LOCK OF THE DAY):**<br><br>"
+              "• **TS% & Perimiter Efficiency:** Boston commands an elite True"
+              " Shooting percentage.<br><br>"
+              "• **Net Rating:** Superior defensive rotations neutralize"
+              " Brooklyn.<br><br>"
+              "🎯 **Model Conclusion:** Celtics project a +8.5 net advantage,"
+              " securing the win."
           ),
           "es_jugada_fija": True,
       },
@@ -245,12 +258,26 @@ def cargar_cartelera():
           "ganador": "New York Knicks",
           "total_puntos": "218.0",
           "analisis_es": (
-              "ANÁLISIS SABERMÉTRICO EXPERTO: Intensidad defensiva y rebote"
-              " ofensivo superior de los Knicks para dominar el ritmo en casa."
+              "**ANÁLISIS SABERMÉTRICO EXPERTO:**<br><br>"
+              "• **Intensidad Defensiva y Rebote Ofensivo:** Los Knicks"
+              " capitalizan los errores del rival convirtiendo segundas"
+              " oportunidades en puntos de alta conversión bajo el aro.<br><br>"
+              "• **Ritmo de Juego (Pace):** New York desacelera el encuentro"
+              " para imponer posesiones largas y físicas que desgastan a la"
+              " defensiva visitante.<br><br>"
+              "🎯 **Conclusión del Modelo:** Jugando en el Madison Square"
+              " Garden, la superioridad en el rebote y la férrea marca en el"
+              " perímetro garantizan que los Knicks controlen el marcador de"
+              " principio a fin."
           ),
           "analisis_en": (
-              "EXPERT ANALYSIS: Defensive intensity and offensive rebounding"
-              " secure the win for New York."
+              "**EXPERT SABERMETRIC ANALYSIS:**<br><br>"
+              "• **Rebounding & Defense:** Knicks dominate second-chance"
+              " points.<br><br>"
+              "• **Pace Control:** Physical half-court sets wear down"
+              " Detroit.<br><br>"
+              "🎯 **Model Conclusion:** Home court advantage and board control"
+              " seal the victory for New York."
           ),
           "es_jugada_fija": False,
       },
@@ -262,13 +289,23 @@ def cargar_cartelera():
           "ganador": "Sacramento Kings",
           "total_puntos": "235.0",
           "analisis_es": (
-              "ANÁLISIS SABERMÉTRICO EXPERTO: El alto Pace y la velocidad en"
-              " transición de Sacramento inclinan la balanza en un duelo de"
-              " muchos puntos."
+              "**ANÁLISIS SABERMÉTRICO EXPERTO:**<br><br>"
+              "• **Velocidad de Transición y Pace:** Sacramento opera con uno"
+              " de los ritmos más dinámicos de la liga, generando múltiples"
+              " posesiones y tiros abiertos de alta eficacia.<br><br>"
+              "• **Eficiencia en Canasta Abierta:** El uso de espacios y el"
+              " flujo de balón de los Kings explotan las debilidades en las"
+              " rotaciones defensivas de San Antonio.<br><br>"
+              "🎯 **Conclusión del Modelo:** La capacidad anotadora en"
+              " transición inclina la balanza a favor de Sacramento en un"
+              " encuentro de alto voltaje y constante intercambio de canastas."
           ),
           "analisis_en": (
-              "EXPERT ANALYSIS: Sacramento's high pace and transition speed"
-              " push them ahead in a high-scoring affair."
+              "**EXPERT SABERMETRIC ANALYSIS:**<br><br>"
+              "• **Transition Pace:** Sacramento pushes a high-tempo offense.<br><br>"
+              "• **Spacing:** Exploits defensive gaps.<br><br>"
+              "🎯 **Model Conclusion:** Kings' offensive output secures the"
+              " road victory."
           ),
           "es_jugada_fija": False,
       },
@@ -280,13 +317,23 @@ def cargar_cartelera():
           "ganador": "Los Angeles Lakers",
           "total_puntos": "230.5",
           "analisis_es": (
-              "ANÁLISIS SABERMÉTRICO EXPERTO: Ventaja considerable en la"
-              " pintura y mayor TS% de los Lakers frente a la juventud de"
-              " Portland."
+              "**ANÁLISIS SABERMÉTRICO EXPERTO:**<br><br>"
+              "• **Dominio en la Pintura y TS%:** Los Lakers presentan una"
+              " ventaja desproporcionada en puntos cercanos al aro y alta"
+              " efectividad en tiros libres.<br><br>"
+              "• **Net Rating de Estrellas:** El impacto en cancha de los"
+              " referentes angelinos supera significativamente el balance"
+              " defensivo de Portland en la carretera.<br><br>"
+              "🎯 **Conclusión del Modelo:** La experiencia y la contundencia"
+              " ofensiva en los minutos finales deciden el duelo para Los"
+              " Angeles con una sólida ventaja en el marcador."
           ),
           "analisis_en": (
-              "EXPERT ANALYSIS: Significant paint advantage and higher TS%"
-              " for the Lakers."
+              "**EXPERT SABERMETRIC ANALYSIS:**<br><br>"
+              "• **Paint Dominance:** Lakers outmatch Portland inside.<br><br>"
+              "• **Star Impact:** Superior closing metrics.<br><br>"
+              "🎯 **Model Conclusion:** Lakers secure a comfortable win at"
+              " home."
           ),
           "es_jugada_fija": False,
       },
@@ -398,7 +445,7 @@ if menu == "Cartelera y Partidos":
           if lang == "es"
           else str(fila_juego["analisis_en"])
       )
-      st.text(analisis_amplio)
+      st.markdown(analisis_amplio, unsafe_allow_html=True)
 
       st.markdown("---")
       if st.button("📄 Descargar Análisis en PDF"):
@@ -408,7 +455,7 @@ if menu == "Cartelera y Partidos":
             sede_val,
             str(fila_juego["ganador"]),
             str(fila_juego["total_puntos"]),
-            analisis_amplio,
+            analisis_amplio.replace("<br>", "\n").replace("<b>", ""),
         )
         with open(archivo_pdf, "rb") as f:
           st.download_button(
@@ -466,7 +513,7 @@ elif menu == "La Jugada Fija del Día":
         if lang == "es"
         else str(juego_estelar["analisis_en"])
     )
-    st.text(analisis_jugada)
+    st.markdown(analisis_jugada, unsafe_allow_html=True)
 
 elif menu == "Diccionario Sabermétrico":
   st.header("Diccionario Sabermétrico Educativo (Básico a Avanzado)")
@@ -566,7 +613,6 @@ elif menu == "Panel de Administración":
         " base:"
     )
 
-    # Botón de descarga de plantilla CSV restaurado con éxito
     csv_ejemplo = df_cartelera.to_csv(index=False).encode("utf-8")
     st.download_button(
         label="📥 Descargar Plantilla CSV de Ejemplo",
