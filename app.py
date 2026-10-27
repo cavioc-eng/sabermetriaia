@@ -280,7 +280,7 @@ def cargar_cartelera():
         return df_saved
     except Exception:
       pass
-  # 🛡️ Respaldo automático inteligente si el archivo no existe o está vacío
+  # Respaldo automático por defecto
   datos_respaldo = [
       {
           "equipo1": "Cleveland Cavaliers",
@@ -318,6 +318,26 @@ t = TEXTOS[lang]
 
 if "autenticado" not in st.session_state:
   st.session_state.autenticado = False
+
+# Selector global de secciones en el menú lateral para que SIEMPRE esté disponible
+st.sidebar.title("Menú Principal" if lang == "es" else "Main Menu")
+if os.path.exists(logo_path):
+  st.sidebar.image(logo_path, width=220)
+
+menu = st.sidebar.radio(
+    "Selecciona una sección:" if lang == "es" else "Select a section:",
+    [
+        "Cartelera y Partidos",
+        "El Pulso de la Duela (Noticias)",
+        "La Jugada Fija del Día",
+        "Diccionario Sabermétrico",
+        "🔐 Panel de Administración",
+    ],
+)
+
+fecha_hoy = datetime.now().strftime("%d de %B de %Y")
+df_cartelera = cargar_cartelera()
+ayer_str = cargar_estadisticas()
 
 if not st.session_state.autenticado:
   col_izq, col_centro, col_der = st.columns([1.2, 1.8, 1])
@@ -366,25 +386,6 @@ if not st.session_state.autenticado:
       st.session_state.autenticado = True
       st.rerun()
 else:
-  st.sidebar.title("Menú Principal" if lang == "es" else "Main Menu")
-  if os.path.exists(logo_path):
-    st.sidebar.image(logo_path, width=220)
-
-  menu = st.sidebar.radio(
-      "Selecciona una sección:" if lang == "es" else "Select a section:",
-      [
-          "Cartelera y Partidos",
-          "El Pulso de la Duela (Noticias)",
-          "La Jugada Fija del Día",
-          "Diccionario Sabermétrico",
-          "🔐 Panel de Administración",
-      ],
-  )
-
-  fecha_hoy = datetime.now().strftime("%d de %B de %Y")
-  df_cartelera = cargar_cartelera()
-  ayer_str = cargar_estadisticas()
-
   if lang == "es":
     st.markdown(
         f"""
@@ -522,4 +523,14 @@ else:
           " métricas de posesión."
       )
 
-      juegos_fijos = df_cartelera[df_cartelera["es_jugada_fija"] == True]
+      # Filtro robusto que busca booleano o string 'True'/'true'
+      juegos_fijos = df_cartelera[
+          df_cartelera["es_jugada_fija"].astype(str).str.lower().isin(["true", "1", "yes", "si"])
+      ]
+      juego_estelar = (
+          juegos_fijos.iloc[0] if not juegos_fijos.empty else df_cartelera.iloc[0]
+      )
+
+      estelar_eq1 = str(juego_estelar["equipo1"]).strip()
+      estelar_eq2 = str(juego_estelar["equipo2"]).strip()
+      logo_estelar_1 = LOGOS_EQUIPOS.get(estelar_eq1, "")
