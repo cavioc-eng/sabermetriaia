@@ -1,0 +1,64 @@
+equipo1,equipo2,hora,sede,ganador,total_puntos,analisis_es,analisis_en,es_jugada_fija
+Charlotte Hornets,Washington Wizards,19:00 (VE),"Capital One Arena, Washington",Charlotte Hornets,231.5,"ANÁLISIS SABERMÉTRICO EXPERTO:
+• Ritmo e Intercambio (Pace ~102.4): Ambos conjuntos apuestan por posesiones rápidas, descuidando parcialmente el repliegue defensivo.
+• Eficiencia Real (TS% y eFG%): Charlotte muestra un porcentaje de tiro real superior gracias a la selección de lanzamientos exteriores liberados.
+• Net Rating & Conclusión: El diferencial defensivo de Washington concede demasiadas segundas oportunidades (REB), inclinando la balanza para los Hornets en un final cerrado.","EXPERT SABERMETRIC ANALYSIS:
+• High-Tempo Pace (~102.4): Both teams prefer quick possessions, often neglecting transition defense.
+• True Shooting Efficiency (TS% & eFG%): Charlotte holds the edge in perimeter scoring efficiency.
+• Net Rating & Verdict: Washington's defensive struggles on the glass (REB) tilt a tight contest toward Charlotte.",False
+Cleveland Cavaliers,Minnesota Timberwolves,19:00 (VE),"Rocket Mortgage FieldHouse, Cleveland",Minnesota Timberwolves,221.0,"ANÁLISIS SABERMÉTRICO EXPERTO:
+• Muralla Defensiva (Net Rating de Elite): Duelo de titanes donde la defensa marca el pulso (Pace controlado ~97.5).
+• Carga de Estrellas (USG% y TS%): Minnesota neutraliza el perímetro rival y impone su dominio físico en la pintura (REB).
+• Conclusión del Modelo: Tras el éxito de ayer, los Wolves reafirman su solidez defensiva para imponerse a domicilio.","EXPERT SABERMETRIC ANALYSIS:
+• Elite Defensive Net Rating: A gritty matchup dictated by controlled tempo (~97.5 Pace).
+• Star Usage (USG% & TS%): Minnesota shuts down the perimeter and dominates the glass (REB).
+• Model Verdict: Following yesterday's success, the Wolves' defensive grit secures a solid road victory.",True
+Boston Celtics,Chicago Bulls,19:30 (VE),"TD Garden, Boston",Boston Celtics,228.5,"ANÁLISIS SABERMÉTRICO EXPERTO:
+• Eficiencia Perimetral Absoluta (TS% > 60%): Boston devora a sus rivales con un espaciado quirúrgico y alto eFG% en triples.
+• Control del Ritmo (Pace ~98.2): Los Celtics asfixian las líneas de pase, forzando múltiples pérdidas (TOV) en la ofensiva de Chicago.
+• Conclusión: Superioridad neta en ambos costados de la cancha para asegurar el triunfo verde.","EXPERT SABERMETRIC ANALYSIS:
+• Absolute Perimeter Efficiency (TS% > 60%): Boston overwhelms opponents with elite floor spacing and high 3-point eFG%.
+• Pace Control (~98.2): The Celtics choke passing lanes, forcing multiple turnovers (TOV).
+• Verdict: Clear two-way efficiency guarantees a decisive home win.",False
+Miami Heat,Dallas Mavericks,19:30 (VE),"Kaseya Center, Miami",Dallas Mavericks,225.0,"ANÁLISIS SABERMÉTRICO EXPERTO:
+• Duelo de Estrellas y Carga Ofensiva (USG% Elevado): Dallas centraliza su peligro en piezas con un PER y TS% descomunales.
+• Ritmo Físico (Pace ~98.9): Miami intentará embarrar la cancha, pero el talento exterior de los Mavs rompe las coberturas en el clutch.
+• Conclusión: Victoria visitante apoyada en la eficacia de sus lanzamientos libres y triples lejanos.","EXPERT SABERMETRIC ANALYSIS:
+• Star Matchup & Usage (High USG%): Dallas relies on elite PER and TS% stars.
+• Physical Tempo (~98.9 Pace): Miami tries to grind it out, but Dallas's outside shooting breaks through late.
+• Verdict: Road win powered by superior shooting efficiency.",False
+Milwaukee Bucks,Indiana Pacers,20:00 (VE),"Fiserv Forum, Milwaukee",Milwaukee Bucks,239.5,"ANÁLISIS SABERMÉTRICO EXPERTO:
+• Torbellino Ofensivo (Pace > 103.5): Choque de trenes con posesiones rapidísimas y constante intercambio de golpes.
+• Dominio en la Pintura (REB y TS%): Milwaukee impone su jerarquía física bajo los tableros para contrarrestar la velocidad de Indiana.
+• Conclusión: Los Bucks aprovechan su Net Rating en casa para llevarse un duelo de alto voltaje.","EXPERT SABERMETRIC ANALYSIS:
+• Offensive Whirlwind (Pace > 103.5): High-speed collision with relentless scoring exchanges.
+• Paint Dominance (REB & TS%): Milwaukee leverages interior muscle to counter Indiana's speed.
+• Verdict: Bucks utilize home Net Rating to capture a high-scoring thriller.",False
+Oklahoma City Thunder,Phoenix Suns,20:00 (VE),"Paycom Center, Oklahoma City",Oklahoma City Thunder,230.0,"ANÁLISIS SABERMÉTRICO EXPERTO:
+• Velocidad y Asfixia Defensiva: OKC combina un Pace dinámico con un Net Rating defensivo de élite en la liga.
+• Eficiencia Global (TS%): Las penetraciones constantes generan faltas y tiros libres de alta conversión, castigando a Phoenix.
+• Conclusión: La profundidad física del Thunder marca diferencias decisivas en el último cuarto.","EXPERT SABERMETRIC ANALYSIS:
+• Velocity & Defensive Stranglehold: OKC pairs dynamic Pace with elite defensive rating.
+• Global Efficiency (TS%): Relentless rim pressure draws high-value free throws.
+• Verdict: Thunder's athletic depth secures a solid home win.",False
+Houston Rockets,Atlanta Hawks,20:30 (VE),"Toyota Center, Houston",Houston Rockets,233.0,"ANÁLISIS SABERMÉTRICO EXPERTO:
+• Batalla de Rebotes y Segunda Oportunidad (REB): Houston castiga con agresividad el tablero ofensivo rival.
+• Eficiencia de Tiro (eFG%): Los Rockets logran mejores porcentajes en la pintura frente a una frágil defensa de Atlanta.
+• Conclusión: El dominio físico interior inclina el pronóstico claramente hacia el conjunto local.","EXPERT SABERMETRIC ANALYSIS:
+• Rebounding Battle (REB): Houston heavily punishes opponent glass on second-chance plays.
+• Shooting Efficiency (eFG%): Rockets convert high-percentage looks against vulnerable interior defense.
+• Verdict: Physical interior edge tips the prediction toward the hosts.",False
+Utah Jazz,Memphis Grizzlies,21:00 (VE),"Delta Center, Salt Lake City",Memphis Grizzlies,234.0,"ANÁLISIS SABERMÉTRICO EXPERTO:
+• Transición y Ritmo Elevado (Pace ~102.1): Memphis impone velocidad y castiga los errores de manejo de balón del rival.
+• Pérdidas y Castigo (TOV): Utah cede demasiados balones en la salida, alimentando el eFG% de los Grizzlies en contragolpe.
+• Conclusión: Victoria trabajada para la visita gracias a su superior Net Rating en ritmo acelerado.","EXPERT SABERMETRIC ANALYSIS:
+• Transition & High Pace (~102.1): Memphis pushes tempo and punishes ball-handling mistakes.
+• Turnovers & Punishment (TOV): Utah's sloppy ball security fuels fast-break efficiency.
+• Verdict: Hard-fought road win for the Grizzlies.",False
+Denver Nuggets,Golden State Warriors,22:00 (VE),"Ball Arena, Denver",Denver Nuggets,232.5,"ANÁLISIS SABERMÉTRICO EXPERTO:
+• Inteligencia Colectiva y PER Estelar: Denver domina el juego estacionado con asistencias (AST) y control absoluto del balón.
+• Fatiga Perimetral (TS%): Aunque Golden State mantiene un USG% alto en su estrella, el desgaste en la altitud de Denver pasa factura.
+• Conclusión: Los campeones locales imponen su ley en la pintura y cierran la jornada con triunfo.","EXPERT SABERMETRIC ANALYSIS:
+• Collective IQ & Stellar PER: Denver orchestrates half-court execution with elite assists (AST).
+• Perimeter Fatigue (TS%): High star usage cannot overcome the altitude fatigue in Denver.
+• Verdict: Home dominance in the paint secures a strong victory.",False
