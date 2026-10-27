@@ -16,11 +16,12 @@ st.markdown(
 )
 st.markdown("---")
 
-# Archivo CSV de respaldo por defecto
+# Archivos de respaldo local
 cartelera_csv_path = "cartelera_hoy.csv"
+efectividad_txt_path = "efectividad_modelo.txt"
 
 
-# Función auxiliar para guardar cartelera localmente
+# Funciones auxiliares de persistencia
 def guardar_cartelera(df):
   try:
     df.to_csv(cartelera_csv_path, index=False, encoding="utf-8")
@@ -28,8 +29,26 @@ def guardar_cartelera(df):
     pass
 
 
+def cargar_efectividad():
+  if os.path.exists(efectividad_txt_path):
+    try:
+      with open(efectividad_txt_path, "r", encoding="utf-8") as f:
+        return f.read().strip()
+    except Exception:
+      pass
+  return "5 de 7 (71.4% de efectividad)"
+
+
+def guardar_efectividad(texto):
+  try:
+    with open(efectividad_txt_path, "w", encoding="utf-8") as f:
+      f.write(texto)
+  except Exception:
+    pass
+
+
 # ==========================================
-# GESTIÓN DE DATOS Y CARGA AUTOMÁTICA BLINDADA
+# GESTIÓN DE DATOS Y CARGA AUTOMÁTICA
 # ==========================================
 if (
     "df_cartelera" not in st.session_state
@@ -44,7 +63,7 @@ if (
       st.error(f"Error al leer el archivo de respaldo: {e}")
       df_cartelera = pd.DataFrame()
   else:
-    # 🛡️ RESPALDO AUTOMÁTICO INTERNO (Por si falta el archivo físico en GitHub)
+    # Respaldo automático con los 9 partidos de hoy
     datos_respaldo = [
         {
             "equipo1": "Charlotte Hornets",
@@ -209,11 +228,14 @@ else:
   df_cartelera = st.session_state["df_cartelera"]
 
 # ==========================================
-# PESTAÑAS PRINCIPALES DE NAVEGACIÓN
+# PESTAÑAS PRINCIPALES DE NAVEGACIÓN (4 SECCIONES)
 # ==========================================
-tab_cartelera, tab_admin = st.tabs(
-    ["📊 Cartelera y Pronósticos", "⚙️ Panel de Administración"]
-)
+tab_cartelera, tab_noticias, tab_diccionario, tab_admin = st.tabs([
+    "📊 Cartelera y Pronósticos",
+    "📰 Noticias y Crónica",
+    "📖 Diccionario Sabermétrico",
+    "⚙️ Panel de Administración",
+])
 
 with tab_cartelera:
   st.subheader("🔥 Partidos y Análisis Sabermétrico de la Jornada")
@@ -255,12 +277,143 @@ with tab_cartelera:
 
         st.markdown("---")
 
+with tab_noticias:
+  st.subheader("📰 El Pulso de la Duela — Crónica Editorial de Élite")
+  st.markdown(
+      "*Lectura profunda de rendimiento, métricas de eficiencia y lecciones"
+      " tácticas de la jornada.*"
+  )
+  st.markdown("---")
+
+  idioma_noticia = st.radio(
+      "Seleccionar Idioma / Language:", ["Español", "English"]
+  )
+
+  if idioma_noticia == "Español":
+    st.markdown("""
+        ### 🏀🏹 Eficiencia Asesina y Dominio en la Pintura: Las Lecciones Tácticas de una Jornada de Alto Voltaje
+        
+        La jornada anterior nos dejó lecciones tácticas fascinantes que van mucho más allá del marcador final. El modelo sabermétrico de la liga demostró que la eficiencia ofensiva y el control del *Pace* son los verdaderos reyes de la duela.
+        
+        **1. La "Jugada Fija" Se Cumple con Autoridad en Toronto 🐺**
+        Nuestra recomendación estelar de la jornada, los **Minnesota Timberwolves**, no decepcionaron. En un partido controlado de principio a fin (117-94), los Wolves dictaron un ritmo pausado (*Pace* bajo) que asfixió el ataque de los Raptors. La clave fue la **eficiencia global real (*TS%*)** de sus piezas estelares.
+        
+        **2. El Espectáculo de Curry y la Lección de Eficiencia de los Lakers 🔥**
+        Los **Angeles Lakers** protagonizaron una victoria de alto octanaje frente al Jazz (132-123), en un encuentro donde el *Pace* fue vertiginoso. Lo sorprendente no fueron los 30 puntos de LeBron James, sino su **eficiencia real (*TS%*)** en la media distancia.
+        
+        **3. La Profundidad de Banquillo de los Pacers Sorprende a Brooklyn 🤝**
+        En el duelo más sorpresivo de la noche, los **Indiana Pacers** superaron a los Brooklyn Nets (136-109). La estadística no miente: el **Net Rating de la segunda unidad** de Indiana fue abismalmente superior.
+        
+        **En resumen:** La jornada confirmó que los equipos que controlan el ritmo, maximizan la eficiencia por posesión y confían en la profundidad de su rotación son los que dominan el escenario de la NBA.
+        """)
+  else:
+    st.markdown("""
+        ### 🏀🏹 Lethal Efficiency and Paint Dominance: High-Voltage Tactical Lessons
+        
+        Yesterday’s slate offered fascinating tactical lessons that extend far beyond the final score. The league's sabermetric model proved that offensive efficiency and Pace control are the true kings of the court.
+        
+        **1. The "Lock of the Day" Delivers with Authority in Toronto 🐺**
+        Our featured recommendation of the day, the **Minnesota Timberwolves**, did not disappoint. In a controlled game from start to finish (117-94), the Wolves dictated a slow tempo (*low Pace*) that suffocated Toronto's attack.
+        
+        **2. Curry’s Showcase and the Lakers’ Efficiency Lesson 🔥**
+        The **Los Angeles Lakers** secured a high-octane victory against the Jazz (132-123), in a game where the *Pace* was breakneck. LeBron James delivered stellar mid-range efficiency.
+        
+        **3. Pacers’ Bench Depth Stuns Brooklyn 🤝**
+        In the most surprising matchup of the night, the **Indiana Pacers** overpowered the Brooklyn Nets (136-109). The bench Net Rating for Indiana was astronomically higher.
+        
+        **In Summary:** Yesterday’s games confirmed that teams that control the tempo, maximize efficiency per possession, and trust the depth of their rotation are the ones dominating the NBA stage.
+        """)
+
+with tab_diccionario:
+  st.subheader("📖 Diccionario Sabermétrico y Guía de Métricas")
+  st.markdown(
+      "*Guía completa para comprender los indicadores científicos utilizados en"
+      " nuestros modelos de predicción.*"
+  )
+  st.markdown("---")
+
+  st.markdown("🟢 **Indicadores Básicos y Tradicionales (Box Score)**")
+  st.markdown(
+      "- **PTS (Points / Puntos):** Total de puntos anotados por un jugador o"
+      " equipo."
+  )
+  st.markdown(
+      "- **REB (Rebounds / Rebotes):** Balones recuperados tras un lanzamiento"
+      " fallido."
+  )
+  st.markdown(
+      "- **AST (Assists / Asistencias):** Pases que conducen directamente a una"
+      " canasta."
+  )
+  st.markdown(
+      "- **STL (Steals / Recuperaciones):** Balones arrebatados al adversario."
+  )
+  st.markdown(
+      "- **BLK (Blocks / Tapones):** Lanzamientos rivales bloqueados en el aire."
+  )
+  st.markdown(
+      "- **TOV (Turnovers / Pérdidas):** Balones entregados al rival por"
+      " errores."
+  )
+  st.markdown(
+      "- **MIN (Minutes / Minutos):** Tiempo total que un jugador disputa en la"
+      " duela."
+  )
+
+  st.markdown("---")
+  st.markdown("🟡 **Indicadores de Eficiencia Estándar**")
+  st.markdown(
+      "- **FG% (Field Goal Percentage):** Porcentaje de tiros de campo"
+      " encestados."
+  )
+  st.markdown(
+      "- **3P% (Three-Point Percentage):** Eficacia en lanzamientos de larga"
+      " distancia."
+  )
+  st.markdown(
+      "- **FT% (Free Throw Percentage):** Precisión desde la línea de tiros"
+      " libres."
+  )
+
+  st.markdown("---")
+  st.markdown("🔴 **Indicadores Avanzados y de Profundidad (Sabermetría IA)**")
+  st.markdown(
+      "- **Pace (Ritmo):** Cantidad estimada de posesiones por cada 48 minutos."
+  )
+  st.markdown(
+      "- **True Shooting Percentage (TS%):** Eficiencia ofensiva global (dobles,"
+      " triples y libres)."
+  )
+  st.markdown(
+      "- **Net Rating:** Diferencia de puntos anotados y permitidos por 100"
+      " posesiones."
+  )
+  st.markdown(
+      "- **Usage Rate (USG%):** Porcentaje de jugadas ofensivas que concluye"
+      " un jugador en cancha."
+  )
+  st.markdown(
+      "- **PER (Player Efficiency Rating):** Índice global de productividad por"
+      " minuto."
+  )
+
 with tab_admin:
   st.subheader("🔐 Panel de Administración Protegido")
   password = st.text_input("Ingrese la clave de administrador:", type="password")
 
   if password == "sabermetria2026":
     st.success("¡Acceso autorizado!")
+
+    st.markdown("---")
+    st.subheader("🎯 Gestor de Efectividad del Modelo")
+    efectividad_actual = cargar_efectividad()
+    nuevo_efectividad = st.text_input(
+        "Aciertos de la Jornada (Ej: 5 de 7 aciertos (71.4%)):",
+        value=efectividad_actual,
+    )
+    if st.button("💾 Guardar Efectividad"):
+      guardar_efectividad(nuevo_efectividad)
+      st.success("¡Efectividad actualizada con éxito!")
 
     st.markdown("---")
     st.subheader("📁 Carga Masiva de Cartelera por Archivo CSV")
