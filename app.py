@@ -62,15 +62,6 @@ TEXTOS = {
     "es": {
         "titulo_app": "SABERMETRÍA IA",
         "sub_app": "Analítica Avanzada de Básquetbol",
-        "paso1_titulo": "Paso 1: Síguenos en TikTok",
-        "paso1_desc": (
-            "Abre nuestro perfil oficial @sabermetriaia y presiona el botón de"
-            " Seguir:"
-        ),
-        "btn_tiktok": "📲 Ir a @sabermetriaia",
-        "paso2_titulo": "Paso 2: Acceso Directo",
-        "paso2_desc": "Haz clic en el botón para entrar al portal exclusivo:",
-        "btn_acceso": "🏀 Entrar al Portal Exclusivo",
         "admin_titulo": "🔐 Panel de Control y Publicación - Sabermetría IA",
         "admin_desc": (
             "Control estadístico de visitas, cartelera masiva por CSV y noticias"
@@ -79,17 +70,10 @@ TEXTOS = {
         "admin_clave": "Ingresa la clave de administrador:",
         "admin_exito": "¡Acceso de administrador concedido!",
         "admin_error": "❌ Clave de administrador incorrecta.",
-        "total_visitas": "Total de Accesos al Portal",
     },
     "en": {
         "titulo_app": "SABERMETRIA AI",
         "sub_app": "Advanced Basketball Analytics",
-        "paso1_titulo": "Step 1: Follow us on TikTok",
-        "paso1_desc": "Open our official profile @sabermetriaia and hit Follow:",
-        "btn_tiktok": "📲 Go to @sabermetriaia",
-        "paso2_titulo": "Step 2: Direct Access",
-        "paso2_desc": "Click the button to enter the exclusive portal:",
-        "btn_acceso": "🏀 Enter Exclusive Portal",
         "admin_titulo": "🔐 Control & Publishing Panel - Sabermetria AI",
         "admin_desc": (
             "Visit statistical control, CSV slate upload and editorial news."
@@ -97,7 +81,6 @@ TEXTOS = {
         "admin_clave": "Enter admin password:",
         "admin_exito": "Admin access granted!",
         "admin_error": "❌ Incorrect admin password.",
-        "total_visitas": "Total Portal Accesses",
     },
 }
 
@@ -109,7 +92,6 @@ st.markdown(
     .matchup-box { display: flex; align-items: center; justify-content: space-around; text-align: center; padding: 15px; background-color: #161b22; border-radius: 12px; border: 1px solid #30363d; margin-bottom: 20px; }
     .team-col { flex: 1; display: flex; flex-direction: column; align-items: center; }
     .vs-col { flex: 0 0 100px; font-size: 32px; font-weight: bold; color: #00FF66; text-align: center; }
-    .tiktok-card { background-color: #161b22; padding: 15px 20px; border-radius: 12px; border: 1px solid #30363d; margin-bottom: 15px; }
     .stats-banner { background: linear-gradient(135deg, #161b22 0%, #1f2937 100%); border: 1px solid #00FF66; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px; }
     </style>
 """,
@@ -240,21 +222,6 @@ def generar_pdf_analisis(
   return pdf_path
 
 
-def registrar_visita():
-  fecha_hora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-  nuevo_reg = pd.DataFrame(
-      [["Seguidor TikTok (Acceso Directo)", fecha_hora]],
-      columns=["Usuario", "Fecha_Acceso"],
-  )
-  if os.path.exists(db_usuarios_path):
-    df_ex = pd.read_csv(db_usuarios_path)
-    pd.concat([df_ex, nuevo_reg], ignore_index=True).to_csv(
-        db_usuarios_path, index=False, encoding="utf-8"
-    )
-  else:
-    nuevo_reg.to_csv(db_usuarios_path, index=False, encoding="utf-8")
-
-
 def cargar_estadisticas():
   if os.path.exists(estadisticas_path):
     try:
@@ -280,7 +247,6 @@ def cargar_cartelera():
         return df_saved
     except Exception:
       pass
-  # Respaldo automático con los partidos de la jornada
   datos_respaldo = [
       {
           "equipo1": "Charlotte Hornets",
@@ -369,7 +335,6 @@ idioma = st.sidebar.selectbox("🌐 Idioma / Language", ["Español", "English"])
 lang = "es" if idioma == "Español" else "en"
 t = TEXTOS[lang]
 
-# Menú lateral fijo y siempre disponible
 st.sidebar.title("Menú Principal" if lang == "es" else "Main Menu")
 if os.path.exists(logo_path):
   st.sidebar.image(logo_path, width=220)
@@ -389,7 +354,108 @@ fecha_hoy = datetime.now().strftime("%d de %B de %Y")
 df_cartelera = cargar_cartelera()
 ayer_str = cargar_estadisticas()
 
-# Banner superior de rendimiento
 if lang == "es":
   st.markdown(
-      f
+      f"""
+    <div class="stats-banner">
+        <h4 style="color: #00FF66; margin: 0;">🎯 Rendimiento del Modelo Sabermétrico (Evaluación de la Jornada)</h4>
+        <p style="font-size: 15px; margin: 5px 0 0 0;">Aciertos del Modelo: <b>{ayer_str}</b></p>
+    </div>
+    """,
+      unsafe_allow_html=True,
+  )
+else:
+  st.markdown(
+      f"""
+    <div class="stats-banner">
+        <h4 style="color: #00FF66; margin: 0;">🎯 Sabermetric Model Performance (Slate Evaluation)</h4>
+        <p style="font-size: 15px; margin: 5px 0 0 0;">Model Hits: <b>{ayer_str}</b></p>
+    </div>
+    """,
+      unsafe_allow_html=True,
+  )
+
+if menu == "Cartelera y Partidos":
+  st.header("📅 Cartelera de Partidos - Análisis Profundo (" + fecha_hoy + ")")
+  if df_cartelera.empty:
+    st.warning("⚠️ No hay partidos cargados actualmente en la cartelera.")
+  else:
+    st.write("Selecciona un encuentro para ver el desglose científico del modelo:")
+
+    opciones_dict = {}
+    for _, row in df_cartelera.iterrows():
+      e1 = str(row["equipo1"]).strip()
+      e2 = str(row["equipo2"]).strip()
+      label = e1 + " vs. " + e2
+      opciones_dict[label] = row
+
+    partido_seleccionado = st.selectbox(
+        "Juegos de hoy:", list(opciones_dict.keys())
+    )
+
+    if partido_seleccionado:
+      fila_juego = opciones_dict[partido_seleccionado]
+      equipo1 = str(fila_juego["equipo1"]).strip()
+      equipo2 = str(fila_juego["equipo2"]).strip()
+
+      logo1_url = LOGOS_EQUIPOS.get(equipo1, "")
+      logo2_url = LOGOS_EQUIPOS.get(equipo2, "")
+
+      matchup_html = f"""
+            <div class="matchup-box">
+                <div class="team-col"><img src="{logo1_url}" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">{equipo1}</h3><span style="font-size: 12px; color: #8b949e;">(Visitante)</span></div>
+                <div class="vs-col">VS</div>
+                <div class="team-col"><img src="{logo2_url}" width="100" style="margin-bottom: 10px;"><h3 style="margin: 0; color: #ffffff;">{equipo2}</h3><span style="font-size: 12px; color: #8b949e;">(Local)</span></div>
+            </div>
+            """
+      st.markdown(matchup_html, unsafe_allow_html=True)
+
+      hora_val = str(fila_juego.get("hora", "19:30 (VE)"))
+      sede_val = str(fila_juego.get("sede", "Arena Principal"))
+      st.markdown(
+          "🕒 **Hora (VE):** "
+          + hora_val
+          + " &nbsp;&nbsp;|&nbsp;&nbsp; 🏟️ **Sede:** "
+          + sede_val
+      )
+      st.markdown("---")
+
+      col1, col2 = st.columns(2)
+      with col1:
+        st.metric(
+            label="Ganador Proyectado", value=str(fila_juego["ganador"])
+        )
+      with col2:
+        st.metric(
+            label="Total de Puntos (O/U)",
+            value=str(fila_juego["total_puntos"]),
+        )
+
+      st.markdown("### 🧠 Razonamiento Táctico y Métricas Avanzadas")
+      analisis_amplio = (
+          str(fila_juego["analisis_es"])
+          if lang == "es"
+          else str(fila_juego["analisis_en"])
+      )
+      st.text(analisis_amplio)
+
+      st.markdown("---")
+      if st.button("📄 Descargar Análisis en PDF"):
+        archivo_pdf = generar_pdf_analisis(
+            equipo1 + " vs " + equipo2,
+            hora_val,
+            sede_val,
+            str(fila_juego["ganador"]),
+            str(fila_juego["total_puntos"]),
+            analisis_amplio,
+        )
+        with open(archivo_pdf, "rb") as f:
+          st.download_button(
+              "💾 Guardar archivo PDF en tu equipo",
+              data=f,
+              file_name="reporte_sabermetria_nba.pdf",
+              mime="application/pdf",
+          )
+
+elif menu == "El Pulso de la Duela (Noticias)":
+  st.header("🧠 El Pulso de la Duela — Crónicas de Élite
