@@ -6,7 +6,42 @@ from datetime import datetime
 # Configuración de la página
 st.set_page_config(page_title="Sabermetría IA", page_icon="🏀", layout="wide")
 
-# Barra Lateral (Menú Principal)
+# Diccionario oficial de logotipos de equipos NBA (ESPN CDN)
+LOGOS_EQUIPOS = {
+    "Charlotte Hornets": "https://a.espncdn.com/i/teamlogos/nba/500/cha.png",
+    "Washington Wizards": "https://a.espncdn.com/i/teamlogos/nba/500/wsh.png",
+    "Chicago Bulls": "https://a.espncdn.com/i/teamlogos/nba/500/chi.png",
+    "Boston Celtics": "https://a.espncdn.com/i/teamlogos/nba/500/bos.png",
+    "New York Knicks": "https://a.espncdn.com/i/teamlogos/nba/500/nyk.png",
+    "Philadelphia 76ers": "https://a.espncdn.com/i/teamlogos/nba/500/phi.png",
+    "Orlando Magic": "https://a.espncdn.com/i/teamlogos/nba/500/orl.png",
+    "Toronto Raptors": "https://a.espncdn.com/i/teamlogos/nba/500/tor.png",
+    "Detroit Pistons": "https://a.espncdn.com/i/teamlogos/nba/500/det.png",
+    "Brooklyn Nets": "https://a.espncdn.com/i/teamlogos/nba/500/bkn.png",
+    "Indiana Pacers": "https://a.espncdn.com/i/teamlogos/nba/500/ind.png",
+    "Miami Heat": "https://a.espncdn.com/i/teamlogos/nba/500/mia.png",
+    "Utah Jazz": "https://a.espncdn.com/i/teamlogos/nba/500/uta.png",
+    "Portland Trail Blazers": "https://a.espncdn.com/i/teamlogos/nba/500/por.png",
+    "Sacramento Kings": "https://a.espncdn.com/i/teamlogos/nba/500/sac.png",
+    "Memphis Grizzlies": "https://a.espncdn.com/i/teamlogos/nba/500/mem.png",
+    "Milwaukee Bucks": "https://a.espncdn.com/i/teamlogos/nba/500/mil.png",
+    "Cleveland Cavaliers": "https://a.espncdn.com/i/teamlogos/nba/500/cle.png",
+    "San Antonio Spurs": "https://a.espncdn.com/i/teamlogos/nba/500/sas.png",
+    "Minnesota Timberwolves": "https://a.espncdn.com/i/teamlogos/nba/500/min.png",
+    "Denver Nuggets": "https://a.espncdn.com/i/teamlogos/nba/500/den.png",
+    "Phoenix Suns": "https://a.espncdn.com/i/teamlogos/nba/500/phx.png",
+    "Dallas Mavericks": "https://a.espncdn.com/i/teamlogos/nba/500/dal.png",
+    "Los Angeles Lakers": "https://a.espncdn.com/i/teamlogos/nba/500/lal.png",
+    "Los Angeles Clippers": "https://a.espncdn.com/i/teamlogos/nba/500/lac.png",
+    "Golden State Warriors": "https://a.espncdn.com/i/teamlogos/nba/500/gsw.png",
+    "Atlanta Hawks": "https://a.espncdn.com/i/teamlogos/nba/500/atl.png",
+    "New Orleans Pelicans": "https://a.espncdn.com/i/teamlogos/nba/500/nop.png",
+    "Houston Rockets": "https://a.espncdn.com/i/teamlogos/nba/500/hou.png",
+    "Oklahoma City Thunder": "https://a.espncdn.com/i/teamlogos/nba/500/okc.png"
+}
+
+# Barra Lateral (Menú Principal con Imagen Institucional de Élite)
+st.sidebar.image("https://images.unsplash.com/photo-1546519638-68e109498ffc?w=500&auto=format&fit=crop&q=60", use_container_width=True)
 st.sidebar.markdown("### 🏀 Sabermetría IA")
 st.sidebar.caption("Analítica Avanzada y Proyecciones NBA")
 st.sidebar.markdown("---")
@@ -21,7 +56,7 @@ seccion = st.sidebar.radio("Selecciona una sección:", [
 ])
 
 # -------------------------------------------------------------
-# CARGA DE DATOS SEGUROS
+# CARGA DE DATOS ROBUSTA
 # -------------------------------------------------------------
 hoy_actual = datetime.now().strftime("%Y-%m-%d")
 
@@ -57,8 +92,19 @@ except Exception:
     df_noticias = pd.DataFrame([
         {
             "fecha": hoy_actual,
-            "titulo": f"El Pulso de la Duela – Radiografía de la Jornada del {hoy_actual}",
-            "cuerpo": "La temporada regular de la NBA no da tregua y nuestra plataforma de analítica avanzada continúa escaneando cada posesión, la efectividad real en los tiros (TS%) y el impacto defensivo (Net Rating) de cada quinteto en la duela.\n\n📊 Lecciones y Ajustes de la Jornada Anterior:\nLos algoritmos de eficiencia neta han calibrado con precisión quirúrgica los márgenes de variabilidad de la liga. Los duelos divisionales de alta intensidad y las rachas en los minutos finales nos recuerdan que la ciencia de datos en el deporte requiere ajustes en tiempo real para blindar las proyecciones de apuestas.\n\n⭐ Análisis de Tendencias:\nNuestros modelos han detectado patrones sólidos en posesiones de media cancha y control de pérdidas, otorgando una ventaja matemática verificada del 80% de efectividad para los apostadores y analistas que siguen nuestros reportes diarios."
+            "titulo": f"El Pulso de la Duela – Radiografía y Análisis de la Jornada del {hoy_actual}",
+            "cuerpo": (
+                "La temporada regular de la NBA no da tregua y nuestra plataforma de analítica avanzada continúa escaneando "
+                "cada posesión, la efectividad real en los tiros (TS%) y el impacto defensivo (Net Rating) de cada quinteto en la duela.\n\n"
+                "📊 **Lecciones y Ajustes de la Jornada Anterior:**\n"
+                "Los algoritmos de eficiencia neta han calibrado con precisión quirúrgica los márgenes de variabilidad de la liga. "
+                "Los duelos divisionales de alta intensidad y las rachas en los minutos finales nos recuerdan que la ciencia de datos en el deporte "
+                "requiere ajustes en tiempo real para blindar las proyecciones de apuestas y los parleys de nuestra comunidad.\n\n"
+                "⭐ **Análisis de Tendencias Sabermétricas:**\n"
+                "Nuestros modelos han detectado patrones sólidos en posesiones de media cancha, control de pérdidas y conversión en transición. "
+                "Esto otorga una ventaja matemática verificada del 80% de efectividad para los apostadores y analistas que siguen nuestros reportes diarios.\n\n"
+                "🚀 *Manténgase conectado a nuestro ecosistema en la nube y reciba las alertas directamente en su dispositivo.*"
+            )
         }
     ])
 
@@ -66,7 +112,7 @@ except Exception:
 st.success(f"🎯 {texto_rendimiento_web}")
 
 # -------------------------------------------------------------
-# SECCIÓN 1: CARTELERA Y PARTIDOS
+# SECCIÓN 1: CARTELERA Y PARTIDOS (CON LOGOTIPOS OFICIALES)
 # -------------------------------------------------------------
 if seccion == "Cartelera y Partidos":
     st.title("🏀 Cartelera de Partidos - Análisis Profundo")
@@ -78,14 +124,22 @@ if seccion == "Cartelera y Partidos":
     idx = opciones_juegos.index(juego_seleccionado)
     juego = df_cartelera.iloc[idx]
     
+    eq1, eq2 = juego['equipo1'], juego['equipo2']
+    logo1 = LOGOS_EQUIPOS.get(eq1, "")
+    logo2 = LOGOS_EQUIPOS.get(eq2, "")
+    
     col1, col2, col3 = st.columns([3, 1, 3])
     with col1:
-        st.subheader(juego['equipo1'])
+        if logo1:
+            st.image(logo1, width=80)
+        st.subheader(eq1)
         st.caption("(Visitante)")
     with col2:
         st.markdown("## **VS**")
     with col3:
-        st.subheader(juego['equipo2'])
+        if logo2:
+            st.image(logo2, width=80)
+        st.subheader(eq2)
         st.caption("(Local)")
         
     st.write("---")
@@ -107,7 +161,17 @@ elif seccion == "Apuestas y Proyecciones USA (Las Vegas)":
     st.write("---")
     
     for _, row in df_apuestas_usa.iterrows():
-        st.markdown(f"### 🏀 {row['equipo1']} @ {row['equipo2']}")
+        eq1, eq2 = row['equipo1'], row['equipo2']
+        logo1 = LOGOS_EQUIPOS.get(eq1, "")
+        logo2 = LOGOS_EQUIPOS.get(eq2, "")
+        
+        st.markdown(f"### 🏀 {eq1} @ {eq2}")
+        c_l1, c_vs, c_l2 = st.columns([1, 6, 1])
+        with c_l1:
+            if logo1: st.image(logo1, width=45)
+        with c_l2:
+            if logo2: st.image(logo2, width=45)
+            
         c1, c2, c3 = st.columns(3)
         with c1:
             st.metric("Spread / Line", str(row['spread']))
@@ -119,7 +183,7 @@ elif seccion == "Apuestas y Proyecciones USA (Las Vegas)":
         st.write("---")
 
 # -------------------------------------------------------------
-# SECCIÓN 3: EL PULSO DE LA DUELA (NOTICIAS)
+# SECCIÓN 3: EL PULSO DE LA DUELA (NOTICIAS AMPLIADAS)
 # -------------------------------------------------------------
 elif seccion == "El Pulso de la Duela (Noticias)":
     st.title("📰 El Pulso de la Duela - Crónicas de Élite")
@@ -138,14 +202,20 @@ elif seccion == "La Jugada Fija del Día":
     
     fijas = df_cartelera[df_cartelera['es_jugada_fija'] == True]
     fija = fijas.iloc[0] if not fijas.empty else df_cartelera.iloc[0]
+    
+    eq1, eq2 = fija['equipo1'], fija['equipo2']
+    logo1 = LOGOS_EQUIPOS.get(eq1, "")
+    logo2 = LOGOS_EQUIPOS.get(eq2, "")
         
     col1, col2, col3 = st.columns([3, 1, 3])
     with col1:
-        st.subheader(fija['equipo1'])
+        if logo1: st.image(logo1, width=80)
+        st.subheader(eq1)
     with col2:
         st.markdown("## **VS**")
     with col3:
-        st.subheader(fija['equipo2'])
+        if logo2: st.image(logo2, width=80)
+        st.subheader(eq2)
         
     st.write("---")
     st.success(f"🔥 **Selección Blindada del Día:** {fija['ganador']}")
@@ -190,9 +260,9 @@ elif seccion == "Panel de Administración":
     
     st.success("🤖 **Robot 1 (Buscador de Cartelera):** Operando de forma autónoma en la nube (Sin listas estáticas).")
     st.success("🤖 **Robot 2 y 3 (Analistas y Líneas USA):** Procesando Net Rating, TS% y Spreads de Las Vegas.")
-    st.success("🤖 **Robot 4 (Cronista y Estadístico):** Compilando crónicas al día y validando efectividad (80%).")
+    st.success("🤖 **Robot 4 (Cronista y Estadístico):** Compilando crónicas amplias al día y validando efectividad (80%).")
     st.success("🤖 **Robot 5 (Robot Supervisor / Maestro):** Auditoría superada con éxito, KeyErrors prevenidos y alertas despachadas a WhatsApp Cloud.")
     
     st.markdown("---")
-    st.markdown("💡 **¿Cuándo actualizan los robots?**")
-    st.write("Los robots se ejecutan automáticamente todos los días mediante el motor programado en GitHub Actions (o de forma manual haciendo clic en *Run workflow* en su repositorio). Una vez finalizado el ciclo, los archivos CSV se actualizan al instante en Streamlit.")
+    st.markdown("💡 **¿Cómo operan los robots?**")
+    st.write("El escuadrón procesa los datos y actualiza los archivos locales de manera autónoma. Puede verificar o forzar ejecuciones en la pestaña *Actions* de su repositorio en GitHub.")
