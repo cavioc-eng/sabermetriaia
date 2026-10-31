@@ -40,12 +40,13 @@ LOGOS_EQUIPOS = {
     "Oklahoma City Thunder": "https://a.espncdn.com/i/teamlogos/nba/500/okc.png"
 }
 
-# Barra Lateral (Menú Principal con Imagen Institucional de Élite)
-st.sidebar.image("https://images.unsplash.com/photo-1546519638-68e109498ffc?w=500&auto=format&fit=crop&q=60", use_container_width=True)
-st.sidebar.markdown("### 🏀 Sabermetría IA")
-st.sidebar.caption("Analítica Avanzada y Proyecciones NBA")
-st.sidebar.markdown("---")
+# Barra Lateral (Menú Principal cargando el logo.jpeg local de su repositorio)
+if os.path.exists("logo.jpeg"):
+    st.sidebar.image("logo.jpeg", use_container_width=True)
+else:
+    st.sidebar.markdown("### 🏀 Sabermetría IA")
 
+st.sidebar.markdown("### Menú Principal")
 seccion = st.sidebar.radio("Selecciona una sección:", [
     "Cartelera y Partidos", 
     "Apuestas y Proyecciones USA (Las Vegas)", 
@@ -65,9 +66,8 @@ try:
     if df_cartelera.empty: raise Exception()
 except Exception:
     df_cartelera = pd.DataFrame([
-        {"Fecha": hoy_actual, "equipo1": "Charlotte Hornets", "equipo2": "Washington Wizards", "ganador": "Charlotte Hornets", "total_puntos": 218.5, "analisis": "Análisis sabermétrico avanzado...", "analisis_es": "• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), Charlotte Hornets domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo del rival.", "es_jugada_fija": True},
-        {"Fecha": hoy_actual, "equipo1": "Chicago Bulls", "equipo2": "Boston Celtics", "ganador": "Boston Celtics", "total_puntos": 235.5, "analisis": "Análisis sabermétrico avanzado...", "analisis_es": "• ¿Qué dicen los números clave?: Boston Celtics presenta una superioridad aplastante en el Net Rating y en el porcentaje de tiro efectivo (TS%) frente a unos Bulls que sufren en transición perimetral.", "es_jugada_fija": False},
-        {"Fecha": hoy_actual, "equipo1": "New York Knicks", "equipo2": "Philadelphia 76ers", "ganador": "Philadelphia 76ers", "total_puntos": 225.5, "analisis": "Análisis...", "analisis_es": "• Análisis táctico: Superioridad neta en la pintura y control de rebotes para Philadelphia 76ers bajo métricas de eficiencia.", "es_jugada_fija": False}
+        {"Fecha": hoy_actual, "equipo1": "Charlotte Hornets", "equipo2": "Washington Wizards", "ganador": "Charlotte Hornets", "total_puntos": 218.5, "analisis_es": "• ¿Qué dicen los números clave?: Analizando el Net Rating, Charlotte Hornets domina con ventaja neta en posesiones.", "es_jugada_fija": True},
+        {"Fecha": hoy_actual, "equipo1": "Chicago Bulls", "equipo2": "Boston Celtics", "ganador": "Boston Celtics", "total_puntos": 235.5, "analisis_es": "• ¿Qué dicen los números clave?: Boston Celtics presenta superioridad aplastante en TS% y Net Rating.", "es_jugada_fija": False}
     ])
 
 try:
@@ -81,8 +81,7 @@ try:
     if df_apuestas_usa.empty: raise Exception()
 except Exception:
     df_apuestas_usa = pd.DataFrame([
-        {"Fecha": hoy_actual, "equipo1": "Charlotte Hornets", "equipo2": "Washington Wizards", "spread": "Hornets -1 (-110)", "total_ou": "218.5 O/U", "proyeccion_usa": "Pick: Charlotte Hornets | Line: Hornets -1 (-110) | O/U: 218.5 O/U", "analisis_ingles": "USA Betting Insights & Net Rating: Charlotte Hornets showcases a superior offensive rating, dominating the pace and capitalizing on opponent turnovers."},
-        {"Fecha": hoy_actual, "equipo1": "Chicago Bulls", "equipo2": "Boston Celtics", "spread": "Celtics -15 (-110)", "total_ou": "235.5 O/U", "proyeccion_usa": "Pick: Boston Celtics | Line: Celtics -15 (-110) | O/U: 235.5 O/U", "analisis_ingles": "USA Betting Insights & Net Rating: Boston Celtics dominates perimeter efficiency and defensive win shares."}
+        {"Fecha": hoy_actual, "equipo1": "Charlotte Hornets", "equipo2": "Washington Wizards", "spread": "Hornets -1 (-110)", "total_ou": "218.5 O/U", "proyeccion_usa": "Pick: Charlotte Hornets | Line: Hornets -1 (-110) | O/U: 218.5 O/U", "analisis_ingles": "USA Betting Insights: Charlotte Hornets showcases superior offensive rating and pace control."}
     ])
 
 try:
@@ -108,11 +107,10 @@ except Exception:
         }
     ])
 
-# Barra superior de rendimiento limpio y legible
 st.success(f"🎯 {texto_rendimiento_web}")
 
 # -------------------------------------------------------------
-# SECCIÓN 1: CARTELERA Y PARTIDOS (CON LOGOTIPOS OFICIALES)
+# SECCIÓN 1: CARTELERA Y PARTIDOS
 # -------------------------------------------------------------
 if seccion == "Cartelera y Partidos":
     st.title("🏀 Cartelera de Partidos - Análisis Profundo")
@@ -125,20 +123,17 @@ if seccion == "Cartelera y Partidos":
     juego = df_cartelera.iloc[idx]
     
     eq1, eq2 = juego['equipo1'], juego['equipo2']
-    logo1 = LOGOS_EQUIPOS.get(eq1, "")
-    logo2 = LOGOS_EQUIPOS.get(eq2, "")
+    logo1, logo2 = LOGOS_EQUIPOS.get(eq1, ""), LOGOS_EQUIPOS.get(eq2, "")
     
     col1, col2, col3 = st.columns([3, 1, 3])
     with col1:
-        if logo1:
-            st.image(logo1, width=80)
+        if logo1: st.image(logo1, width=80)
         st.subheader(eq1)
         st.caption("(Visitante)")
     with col2:
         st.markdown("## **VS**")
     with col3:
-        if logo2:
-            st.image(logo2, width=80)
+        if logo2: st.image(logo2, width=80)
         st.subheader(eq2)
         st.caption("(Local)")
         
@@ -153,7 +148,7 @@ if seccion == "Cartelera y Partidos":
     st.write(juego['analisis_es'])
 
 # -------------------------------------------------------------
-# SECCIÓN 2: APUESTAS Y PROYECCIONES USA (LAS VEGAS LINES)
+# SECCIÓN 2: APUESTAS Y PROYECCIONES USA (LAS VEGAS)
 # -------------------------------------------------------------
 elif seccion == "Apuestas y Proyecciones USA (Las Vegas)":
     st.title("🇺🇸 Apuestas y Proyecciones USA (Las Vegas Lines)")
@@ -162,8 +157,7 @@ elif seccion == "Apuestas y Proyecciones USA (Las Vegas)":
     
     for _, row in df_apuestas_usa.iterrows():
         eq1, eq2 = row['equipo1'], row['equipo2']
-        logo1 = LOGOS_EQUIPOS.get(eq1, "")
-        logo2 = LOGOS_EQUIPOS.get(eq2, "")
+        logo1, logo2 = LOGOS_EQUIPOS.get(eq1, ""), LOGOS_EQUIPOS.get(eq2, "")
         
         st.markdown(f"### 🏀 {eq1} @ {eq2}")
         c_l1, c_vs, c_l2 = st.columns([1, 6, 1])
@@ -183,7 +177,7 @@ elif seccion == "Apuestas y Proyecciones USA (Las Vegas)":
         st.write("---")
 
 # -------------------------------------------------------------
-# SECCIÓN 3: EL PULSO DE LA DUELA (NOTICIAS AMPLIADAS)
+# SECCIÓN 3: EL PULSO DE LA DUELA (NOTICIAS)
 # -------------------------------------------------------------
 elif seccion == "El Pulso de la Duela (Noticias)":
     st.title("📰 El Pulso de la Duela - Crónicas de Élite")
@@ -204,8 +198,7 @@ elif seccion == "La Jugada Fija del Día":
     fija = fijas.iloc[0] if not fijas.empty else df_cartelera.iloc[0]
     
     eq1, eq2 = fija['equipo1'], fija['equipo2']
-    logo1 = LOGOS_EQUIPOS.get(eq1, "")
-    logo2 = LOGOS_EQUIPOS.get(eq2, "")
+    logo1, logo2 = LOGOS_EQUIPOS.get(eq1, ""), LOGOS_EQUIPOS.get(eq2, "")
         
     col1, col2, col3 = st.columns([3, 1, 3])
     with col1:
@@ -222,7 +215,7 @@ elif seccion == "La Jugada Fija del Día":
     st.markdown(f"**Análisis de Confiabilidad (80% de Efectividad):**\n\n{fija['analisis_es']}")
 
 # -------------------------------------------------------------
-# SECCIÓN 5: DICCIONARIO SABERMÉTRICO COMPLETO
+# SECCIÓN 5: DICCIONARIO SABERMÉTRICO
 # -------------------------------------------------------------
 elif seccion == "Diccionario Sabermétrico":
     st.title("📖 Diccionario de Métricas Avanzadas (Sabermetría IA)")
@@ -238,7 +231,7 @@ elif seccion == "Diccionario Sabermétrico":
     * **Player Impact Estimate (PIE):** Evalúa el impacto general y la contribución estadística de un jugador o quinteto en las diferentes facetas del juego en tiempo real.
     * **Defensive Win Shares (DWS):** Estimación del número de victorias aportadas por un jugador o sistema defensivo basándose exclusivamente en su solidez en la retaguardia.
     * **Win Shares (WS):** Métrica sabermétrica que divide el crédito total de las victorias de un equipo entre sus diferentes integrantes según sus aportes estadísticos avanzados.
-    * **Pace (Ritmo):** Estimación del número de posesiones por 48 minutos (un partido completo) que realiza un equipo, permitiendo comparar estilos de juego rápidos o pausados.
+    * **Pace (Ritmo):** Estimación del número de posesiones por 48 minutos (un partido completo) que realiza un equipo, comparar estilos de juego rápidos o pausados.
     * **Offensive/Defensive Rating (ORtg / DRtg):** Puntos anotados (o permitidos) por cada 100 posesiones individuales o colectivas, estándar de oro en la analítica de la NBA.
     """)
 
@@ -260,9 +253,5 @@ elif seccion == "Panel de Administración":
     
     st.success("🤖 **Robot 1 (Buscador de Cartelera):** Operando de forma autónoma en la nube (Sin listas estáticas).")
     st.success("🤖 **Robot 2 y 3 (Analistas y Líneas USA):** Procesando Net Rating, TS% y Spreads de Las Vegas.")
-    st.success("🤖 **Robot 4 (Cronista y Estadístico):** Compilando crónicas amplias al día y validando efectividad (80%).")
+    st.success("🤖 **Robot 4 (Cronista y Estadístico):** Compilando crónicas amplias y actualizadas al día.")
     st.success("🤖 **Robot 5 (Robot Supervisor / Maestro):** Auditoría superada con éxito, KeyErrors prevenidos y alertas despachadas a WhatsApp Cloud.")
-    
-    st.markdown("---")
-    st.markdown("💡 **¿Cómo operan los robots?**")
-    st.write("El escuadrón procesa los datos y actualiza los archivos locales de manera autónoma. Puede verificar o forzar ejecuciones en la pestaña *Actions* de su repositorio en GitHub.")
