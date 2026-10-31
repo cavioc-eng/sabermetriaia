@@ -30,7 +30,7 @@ def robot_1_buscar_cartelera_cruda():
     ]
     
     indice_base = (dia_del_anio * 3) % len(equipos_nba)
-    partidos_en bruto = []
+    partidos_en_bruto = []
     
     for i in range(6):
         eq1, eq2, spread, total = equipos_nba[(indice_base + i) % len(equipos_nba)]
