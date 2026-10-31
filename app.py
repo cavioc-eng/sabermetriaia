@@ -5,17 +5,38 @@ import os
 # Configuración de la página
 st.set_page_config(page_title="Sabermetría IA", page_icon="🏀", layout="wide")
 
-# Estilos visuales de élite
+# Estilos visuales de élite y corrección de contraste para tarjetas y métricas
 st.markdown("""
     <style>
     .main { background-color: #0e1117; color: #ffffff; }
-    .stMetric { background-color: #1a1c23; padding: 15px; border-radius: 10px; border: 1px solid #30333f; }
+    div[data-testid="stMetric"] {
+        background-color: #1f242d !important;
+        padding: 15px !important;
+        border-radius: 10px !important;
+        border: 1px solid #30333f !important;
+    }
+    div[data-testid="stMetric"] label {
+        color: #94a3b8 !important;
+        font-weight: 600 !important;
+    }
+    div[data-testid="stMetric"] div[data-testid="stMetricValue"] {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+    }
+    .stAlert {
+        background-color: #1e293b !important;
+        color: #ffffff !important;
+        border: 1px solid #334155 !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
-# Barra Lateral (Menú Principal)
-st.sidebar.image("https://images.unsplash.com/photo-1546519638-68e109498ffc?w=500&auto=format&fit=crop&q=60", use_container_width=True)
-st.sidebar.markdown("### Menú Principal")
+# Barra Lateral (Menú Principal con Logo de Élite)
+st.sidebar.image("https://images.unsplash.com/photo-1519766304817-4f37bda74a29?w=500&auto=format&fit=crop&q=60", use_container_width=True)
+st.sidebar.markdown("### 🏀 Sabermetría IA")
+st.sidebar.caption("Analítica Avanzada y Proyecciones NBA")
+st.sidebar.markdown("---")
+
 seccion = st.sidebar.radio("Selecciona una sección:", [
     "Cartelera y Partidos", 
     "Apuestas y Proyecciones USA (Las Vegas)", 
@@ -26,7 +47,7 @@ seccion = st.sidebar.radio("Selecciona una sección:", [
 ])
 
 # -------------------------------------------------------------
-# CARGA DE DATOS CON RESPALDO ROBUSTO (CERO MENSAJES DE ESPERA)
+# CARGA DE DATOS CON RESPALDO ROBUSTO
 # -------------------------------------------------------------
 try:
     df_cartelera = pd.read_csv("cartelera_juegos.csv")
@@ -34,8 +55,7 @@ try:
 except Exception:
     df_cartelera = pd.DataFrame([
         {"Fecha": "2026-10-31", "equipo1": "Charlotte Hornets", "equipo2": "Washington Wizards", "ganador": "Charlotte Hornets", "total_puntos": 218.5, "analisis": "Análisis sabermétrico avanzado...", "analisis_es": "• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), Charlotte Hornets domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo del rival.", "es_jugada_fija": True},
-        {"Fecha": "2026-10-31", "equipo1": "Chicago Bulls", "equipo2": "Boston Celtics", "ganador": "Boston Celtics", "total_puntos": 235.5, "analisis": "Análisis sabermétrico avanzado...", "analisis_es": "• ¿Qué dicen los números clave?: Boston Celtics presenta una superioridad aplastante en el Net Rating y en el porcentaje de tiro efectivo (TS%) frente a unos Bulls que sufren en transición.", "es_jugada_fija": False},
-        {"Fecha": "2026-10-31", "equipo1": "New York Knicks", "equipo2": "Philadelphia 76ers", "ganador": "Philadelphia 76ers", "total_puntos": 225.5, "analisis": "Análisis...", "analisis_es": "• Análisis táctico: Superioridad neta en la pintura y control de rebotes para Philadelphia 76ers.", "es_jugada_fija": False}
+        {"Fecha": "2026-10-31", "equipo1": "Chicago Bulls", "equipo2": "Boston Celtics", "ganador": "Boston Celtics", "total_puntos": 235.5, "analisis": "Análisis sabermétrico avanzado...", "analisis_es": "• ¿Qué dicen los números clave?: Boston Celtics presenta una superioridad aplastante en el Net Rating y en el porcentaje de tiro efectivo (TS%) frente a unos Bulls que sufren en transición.", "es_jugada_fija": False}
     ])
 
 try:
@@ -94,9 +114,9 @@ if seccion == "Cartelera y Partidos":
     st.write("---")
     m1, m2 = st.columns(2)
     with m1:
-        st.metric("Ganador Proyectado", juego['ganador'])
+        st.metric("Ganador Proyectado", str(juego['ganador']))
     with m2:
-        st.metric("Total de Puntos (O/U)", juego['total_puntos'])
+        st.metric("Total de Puntos (O/U)", str(juego['total_puntos']))
         
     st.subheader("Razonamiento Táctico y Métricas Avanzadas")
     st.write(juego['analisis_es'])
@@ -109,17 +129,16 @@ elif seccion == "Apuestas y Proyecciones USA (Las Vegas)":
     st.markdown("Análisis especializados con spreads, hándicaps y totales O/U orientados a la audiencia de Estados Unidos.")
     
     for _, row in df_apuestas_usa.iterrows():
-        with st.container():
-            st.markdown(f"### 🏀 {row['equipo1']} @ {row['equipo2']}")
-            c1, c2, c3 = st.columns(3)
-            with c1:
-                st.metric("Spread / Line", row['spread'])
-            with c2:
-                st.metric("Total (O/U)", row['total_ou'])
-            with c3:
-                st.metric("Proyección USA", row['proyeccion_usa'])
-            st.info(row['analisis_ingles'])
-            st.write("---")
+        st.markdown(f"### 🏀 {row['equipo1']} @ {row['equipo2']}")
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            st.metric("Spread / Line", str(row['spread']))
+        with c2:
+            st.metric("Total (O/U)", str(row['total_ou']))
+        with c3:
+            st.metric("Proyección USA", str(row['proyeccion_usa']))
+        st.success(row['analisis_ingles'])
+        st.write("---")
 
 # -------------------------------------------------------------
 # SECCIÓN 3: EL PULSO DE LA DUELA (NOTICIAS)
