@@ -2,8 +2,11 @@ name: Sabermetria IA Cloud Engine
 
 on:
   schedule:
-    - cron: '0 12 * * *'
+    - cron: '0 12 * * *'  # Se ejecuta automáticamente todos los días a las 12:00 UTC
   workflow_dispatch:
+
+permissions:
+  contents: write  # Permite que GitHub Actions guarde y actualice archivos en el repositorio
 
 jobs:
   ejecutar-motor:
@@ -22,10 +25,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests pandas openpyxl
 
-      - name: Ejecutar motor maestro
+      - name: Ejecutar motor maestro y actualizar datos
         env:
           WHATSAPP_TOKEN: ${{ secrets.WHATSAPP_TOKEN }}
           WHATSAPP_PHONE_ID: ${{ secrets.WHATSAPP_PHONE_ID }}
           WHATSAPP_DESTINO: ${{ secrets.WHATSAPP_DESTINO }}
         run: |
           python motor_sabermetria_cloud.py
+
+      - name: Auto-commitear cambios en la cartelera si los hay
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add cartelera_juegos.csv
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Actualización automática de cartelera y métricas del día" && git push)
