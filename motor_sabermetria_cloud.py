@@ -71,3 +71,4 @@ def ejecutar_escuadron_autonomo():
 
 if __name__ == "__main__":
     ejecutar_escuadron_autonomo()
+# Forzar actualizacion robot
