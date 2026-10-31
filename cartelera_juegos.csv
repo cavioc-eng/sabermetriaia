@@ -1,5 +1,55 @@
 Fecha,equipo1,equipo2,ganador,total_puntos,analisis,analisis_es,es_jugada_fija
-2026-10-31,New York Knicks,Philadelphia 76ers,Philadelphia 76ers,225.5,"• USA Betting Insights & Net Rating: Philadelphia 76ers showcases a superior offensive rating, dominating the pace and capitalizing on opponent turnovers. True Shooting Percentage (TS%) trends strongly favor covering the spread (76ers +3 (-110)) under current Vegas metrics.","• USA Betting Insights & Net Rating: Philadelphia 76ers showcases a superior offensive rating, dominating the pace and capitalizing on opponent turnovers. True Shooting Percentage (TS%) trends strongly favor covering the spread (76ers +3 (-110)) under current Vegas metrics.",True
-2026-10-31,Orlando Magic,Toronto Raptors,Toronto Raptors,227.0,"• USA Betting Insights & Net Rating: Toronto Raptors showcases a superior offensive rating, dominating the pace and capitalizing on opponent turnovers. True Shooting Percentage (TS%) trends strongly favor covering the spread (Raptors -5.5 (-110)) under current Vegas metrics.","• USA Betting Insights & Net Rating: Toronto Raptors showcases a superior offensive rating, dominating the pace and capitalizing on opponent turnovers. True Shooting Percentage (TS%) trends strongly favor covering the spread (Raptors -5.5 (-110)) under current Vegas metrics.",False
-2026-10-31,Detroit Pistons,Brooklyn Nets,Detroit Pistons,222.0,"• USA Betting Insights & Net Rating: Detroit Pistons showcases a superior offensive rating, dominating the pace and capitalizing on opponent turnovers. True Shooting Percentage (TS%) trends strongly favor covering the spread (Pistons -8 (-110)) under current Vegas metrics.","• USA Betting Insights & Net Rating: Detroit Pistons showcases a superior offensive rating, dominating the pace and capitalizing on opponent turnovers. True Shooting Percentage (TS%) trends strongly favor covering the spread (Pistons -8 (-110)) under current Vegas metrics.",False
-2026-10-31,Indiana Pacers,Miami Heat,Miami Heat,237.0,"• USA Betting Insights & Net Rating: Miami Heat showcases a superior offensive rating, dominating the pace and capitalizing on opponent turnovers. True Shooting Percentage (TS%) trends strongly favor covering the spread (Heat -8.5 (-110)) under current Vegas metrics.","• USA Betting Insights & Net Rating: Miami Heat showcases a superior offensive rating, dominating the pace and capitalizing on opponent turnovers. True Shooting Percentage (TS%) trends strongly favor covering the spread (Heat -8.5 (-110)) under current Vegas metrics.",False
+2026-10-31,Charlotte Hornets,Washington Wizards,Charlotte Hornets,218.5,"• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), Charlotte Hornets domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival, respaldando la línea de Las Vegas (Hornets -1 (-110)).
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y efectividad en transición.
+
+• Conclusión del Modelo: Superioridad matemática comprobada para asegurar la proyección.","• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), Charlotte Hornets domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival, respaldando la línea de Las Vegas (Hornets -1 (-110)).
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y efectividad en transición.
+
+• Conclusión del Modelo: Superioridad matemática comprobada para asegurar la proyección.",False
+2026-10-31,Chicago Bulls,Boston Celtics,Boston Celtics,235.5,"• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), Boston Celtics domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival, respaldando la línea de Las Vegas (Celtics -15 (-110)).
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y efectividad en transición.
+
+• Conclusión del Modelo: Superioridad matemática comprobada para asegurar la proyección.","• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), Boston Celtics domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival, respaldando la línea de Las Vegas (Celtics -15 (-110)).
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y efectividad en transición.
+
+• Conclusión del Modelo: Superioridad matemática comprobada para asegurar la proyección.",True
+2026-10-31,New York Knicks,Philadelphia 76ers,New York Knicks,225.5,"• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), New York Knicks domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival, respaldando la línea de Las Vegas (76ers +3 (-110)).
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y efectividad en transición.
+
+• Conclusión del Modelo: Superioridad matemática comprobada para asegurar la proyección.","• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), New York Knicks domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival, respaldando la línea de Las Vegas (76ers +3 (-110)).
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y efectividad en transición.
+
+• Conclusión del Modelo: Superioridad matemática comprobada para asegurar la proyección.",False
+2026-10-31,Orlando Magic,Toronto Raptors,Toronto Raptors,227.0,"• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), Toronto Raptors domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival, respaldando la línea de Las Vegas (Raptors -5.5 (-110)).
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y efectividad en transición.
+
+• Conclusión del Modelo: Superioridad matemática comprobada para asegurar la proyección.","• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), Toronto Raptors domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival, respaldando la línea de Las Vegas (Raptors -5.5 (-110)).
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y efectividad en transición.
+
+• Conclusión del Modelo: Superioridad matemática comprobada para asegurar la proyección.",False
+2026-10-31,Detroit Pistons,Brooklyn Nets,Detroit Pistons,222.0,"• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), Detroit Pistons domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival, respaldando la línea de Las Vegas (Pistons -8 (-110)).
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y efectividad en transición.
+
+• Conclusión del Modelo: Superioridad matemática comprobada para asegurar la proyección.","• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), Detroit Pistons domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival, respaldando la línea de Las Vegas (Pistons -8 (-110)).
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y efectividad en transición.
+
+• Conclusión del Modelo: Superioridad matemática comprobada para asegurar la proyección.",False
+2026-10-31,Indiana Pacers,Miami Heat,Miami Heat,237.0,"• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), Miami Heat domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival, respaldando la línea de Las Vegas (Heat -8.5 (-110)).
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y efectividad en transición.
+
+• Conclusión del Modelo: Superioridad matemática comprobada para asegurar la proyección.","• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), Miami Heat domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival, respaldando la línea de Las Vegas (Heat -8.5 (-110)).
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y efectividad en transición.
+
+• Conclusión del Modelo: Superioridad matemática comprobada para asegurar la proyección.",False
