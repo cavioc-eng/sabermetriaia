@@ -1,5 +1,5 @@
 import os
-requests_mod = __import__('requests')
+import requests
 import pandas as pd
 from datetime import datetime
 
@@ -11,7 +11,7 @@ def ejecutar_escuadron_autonomo():
     hoy_str = datetime.now().strftime("%Y-%m-%d")
     print(f"🤖 [Robot Supervisor]: Procesando cartelera completa de la jornada para el {hoy_str}...")
     
-    # Cartelera real oficial de la jornada de hoy (incluyendo Memphis vs Sacramento)
+    # Cartelera real oficial de la jornada (incluyendo Memphis vs Sacramento)
     partidos_reales_hoy = [
         {"equipo1": "Utah Jazz", "equipo2": "Portland Trail Blazers", "spread": "Jazz -2.5 (-110)", "total": "224.5 O/U", "ganador": "Utah Jazz", "probabilidad": 91.0},
         {"equipo1": "Charlotte Hornets", "equipo2": "Philadelphia 76ers", "spread": "76ers -4.5 (-110)", "total": "220.0 O/U", "ganador": "Philadelphia 76ers", "probabilidad": 89.5},
@@ -22,7 +22,6 @@ def ejecutar_escuadron_autonomo():
         {"equipo1": "Houston Rockets", "equipo2": "Oklahoma City Thunder", "spread": "Thunder -6.0 (-110)", "total": "228.0 O/U", "ganador": "Oklahoma City Thunder", "probabilidad": 80.5}
     ]
     
-    # Ordenamos de mayor a menor probabilidad de acierto
     partidos_ordenados = sorted(partidos_reales_hoy, key=lambda x: x["probabilidad"], reverse=True)
     
     cartelera_general = []
@@ -63,7 +62,6 @@ def ejecutar_escuadron_autonomo():
             "probabilidad": p["probabilidad"]
         })
         
-    # Guardar archivos sincronizados
     pd.DataFrame(cartelera_general).to_csv("cartelera_juegos.csv", index=False)
     pd.DataFrame(apuestas_usa_list).to_csv("apuestas_usa.csv", index=False)
     
@@ -71,4 +69,3 @@ def ejecutar_escuadron_autonomo():
 
 if __name__ == "__main__":
     ejecutar_escuadron_autonomo()
-# Forzar actualizacion robot
