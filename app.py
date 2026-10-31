@@ -6,33 +6,7 @@ from datetime import datetime
 # Configuración de la página
 st.set_page_config(page_title="Sabermetría IA", page_icon="🏀", layout="wide")
 
-# Estilos visuales de élite y corrección absoluta de contraste para tarjetas y alertas
-st.markdown("""
-    <style>
-    .main { background-color: #0e1117; color: #ffffff; }
-    div[data-testid="stMetric"] {
-        background-color: #1f242d !important;
-        padding: 15px !important;
-        border-radius: 10px !important;
-        border: 1px solid #30333f !important;
-    }
-    div[data-testid="stMetric"] label {
-        color: #94a3b8 !important;
-        font-weight: 600 !important;
-    }
-    div[data-testid="stMetric"] div[data-testid="stMetricValue"] {
-        color: #ffffff !important;
-        font-weight: 700 !important;
-    }
-    .stAlert {
-        background-color: #1e293b !important;
-        color: #ffffff !important;
-        border: 1px solid #334155 !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-# Barra Lateral (Menú Principal con Branding Profesional)
+# Barra Lateral (Menú Principal)
 st.sidebar.markdown("### 🏀 Sabermetría IA")
 st.sidebar.caption("Analítica Avanzada y Proyecciones NBA")
 st.sidebar.markdown("---")
@@ -47,7 +21,7 @@ seccion = st.sidebar.radio("Selecciona una sección:", [
 ])
 
 # -------------------------------------------------------------
-# CARGA DE DATOS CON RESPALDO ROBUSTO Y ACTUALIZADO
+# CARGA DE DATOS SEGUROS
 # -------------------------------------------------------------
 hoy_actual = datetime.now().strftime("%Y-%m-%d")
 
@@ -88,8 +62,8 @@ except Exception:
         }
     ])
 
-# Barra superior de rendimiento verificado
-st.info(f"🎯 {texto_rendimiento_web}")
+# Barra superior de rendimiento limpio y legible
+st.success(f"🎯 {texto_rendimiento_web}")
 
 # -------------------------------------------------------------
 # SECCIÓN 1: CARTELERA Y PARTIDOS
@@ -130,6 +104,7 @@ if seccion == "Cartelera y Partidos":
 elif seccion == "Apuestas y Proyecciones USA (Las Vegas)":
     st.title("🇺🇸 Apuestas y Proyecciones USA (Las Vegas Lines)")
     st.markdown("Análisis especializados con spreads, hándicaps y totales O/U orientados a la audiencia de Estados Unidos.")
+    st.write("---")
     
     for _, row in df_apuestas_usa.iterrows():
         st.markdown(f"### 🏀 {row['equipo1']} @ {row['equipo2']}")
@@ -140,7 +115,7 @@ elif seccion == "Apuestas y Proyecciones USA (Las Vegas)":
             st.metric("Total (O/U)", str(row['total_ou']))
         with c3:
             st.metric("Proyección USA", str(row['proyeccion_usa']))
-        st.success(row['analisis_ingles'])
+        st.info(row['analisis_ingles'])
         st.write("---")
 
 # -------------------------------------------------------------
@@ -148,6 +123,7 @@ elif seccion == "Apuestas y Proyecciones USA (Las Vegas)":
 # -------------------------------------------------------------
 elif seccion == "El Pulso de la Duela (Noticias)":
     st.title("📰 El Pulso de la Duela - Crónicas de Élite")
+    st.write("---")
     
     for _, row in df_noticias.iterrows():
         st.markdown(f"### {row['titulo']}")
@@ -176,11 +152,12 @@ elif seccion == "La Jugada Fija del Día":
     st.markdown(f"**Análisis de Confiabilidad (80% de Efectividad):**\n\n{fija['analisis_es']}")
 
 # -------------------------------------------------------------
-# SECCIÓN 5: DICCIONARIO SABERMÉTRICO COMPLETO Y AMPLIADO
+# SECCIÓN 5: DICCIONARIO SABERMÉTRICO COMPLETO
 # -------------------------------------------------------------
 elif seccion == "Diccionario Sabermétrico":
     st.title("📖 Diccionario de Métricas Avanzadas (Sabermetría IA)")
     st.markdown("Glosario oficial de los indicadores de eficiencia, impacto y rendimiento analítico utilizados por nuestro modelo:")
+    st.write("---")
     
     st.markdown("""
     * **Net Rating:** Diferencial de puntos anotados y recibidos por cada 100 posesiones. Mide el dominio real y la superioridad neta de un equipo en ambos costados de la duela.
@@ -196,13 +173,13 @@ elif seccion == "Diccionario Sabermétrico":
     """)
 
 # -------------------------------------------------------------
-# SECCIÓN 6: PANEL DE ADMINISTRACIÓN Y AUDITORÍA EN VIVO
+# SECCIÓN 6: PANEL DE ADMINISTRACIÓN
 # -------------------------------------------------------------
 elif seccion == "Panel de Administración":
     st.title("⚙️ Panel de Control y Auditoría del Ecosistema")
     st.markdown("Estado del escuadrón autónomo de los 5 robots y sincronización en la nube:")
+    st.write("---")
     
-    # Obtener la hora exacta de actualización basada en el archivo CSV local
     try:
         tiempo_mod = os.path.getmtime("cartelera_juegos.csv")
         ultima_actualizacion = datetime.fromtimestamp(tiempo_mod).strftime("%Y-%m-%d %H:%M:%S")
