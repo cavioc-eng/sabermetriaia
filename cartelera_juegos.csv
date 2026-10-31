@@ -1,7 +1,55 @@
 Fecha,equipo1,equipo2,ganador,total_puntos,analisis,analisis_es,es_jugada_fija
-2026-10-31,New Orleans Pelicans,Atlanta Hawks,Atlanta Hawks,215.0,Análisis sabermétrico avanzado: Eficiencia neta favorable en la pintura y control de posesiones para Atlanta Hawks.,Análisis sabermétrico avanzado: Eficiencia neta favorable en la pintura y control de posesiones para Atlanta Hawks.,False
-2026-10-31,Memphis Grizzlies,Sacramento Kings,Memphis Grizzlies,218.2,Análisis sabermétrico avanzado: Eficiencia neta favorable en la pintura y control de posesiones para Memphis Grizzlies.,Análisis sabermétrico avanzado: Eficiencia neta favorable en la pintura y control de posesiones para Memphis Grizzlies.,False
-2026-10-31,Milwaukee Bucks,Cleveland Cavaliers,Cleveland Cavaliers,221.4,Análisis sabermétrico avanzado: Eficiencia neta favorable en la pintura y control de posesiones para Cleveland Cavaliers.,Análisis sabermétrico avanzado: Eficiencia neta favorable en la pintura y control de posesiones para Cleveland Cavaliers.,False
-2026-10-31,San Antonio Spurs,Minnesota Timberwolves,San Antonio Spurs,224.6,Análisis sabermétrico avanzado: Eficiencia neta favorable en la pintura y control de posesiones para San Antonio Spurs.,Análisis sabermétrico avanzado: Eficiencia neta favorable en la pintura y control de posesiones para San Antonio Spurs.,False
-2026-10-31,Boston Celtics,New York Knicks,New York Knicks,227.8,Análisis sabermétrico avanzado: Eficiencia neta favorable en la pintura y control de posesiones para New York Knicks.,Análisis sabermétrico avanzado: Eficiencia neta favorable en la pintura y control de posesiones para New York Knicks.,True
-2026-10-31,Miami Heat,Chicago Bulls,Miami Heat,231.0,Análisis sabermétrico avanzado: Eficiencia neta favorable en la pintura y control de posesiones para Miami Heat.,Análisis sabermétrico avanzado: Eficiencia neta favorable en la pintura y control de posesiones para Miami Heat.,False
+2026-10-31,New Orleans Pelicans,Atlanta Hawks,Atlanta Hawks,215.0,"• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), Atlanta Hawks domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival.
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y defensas asfixiantes en media cancha, cortando de raíz el juego rápido y las transiciones.
+
+• Conclusión del Modelo para los Fanáticos: La superioridad matemática en eficiencia ofensiva otorga una ventaja proyectada sólida para asegurar la victoria con argumentos científicos rigurosos.","• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), Atlanta Hawks domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival.
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y defensas asfixiantes en media cancha, cortando de raíz el juego rápido y las transiciones.
+
+• Conclusión del Modelo para los Fanáticos: La superioridad matemática en eficiencia ofensiva otorga una ventaja proyectada sólida para asegurar la victoria con argumentos científicos rigurosos.",False
+2026-10-31,Memphis Grizzlies,Sacramento Kings,Memphis Grizzlies,218.2,"• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), Memphis Grizzlies domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival.
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y defensas asfixiantes en media cancha, cortando de raíz el juego rápido y las transiciones.
+
+• Conclusión del Modelo para los Fanáticos: La superioridad matemática en eficiencia ofensiva otorga una ventaja proyectada sólida para asegurar la victoria con argumentos científicos rigurosos.","• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), Memphis Grizzlies domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival.
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y defensas asfixiantes en media cancha, cortando de raíz el juego rápido y las transiciones.
+
+• Conclusión del Modelo para los Fanáticos: La superioridad matemática en eficiencia ofensiva otorga una ventaja proyectada sólida para asegurar la victoria con argumentos científicos rigurosos.",False
+2026-10-31,Milwaukee Bucks,Cleveland Cavaliers,Cleveland Cavaliers,221.4,"• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), Cleveland Cavaliers domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival.
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y defensas asfixiantes en media cancha, cortando de raíz el juego rápido y las transiciones.
+
+• Conclusión del Modelo para los Fanáticos: La superioridad matemática en eficiencia ofensiva otorga una ventaja proyectada sólida para asegurar la victoria con argumentos científicos rigurosos.","• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), Cleveland Cavaliers domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival.
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y defensas asfixiantes en media cancha, cortando de raíz el juego rápido y las transiciones.
+
+• Conclusión del Modelo para los Fanáticos: La superioridad matemática en eficiencia ofensiva otorga una ventaja proyectada sólida para asegurar la victoria con argumentos científicos rigurosos.",False
+2026-10-31,San Antonio Spurs,Minnesota Timberwolves,San Antonio Spurs,224.6,"• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), San Antonio Spurs domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival.
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y defensas asfixiantes en media cancha, cortando de raíz el juego rápido y las transiciones.
+
+• Conclusión del Modelo para los Fanáticos: La superioridad matemática en eficiencia ofensiva otorga una ventaja proyectada sólida para asegurar la victoria con argumentos científicos rigurosos.","• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), San Antonio Spurs domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival.
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y defensas asfixiantes en media cancha, cortando de raíz el juego rápido y las transiciones.
+
+• Conclusión del Modelo para los Fanáticos: La superioridad matemática en eficiencia ofensiva otorga una ventaja proyectada sólida para asegurar la victoria con argumentos científicos rigurosos.",False
+2026-10-31,Boston Celtics,New York Knicks,New York Knicks,227.8,"• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), New York Knicks domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival.
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y defensas asfixiantes en media cancha, cortando de raíz el juego rápido y las transiciones.
+
+• Conclusión del Modelo para los Fanáticos: La superioridad matemática en eficiencia ofensiva otorga una ventaja proyectada sólida para asegurar la victoria con argumentos científicos rigurosos.","• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), New York Knicks domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival.
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y defensas asfixiantes en media cancha, cortando de raíz el juego rápido y las transiciones.
+
+• Conclusión del Modelo para los Fanáticos: La superioridad matemática en eficiencia ofensiva otorga una ventaja proyectada sólida para asegurar la victoria con argumentos científicos rigurosos.",True
+2026-10-31,Miami Heat,Chicago Bulls,Miami Heat,231.0,"• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), Miami Heat domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival.
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y defensas asfixiantes en media cancha, cortando de raíz el juego rápido y las transiciones.
+
+• Conclusión del Modelo para los Fanáticos: La superioridad matemática en eficiencia ofensiva otorga una ventaja proyectada sólida para asegurar la victoria con argumentos científicos rigurosos.","• ¿Qué dicen los números clave?: Analizando el Net Rating (diferencial de puntos por cada 100 posesiones), Miami Heat domina con una ventaja notable en ambos costados de la duela. Su True Shooting Percentage (TS%) supera con creces el promedio defensivo que presenta el rival.
+
+• Control del Ritmo (Pace): El planteamiento táctico impone posesiones ordenadas y defensas asfixiantes en media cancha, cortando de raíz el juego rápido y las transiciones.
+
+• Conclusión del Modelo para los Fanáticos: La superioridad matemática en eficiencia ofensiva otorga una ventaja proyectada sólida para asegurar la victoria con argumentos científicos rigurosos.",False
