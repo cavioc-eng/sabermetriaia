@@ -322,11 +322,33 @@ elif menu == "La Jugada Fija del Día":
         st.markdown(analisis_jugada, unsafe_allow_html=True)
 
 elif menu == "Diccionario Sabermétrico":
-    st.header("Diccionario Sabermétrico Educativo (Básico a Avanzado)")
-    st.write("Guía completa de referencia para comprender desde los fundamentos tradicionales hasta las métricas de eficiencia más avanzadas:")
+    st.header("Diccionario Sabermétrico Educativo")
+    st.write("Guía completa de referencia para comprender desde los fundamentos tradicionales hasta las métricas de eficiencia:")
     if lang == "es":
         st.markdown(
-            "### Indicadores Básicos y Tradicionales (Box Score)\n"
-            "- **PTS (Points / Puntos):** Total de puntos anotados por un jugador o equipo.\n"
-            "- **REB (Rebounds / Rebotes):** Balones recuperados tras un lanzamiento fallido.\n"
-            "- **AST (Assists / Asistencias):** Pases que conducen directamente a una
+            "### Indicadores Básicos y Tradicionales\n"
+            "- **PTS (Points):** Total de puntos anotados.\n"
+            "- **REB (Rebounds):** Rebotes totales.\n"
+            "- **AST (Assists):** Asistencias de canasta.\n\n"
+            "### Indicadores Avanzados (Sabermetría IA)\n"
+            "- **Pace (Ritmo):** Posesiones estimadas por 48 minutos.\n"
+            "- **TS% (True Shooting):** Eficiencia de tiro global.\n"
+            "- **Net Rating:** Diferencial de puntos por 100 posesiones."
+        )
+    else:
+        st.markdown(
+            "### Basic Indicators\n"
+            "- **PTS (Points):** Total points scored.\n"
+            "- **REB (Rebounds):** Total rebounds.\n"
+            "- **AST (Assists):** Total assists.\n\n"
+            "### Advanced Analytics\n"
+            "- **Pace:** Possessions per 48 minutes.\n"
+            "- **TS%:** Scoring efficiency.\n"
+            "- **Net Rating:** Point differential per 100 possessions."
+        )
+
+elif menu == "Panel de Administración":
+    st.header("🔐 Panel de Control y Publicación - Sabermetría IA")
+    st.write("Control estadístico, cartelera, apuestas y crónicas editoriales.")
+
+    clave_admin = st.text_input("Ing
