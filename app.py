@@ -11,6 +11,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 logo_path = os.path.join(current_dir, "logo.jpeg")
 db_usuarios_path = os.path.join(current_dir, "registros_tiktok.csv")
 estadisticas_path = os.path.join(current_dir, "historial_aciertos.csv")
+historial_efectividad_path = os.path.join(current_dir, "historial_efectividad.csv")
 noticias_txt_path = os.path.join(current_dir, "noticias.txt")
 cartelera_csv_path = os.path.join(current_dir, "cartelera_juegos.csv")
 apuestas_csv_path = os.path.join(current_dir, "apuestas_usa.csv")
@@ -113,16 +114,48 @@ def generar_pdf_analisis(partido, hora, sede, ganador, total_puntos, razonamient
     doc.build(story)
     return pdf_path
 
-def cargar_estadisticas():
-    if os.path.exists(estadisticas_path):
+
+def cargar_historial_efectividad():
+    if os.path.exists(historial_efectividad_path):
         try:
-            return str(pd.read_csv(estadisticas_path, encoding="utf-8").iloc[0]["ayer"])
+            df_hist = pd.read_csv(historial_efectividad_path, encoding="utf-8")
+            if not df_hist.empty:
+                return df_hist
         except Exception:
             pass
-    return "Actualizando rendimiento..."
+    df_default = pd.DataFrame([
+        {"fecha": "2026-11-01", "juegos": 4, "aciertos": 3, "efectividad": 75.0},
+        {"fecha": "2026-11-02", "juegos": 15, "aciertos": 7, "efectividad": 46.7}
+    ])
+    guardar_historial_efectividad(df_default)
+    return df_default
+
+def guardar_historial_efectividad(df):
+    try:
+        df.to_csv(historial_efectividad_path, index=False, encoding="utf-8")
+    except Exception:
+        pass
+
+def calcular_metricas_efectividad():
+    df_hist = cargar_historial_efectividad()
+    if df_hist.empty:
+        return "N/A", "N/A"
+    ultima_fila = df_hist.iloc[-1]
+    ayer_str = f"{int(ultima_fila['aciertos'])} / {int(ultima_fila['juegos']} ({ultima_fila['efectividad']:.1f}%)"
+    
+    total_juegos = df_hist['juegos'].sum()
+    total_aciertos = df_hist['aciertos'].sum()
+    acumulado_pct = (total_aciertos / total_juegos * 100) if total_juegos > 0 else 0.0
+    acumulado_str = f"{int(total_aciertos)} / {int(total_juegos)} ({acumulado_pct:.1f}%)"
+    return ayer_str, acumulado_str
+
+def cargar_estadisticas():
+    ayer_str, _ = calcular_metricas_efectividad()
+    return ayer_str
 
 def guardar_estadisticas(ayer):
-    pd.DataFrame([[ayer]], columns=["ayer"]).to_csv(estadisticas_path, index=False, encoding="utf-8")
+    pass
+
 
 def cargar_cartelera():
     if os.path.exists(cartelera_csv_path):
@@ -189,12 +222,12 @@ df_cartelera = cargar_cartelera()
 df_apuestas = cargar_apuestas_usa()
 ayer_str = cargar_estadisticas()
 
+ayer_auto, acum_auto = calcular_metricas_efectividad()
 with st.container():
-    st.info(
-        f"🎯 **Rendimiento del Modelo Sabermétrico:** Aciertos Recientes: **{ayer_str}**"
-        if lang == "es"
-        else f"🎯 **Sabermetric Model Performance:** Recent Hits: **{ayer_str}**"
-    )
+    if lang == "es":
+        st.markdown(f"🎯 **Efectividad Modelo:**<br>• Jornada Anterior: **{ayer_auto}**<br>• Acumulado Global: **{acum_auto}**", unsafe_allow_html=True)
+    else:
+        st.markdown(f"🎯 **Model Effectiveness:**<br>• Last Slate: **{ayer_auto}**<br>• Accumulated: **{acum_auto}**", unsafe_allow_html=True)
 
 if menu == "Cartelera y Partidos":
     st.header("Cartelera de Partidos - Análisis Profundo (" + fecha_hoy + ")")
@@ -286,11 +319,23 @@ elif menu == "Apuestas y Proyecciones USA (Las Vegas)":
                 st.markdown("---")
 
 elif menu == "El Pulso de la Duela (Noticias)":
-    st.header("El Pulso de la Duela - Crónicas de Élite (" + fecha_hoy + ")")
+    st.header("🎙️ El Pulso de la Duela - Crónicas y Exclusivas (" + fecha_hoy + ")")
+    st.markdown("<p style='color: #00FF66; font-size: 1.1em; font-weight: bold;'>El análisis más ardiente y sin censura de las duelas de la NBA.</p>", unsafe_allow_html=True)
     st.markdown("---")
     mat_es, mat_en = cargar_noticias_txt()
     cronica_texto = mat_es if lang == "es" else mat_en
-    st.markdown(cronica_texto)
+    
+    # Styled news card container
+    st.markdown(
+        f"""
+        <div style="background-color: #161b22; padding: 25px; border-radius: 12px; border-left: 5px solid #00FF66; box-shadow: 0 4px 12px rgba(0,255,102,0.15);">
+            <div style="font-size: 1.05em; line-height: 1.6; color: #e6edf3;">
+                {cronica_texto.replace(chr(10), '<br>')}
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 elif menu == "La Jugada Fija del Día":
     st.header("La Jugada Estelar del Modelo")
@@ -418,12 +463,32 @@ elif menu == "Panel de Administración":
             st.rerun()
 
         st.markdown("---")
-        ayer_act = cargar_estadisticas()
-        with st.form("form_estadisticas"):
-            nuevo_ayer = st.text_input("Aciertos de la Jornada (Ej: 6 / 10 (60.0%)):", value=ayer_act)
-            if st.form_submit_button("💾 Guardar Efectividad"):
-                guardar_estadisticas(nuevo_ayer)
-                st.success("¡Efectividad actualizada con transparencia!")
+        st.subheader("📊 Control Automático de Efectividad e Historial")
+        ayer_str, acumulado_str = calcular_metricas_efectividad()
+        col_m1, col_m2 = st.columns(2)
+        with col_m1:
+            st.metric("Efectividad Jornada Anterior", ayer_str)
+        with col_m2:
+            st.metric("Efectividad Acumulada Temporada", acumulado_str)
+            
+        st.write("Registra los resultados de la nueva jornada para actualizar automáticamente el acumulado:")
+        df_hist_actual = cargar_historial_efectividad()
+        st.dataframe(df_hist_actual, use_container_width=True)
+        
+        with st.form("form_nuevo_registro_efectividad"):
+            col_f1, col_f2 = st.columns(2)
+            with col_f1:
+                fecha_reg = st.text_input("Fecha (YYYY-MM-DD):", value=datetime.now().strftime("%Y-%m-%d"))
+                juegos_reg = st.number_input("Total de Partidos Pronosticados:", min_value=1, max_value=30, value=15)
+            with col_f2:
+                aciertos_reg = st.number_input("Partidos Acertados:", min_value=0, max_value=30, value=8)
+            
+            if st.form_submit_button("➕ Registrar Jornada y Recalcular Automáticamente"):
+                pct = (aciertos_reg / juegos_reg * 100) if juegos_reg > 0 else 0.0
+                nueva_fila = pd.DataFrame([{"fecha": fecha_reg, "juegos": int(juegos_reg), "aciertos": int(aciertos_reg), "efectividad": round(pct, 1)}])
+                df_actualizado = pd.concat([df_hist_actual, nueva_fila], ignore_index=True)
+                guardar_historial_efectividad(df_actualizado)
+                st.success(f"¡Jornada registrada con éxito! Efectividad del día: {pct:.1f}%")
                 st.rerun()
 
         mat_es_act, mat_en_act = cargar_noticias_txt()
