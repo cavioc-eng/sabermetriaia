@@ -141,7 +141,7 @@ def calcular_metricas_efectividad():
     if df_hist.empty:
         return "N/A", "N/A"
     ultima_fila = df_hist.iloc[-1]
-    ayer_str = f"{int(ultima_fila['aciertos'])} / {int(ultima_fila['juegos']} ({ultima_fila['efectividad']:.1f}%)"
+    ayer_str = f"{int(ultima_fila['aciertos'])} / {int(ultima_fila['juegos'])} ({ultima_fila['efectividad']:.1f}%)"
     
     total_juegos = df_hist['juegos'].sum()
     total_aciertos = df_hist['aciertos'].sum()
