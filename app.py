@@ -23,6 +23,25 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# Contador automático de visitas por sesión
+def registrar_visita():
+    try:
+        now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        nueva_visita = pd.DataFrame([{"fecha_hora": now_str, "origen": "Acceso Directo / TikTok"}])
+        if os.path.exists(db_usuarios_path):
+            df_vis = pd.read_csv(db_usuarios_path, encoding="utf-8")
+            df_vis = pd.concat([df_vis, nueva_visita], ignore_index=True)
+        else:
+            df_vis = nueva_visita
+        df_vis.to_csv(db_usuarios_path, index=False, encoding="utf-8")
+    except Exception:
+        pass
+
+if 'visit_registered' not in st.session_state:
+    registrar_visita()
+    st.session_state['visit_registered'] = True
+
+
 def cargar_noticias_txt():
     default_mat_es = (
         "Una Noche de Pura Maestría Táctica: El Salto de Calidad del Modelo Sabermétrico\n\n"
@@ -125,7 +144,11 @@ def cargar_historial_efectividad():
             pass
     df_default = pd.DataFrame([
         {"fecha": "2026-11-01", "juegos": 4, "aciertos": 3, "efectividad": 75.0},
-        {"fecha": "2026-11-02", "juegos": 15, "aciertos": 7, "efectividad": 46.7}
+        {"fecha": "2026-11-02", "juegos": 15, "aciertos": 7, "efectividad": 46.7},
+        {"fecha": "2026-11-04", "juegos": 14, "aciertos": 12, "efectividad": 85.7},
+        {"fecha": "2026-11-05", "juegos": 2, "aciertos": 2, "efectividad": 100.0},
+        {"fecha": "2026-11-06", "juegos": 9, "aciertos": 8, "efectividad": 88.9},
+        {"fecha": "2026-11-07", "juegos": 7, "aciertos": 7, "efectividad": 100.0}
     ])
     guardar_historial_efectividad(df_default)
     return df_default
