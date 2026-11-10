@@ -149,7 +149,8 @@ def cargar_historial_efectividad():
         {"fecha": "2026-11-05", "juegos": 2, "aciertos": 2, "efectividad": 100.0},
         {"fecha": "2026-11-06", "juegos": 9, "aciertos": 8, "efectividad": 88.9},
         {"fecha": "2026-11-07", "juegos": 7, "aciertos": 7, "efectividad": 100.0},
-        {"fecha": "2026-11-08", "juegos": 7, "aciertos": 6, "efectividad": 85.7}
+        {"fecha": "2026-11-08", "juegos": 7, "aciertos": 6, "efectividad": 85.7},
+        {"fecha": "2026-11-09", "juegos": 8, "aciertos": 4, "efectividad": 50.0}
     ])
     guardar_historial_efectividad(df_default)
     return df_default
@@ -349,6 +350,7 @@ elif menu == "El Pulso de la Duela (Noticias)":
     mat_es, mat_en = cargar_noticias_txt()
     cronica_texto = mat_es if lang == "es" else mat_en
     
+    # Styled news card container
     st.markdown(
         f"""
         <div style="background-color: #161b22; padding: 25px; border-radius: 12px; border-left: 5px solid #00FF66; box-shadow: 0 4px 12px rgba(0,255,102,0.15);">
