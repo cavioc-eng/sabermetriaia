@@ -150,7 +150,8 @@ def cargar_historial_efectividad():
         {"fecha": "2026-11-06", "juegos": 9, "aciertos": 8, "efectividad": 88.9},
         {"fecha": "2026-11-07", "juegos": 7, "aciertos": 7, "efectividad": 100.0},
         {"fecha": "2026-11-08", "juegos": 7, "aciertos": 6, "efectividad": 85.7},
-        {"fecha": "2026-11-09", "juegos": 8, "aciertos": 4, "efectividad": 50.0}
+        {"fecha": "2026-11-09", "juegos": 8, "aciertos": 4, "efectividad": 50.0},
+        {"fecha": "2026-11-10", "juegos": 6, "aciertos": 3, "efectividad": 50.0}
     ])
     guardar_historial_efectividad(df_default)
     return df_default
