@@ -10,7 +10,7 @@ if os.path.exists(logo_path):
     st.sidebar.image(logo_path, width=220)
 
 st.sidebar.markdown("---")
-st.sidebar.subheader("🏆 Selección de Deporte" if "es" else "🏆 Sport Selection")
+st.sidebar.subheader("🏆 Selección de Deporte")
 
 sport = st.sidebar.selectbox("Deporte / Sport", ["NBA (Básquetbol)", "NFL (Fútbol Americano)"])
 sport_prefix = "nba" if "Básquetbol" in sport else "nfl"
@@ -19,21 +19,21 @@ lang = st.sidebar.selectbox("Idioma / Language", ["Español", "English"])
 lang_code = "es" if lang == "Español" else "en"
 
 st.sidebar.markdown("---")
-st.sidebar.subheader("📌 Menú Principal" if lang_code == "es" else "📌 Main Menu")
+st.sidebar.subheader("📌 Menú Principal")
 
 menu = st.sidebar.radio(
     "Navegación",
     [
-        "📊 Cartelera de Partidos" if lang_code == "es" else "📊 Match Schedule",
-        "📈 Apuestas USA & Métricas" if lang_code == "es" else "📈 USA Betting & Metrics",
-        "🧭 Checklist de Último Minuto" if lang_code == "es" else "🧭 Last-Minute Checklist",
-        "⚙️ Panel de Administración" if lang_code == "es" else "⚙️ Admin Panel"
+        "📊 Cartelera de Partidos",
+        "📈 Apuestas USA & Métricas",
+        "🧭 Checklist de Último Minuto",
+        "⚙️ Panel de Administración"
     ]
 )
 
 current_dir = os.path.dirname(__file__) if "__file__" in locals() else "."
 
-# File paths mapping
+# File paths mapping based on sport
 if sport_prefix == "nba":
     cartelera_path = os.path.join(current_dir, "cartelera_juegos.csv")
     apuestas_path = os.path.join(current_dir, "apuestas_usa.csv")
@@ -45,7 +45,7 @@ else:
     efectividad_path = os.path.join(current_dir, "nfl_historial_efectividad.csv")
     checklist_path = os.path.join(current_dir, "nfl_checklist_ultimo_minuto.csv")
 
-# Effectiveness Display in Sidebar or Top
+# Effectiveness Display
 if os.path.exists(efectividad_path):
     df_ef = pd.read_csv(efectividad_path)
     if not df_ef.empty:
@@ -67,41 +67,50 @@ st.markdown(f"• **Jornada Anterior / Last Slate:** {jornada_txt}")
 st.markdown(f"• **Acumulado Global / Global Accumulator:** {global_txt}")
 st.markdown("---")
 
-# Main content based on menu selection
-if "Cartelera" in menu or "Schedule" in menu:
-    st.markdown(f"## 📊 Cartelera de Partidos [{sport}]")
+# Section 1: Cartelera de Partidos
+if "Cartelera" in menu:
+    st.markdown(f"## 📊 Cartelera de Partidos [{sport}] - Análisis Profundo")
     if os.path.exists(cartelera_path):
         df_cart = pd.read_csv(cartelera_path)
+        match_options = [f"{row.get('equipo1', '')} vs {row.get('equipo2', '')}" for idx, row in df_cart.iterrows()]
+        selected_match = st.selectbox("Selecciona un encuentro para ver el desglose científico del modelo:" if lang_code == "es" else "Select a matchup:", match_options)
+        
         for idx, row in df_cart.iterrows():
-            st.markdown(f"### 🏀 {row.get('equipo1', '')} vs {row.get('equipo2', '')}")
-            st.markdown(f"⏰ **Hora (VE):** {row.get('hora', '')} | 🏟️ **Sede:** {row.get('sede', '')}")
-            st.markdown(f"🎯 **Pick / Pronóstico:** {row.get('ganador', '')} | 📊 **Total Puntos (O/U):** {row.get('total_puntos', '')}")
-            st.markdown("---")
+            match_title = f"{row.get('equipo1', '')} vs {row.get('equipo2', '')}"
+            if match_title == selected_match:
+                st.markdown(f"### {row.get('equipo1', '')} vs {row.get('equipo2', '')}")
+                st.markdown(f"⏰ **Hora (VE):** {row.get('hora', '')} | 🏟️ **Sede:** {row.get('sede', '')}")
+                st.markdown(f"🎯 **Pick / Pronóstico:** {row.get('ganador', '')} | 📊 **Total Puntos (O/U):** {row.get('total_puntos', '')}")
+                st.markdown(f"💬 **Análisis:** {row.get('analisis', row.get('resumen', 'Análisis estadístico avanzado disponible.'))}")
+                st.markdown("---")
     else:
-        st.warning("No se encontró el archivo de cartelera.")
+        st.warning("No se encontró el archivo de cartelera de partidos.")
 
-elif "Apuestas" in menu or "Betting" in menu:
+# Section 2: Apuestas USA & Métricas
+elif "Apuestas" in menu:
     st.markdown(f"## 📈 Apuestas USA & Métricas Avanzadas [{sport}]")
     if os.path.exists(apuestas_path):
         df_ap = pd.read_csv(apuestas_path)
         st.dataframe(df_ap, use_container_width=True)
     else:
-        st.warning("No se encontró el archivo de apuestas y métricas.")
+        st.warning("No se encontró el archivo de apuestas de USA.")
 
+# Section 3: Checklist de Último Minuto
 elif "Checklist" in menu:
     st.markdown(f"## 🧭 Checklist de Último Minuto [{sport}]")
     if os.path.exists(checklist_path):
         df_chk = pd.read_csv(checklist_path)
         for idx, row in df_chk.iterrows():
-            st.markdown(f"**Partido:** {row.get('partido', '')}")
-            st.markdown(f"• **Estado:** {row.get('estado', '')}")
-            st.markdown(f"• **Alerta / Notas:** {row.get('alerta_notas', '')}")
+            st.markdown(f"### 🏀 Partido: {row.get('partido', '')}")
+            st.markdown(f"• **Estado / Status:** {row.get('estado', '')}")
+            st.markdown(f"• **Alerta / Notes:** {row.get('alerta_notas', '')}")
             st.markdown(f"• **Cambio de Perspectiva:** {row.get('cambio_perspectiva', '')}")
             st.markdown("---")
     else:
-        st.warning("No se encontró el checklist de último minuto.")
+        st.warning("No se encontró el archivo de checklist de último minuto.")
 
-elif "Administración" in menu or "Admin" in menu:
+# Section 4: Panel de Administración
+elif "Administración" in menu:
     st.markdown(f"## ⚙️ Panel de Administración [{sport}]")
     password = st.text_input("Clave de administrador:" if lang_code == "es" else "Admin Password:", type="password")
     if password == "coseinca2026":
