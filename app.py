@@ -27,6 +27,8 @@ menu = st.sidebar.radio(
         "📊 Cartelera de Partidos",
         "📈 Apuestas USA & Métricas",
         "🧭 Checklist de Último Minuto",
+        "📰 Noticias & Análisis",
+        "📖 Diccionario Sabermétrico",
         "⚙️ Panel de Administración"
     ]
 )
@@ -39,11 +41,13 @@ if sport_prefix == "nba":
     apuestas_path = os.path.join(current_dir, "apuestas_usa.csv")
     efectividad_path = os.path.join(current_dir, "historial_efectividad.csv")
     checklist_path = os.path.join(current_dir, "checklist_ultimo_minuto.csv")
+    noticias_path = os.path.join(current_dir, "noticias.txt")
 else:
     cartelera_path = os.path.join(current_dir, "nfl_cartelera_juegos.csv")
     apuestas_path = os.path.join(current_dir, "nfl_apuestas_usa.csv")
     efectividad_path = os.path.join(current_dir, "nfl_historial_efectividad.csv")
     checklist_path = os.path.join(current_dir, "nfl_checklist_ultimo_minuto.csv")
+    noticias_path = os.path.join(current_dir, "nfl_noticias.txt")
 
 # Effectiveness Display
 if os.path.exists(efectividad_path):
@@ -109,7 +113,33 @@ elif "Checklist" in menu:
     else:
         st.warning("No se encontró el archivo de checklist de último minuto.")
 
-# Section 4: Panel de Administración
+# Section 4: Noticias & Análisis
+elif "Noticias" in menu:
+    st.markdown(f"## 📰 Noticias & Análisis Avanzado [{sport}]")
+    if os.path.exists(noticias_path):
+        with open(noticias_path, 'r', encoding='utf-8') as f:
+            noticias_text = f.read()
+        st.markdown(noticias_text)
+    else:
+        st.info(f"Reportes y boletines analíticos actualizados para {sport} en desarrollo.")
+
+# Section 5: Diccionario Sabermétrico
+elif "Diccionario" in menu:
+    st.markdown(f"## 📖 Diccionario Sabermétrico & Glosario Analítico [{sport}]")
+    if sport_prefix == "nba":
+        st.markdown("### 🏀 Métricas Clave NBA:")
+        st.markdown("• **Net Rating:** Diferencial de puntos por 100 posesiones (Ofensiva vs Defensiva).")
+        st.markdown("• **Effective Field Goal Percentage (eFG%):** Porcentaje de tiro efectivo ajustado por el valor superior de los triples.")
+        st.markdown("• **True Shooting Percentage (TS%):** Eficiencia de anotación considerando tiros de campo, triples y tiros libres.")
+        st.markdown("• **Win Probability Model:** Modelo predictivo basado en posesiones, ventaja en la pintura y fatiga del back-to-back.")
+    else:
+        st.markdown("### 🏈 Métricas Clave NFL:")
+        st.markdown("• **EPA per Play (Expected Points Added):** Valor esperado de puntos añadidos por cada jugada ofensiva o defensiva.")
+        st.markdown("• **Success Rate (% de Éxito):** Porcentaje de jugadas que cumplen con el umbral de yardas necesarias según el down.")
+        st.markdown("• **DVOA (Defense-adjusted Value Over Average):** Eficiencia de un equipo comparada con el promedio de la liga, ajustada por la calidad del oponente.")
+        st.markdown("• **Pressure Rate:** Porcentaje de jugadas de pase donde la defensiva presiona al mariscal de campo.")
+
+# Section 6: Panel de Administración
 elif "Administración" in menu:
     st.markdown(f"## ⚙️ Panel de Administración [{sport}]")
     password = st.text_input("Clave de administrador:" if lang_code == "es" else "Admin Password:", type="password")
