@@ -345,8 +345,7 @@ if is_cartelera:
             st.markdown("---")
             if st.button("📄 " + ("Descargar Análisis en PDF" if lang == "es" else "Download Analysis PDF")):
                 archivo_pdf = generar_pdf_analisis(
-                    equipo1 + " vs " + equipo2, hora_val, sede_val, str(fila_juego["ganador"]), str(fila_juego["total_puntos"]), analisis_amplio.replace("<br>", "
-").replace("<b>", "")
+                    equipo1 + " vs " + equipo2, hora_val, sede_val, str(fila_juego["ganador"]), str(fila_juego["total_puntos"]), analisis_amplio.replace("<br>", "\n").replace("<b>", "")
                 )
                 with open(archivo_pdf, "rb") as f:
                     st.download_button("💾 " + ("Guardar archivo PDF en tu equipo" if lang == "es" else "Save PDF file to your device"), data=f, file_name="reporte_sabermetria_nba.pdf", mime="application/pdf")
