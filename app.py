@@ -15,6 +15,7 @@ historial_efectividad_path = os.path.join(current_dir, "historial_efectividad.cs
 noticias_txt_path = os.path.join(current_dir, "noticias.txt")
 cartelera_csv_path = os.path.join(current_dir, "cartelera_juegos.csv")
 apuestas_csv_path = os.path.join(current_dir, "apuestas_usa.csv")
+checklist_csv_path = os.path.join(current_dir, "checklist_ultimo_minuto.csv")
 
 st.set_page_config(
     page_title="Sabermetría IA - Analítica Avanzada de Básquetbol",
@@ -216,6 +217,23 @@ def guardar_cartelera(df):
     except Exception:
         pass
 
+
+def cargar_checklist():
+    if os.path.exists(checklist_csv_path):
+        try:
+            df = pd.read_csv(checklist_csv_path, encoding="utf-8")
+            if not df.empty:
+                return df
+        except Exception:
+            pass
+    return pd.DataFrame(columns=["partido", "estado", "alerta_notas", "cambio_perspectiva"])
+
+def guardar_checklist(df):
+    try:
+        df.to_csv(checklist_csv_path, index=False, encoding="utf-8")
+    except Exception:
+        pass
+
 def cargar_apuestas_usa():
     if os.path.exists(apuestas_csv_path):
         try:
@@ -238,6 +256,7 @@ menu = st.sidebar.radio(
     [
         "Cartelera y Partidos",
         "Apuestas y Proyecciones USA (Las Vegas)",
+        "🧭 Checklist de Último Minuto",
         "El Pulso de la Duela (Noticias)",
         "La Jugada Fija del Día",
         "Diccionario Sabermétrico",
@@ -346,6 +365,37 @@ elif menu == "Apuestas y Proyecciones USA (Las Vegas)":
                 st.markdown(f"*{proj}*")
                 st.markdown("---")
 
+
+elif menu == "🧭 Checklist de Último Minuto":
+    st.header("🧭 Checklist de Último Minuto del Analista")
+    st.markdown("Monitoreo en vivo de lesiones, reportes médicos oficiales (Rotowire / NBA Injury Report), fatiga *back-to-back* y factores de última hora que complementan nuestras métricas sabermétricas.")
+    st.markdown("---")
+    df_chk = cargar_checklist()
+    if df_chk.empty:
+        st.info("No hay alertas registradas para la jornada de hoy. Las métricas operan con normalidad.")
+    else:
+        for _, row in df_chk.iterrows():
+            partido = str(row.get("partido", ""))
+            estado = str(row.get("estado", "🟢 Normal"))
+            notas = str(row.get("alerta_notas", ""))
+            cambio = str(row.get("cambio_perspectiva", "Ninguno"))
+            
+            color_box = "#161b22"
+            if "🟢" in estado:
+                border_col = "#00FF66"
+            elif "🟡" in estado:
+                border_col = "#FFD700"
+            else:
+                border_col = "#FF4B4B"
+            
+            st.markdown(f"""
+            <div style="background-color: {color_box}; padding: 18px; border-radius: 10px; border-left: 5px solid {border_col}; margin-bottom: 15px;">
+                <h4 style="margin: 0; color: #ffffff;">{partido} &nbsp;|&nbsp; Estado: {estado}</h4>
+                <p style="margin: 8px 0 0 0; color: #e6edf3;"><b>Notas del Analista (Rotowire / Lesiones / B2B):</b> {notas}</p>
+                <p style="margin: 5px 0 0 0; color: #00FF66;"><b>Sugerencia / Perspectiva:</b> {cambio}</p>
+            </div>
+            """, unsafe_allow_html=True)
+
 elif menu == "El Pulso de la Duela (Noticias)":
     st.header("🎙️ El Pulso de la Duela - Crónicas y Exclusivas (" + fecha_hoy + ")")
     st.markdown("<p style='color: #00FF66; font-size: 1.1em; font-weight: bold;'>El análisis más ardiente y sin censura de las duelas de la NBA.</p>", unsafe_allow_html=True)
@@ -437,6 +487,27 @@ elif menu == "Panel de Administración":
             st.metric(label="Total de Ingresos Acumulados al Portal", value=0)
 
         st.markdown("---")
+        
+        st.markdown("---")
+        st.subheader("🧭 Gestor del Checklist de Último Minuto")
+        df_chk_admin = cargar_checklist()
+        with st.form("form_checklist_admin"):
+            partido_chk = st.selectbox("Selecciona el Partido:", [f"{r['equipo1']} vs {r['equipo2']}" for _, r in df_cartelera.iterrows()] if not df_cartelera.empty else ["Ninguno"])
+            estado_chk = st.selectbox("Nivel de Alerta:", ["🟢 Normal (Métrica Pura)", "🟡 Precaución (Baja / Back-to-back)", "🔴 Alerta Roja (Cambio de Perspectiva / Voltear Pronóstico)"])
+            notas_chk = st.text_area("Notas del Analista (Rotowire / Lesiones / Descanso):", value="Sin novedades reportadas en el parte médico oficial.")
+            cambio_chk = st.text_input("Sugerencia de Ajuste / Cambio de Perspectiva:", value="Mantener pronóstico base del modelo.")
+            
+            if st.form_submit_button("💾 Guardar / Actualizar Alerta de Partido"):
+                nuevo_item = pd.DataFrame([{"partido": partido_chk, "estado": estado_chk, "alerta_notas": notas_chk, "cambio_perspectiva": cambio_chk}])
+                if not df_chk_admin.empty:
+                    df_chk_admin = df_chk_admin[df_chk_admin["partido"] != partido_chk]
+                    df_chk_admin = pd.concat([df_chk_admin, nuevo_item], ignore_index=True)
+                else:
+                    df_chk_admin = nuevo_item
+                guardar_checklist(df_chk_admin)
+                st.success(f"¡Alerta actualizada para {partido_chk}!")
+                st.rerun()
+
         st.subheader("📤 Carga Masiva de Cartelera de Partidos (CSV)")
         csv_ejemplo = df_cartelera.to_csv(index=False).encode("utf-8")
         st.download_button(label="📥 Descargar Plantilla CSV de Partidos", data=csv_ejemplo, file_name="plantilla_cartelera_ejemplo.csv", mime="text/csv")
