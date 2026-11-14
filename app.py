@@ -112,8 +112,6 @@ if "Cartelera" in menu or "Schedule" in menu:
             df_fija = df_cart[df_cart['es_jugada_fija'] == True]
             if not df_fija.empty:
                 row_fija = df_fija.iloc[0]
-                st.markdown("---")
-                st.markdown(f"### ⭐ {'Juego del Día & Análisis de Jugada Fija' if lang_code == 'es' else 'Lock of the Day & Fixed Play Analysis'} [{sport}]")
                 match_name = f"{row_fija.get('equipo1', '')} vs {row_fija.get('equipo2', '')}"
                 hora_v = row_fija.get('hora', '')
                 sede_v = row_fija.get('sede', '')
@@ -121,12 +119,19 @@ if "Cartelera" in menu or "Schedule" in menu:
                 total_v = row_fija.get('total_puntos', '')
                 analisis_v = row_fija.get('analisis_es', row_fija.get('analisis', ''))
                 
-                st.info(f"**{match_name}**\n\n"
-                        f"⏰ **{'Hora (VE)' if lang_code == 'es' else 'Time (VE)'}:** {hora_v} | 🏟️ **{'Sede' if lang_code == 'es' else 'Venue'}:** {sede_v}\n\n"
-                        f"🎯 **{'Pick / Pronóstico Oficial' if lang_code == 'es' else 'Official Model Pick'}:** `{ganador_v}` | 📊 **Total Puntos (O/U):** `{total_v}`\n\n"
-                        f"🧠 **{'Por qué es Jugada Fija (Fundamento Científico)' if lang_code == 'es' else 'Rationale (Scientific Foundation)'}:**\n"
-                        f"{analisis_v}")
-                st.markdown("---")
+                # Replace HTML <br> with clean text for HTML container
+                clean_analisis = analisis_v.replace('<br>', '\n').replace('<br/>', '\n')
+                st.markdown(f"""
+                <div style="background-color: #f0f7ff; padding: 20px; border-radius: 10px; border-left: 5px solid #1f77b4; margin-bottom: 20px;">
+                    <h4>⭐ {'Juego del Día & Análisis de Jugada Fija' if lang_code == 'es' else 'Lock of the Day & Fixed Play Analysis'} [{sport}]</h4>
+                    <p><b>{match_name}</b></p>
+                    <p>⏰ <b>{'Hora (VE)' if lang_code == 'es' else 'Time (VE)'}:</b> {hora_v} | 🏟️ <b>{'Sede' if lang_code == 'es' else 'Venue'}:</b> {sede_v}</p>
+                    <p>🎯 <b>{'Pick / Pronóstico Oficial' if lang_code == 'es' else 'Official Model Pick'}:</b> <code>{ganador_v}</code> | 📊 <b>Total Puntos (O/U):</b> <code>{total_v}</code></p>
+                    <hr style="margin: 10px 0;">
+                    <p>🧠 <b>{'Por qué es Jugada Fija (Fundamento Científico)' if lang_code == 'es' else 'Rationale (Scientific Foundation)'}:</b></p>
+                    <p style="white-space: pre-line;">{clean_analisis}</p>
+                </div>
+                """, unsafe_allow_html=True)
         
         st.markdown(f"### 📋 {'Resto de la Cartelera & Desglose de Encuentros' if lang_code == 'es' else 'Full Schedule & Match Breakdown'}")
         match_options = [f"{row.get('equipo1', '')} vs {row.get('equipo2', '')}" for idx, row in df_cart.iterrows()]
