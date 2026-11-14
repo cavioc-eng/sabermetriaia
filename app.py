@@ -26,6 +26,8 @@ if 'visited' not in st.session_state:
     try:
         with open(visitor_file, "w") as f:
             f.write(str(count))
+    except:
+        pass
 else:
     try:
         with open(visitor_file, "r") as f:
