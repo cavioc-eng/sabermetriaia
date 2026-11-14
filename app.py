@@ -127,9 +127,34 @@ if "Cartelera" in menu or "Schedule" in menu:
 # Section 2: Apuestas USA & Métricas
 elif "Apuestas" in menu or "Betting" in menu:
     st.markdown(f"## 📈 {'Apuestas USA & Métricas Avanzadas' if lang_code == 'es' else 'USA Betting & Advanced Metrics'} [{sport}]")
+    st.markdown("---")
     if os.path.exists(apuestas_path):
         df_ap = pd.read_csv(apuestas_path)
-        st.dataframe(df_ap, use_container_width=True)
+        # Ensure sorted by probabilidad descending if column exists
+        if 'probabilidad' in df_ap.columns:
+            df_ap = df_ap.sort_values(by='probabilidad', ascending=False).reset_index(drop=True)
+        
+        for idx, row in df_ap.iterrows():
+            equipo1 = row.get('equipo1', row.get('partido', 'Partido'))
+            equipo2 = row.get('equipo2', '')
+            spread = row.get('spread', 'N/A')
+            total_ou = row.get('total_ou', 'N/A')
+            proyeccion = row.get('proyeccion_usa', row.get('analisis_apuesta', ''))
+            prob = row.get('probabilidad', 0.0)
+            
+            match_str = f"**{equipo1} vs {equipo2}**" if equipo2 else f"**{equipo1}**"
+            
+            with st.container():
+                col_a, col_b, col_c = st.columns([3, 1.5, 1.5])
+                with col_a:
+                    st.markdown(f"### 🏀 {match_str}")
+                    st.markdown(f"💬 **{'Proyección' if lang_code == 'es' else 'Projection'}:** {proyeccion}")
+                with col_b:
+                    st.markdown(f"📊 **Spread:** `{spread}`")
+                    st.markdown(f"📈 **Total (O/U):** `{total_ou}`")
+                with col_c:
+                    st.metric(label="Probabilidad / Confianza" if lang_code == 'es' else "Probability / Conf", value=f"{prob}%")
+                st.markdown("---")
     else:
         st.warning("No se encontró el archivo de apuestas." if lang_code == "es" else "Betting file not found.")
 
