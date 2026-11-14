@@ -9,6 +9,34 @@ logo_path = os.path.join(os.path.dirname(__file__) if "__file__" in locals() els
 if os.path.exists(logo_path):
     st.sidebar.image(logo_path, width=220)
 
+# Visitor Counter
+visitor_file = "visitas.txt"
+if not os.path.exists(visitor_file):
+    with open(visitor_file, "w") as f:
+        f.write("0")
+
+if 'visited' not in st.session_state:
+    st.session_state.visited = True
+    try:
+        with open(visitor_file, "r") as f:
+            count = int(f.read().strip() or "0")
+    except:
+        count = 0
+    count += 1
+    try:
+        with open(visitor_file, "w") as f:
+            f.write(str(count))
+else:
+    try:
+        with open(visitor_file, "r") as f:
+            count = int(f.read().strip() or "0")
+    except:
+        count = 0
+
+st.sidebar.markdown("---")
+st.sidebar.markdown(f"👁️ **Visitas Totales / Total Visits:** `{count:,}`")
+
+
 st.sidebar.markdown("---")
 st.sidebar.subheader("🏆 Selección de Deporte" if "es" else "🏆 Sport Selection")
 
