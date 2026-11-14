@@ -35,7 +35,7 @@ menu = st.sidebar.radio(
 
 current_dir = os.path.dirname(__file__) if "__file__" in locals() else "."
 
-# File paths mapping based on sport
+# File paths mapping based on sport (NBA matches exact GitHub filenames: historial_efectividad.csv, cartelera_juegos.csv)
 if sport_prefix == "nba":
     cartelera_path = os.path.join(current_dir, "cartelera_juegos.csv")
     apuestas_path = os.path.join(current_dir, "apuestas_usa.csv")
@@ -85,7 +85,7 @@ if "Cartelera" in menu:
                 st.markdown(f"### {row.get('equipo1', '')} vs {row.get('equipo2', '')}")
                 st.markdown(f"⏰ **Hora (VE):** {row.get('hora', '')} | 🏟️ **Sede:** {row.get('sede', '')}")
                 st.markdown(f"🎯 **Pick / Pronóstico:** {row.get('ganador', '')} | 📊 **Total Puntos (O/U):** {row.get('total_puntos', '')}")
-                st.markdown(f"💬 **Análisis:** {row.get('analisis', row.get('resumen', 'Análisis estadístico avanzado disponible.'))}")
+                st.markdown(f"💬 **Análisis:** {row.get('analisis_es', row.get('analisis', 'Análisis estadístico avanzado disponible.'))}")
                 st.markdown("---")
     else:
         st.warning("No se encontró el archivo de cartelera de partidos.")
@@ -121,7 +121,7 @@ elif "Noticias" in menu:
             noticias_text = f.read()
         st.markdown(noticias_text)
     else:
-        st.info(f"Reportes y boletines analíticos actualizados para {sport} en desarrollo.")
+        st.info(f"Reportes y boletines analíticos actualizados para {sport} en development.")
 
 # Section 5: Diccionario Sabermétrico
 elif "Diccionario" in menu:
