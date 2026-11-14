@@ -106,6 +106,14 @@ if "Cartelera" in menu or "Schedule" in menu:
     st.markdown(f"## 📊 {'Cartelera de Partidos' if lang_code == 'es' else 'Match Schedule'} [{sport}]")
     if os.path.exists(cartelera_path):
         df_cart = pd.read_csv(cartelera_path)
+        
+        # Highlight Juego del Día / Jugada Fija if present
+        if 'es_jugada_fija' in df_cart.columns:
+            df_fija = df_cart[df_cart['es_jugada_fija'] == True]
+            if not df_fija.empty:
+                row_fija = df_fija.iloc[0]
+                st.success(f"⭐ **JUEGO DEL DÍA / JUGADA FIJA ({sport}):** {row_fija.get('equipo1', '')} vs {row_fija.get('equipo2', '')} — **Pick Oficial:** {row_fija.get('ganador', '')} (Confianza Máxima / Calibración Bayesiana)")
+        
         match_options = [f"{row.get('equipo1', '')} vs {row.get('equipo2', '')}" for idx, row in df_cart.iterrows()]
         selected_match = st.selectbox("Selecciona un encuentro para ver el desglose científico del modelo:" if lang_code == "es" else "Select a matchup for model breakdown:", match_options)
         
@@ -130,8 +138,14 @@ elif "Apuestas" in menu or "Betting" in menu:
     st.markdown("---")
     if os.path.exists(apuestas_path):
         df_ap = pd.read_csv(apuestas_path)
+        # Ensure sorted by probabilidad descending if column exists
         if 'probabilidad' in df_ap.columns:
             df_ap = df_ap.sort_values(by='probabilidad', ascending=False).reset_index(drop=True)
+            
+            # Highlight top pick as Lock of the Day in Apuestas
+            top_row = df_ap.iloc[0]
+            st.success(f"⭐ **LOCK OF THE DAY (JUEGO DEL DÍA):** {top_row.get('equipo1', '')} vs {top_row.get('equipo2', '')} | **Spread:** `{top_row.get('spread', '')}` | **Probabilidad:** `{top_row.get('probabilidad', '')}%`")
+            st.markdown("---")
         
         for idx, row in df_ap.iterrows():
             equipo1 = row.get('equipo1', row.get('partido', 'Partido'))
@@ -165,7 +179,7 @@ elif "Checklist" in menu:
         for idx, row in df_chk.iterrows():
             st.markdown(f"### 🏀 {'Partido' if lang_code == 'es' else 'Match'}: {row.get('partido', '')}")
             st.markdown(f"• **{'Estado' if lang_code == 'es' else 'Status'}:** {row.get('estado', '')}")
-            st.markdown(f"• **{'Alerta / Notas' if lang_code == 'es' else 'Alert / Notes'}:** {row.get('alerta_notas', '')}")
+            st.markdown(f"• **{'Alerta / Notes' if lang_code == 'es' else 'Alert / Notes'}:** {row.get('alerta_notas', '')}")
             st.markdown(f"• **{'Cambio de Perspectiva' if lang_code == 'es' else 'Perspective Shift'}:** {row.get('cambio_perspectiva', '')}")
             st.markdown("---")
     else:
