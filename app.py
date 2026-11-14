@@ -179,7 +179,7 @@ elif "Checklist" in menu:
         for idx, row in df_chk.iterrows():
             st.markdown(f"### 🏀 {'Partido' if lang_code == 'es' else 'Match'}: {row.get('partido', '')}")
             st.markdown(f"• **{'Estado' if lang_code == 'es' else 'Status'}:** {row.get('estado', '')}")
-            st.markdown(f"• **{'Alerta / Notes' if lang_code == 'es' else 'Alert / Notes'}:** {row.get('alerta_notas', '')}")
+            st.markdown(f"• **{'Alerta / Notas' if lang_code == 'es' else 'Alert / Notes'}:** {row.get('alerta_notas', '')}")
             st.markdown(f"• **{'Cambio de Perspectiva' if lang_code == 'es' else 'Perspective Shift'}:** {row.get('cambio_perspectiva', '')}")
             st.markdown("---")
     else:
