@@ -1,11 +1,6 @@
-equipo1,equipo2,spread,total_ou,proyeccion_usa,probabilidad
-Houston Rockets,Utah Jazz,-7.5,225.5,Pick: Houston Rockets (⭐ Jugada Fija) | Spread: -7.5 | Conf: 91.5% (Calibración Bayesiana: Alta estabilidad en pintura y Net Rating local),91.5
-Minnesota Timberwolves,Chicago Bulls,-4.5,234.0,Pick: Minnesota Timberwolves | Spread: -4.5 | Conf: 90.0% (Control de rebotes y fatiga rival en B2B),90.0
-Los Angeles Clippers,Oklahoma City Thunder,-5.5,223.0,Pick: Oklahoma City Thunder | Spread: -5.5 | Conf: 88.0% (Eficiencia defensiva perimetral N° 1),88.0
-Miami Heat,Cleveland Cavaliers,-4.5,218.5,Pick: Cleveland Cavaliers | Spread: -4.5 | Conf: 85.0% (Fricción defensiva en media cancha),85.0
-New Orleans Pelicans,Memphis Grizzlies,-3.5,226.0,Pick: Memphis Grizzlies | Spread: -3.5 | Conf: 83.5% (Diferencial de robos y pérdidas),83.5
-Chicago Bulls,Atlanta Hawks,-4.5,234.5,Pick: Atlanta Hawks | Spread: -4.5 | Conf: 81.0% (Ritmo de posesiones elevado en transición),81.0
-Indiana Pacers,New York Knicks,-3.5,232.5,Pick: New York Knicks | Spread: -3.5 | Conf: 79.5% (Ejecución superior en clutch time),79.5
-San Antonio Spurs,Golden State Warriors,-2.5,230.0,Pick: San Antonio Spurs (⚠️ Ajuste por Baja de S. Curry) | Spread: -2.5 | Conf: 78.0% (Impacto crítico de Wembanyama en la pintura),78.0
-Sacramento Kings,Portland Trail Blazers,-7.5,235.0,Pick: Sacramento Kings (⚠️ Precaución: Racha de Portland) | Spread: -7.5 | Conf: 68.0% (Alta varianza por inercia visitante),68.0
-Orlando Magic,Milwaukee Bucks,6.5,221.0,Pick: Milwaukee Bucks (⚠️ Precaución: Inconsistencia Reciente) | Spread: +6.5 | Conf: 64.0% (Desviación estocástica en finales apretados),64.0
+"equipo1","equipo2","spread","total_ou","proyeccion_usa","probabilidad"
+"Minnesota Timberwolves","Chicago Bulls","-4.5","234.0","Pick: Minnesota Timberwolves (⭐ Jugada Fija) | Spread: -4.5 | Conf: 92.5% (Control de rebotes y fatiga B2B)","92.5"
+"Denver Nuggets","New Orleans Pelicans","-3.5","224.5","Pick: Denver Nuggets | Spread: -3.5 | Conf: 89.0% (Eficiencia en transición y control de tableros)","89.0"
+"Cleveland Cavaliers","Dallas Mavericks","-6.5","231.0","Pick: Cleveland Cavaliers | Spread: -6.5 | Conf: 86.5% (Presión perimetral excelsa en casa)","86.5"
+"Memphis Grizzlies","Brooklyn Nets","-5.0","228.5","Pick: Memphis Grizzlies | Spread: -5.0 | Conf: 84.0% (Diferencial de robos y pérdidas)","84.0"
+"Miami Heat","Detroit Pistons","-7.0","219.0","Pick: Miami Heat | Spread: -7.0 | Conf: 81.5% (Volumen interior y defensa física)","81.5"
