@@ -130,7 +130,6 @@ elif "Apuestas" in menu or "Betting" in menu:
     st.markdown("---")
     if os.path.exists(apuestas_path):
         df_ap = pd.read_csv(apuestas_path)
-        # Ensure sorted by probabilidad descending if column exists
         if 'probabilidad' in df_ap.columns:
             df_ap = df_ap.sort_values(by='probabilidad', ascending=False).reset_index(drop=True)
         
