@@ -107,13 +107,28 @@ if "Cartelera" in menu or "Schedule" in menu:
     if os.path.exists(cartelera_path):
         df_cart = pd.read_csv(cartelera_path)
         
-        # Highlight Juego del Día / Jugada Fija if present
+        # Dedicated Section for Juego del Día / Jugada Fija (Lock of the Day)
         if 'es_jugada_fija' in df_cart.columns:
             df_fija = df_cart[df_cart['es_jugada_fija'] == True]
             if not df_fija.empty:
                 row_fija = df_fija.iloc[0]
-                st.success(f"⭐ **JUEGO DEL DÍA / JUGADA FIJA ({sport}):** {row_fija.get('equipo1', '')} vs {row_fija.get('equipo2', '')} — **Pick Oficial:** {row_fija.get('ganador', '')} (Confianza Máxima / Calibración Bayesiana)")
+                st.markdown("---")
+                st.markdown(f"### ⭐ {'Juego del Día & Análisis de Jugada Fija' if lang_code == 'es' else 'Lock of the Day & Fixed Play Analysis'} [{sport}]")
+                match_name = f"{row_fija.get('equipo1', '')} vs {row_fija.get('equipo2', '')}"
+                hora_v = row_fija.get('hora', '')
+                sede_v = row_fija.get('sede', '')
+                ganador_v = row_fija.get('ganador', '')
+                total_v = row_fija.get('total_puntos', '')
+                analisis_v = row_fija.get('analisis_es', row_fija.get('analisis', ''))
+                
+                st.info(f"**{match_name}**\n\n"
+                        f"⏰ **{'Hora (VE)' if lang_code == 'es' else 'Time (VE)'}:** {hora_v} | 🏟️ **{'Sede' if lang_code == 'es' else 'Venue'}:** {sede_v}\n\n"
+                        f"🎯 **{'Pick / Pronóstico Oficial' if lang_code == 'es' else 'Official Model Pick'}:** `{ganador_v}` | 📊 **Total Puntos (O/U):** `{total_v}`\n\n"
+                        f"🧠 **{'Por qué es Jugada Fija (Fundamento Científico)' if lang_code == 'es' else 'Rationale (Scientific Foundation)'}:**\n"
+                        f"{analisis_v}")
+                st.markdown("---")
         
+        st.markdown(f"### 📋 {'Resto de la Cartelera & Desglose de Encuentros' if lang_code == 'es' else 'Full Schedule & Match Breakdown'}")
         match_options = [f"{row.get('equipo1', '')} vs {row.get('equipo2', '')}" for idx, row in df_cart.iterrows()]
         selected_match = st.selectbox("Selecciona un encuentro para ver el desglose científico del modelo:" if lang_code == "es" else "Select a matchup for model breakdown:", match_options)
         
