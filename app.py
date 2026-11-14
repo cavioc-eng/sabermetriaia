@@ -35,7 +35,7 @@ menu = st.sidebar.radio(
 
 current_dir = os.path.dirname(__file__) if "__file__" in locals() else "."
 
-# File paths mapping based on sport (NBA matches exact GitHub filenames: historial_efectividad.csv, cartelera_juegos.csv)
+# File paths mapping based on sport
 if sport_prefix == "nba":
     cartelera_path = os.path.join(current_dir, "cartelera_juegos.csv")
     apuestas_path = os.path.join(current_dir, "apuestas_usa.csv")
@@ -121,7 +121,7 @@ elif "Noticias" in menu:
             noticias_text = f.read()
         st.markdown(noticias_text)
     else:
-        st.info(f"Reportes y boletines analíticos actualizados para {sport} en development.")
+        st.info(f"Reportes y boletines analíticos actualizados para {sport} en desarrollo.")
 
 # Section 5: Diccionario Sabermétrico
 elif "Diccionario" in menu:
@@ -143,7 +143,9 @@ elif "Diccionario" in menu:
 elif "Administración" in menu:
     st.markdown(f"## ⚙️ Panel de Administración [{sport}]")
     password = st.text_input("Clave de administrador:" if lang_code == "es" else "Admin Password:", type="password")
-    if password == "coseinca2026":
+    # Accept both sabermetria2026, coseinca2026, and sabermetria
+    valid_passwords = ["sabermetria2026", "coseinca2026", "sabermetria"]
+    if password in valid_passwords:
         st.success("¡Acceso concedido!" if lang_code == "es" else "Access granted!")
         uploaded_file = st.file_uploader("Cargar Cartelera CSV" if lang_code == "es" else "Upload Schedule CSV", type=["csv"])
         if uploaded_file is not None:
