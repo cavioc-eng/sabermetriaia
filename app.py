@@ -125,6 +125,20 @@ def get_match_pdf_bytes(match_title, hora, sede, pick, total_ou, analisis, sport
     pdf.add_page()
     pdf.set_auto_page_break(auto=True, margin=15)
     
+    # Remove emojis and non-latin1 characters to prevent UnicodeEncodeError in FPDF
+    def clean_str(s):
+        if not s:
+            return ""
+        # Remove emojis and keep basic printable ascii / latin1
+        return "".join(c for c in str(s) if ord(c) < 256).encode('latin1', errors='ignore').decode('latin1')
+
+    match_title = clean_str(match_title)
+    sport_name = clean_str(sport_name)
+    hora = clean_str(hora)
+    sede = clean_str(sede)
+    pick = clean_str(pick)
+    total_ou = clean_str(total_ou)
+
     pdf.set_font('helvetica', 'B', 13)
     pdf.set_text_color(20, 20, 20)
     pdf.cell(0, 8, f'Encuentro: {match_title}', 0, 1, 'L')
@@ -134,21 +148,25 @@ def get_match_pdf_bytes(match_title, hora, sede, pick, total_ou, analisis, sport
     pdf.cell(0, 7, f' Deporte: {sport_name}', 0, 1, 'L', fill=True)
     pdf.cell(0, 7, f' Hora (VE): {hora}', 0, 1, 'L', fill=True)
     pdf.cell(0, 7, f' Sede: {sede}', 0, 1, 'L', fill=True)
-    pdf.cell(0, 7, f' Pick / Pronóstico Oficial: {pick}', 0, 1, 'L', fill=True)
+    pdf.cell(0, 7, f' Pick / Pronostico Oficial: {pick}', 0, 1, 'L', fill=True)
     pdf.cell(0, 7, f' Total Puntos (O/U): {total_ou}', 0, 1, 'L', fill=True)
     pdf.ln(4)
     
     pdf.set_font('helvetica', 'B', 11)
     pdf.set_text_color(31, 119, 180)
-    pdf.cell(0, 7, 'Análisis Sabermétrico Avanzado', 0, 1, 'L')
+    pdf.cell(0, 7, 'Analisis Sabermetrico Avanzado', 0, 1, 'L')
     
     clean_text = analisis.replace('<br>', '\n').replace('<br/>', '\n').replace('<b>', '').replace('</b>', '').replace('<strong>', '').replace('</strong>', '').replace('<em>', '').replace('</em>', '').replace('&bull;', '-')
+    clean_text = clean_str(clean_text)
     
     pdf.set_font('helvetica', '', 9.5)
     pdf.set_text_color(50, 50, 50)
     pdf.multi_cell(0, 5.5, clean_text)
     
-    return pdf.output(dest='S').encode('latin1', errors='ignore')
+    res = pdf.output(dest='S')
+    if isinstance(res, str):
+        return res.encode('latin1', errors='ignore')
+    return bytes(res)
 
 
 # Section 1: Cartelera de Partidos
