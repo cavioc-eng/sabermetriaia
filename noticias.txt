@@ -1,0 +1,40 @@
+## 📰 Boletín Sabermétrico & Resultados de la Jornada | Gameday Results & Sabermetric Bulletin
+*Actualizado / Updated: 14 de Noviembre / November 14*
+
+---
+
+### 🇪🇸 ESPAÑOL: Resumen y Auditoría de la Jornada
+¡Una jornada de alta precisión y lectura táctica impecable en la NBA! Nuestro motor analítico cerró la fecha con una efectividad sobresaliente del **80.0% (4 de 5 aciertos)**, reafirmando que el rigor científico y el *Trading de los Juegos* superan cualquier corazonada.
+
+#### 🎯 Resultados y Desglose de la Cartelera
+*   **Denver Nuggets 116 vs. New Orleans Pelicans 108** 
+    *   *Pronóstico del Modelo:* Denver Nuggets (-3.5) 🎯 **ACIERTO**. La eficiencia en transición y el control de tableros dictaron cátedra en la carretera.
+*   **Cleveland Cavaliers 127 vs. Dallas Mavericks 117** 
+    *   *Pronóstico del Modelo:* Cleveland Cavaliers (-6.5) 🎯 **ACIERTO**. Los Cavaliers mantuvieron su invicto en casa con una presión perimetral excelsa.
+*   **Memphis Grizzlies 129 vs. Brooklyn Nets 110** 
+    *   *Pronóstico del Modelo:* Memphis Grizzlies (-5.0) 🎯 **ACIERTO**. Diferencial de robos y pérdidas impecable que cubrió el spread con holgura.
+*   **Miami Heat vs. Detroit Pistons (Victoria de Miami)** 
+    *   *Pronóstico del Modelo:* Miami Heat (-7.0) 🎯 **ACIERTO**. El volumen interior y la defensa física hicieron respetar la localía en el Kaseya Center.
+*   **Minnesota Timberwolves 106 vs. Chicago Bulls 117** 
+    *   *Pronóstico del Modelo:* Minnesota Timberwolves (-4.5) ⭐ **Jugada Fija** ❌ **FALLO**. La gran lección de la jornada: Chicago sorprendió con alta efectividad de campo en condición de *Back-to-Back*. La varianza competitiva nos recuerda la importancia estricta del *Checklist de Último Minuto*.
+
+> 💡 **Nota del Trader:** La consistencia a largo plazo se construye auditando cada desvío. ¡Afinamos coeficientes y vamos por la revancha con la cartelera de hoy!
+
+---
+
+### 🇬🇧 ENGLISH: Gameday Review & Sabermetric Audit
+A stellar night of analytical precision in the NBA! Our predictive engine closed out the slate with an outstanding **80.0% accuracy rate (4 out of 5 correct picks)**, proving once again that data science and *Sports Trading* outmatch raw guesswork.
+
+#### 🎯 Results & Match Breakdown
+*   **Denver Nuggets 116 vs. New Orleans Pelicans 108** 
+    *   *Model Pick:* Denver Nuggets (-3.5) 🎯 **WIN**. Transition efficiency and glass control secured the road victory.
+*   **Cleveland Cavaliers 127 vs. Dallas Mavericks 117** 
+    *   *Model Pick:* Cleveland Cavaliers (-6.5) 🎯 **WIN**. Cavaliers protected home court with elite perimeter pressure.
+*   **Memphis Grizzlies 129 vs. Brooklyn Nets 110** 
+    *   *Model Pick:* Memphis Grizzlies (-5.0) 🎯 **WIN**. Flawless ball security and turnover differential sealed a comfortable cover.
+*   **Miami Heat vs. Detroit Pistons (Miami Win)** 
+    *   *Model Pick:* Miami Heat (-7.0) 🎯 **WIN**. Interior volume and physical defense anchored the home win at Kaseya Center.
+*   **Minnesota Timberwolves 106 vs. Chicago Bulls 117** 
+    *   *Model Pick:* Minnesota Timberwolves (-4.5) ⭐ **Lock of the Day** ❌ **LOSS**. The ultimate lesson of the night: Chicago delivered an upset on a *Back-to-Back*. Variance reminds us why the *Last-Minute Checklist* is non-negotiable.
+
+> 💡 **Trader's Note:** Long-term edge is forged through strict audit and refinement. We've recalibrated our models and are ready for tonight's slate!
