@@ -1,3 +1,5 @@
+from fpdf import FPDF
+import tempfile
 import streamlit as st
 import pandas as pd
 import os
@@ -101,6 +103,54 @@ st.markdown(f"• **{'Jornada Anterior' if lang_code == 'es' else 'Last Slate'}:
 st.markdown(f"• **{'Acumulado Global' if lang_code == 'es' else 'Global Accumulator'}:** {global_txt}")
 st.markdown("---")
 
+
+class PDFReport(FPDF):
+    def header(self):
+        self.set_font('helvetica', 'B', 15)
+        self.set_text_color(31, 119, 180)
+        self.cell(0, 10, 'Sabermetría IA / Winometry AI - Reporte Analítico', 0, 1, 'C')
+        self.set_font('helvetica', 'I', 9)
+        self.set_text_color(100, 100, 100)
+        self.cell(0, 5, 'Trading de los Juegos & Rigor Métrico Deportivo', 0, 1, 'C')
+        self.ln(4)
+
+    def footer(self):
+        self.set_y(-15)
+        self.set_font('helvetica', 'I', 8)
+        self.set_text_color(150, 150, 150)
+        self.cell(0, 10, f'Página {self.page_no()} | Generado por Sabermetría IA', 0, 0, 'C')
+
+def get_match_pdf_bytes(match_title, hora, sede, pick, total_ou, analisis, sport_name):
+    pdf = PDFReport()
+    pdf.add_page()
+    pdf.set_auto_page_break(auto=True, margin=15)
+    
+    pdf.set_font('helvetica', 'B', 13)
+    pdf.set_text_color(20, 20, 20)
+    pdf.cell(0, 8, f'Encuentro: {match_title}', 0, 1, 'L')
+    
+    pdf.set_font('helvetica', 'B', 9)
+    pdf.set_fill_color(240, 247, 255)
+    pdf.cell(0, 7, f' Deporte: {sport_name}', 0, 1, 'L', fill=True)
+    pdf.cell(0, 7, f' Hora (VE): {hora}', 0, 1, 'L', fill=True)
+    pdf.cell(0, 7, f' Sede: {sede}', 0, 1, 'L', fill=True)
+    pdf.cell(0, 7, f' Pick / Pronóstico Oficial: {pick}', 0, 1, 'L', fill=True)
+    pdf.cell(0, 7, f' Total Puntos (O/U): {total_ou}', 0, 1, 'L', fill=True)
+    pdf.ln(4)
+    
+    pdf.set_font('helvetica', 'B', 11)
+    pdf.set_text_color(31, 119, 180)
+    pdf.cell(0, 7, 'Análisis Sabermétrico Avanzado', 0, 1, 'L')
+    
+    clean_text = analisis.replace('<br>', '\n').replace('<br/>', '\n').replace('<b>', '').replace('</b>', '').replace('<strong>', '').replace('</strong>', '').replace('<em>', '').replace('</em>', '').replace('&bull;', '-')
+    
+    pdf.set_font('helvetica', '', 9.5)
+    pdf.set_text_color(50, 50, 50)
+    pdf.multi_cell(0, 5.5, clean_text)
+    
+    return pdf.output(dest='S').encode('latin1', errors='ignore')
+
+
 # Section 1: Cartelera de Partidos
 if "Cartelera" in menu or "Schedule" in menu:
     st.markdown(f"## 📊 {'Cartelera de Partidos' if lang_code == 'es' else 'Match Schedule'} [{sport}]")
@@ -134,6 +184,15 @@ if "Cartelera" in menu or "Schedule" in menu:
                     <div style="font-size: 0.9rem; line-height: 1.5; word-break: break-word;">{clean_analisis}</div>
                 </div>
                 """, unsafe_allow_html=True)
+                
+                pdf_bytes_fija = get_match_pdf_bytes(match_name, hora_v, sede_v, ganador_v, str(total_v), analisis_v, sport)
+                st.download_button(
+                    label="📥 Descargar Análisis en PDF (Jugada Fija)" if lang_code == 'es' else "📥 Download PDF Analysis (Lock of the Day)",
+                    data=pdf_bytes_fija,
+                    file_name=f"Jugada_Fija_{match_name.replace(' ', '_')}.pdf",
+                    mime="application/pdf",
+                    key="download_fija_pdf"
+                )
                 st.markdown("---")
         
         st.markdown(f"### 📋 {'Resto de la Cartelera & Desglose de Encuentros' if lang_code == 'es' else 'Full Schedule & Match Breakdown'}")
@@ -151,6 +210,15 @@ if "Cartelera" in menu or "Schedule" in menu:
                 if lang_code == 'en':
                     analisis_content = row.get('analisis_en', analisis_content)
                 st.markdown(f"💬 **{'Análisis' if lang_code == 'es' else 'Analysis'}:** {analisis_content}", unsafe_allow_html=True)
+                
+                pdf_bytes_match = get_match_pdf_bytes(match_title, row.get('hora', ''), row.get('sede', ''), row.get('ganador', ''), str(row.get('total_puntos', '')), analisis_content, sport)
+                st.download_button(
+                    label="📥 Descargar Análisis en PDF" if lang_code == 'es' else "📥 Download PDF Analysis",
+                    data=pdf_bytes_match,
+                    file_name=f"Analisis_{match_title.replace(' ', '_')}.pdf",
+                    mime="application/pdf",
+                    key=f"download_pdf_{idx}"
+                )
                 st.markdown("---")
     else:
         st.warning("No se encontró el archivo de cartelera." if lang_code == "es" else "Schedule file not found.")
