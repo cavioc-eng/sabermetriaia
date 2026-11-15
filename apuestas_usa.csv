@@ -1,6 +1,10 @@
-"equipo1","equipo2","spread","total_ou","proyeccion_usa","probabilidad"
-"Minnesota Timberwolves","Chicago Bulls","-4.5","234.0","Pick: Minnesota Timberwolves (⭐ Jugada Fija) | Spread: -4.5 | Conf: 92.5% (Control de rebotes y fatiga B2B)","92.5"
-"Denver Nuggets","New Orleans Pelicans","-3.5","224.5","Pick: Denver Nuggets | Spread: -3.5 | Conf: 89.0% (Eficiencia en transición y control de tableros)","89.0"
-"Cleveland Cavaliers","Dallas Mavericks","-6.5","231.0","Pick: Cleveland Cavaliers | Spread: -6.5 | Conf: 86.5% (Presión perimetral excelsa en casa)","86.5"
-"Memphis Grizzlies","Brooklyn Nets","-5.0","228.5","Pick: Memphis Grizzlies | Spread: -5.0 | Conf: 84.0% (Diferencial de robos y pérdidas)","84.0"
-"Miami Heat","Detroit Pistons","-7.0","219.0","Pick: Miami Heat | Spread: -7.0 | Conf: 81.5% (Volumen interior y defensa física)","81.5"
+equipo1,equipo2,spread,total_ou,proyeccion_usa,probabilidad
+Boston Celtics,Dallas Mavericks,-5.5,226.5,Pick: Boston Celtics (⭐ Jugada Fija) | Spread: -5.5 | Conf: 93.5% (Net rating perimetral y control de ritmo),93.5
+Oklahoma City Thunder,Sacramento Kings,-4.5,235.0,Pick: Oklahoma City Thunder | Spread: -4.5 | Conf: 88.5% (Presión perimetral y ratio asistencias/pérdidas),88.5
+Houston Rockets,Washington Wizards,-8.5,225.0,Pick: Houston Rockets | Spread: -8.5 | Conf: 89.0% (Asfixia defensiva y control de tableros),89.0
+LA Clippers,Charlotte Hornets,-6.5,219.5,Pick: LA Clippers | Spread: -6.5 | Conf: 87.0% (Defensive rating y solidez en casa),87.0
+New York Knicks,Toronto Raptors,-6.0,222.0,Pick: New York Knicks | Spread: -6.0 | Conf: 86.0% (Ejecución táctica y control de ritmo),86.0
+Los Angeles Lakers,Phoenix Suns,-4.0,228.0,Pick: Los Angeles Lakers | Spread: -4.0 | Conf: 85.5% (Control de pintura y rebotes),85.5
+Milwaukee Bucks,Atlanta Hawks,-4.5,238.5,Pick: Milwaukee Bucks | Spread: -4.5 | Conf: 84.0% (Volumen interior y posesiones netas),84.0
+San Antonio Spurs,Utah Jazz,-5.0,233.0,Pick: San Antonio Spurs | Spread: -5.0 | Conf: 83.5% (Gravedad interior y eFG%),83.5
+Indiana Pacers,Philadelphia 76ers,+3.5,231.5,Pick: Indiana Pacers | Spread: +3.5 | Conf: 81.0% (Pace ofensivo y conversión exterior),81.0
