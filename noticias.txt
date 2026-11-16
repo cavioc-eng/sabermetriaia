@@ -1,40 +1,42 @@
-## 📰 Boletín Sabermétrico & Resultados de la Jornada | Gameday Results & Sabermetric Bulletin
-*Actualizado / Updated: 14 de Noviembre / November 14*
+## 📰 Boletín Sabermétrico NBA & Auditoría de la Jornada | NBA Sabermetric Bulletin & Gameday Audit
+*Actualizado / Updated: 16 de Noviembre / November 16*
 
 ---
 
-### 🇪🇸 ESPAÑOL: Resumen y Auditoría de la Jornada
-¡Una jornada de alta precisión y lectura táctica impecable en la NBA! Nuestro motor analítico cerró la fecha con una efectividad sobresaliente del **80.0% (4 de 5 aciertos)**, reafirmando que el rigor científico y el *Trading de los Juegos* superan cualquier corazonada.
+### 🇪🇸 ESPAÑOL: Auditoría Profunda y Resultados de la Jornada Dominical (NBA)
+¡Una jornada dominical de alta precisión en las duelas de la NBA! Nuestro motor analítico cerró la fecha con un sólido **77.8% de efectividad (7 aciertos en 9 encuentros)**, elevando nuestro acumulado global de temporada a **78.6%**. El rigor del *Net Rating* perimetral y el control de ritmo volvieron a marcar la diferencia.
 
-#### 🎯 Resultados y Desglose de la Cartelera
-*   **Denver Nuggets 116 vs. New Orleans Pelicans 108** 
-    *   *Pronóstico del Modelo:* Denver Nuggets (-3.5) 🎯 **ACIERTO**. La eficiencia en transición y el control de tableros dictaron cátedra en la carretera.
-*   **Cleveland Cavaliers 127 vs. Dallas Mavericks 117** 
-    *   *Pronóstico del Modelo:* Cleveland Cavaliers (-6.5) 🎯 **ACIERTO**. Los Cavaliers mantuvieron su invicto en casa con una presión perimetral excelsa.
-*   **Memphis Grizzlies 129 vs. Brooklyn Nets 110** 
-    *   *Pronóstico del Modelo:* Memphis Grizzlies (-5.0) 🎯 **ACIERTO**. Diferencial de robos y pérdidas impecable que cubrió el spread con holgura.
-*   **Miami Heat vs. Detroit Pistons (Victoria de Miami)** 
-    *   *Pronóstico del Modelo:* Miami Heat (-7.0) 🎯 **ACIERTO**. El volumen interior y la defensa física hicieron respetar la localía en el Kaseya Center.
-*   **Minnesota Timberwolves 106 vs. Chicago Bulls 117** 
-    *   *Pronóstico del Modelo:* Minnesota Timberwolves (-4.5) ⭐ **Jugada Fija** ❌ **FALLO**. La gran lección de la jornada: Chicago sorprendió con alta efectividad de campo en condición de *Back-to-Back*. La varianza competitiva nos recuerda la importancia estricta del *Checklist de Último Minuto*.
+#### 🎯 Desglose de los Aciertos Destacados (7/9 Aciertos Generales)
+1. **Boston Celtics vs. Dallas Mavericks (⭐ Jugada Fija):** **ACIERTO ✅** (Celtics 131 - 94 Mavericks). ¡Nuestra fija estelar no falló! El diferencial perimetral trituró a Dallas por 37 puntos de ventaja.
+2. **Sacramento Kings vs. Oklahoma City Thunder:** **ACIERTO ✅** (Thunder 125 - 103 Kings). Presión perimetral asfixiante y dominio desde el primer cuarto.
+3. **Washington Wizards vs. Houston Rockets:** **ACIERTO ✅** (Rockets 147 - 119 Wizards). Exhibición ofensiva total con un tercer cuarto arrollador de 46 puntos.
+4. **Toronto Raptors vs. New York Knicks:** **ACIERTO ✅** (Knicks 112 - 108 Raptors en OT). Ejecución táctica impecable en tiempo extra.
+5. **Utah Jazz vs. San Antonio Spurs:** **ACIERTO ✅** (Spurs 110 - 102 Jazz). Solidez en la pintura y control de los tiempos en el cierre.
+6. **Los Angeles Clippers vs. Charlotte Hornets:** **ACIERTO ✅** (Clippers 113 - 105 Hornets). Solidez defensiva en casa y control de los embates finales.
+7. **Phoenix Suns vs. Los Angeles Lakers:** **ACIERTO ✅** (Lakers 131 - 123 Suns). Dominio en tableros y pintura en la segunda mitad.
 
-> 💡 **Nota del Trader:** La consistencia a largo plazo se construye auditando cada desvío. ¡Afinamos coeficientes y vamos por la revancha con la cartelera de hoy!
+#### 📉 Análisis de los Desvíos Registrados (2 Fallos)
+* **Philadelphia 76ers vs. Indiana Pacers (76ers 131 - 124 Pacers):** Pronosticábamos a Indiana por su *pace* ofensivo, pero Philadelphia ajustó su rotación interior para llevarse un duelo de ultra-goleo.
+* **Milwaukee Bucks vs. Atlanta Hawks (Hawks 113 - 106 Bucks):** Los Bucks eran favoritos por volumen interior, pero Atlanta protagonizó una de las sorpresas con un segundo cuarto demoledor (37-16).
+
+> 💡 **Nota del Trader:** La consistencia en la NBA requiere auditar cada variable, desde el descanso (*Back-to-Back*) hasta la eficiencia perimetral. ¡Nuestros modelos afinan coeficientes para la cartelera de hoy!
 
 ---
 
-### 🇬🇧 ENGLISH: Gameday Review & Sabermetric Audit
-A stellar night of analytical precision in the NBA! Our predictive engine closed out the slate with an outstanding **80.0% accuracy rate (4 out of 5 correct picks)**, proving once again that data science and *Sports Trading* outmatch raw guesswork.
+### 🇬🇧 ENGLISH: Deep Audit & Sunday Gameday Results (NBA)
+A stellar analytical Sunday on the NBA hardwood! Our predictive engine closed out the slate with a solid **77.8% accuracy rate (7 correct picks out of 9 games)**, pushing our global season accumulator to **78.6%**. The power of perimeter *Net Rating* and pace control proved decisive once again.
 
-#### 🎯 Results & Match Breakdown
-*   **Denver Nuggets 116 vs. New Orleans Pelicans 108** 
-    *   *Model Pick:* Denver Nuggets (-3.5) 🎯 **WIN**. Transition efficiency and glass control secured the road victory.
-*   **Cleveland Cavaliers 127 vs. Dallas Mavericks 117** 
-    *   *Model Pick:* Cleveland Cavaliers (-6.5) 🎯 **WIN**. Cavaliers protected home court with elite perimeter pressure.
-*   **Memphis Grizzlies 129 vs. Brooklyn Nets 110** 
-    *   *Model Pick:* Memphis Grizzlies (-5.0) 🎯 **WIN**. Flawless ball security and turnover differential sealed a comfortable cover.
-*   **Miami Heat vs. Detroit Pistons (Miami Win)** 
-    *   *Model Pick:* Miami Heat (-7.0) 🎯 **WIN**. Interior volume and physical defense anchored the home win at Kaseya Center.
-*   **Minnesota Timberwolves 106 vs. Chicago Bulls 117** 
-    *   *Model Pick:* Minnesota Timberwolves (-4.5) ⭐ **Lock of the Day** ❌ **LOSS**. The ultimate lesson of the night: Chicago delivered an upset on a *Back-to-Back*. Variance reminds us why the *Last-Minute Checklist* is non-negotiable.
+#### 🎯 Highlights of Winning Picks (7/9 Overall Wins)
+1. **Boston Celtics vs. Dallas Mavericks (⭐ Lock of the Day):** **WIN ✅** (Celtics 131 - 94 Mavericks). Our marquee lock delivered in style! Perimeter efficiency crushed Dallas by a 37-point margin.
+2. **Sacramento Kings vs. Oklahoma City Thunder:** **WIN ✅** (Thunder 125 - 103 Kings). Suffocating perimeter pressure and wire-to-wire control.
+3. **Washington Wizards vs. Houston Rockets:** **WIN ✅** (Rockets 147 - 119 Wizards). Offensive masterclass featuring a dominant 46-point third quarter.
+4. **Toronto Raptors vs. New York Knicks:** **WIN ✅** (Knicks 112 - 108 Raptors in OT). Flawless clutch execution in overtime.
+5. **Utah Jazz vs. San Antonio Spurs:** **WIN ✅** (Spurs 110 - 102 Jazz). Interior toughness and late-game clock management.
+6. **Los Angeles Clippers vs. Charlotte Hornets:** **WIN ✅** (Clippers 113 - 105 Hornets). Home defensive resilience holding off late runs.
+7. **Phoenix Suns vs. Los Angeles Lakers:** **WIN ✅** (Lakers 131 - 123 Suns). Second-half rebounding and paint dominance secured the win.
 
-> 💡 **Trader's Note:** Long-term edge is forged through strict audit and refinement. We've recalibrated our models and are ready for tonight's slate!
+#### 📉 Analysis of Missed Picks (2 Losses)
+* **Philadelphia 76ers vs. Indiana Pacers (76ers 131 - 124 Pacers):** We projected Indiana's offensive pace, but Philadelphia adjusted their interior rotation to edge out a high-scoring shootout.
+* **Milwaukee Bucks vs. Atlanta Hawks (Hawks 113 - 106 Bucks):** Milwaukee was favored on interior volume, but Atlanta pulled off an upset sparked by a blistering 37-16 second quarter.
+
+> 💡 **Trader's Note:** Long-term NBA edge requires auditing every factor, from rest advantage to perimeter efficiency. Our models are dialed in for today's slate!
