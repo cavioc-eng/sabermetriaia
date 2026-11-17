@@ -3,24 +3,24 @@
 
 ---
 
-### 🇪🇸 ESPAÑOL: Auditoría y Lección del Monday Night Football
-¡Tienes toda la razón, colega! El análisis riguroso exige transparencia absoluta ante cualquier desvío. En el *Monday Night Football*, los **Los Angeles Chargers** sorprendieron y vencieron 23-20 a los **Baltimore Ravens**, lo que significó un **fallo ❌** en nuestra selección fija de los Ravens (-3.0). La varianza defensiva y los ajustes de última hora en el SoFi Stadium inclinaron la balanza para Los Ángeles.
+### 🇪🇸 ESPAÑOL: Auditoría y Lección del Monday Night Football (16 de Noviembre)
+¡Transparencia absoluta en el emparrillado! En el *Monday Night Football* de la Semana 10, los **Los Angeles Chargers** dieron la sorpresa y vencieron 23-20 a los **Baltimore Ravens** en el SoFi Stadium. A pesar de nuestro pronóstico en los Ravens (-3.0), la ejecución clutch de Los Ángeles inclinó la balanza.
 
-#### 🎯 Resultados y Desglose de la Jornada MNF
+#### 🎯 Resultado del Monday Night Football
 *   **Los Angeles Chargers 23 vs. Baltimore Ravens 20** (Spread: -3.0)
-    *   *Pronóstico del Modelo:* **Baltimore Ravens (-3.0)** ⭐ **Jugada Fija** ❌ **FALLO**. 
-    *   *Análisis de Varianza:* A pesar de dominar ciertos sectores en las trincheras, Baltimore no pudo contener los ataques decisivos de los Chargers en el cierre, rompiendo nuestra racha perfecta previa en el *Trading USA*.
+    *   *Pronóstico del Modelo:* Baltimore Ravens (-3.0) ⭐ Jugada Fija ❌ FALLO.
+    *   *Análisis:* La varianza defensiva y los paradas clave en el último cuarto le dieron la victoria a los Chargers. Nuestro acumulado global en la NFL se ajusta a **61.5% (8 aciertos en 13 partidos)**.
 
-> 📈 **Acumulado NFL Actualizado:** Tras este resultado adverso, nuestra efectividad acumulada en la temporada de la NFL se ajusta a **61.5% (8 aciertos en 13 partidos evaluados)**. ¡Cada ajuste fortalece nuestros modelos!
+> 🚨 **Aviso de Cartelera:** No hay partidos programados en la NFL hasta el próximo **19 de noviembre de 2026**. Nuestros modelos se encuentran afinando coeficientes.
 
 ---
 
-### 🇬🇧 ENGLISH: Monday Night Football Audit & Correction
-You are entirely right, colleague! Rigorous analysis demands absolute transparency when deviations occur. On *Monday Night Football*, the **Los Angeles Chargers** pulled off a 23-20 upset against the **Baltimore Ravens**, resulting in a **loss ❌** for our Lock of the Day on the Ravens (-3.0). Late-game execution and defensive shifts at SoFi Stadium swung the outcome to Los Angeles.
+### 🇬🇧 ENGLISH: Monday Night Football Audit & Gameday Update (November 16)
+Absolute transparency on the gridiron! On *Monday Night Football*, the **Los Angeles Chargers** pulled off a 23-20 upset against the **Baltimore Ravens** at SoFi Stadium. Despite our pick on the Ravens (-3.0), Los Angeles' clutch execution sealed the win.
 
-#### 🎯 MNF Breakdown & Results
+#### 🎯 Monday Night Football Result
 *   **Los Angeles Chargers 23 vs. Baltimore Ravens 20** (Spread: -3.0)
-    *   *Model Pick:* **Baltimore Ravens (-3.0)** ⭐ **Lock of the Day** ❌ **LOSS**.
-    *   *Variance Analysis:* Despite winning certain trench matchups, Baltimore failed to contain the Chargers' clutch execution down the stretch, halting our prior perfect run in US Trading.
+    *   *Model Pick:* Baltimore Ravens (-3.0) ⭐ Lock of the Day ❌ LOSS.
+    *   *Analysis:* Defensive variance and clutch fourth-quarter stops gave the Chargers the edge. Our global NFL accumulator adjusts to **61.5% (8 correct picks out of 13 games)**.
 
-> 📈 **Updated NFL Accumulator:** Following this setback, our global season accuracy in the NFL adjusts to **61.5% (8 correct picks out of 13 evaluated games)**. Every correction sharpens our predictive models!
+> 🚨 **Schedule Notice:** There are no NFL games scheduled until **November 19, 2026**. Our predictive engines are actively recalibrating.
