@@ -1,42 +1,26 @@
-## 📰 Boletín Sabermétrico NFL & Auditoría de la Jornada | NFL Sabermetric Bulletin & Gameday Audit
-*Actualizado / Updated: 16 de Noviembre / November 16*
+## 📰 Boletín Sabermétrico NFL & Auditoría del Monday Night Football | NFL Sabermetric Bulletin & MNF Audit
+*Actualizado / Updated: 17 de Noviembre / November 17*
 
 ---
 
-### 🇪🇸 ESPAÑOL: Auditoría Profunda y Resultados de la Jornada Dominical (NFL)
-¡Una jornada dominical de altísimo voltaje en los emparrillados! Nuestro modelo predictivo y las selecciones VIP en el mercado de EE. UU. cerraron con un **pleno perfecto del 100.0% (5 de 5 en apuestas estelares)**, mientras que en la cartelera general de 12 encuentros registramos **8 aciertos (66.7% de efectividad)**. El rigor del *EPA per Play*, el *Success Rate* y los factores climáticos volvieron a marcar la pauta.
+### 🇪🇸 ESPAÑOL: Auditoría y Lección del Monday Night Football
+¡Tienes toda la razón, colega! El análisis riguroso exige transparencia absoluta ante cualquier desvío. En el *Monday Night Football*, los **Los Angeles Chargers** sorprendieron y vencieron 23-20 a los **Baltimore Ravens**, lo que significó un **fallo ❌** en nuestra selección fija de los Ravens (-3.0). La varianza defensiva y los ajustes de última hora en el SoFi Stadium inclinaron la balanza para Los Ángeles.
 
-#### 🎯 Desglose de las 5 Selecciones Estelares (Apuestas USA - 5/5 Aciertos)
-1. **New York Jets vs. Buffalo Bills (⭐ Jugada Fija):** **ACIERTO ✅** (Bills 31 - 12 Jets). Las ráfagas de viento pronosticadas en Orchard Park limitaron el juego aéreo visitante, consolidando el dominio terrestre de Buffalo.
-2. **Dallas Cowboys vs. San Francisco 49ers:** **ACIERTO ✅** (49ers 46 - 40 Cowboys). Un duelo ofensivo memorable donde el DVOA defensivo de San Francisco pesó en los minutos finales.
-3. **Atlanta Falcons vs. Kansas City Chiefs:** **ACIERTO ✅** (Chiefs 35 - 13 Falcons). Eficacia clínica en zona roja y presión implacable en las trincheras.
-4. **Cincinnati Bengals vs. Pittsburgh Steelers:** **ACIERTO ✅** (Bengals 38 - 18 Steelers). Explosividad aérea desbordante que destrozó la secundaria de Pittsburgh.
-5. **Detroit Lions vs. New England Patriots:** **ACIERTO ✅** (Lions 35 - 10 Patriots). Dominio absoluto de principio a fin en el partido internacional matutino.
+#### 🎯 Resultados y Desglose de la Jornada MNF
+*   **Los Angeles Chargers 23 vs. Baltimore Ravens 20** (Spread: -3.0)
+    *   *Pronóstico del Modelo:* **Baltimore Ravens (-3.0)** ⭐ **Jugada Fija** ❌ **FALLO**. 
+    *   *Análisis de Varianza:* A pesar de dominar ciertos sectores en las trincheras, Baltimore no pudo contener los ataques decisivos de los Chargers en el cierre, rompiendo nuestra racha perfecta previa en el *Trading USA*.
 
-#### 📉 Análisis de Desvíos en la Cartelera Ampliada (8/12 Aciertos Generales)
-* **Cleveland Browns vs. Houston Texans (Browns 27 - 24 Texans):** Cleveland sorprendió con una muralla defensiva en casa que contuvo el ritmo aéreo de Houston en un final cardiaco.
-* **Green Bay Packers vs. Minnesota Vikings (Vikings 30 - 10 Packers):** Minnesota impuso un *Pass Rush* asfixiante que anuló el plan ofensivo de Green Bay en el U.S. Bank Center.
-* **Indianapolis Colts vs. Miami Dolphins (Colts 24 - 22 Dolphins):** Un gol de campo agónico y control de reloj le dieron la victoria a Indianapolis en un margen de error mínimo.
-* **New Orleans Saints vs. Carolina Panthers (Panthers 20 - 17 Saints):** Duelo divisional cerrado donde Carolina capitalizó errores en equipos especiales para llevarse el triunfo.
-
-> 💡 **Nota del Trader:** La consistencia en la NFL requiere auditar cada detalle, desde las trincheras hasta el clima. ¡Nuestros modelos afinan coeficientes para la próxima semana!
+> 📈 **Acumulado NFL Actualizado:** Tras este resultado adverso, nuestra efectividad acumulada en la temporada de la NFL se ajusta a **61.5% (8 aciertos en 13 partidos evaluados)**. ¡Cada ajuste fortalece nuestros modelos!
 
 ---
 
-### 🇬🇧 ENGLISH: Deep Audit & Sunday Gameday Results (NFL)
-A thrilling Sunday on the NFL gridiron! Our predictive model and VIP US betting picks closed out with a **flawless 100.0% accuracy rate (5/5 on top plays)**, while the general 12-game slate yielded **8 correct picks (66.7% overall accuracy)**. The power of *EPA per Play*, *Success Rate*, and weather factors proved decisive once again.
+### 🇬🇧 ENGLISH: Monday Night Football Audit & Correction
+You are entirely right, colleague! Rigorous analysis demands absolute transparency when deviations occur. On *Monday Night Football*, the **Los Angeles Chargers** pulled off a 23-20 upset against the **Baltimore Ravens**, resulting in a **loss ❌** for our Lock of the Day on the Ravens (-3.0). Late-game execution and defensive shifts at SoFi Stadium swung the outcome to Los Angeles.
 
-#### 🎯 Top 5 US Betting Picks Breakdown (5/5 Wins)
-1. **New York Jets vs. Buffalo Bills (⭐ Lock of the Day):** **WIN ✅** (Bills 31 - 12 Jets). Wind gusts in Orchard Park restricted visiting passing efficiency, anchoring Buffalo's rushing dominance.
-2. **Dallas Cowboys vs. San Francisco 49ers:** **WIN ✅** (49ers 46 - 40 Cowboys). An unforgettable offensive shootout where San Francisco's defensive DVOA prevailed in crunch time.
-3. **Atlanta Falcons vs. Kansas City Chiefs:** **WIN ✅** (Chiefs 35 - 13 Falcons). Clinical red-zone efficiency and relentless trench pressure.
-4. **Cincinnati Bengals vs. Pittsburgh Steelers:** **WIN ✅** (Bengals 38 - 18 Steelers). Explosive aerial attack tore through Pittsburgh's secondary.
-5. **Detroit Lions vs. New England Patriots:** **WIN ✅** (Lions 35 - 10 Patriots). Complete wire-to-wire dominance in the international morning matchup.
+#### 🎯 MNF Breakdown & Results
+*   **Los Angeles Chargers 23 vs. Baltimore Ravens 20** (Spread: -3.0)
+    *   *Model Pick:* **Baltimore Ravens (-3.0)** ⭐ **Lock of the Day** ❌ **LOSS**.
+    *   *Variance Analysis:* Despite winning certain trench matchups, Baltimore failed to contain the Chargers' clutch execution down the stretch, halting our prior perfect run in US Trading.
 
-#### 📉 General Slate Audit (8/12 Overall Wins)
-* **Cleveland Browns vs. Houston Texans (Browns 27 - 24 Texans):** Cleveland's home defensive wall contained Houston's aerial tempo in a cardiac finish.
-* **Green Bay Packers vs. Minnesota Vikings (Vikings 30 - 10 Packers):** Minnesota's suffocating pass rush dismantled Green Bay's offensive scheme at U.S. Bank Stadium.
-* **Indianapolis Colts vs. Miami Dolphins (Colts 24 - 22 Dolphins):** A late clutch field goal and clock management secured the narrow win for Indy.
-* **New Orleans Saints vs. Carolina Panthers (Panthers 20 - 17 Saints):** Tight divisional battle where Carolina capitalized on special teams miscues.
-
-> 💡 **Trader's Note:** Long-term NFL edge requires auditing every variable, from trench matchups to stadium weather. Our models are dialed in for next week!
+> 📈 **Updated NFL Accumulator:** Following this setback, our global season accuracy in the NFL adjusts to **61.5% (8 correct picks out of 13 evaluated games)**. Every correction sharpens our predictive models!
