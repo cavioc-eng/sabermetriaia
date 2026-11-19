@@ -1,34 +1,48 @@
-## 📰 Boletín Sabermétrico NBA & Auditoría de la Jornada (17 Nov) | NBA Sabermetric Bulletin & Gameday Audit
-*Actualizado / Updated: 18 de Noviembre / November 18*
+## 📰 Boletín Sabermétrico NBA & Auditoría de la Jornada (18 Nov) | NBA Sabermetric Bulletin & Gameday Audit
+*Actualizado / Updated: 19 de Noviembre / November 19*
 
 ---
 
-### 🇪🇸 ESPAÑOL: Auditoría Profunda y Resultados de la Jornada (17 de Noviembre)
-¡Excelente jornada para el modelo sabermétrico! Nuestro motor analítico registró **3 aciertos en 5 encuentros (60.0% de efectividad)** en la cartelera de ayer, destacando el cumplimiento exacto de nuestra **Jugada Fija (*Lock of the Day*)**. Con estos resultados, nuestro acumulado global de temporada se ubica en un sólido **75.7%**.
+### 🇪🇸 ESPAÑOL: Auditoría y Conciliación de la Jornada (18 de Noviembre)
+¡Transparencia total en el análisis! En una cartelera atípica y cargada de sorpresas con **12 partidos**, nuestro modelo sabermétrico registró **4 aciertos en 12 encuentros (33.3% de efectividad)** en la jornada del 18 de noviembre. Con esta conciliación, nuestro **acumulado global de temporada se ubica en 71.5% (88 aciertos en 123 partidos)**.
 
-#### 🎯 Desglose de los 3 Aciertos de la Jornada
-1. **Toronto Raptors vs. New York Knicks (⭐ Jugada Fija):** **ACIERTO ✅** (Knicks 111 - 102 Raptors). New York cumplió con creces en el Madison Square Garden, ratificando el 91.5% de confianza respaldado por nuestro *Net Rating* defensivo y control de ritmo.
-2. **Minnesota Timberwolves vs. Portland Trail Blazers:** **ACIERTO ✅** (Timberwolves 106 - 105 Trail Blazers). Victoria ajustada pero controlada gracias a la protección de aro en el cierre.
-3. **Los Angeles Lakers vs. Charlotte Hornets:** **ACIERTO ✅** (Lakers 118 - 114 T.P. Hornets). Victoria en prórroga tras dominar la pintura y los tableros en el tiempo regular.
+#### 🎯 Desglose de los 4 Aciertos (18/11/2026)
+1. **Miami Heat vs. Milwaukee Bucks:** **ACIERTO ✅** (Heat 137 - 130 Bucks). El control del ritmo y la ejecución ofensiva en casa respondieron a lo esperado.
+2. **Orlando Magic vs. Philadelphia 76ers:** **ACIERTO ✅** (76ers 121 - 116 Magic). Philadelphia sostuvo su ventaja en el cierre para cumplir el pronóstico.
+3. **Dallas Mavericks vs. Golden State Warriors:** **ACIERTO ✅** (Mavericks 116 - 94 Warriors). Victoria contundente de Dallas con amplio margen.
+4. **Sacramento Kings vs. Phoenix Suns:** **ACIERTO ✅** (Suns 128 - 107 Kings). Phoenix dominó como visitante con autoridad.
 
-#### 📉 Análisis de los 2 Desvíos Registrados (Resultados Sorpresa)
-* **San Antonio Spurs vs. Detroit Pistons:** **FALLO ❌** (Pistons 105 - 93 Spurs). Detroit impuso una sólida defensa perimetral en casa, neutralizando nuestra proyección favorable a San Antonio.
-* **Los Angeles Clippers vs. Utah Jazz:** **FALLO ❌** (Jazz 132 - 107 Clippers). Utah sorprendió con una ofensiva arrolladora en el Delta Center, superando los márgenes esperados en el tiro exterior.
+#### 📉 Conciliación de los 8 Desvíos / Sorpresas de la Noche
+* **Cleveland Cavaliers vs. Memphis Grizzlies:** **FALLO ❌** (Grizzlies 124 - 121 Cavaliers). Duelo parejo definido en el cierre a favor de Memphis.
+* **Indiana Pacers vs. Houston Rockets:** **FALLO ❌** (Rockets 119 - 104 Pacers). Houston impuso su ritmo y se llevó el triunfo visitante.
+* **Brooklyn Nets vs. Chicago Bulls:** **FALLO ❌** (Bulls 137 - 107 Nets). Chicago dominó ampliamente desde el primer cuarto.
+* **Toronto Raptors vs. Washington Wizards:** **FALLO ❌** (Wizards 103 - 99 Raptors). Washington cerró mejor en un marcador bajo.
+* **New Orleans Pelicans vs. Detroit Pistons:** **FALLO ❌** (Pistons 122 - 109 Pelicans). Detroit volvió a responder con solidez.
+* **Oklahoma City Thunder vs. Atlanta Hawks (⭐ Jugada Fija):** **FALLO ❌** (Hawks 117 - 112 Thunder). Atlanta remontó en el último cuarto (34-19) para llevarse la sorpresa ante nuestra jugada fija.
+* **Denver Nuggets vs. Boston Celtics:** **FALLO ❌** (Nuggets 105 - 101 Celtics). Denver defendió su casa y frenó a Boston en la segunda mitad.
+* **Los Angeles Lakers vs. Utah Jazz:** **FALLO ❌** (Jazz 109 - 97 Lakers). Utah cerró fuerte en el último cuarto (31-21) para quedarse con el juego.
 
-> 💡 **Nota del Trader:** ¡Nuestra Jugada Fija respondió con autoridad! Continuamos afinando coeficientes para mantener la excelencia en el *Sports Trading*.
+> 💡 **Nota del Trader:** Las jornadas de alto volumen con múltiples resultados visitantes y cierres inesperados exigen ajustar ponderaciones de varianza y *late-game execution*. Nuestro acumulado global sigue por encima del 71%.
 
 ---
 
-### 🇬🇧 ENGLISH: Deep Audit & Gameday Results (November 17)
-An excellent night for our sabermetric model! Our predictive engine recorded **3 correct picks out of 5 games (60.0% accuracy)** on yesterday's slate, highlighted by the flawless hit on our **Lock of the Day**. Following these results, our global season accumulator stands at a solid **75.7%**.
+### 🇬🇧 ENGLISH: Gameday Audit & Reconciliation (November 18)
+Full analytical transparency! Across a surprise-heavy **12-game slate**, our sabermetric model recorded **4 wins out of 12 games (33.3% accuracy)** on November 18. With this update, our **global season accumulator stands at 71.5% (88 wins out of 123 games)**.
 
-#### 🎯 Breakdown of Winning Picks
-1. **Toronto Raptors vs. New York Knicks (⭐ Lock of the Day):** **WIN ✅** (Knicks 111 - 102 Raptors). New York delivered at Madison Square Garden, validating our 91.5% confidence rating backed by defensive Net Rating and pace control.
-2. **Minnesota Timberwolves vs. Portland Trail Blazers:** **WIN ✅** (Timberwolves 106 - 105 Trail Blazers). A narrow yet well-defended win secured in the paint.
-3. **Los Angeles Lakers vs. Charlotte Hornets:** **WIN ✅** (Lakers 118 - 114 OT Hornets). Hard-fought overtime victory after dominating the interior throughout regulation.
+#### 🎯 Winning Picks Breakdown (11/18/2026)
+1. **Miami Heat vs. Milwaukee Bucks:** **WIN ✅** (Heat 137 - 130 Bucks).
+2. **Orlando Magic vs. Philadelphia 76ers:** **WIN ✅** (76ers 121 - 116 Magic).
+3. **Dallas Mavericks vs. Golden State Warriors:** **WIN ✅** (Mavericks 116 - 94 Warriors).
+4. **Sacramento Kings vs. Phoenix Suns:** **WIN ✅** (Suns 128 - 107 Kings).
 
-#### 📉 Analysis of Missed Picks (Upset Results)
-* **San Antonio Spurs vs. Detroit Pistons:** **LOSS ❌** (Pistons 105 - 93 Spurs). Detroit clamped down defensively at home, defying our projections favoring San Antonio.
-* **Los Angeles Clippers vs. Utah Jazz:** **LOSS ❌** (Jazz 132 - 107 Clippers). Utah exploded offensively at the Delta Center, outperforming our perimeter metrics.
+#### 📉 Missed Picks / Upsets Reconciliation
+* **Cleveland Cavaliers vs. Memphis Grizzlies:** **LOSS ❌** (Grizzlies 124 - 121 Cavaliers).
+* **Indiana Pacers vs. Houston Rockets:** **LOSS ❌** (Rockets 119 - 104 Pacers).
+* **Brooklyn Nets vs. Chicago Bulls:** **LOSS ❌** (Bulls 137 - 107 Nets).
+* **Toronto Raptors vs. Washington Wizards:** **LOSS ❌** (Wizards 103 - 99 Raptors).
+* **New Orleans Pelicans vs. Detroit Pistons:** **LOSS ❌** (Pistons 122 - 109 Pelicans).
+* **Oklahoma City Thunder vs. Atlanta Hawks (⭐ Lock of the Day):** **LOSS ❌** (Hawks 117 - 112 Thunder).
+* **Denver Nuggets vs. Boston Celtics:** **LOSS ❌** (Nuggets 105 - 101 Celtics).
+* **Los Angeles Lakers vs. Utah Jazz:** **LOSS ❌** (Jazz 109 - 97 Lakers).
 
-> 💡 **Trader's Note:** Our Lock of the Day delivered with authority! We continue refining our coefficients to maintain sports trading excellence.
+> 💡 **Trader's Note:** High-volume slates with heavy road upsets and fourth-quarter swings reinforce the value of recalibrating variance and late-game weights while keeping our season accumulator above 71%.
