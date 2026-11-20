@@ -1,32 +1,32 @@
-## 📰 Boletín Sabermétrico NBA & Auditoría de la Jornada (19 Nov) | NBA Sabermetric Bulletin & Gameday Audit
+## 📰 Boletín Sabermétrico NBA & Matriz de 4 Capas (20 Nov) | NBA Sabermetric Bulletin & 4-Layer Matrix
 *Actualizado / Updated: 20 de Noviembre / November 20*
 
 ---
 
-### 🇪🇸 ESPAÑOL: Auditoría y Conciliación de la Jornada (19 de Noviembre)
-¡Transparencia total en el análisis! En una cartelera corta de **4 encuentros** el 19 de noviembre, nuestro modelo sabermétrico registró **1 acierto en 4 partidos (25.0% de efectividad)**, acertando la **Jugada Fija** con **New York Knicks** (**102 - 99** ante Minnesota Timberwolves). Con esta conciliación, el **acumulado global de temporada se ubica en 70.1% (89 aciertos en 127 partidos)**.
+### 🇪🇸 ESPAÑOL: Previa de la Jornada (20 de Noviembre) — Modelo Ampliado de 4 Capas
+Tras la conciliación del 19 de noviembre (**1/4, 25.0%**; acierto en la **Jugada Fija** con **New York Knicks 102-99** y acumulado global en **70.1%**, 89/127), estrenamos hoy **20 de noviembre** nuestro **motor sabermétrico ampliado en 4 capas** (Estadística Tradicional & Forma L5-L10 + Four Factors/ORtg/DRtg + Filtro Situacional/Descanso + Escala de Convicción) sobre una cartelera de **9 encuentros**.
+* ⏰ **Protocolo de Corte Diario:** Revisión obligatoria a las **18:00 (6:00 PM)** —o 1 hora antes del primer salto inicial cuando haya juegos tempranos— para incorporar reportes médicos, rotaciones y movimientos de línea.
 
-#### 🎯 Acierto Clave del Día (19/11/2026)
-1. **Minnesota Timberwolves vs. New York Knicks (⭐ Jugada Fija):** **ACIERTO ✅** (Knicks 102 - 99 Timberwolves). New York sostuvo su ventaja y frenó a Minnesota en un duelo cerrado (total de 201 puntos frente a línea de 221.0).
+#### 🎯 Jugada Fija Preliminar (Convicción Alta — Sujeta a Corte 18:00)
+*   **Oklahoma City Thunder vs. New Orleans Pelicans (20:00 VE)**
+    *   *Pick Preliminar:* **Oklahoma City Thunder (-6.5)** ⭐ *Total (O/U):* 225.0 | *Confianza:* `88.5%`
 
-#### 📉 Conciliación de los 3 Desvíos de la Jornada
-* **Memphis Grizzlies vs. Golden State Warriors:** **FALLO ❌** (Grizzlies 126 - 98 Warriors). Memphis dominó de principio a fin con un parcial contundente de 28 puntos.
-* **Milwaukee Bucks vs. Portland Trail Blazers:** **FALLO ❌** (Trail Blazers 124 - 114 Bucks). Portland respondió en casa y sostuvo el ritmo ofensivo en la segunda mitad.
-* **San Antonio Spurs vs. Los Angeles Clippers:** **FALLO ❌** (Spurs 124 - 112 Clippers). San Antonio cerró mejor el partido (67 puntos en la segunda mitad) para llevarse la victoria.
-
-> 💡 **Nota del Trader:** La **Jugada Fija** respondió con triunfo de los Knicks, mientras que la varianza volvió a hacerse sentir en los otros tres cruces. El acumulado global sigue por encima del **70.0%** (89/127).
+#### 📋 Resto de la Cartelera por Nivel de Convicción (20/11/2026)
+*   **Convicción Alta:** Orlando Magic (-6.0 vs. Nets, 85.5%) | Phoenix Suns (-5.5 vs. Jazz, 85.0%).
+*   **Convicción Media-Alta:** Cleveland Cavaliers (-4.5 vs. Pacers, 84.0%) | Atlanta Hawks (-4.0 vs. Hornets, 83.5%) | Chicago Bulls (-5.0 vs. Wizards, 83.0%).
+*   **Convicción Media (Alta Varianza):** Detroit Pistons (-2.5 vs. Raptors, 81.0%) | Denver Nuggets (-2.0 vs. Rockets, 80.5%) | Sacramento Kings (-2.5 vs. Lakers, 80.0%).
 
 ---
 
-### 🇬🇧 ENGLISH: Gameday Audit & Reconciliation (November 19)
-Full analytical transparency! Across a short **4-game slate** on November 19, our sabermetric model recorded **1 win out of 4 games (25.0% accuracy)**, hitting the **Lock of the Day** with the **New York Knicks** (**102 - 99** over the Minnesota Timberwolves). With this update, our **global season accumulator stands at 70.1% (89 wins out of 127 games)**.
+### 🇬🇧 ENGLISH: Gameday Preview (November 20) — Expanded 4-Layer Sabermetric Model
+Following the November 19 reconciliation (**1/4, 25.0%**; hitting the **Lock of the Day** with **New York Knicks 102-99** and global season accuracy at **70.1%**, 89/127), today **November 20** we roll out our **expanded 4-layer sabermetric engine** (Traditional & L5-L10 Form + Four Factors/ORtg/DRtg + Situational/Rest Filter + Conviction Tiers) across a **9-game slate**.
+* ⏰ **Daily Pre-Tip Cutoff Protocol:** Mandatory check at **6:00 PM (18:00)** —or 1 hour before the first tip-off on early slates— to incorporate injury reports, rotations, and line moves.
 
-#### 🎯 Winning Pick Breakdown (11/19/2026)
-1. **Minnesota Timberwolves vs. New York Knicks (⭐ Lock of the Day):** **WIN ✅** (Knicks 102 - 99 Timberwolves). New York held firm down the stretch in a low-scoring battle (201 combined points vs. 221.0 line).
+#### 🎯 Preliminary Lock of the Day (High Conviction — Subject to 6:00 PM Check)
+*   **Oklahoma City Thunder vs. New Orleans Pelicans (8:00 PM ET / VE)**
+    *   *Preliminary Pick:* **Oklahoma City Thunder (-6.5)** ⭐ *Total (O/U):* 225.0 | *Confidence:* `88.5%`
 
-#### 📉 Missed Picks Reconciliation
-* **Memphis Grizzlies vs. Golden State Warriors:** **LOSS ❌** (Grizzlies 126 - 98 Warriors). Memphis controlled the game throughout for a 28-point win.
-* **Milwaukee Bucks vs. Portland Trail Blazers:** **LOSS ❌** (Trail Blazers 124 - 114 Bucks). Portland defended home court and stayed sharp in the second half.
-* **San Antonio Spurs vs. Los Angeles Clippers:** **LOSS ❌** (Spurs 124 - 112 Clippers). San Antonio closed strong in the second half to take the win.
-
-> 💡 **Trader's Note:** The **Lock of the Day** delivered with New York, while variance continued to impact the other three matchups. Our global season accumulator remains above **70.0%** (89/127).
+#### 📋 Remaining Slate by Conviction Tier (11/20/2026)
+*   **High Conviction:** Orlando Magic (-6.0 vs. Nets, 85.5%) | Phoenix Suns (-5.5 vs. Jazz, 85.0%).
+*   **Medium-High Conviction:** Cleveland Cavaliers (-4.5 vs. Pacers, 84.0%) | Atlanta Hawks (-4.0 vs. Hornets, 83.5%) | Chicago Bulls (-5.0 vs. Wizards, 83.0%).
+*   **Medium Conviction (High Variance):** Detroit Pistons (-2.5 vs. Raptors, 81.0%) | Denver Nuggets (-2.0 vs. Rockets, 80.5%) | Sacramento Kings (-2.5 vs. Lakers, 80.0%).
