@@ -1,10 +1,10 @@
 equipo1,equipo2,spread,total_ou,proyeccion_usa,probabilidad
-Oklahoma City Thunder,New Orleans Pelicans,-6.5,225.0,"Pick: Oklahoma City Thunder (⭐ Jugada Fija) | Spread: -6.5 | Conf: 88.5% [Convicción Alta] (NetRtg, TOV% forzado y DRtg; corte 18:00)",88.5
-Brooklyn Nets,Orlando Magic,-6.0,218.5,Pick: Orlando Magic | Spread: -6.0 | Conf: 85.5% [Convicción Alta] (DRtg en casa y DRB%; corte 18:00),85.5
-Utah Jazz,Phoenix Suns,-5.5,230.0,"Pick: Phoenix Suns | Spread: -5.5 | Conf: 85.0% [Convicción Alta] (TS%, control TOV% y localía; corte 18:00)",85.0
-Cleveland Cavaliers,Indiana Pacers,-4.5,233.0,Pick: Cleveland Cavaliers | Spread: -4.5 | Conf: 84.0% [Convicción Media-Alta] (eFG% y puntos en pintura; corte 18:00),84.0
-Atlanta Hawks,Charlotte Hornets,-4.0,231.5,"Pick: Atlanta Hawks | Spread: -4.0 | Conf: 83.5% [Convicción Media-Alta] (Forma reciente L5, Pace y FTr; corte 18:00)",83.5
-Chicago Bulls,Washington Wizards,-5.0,234.5,"Pick: Chicago Bulls | Spread: -5.0 | Conf: 83.0% [Convicción Media-Alta] (ORtg, AST% y volumen 3P; corte 18:00)",83.0
-Detroit Pistons,Toronto Raptors,-2.5,223.5,Pick: Detroit Pistons | Spread: -2.5 | Conf: 81.0% [Convicción Media] (ORB% y forma reciente; corte 18:00),81.0
-Denver Nuggets,Houston Rockets,-2.0,222.5,Pick: Denver Nuggets | Spread: -2.0 | Conf: 80.5% [Convicción Media] (Ejecución clutch y AST%; corte 18:00),80.5
-Los Angeles Lakers,Sacramento Kings,-2.5,232.5,Pick: Sacramento Kings | Spread: -2.5 | Conf: 80.0% [Convicción Media] (Pace en casa y espaciamiento; corte 18:00),80.0
+Oklahoma City Thunder,New Orleans Pelicans,-6.5,225.0,"Pick: Oklahoma City Thunder (⭐ Jugada Fija CONFIRMADA 18:00) | Spread: -6.5 | Conf: 89.0% [Convicción Alta] (NetRtg, TOV% forzado y DRtg)",89.0
+Brooklyn Nets,Orlando Magic,-6.0,218.5,Pick: Orlando Magic [CONFIRMADO 18:00] | Spread: -6.0 | Conf: 85.5% [Convicción Alta] (DRtg en casa y DRB%),85.5
+Utah Jazz,Phoenix Suns,-5.5,230.0,"Pick: Phoenix Suns [CONFIRMADO 18:00] | Spread: -5.5 | Conf: 85.0% [Convicción Alta] (TS%, control TOV% y localía)",85.0
+Cleveland Cavaliers,Indiana Pacers,-4.5,233.0,Pick: Cleveland Cavaliers [CONFIRMADO 18:00] | Spread: -4.5 | Conf: 84.0% [Convicción Media-Alta] (eFG% y pintura),84.0
+Atlanta Hawks,Charlotte Hornets,-4.0,231.5,"Pick: Atlanta Hawks [CONFIRMADO 18:00] | Spread: -4.0 | Conf: 84.0% [Convicción Media-Alta] (Forma L5, Pace y FTr)",84.0
+Chicago Bulls,Washington Wizards,-5.0,234.5,"Pick: Chicago Bulls [CONFIRMADO 18:00] | Spread: -5.0 | Conf: 83.0% [Convicción Media-Alta] (ORtg, AST% y volumen 3P)",83.0
+Los Angeles Lakers,Sacramento Kings,-2.5,232.5,Pick: Sacramento Kings [CONFIRMADO 18:00 - ALTA VARIANZA] | Spread: -2.5 | Conf: 80.0% [Convicción Media] (Pace en casa y espaciamiento),80.0
+Denver Nuggets,Houston Rockets,-1.5,220.5,"Pick: Houston Rockets [VARIADO A LAS 18:00] | Spread: -1.5 | Conf: 79.0% [Convicción Media / Varianza] (DRtg, rebote y control de posesiones)",79.0
+Detroit Pistons,Toronto Raptors,-2.0,221.5,Pick: Detroit Pistons [AJUSTADO A LAS 18:00] | Spread: -2.0 | Conf: 78.5% [Convicción Media / Precaución] (ORB% y TOV% con filtro de varianza),78.5

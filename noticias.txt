@@ -1,32 +1,48 @@
-## 📰 Boletín Sabermétrico NBA & Matriz de 4 Capas (20 Nov) | NBA Sabermetric Bulletin & 4-Layer Matrix
-*Actualizado / Updated: 20 de Noviembre / November 20*
+## 📰 Boletín Sabermétrico NBA — Cierre Oficial de las 18:00 (20 Nov) | NBA Sabermetric Bulletin — 6:00 PM Final
+*Actualizado / Updated: 20 de Noviembre / November 20 (Corte 18:00 VET)*
 
 ---
 
-### 🇪🇸 ESPAÑOL: Previa de la Jornada (20 de Noviembre) — Modelo Ampliado de 4 Capas
-Tras la conciliación del 19 de noviembre (**1/4, 25.0%**; acierto en la **Jugada Fija** con **New York Knicks 102-99** y acumulado global en **70.1%**, 89/127), estrenamos hoy **20 de noviembre** nuestro **motor sabermétrico ampliado en 4 capas** (Estadística Tradicional & Forma L5-L10 + Four Factors/ORtg/DRtg + Filtro Situacional/Descanso + Escala de Convicción) sobre una cartelera de **9 encuentros**.
-* ⏰ **Protocolo de Corte Diario:** Revisión obligatoria a las **18:00 (6:00 PM)** —o 1 hora antes del primer salto inicial cuando haya juegos tempranos— para incorporar reportes médicos, rotaciones y movimientos de línea.
+### 🇪🇸 ESPAÑOL: Cierre Oficial de las 18:00 (20 de Noviembre) — Modelo de 4 Capas
+Completamos la revisión de cierre de las **18:00 VET** (una hora antes del inicio a las **19:00 VET**) sobre los **9 partidos** de hoy bajo nuestro **motor sabermétrico ampliado en 4 capas**:
+* **7 pronósticos confirmados** y **2 ajustes tácticos** por filtro de varianza y métricas avanzadas:
+  1. **Variación de Pick:** **Denver Nuggets vs. Houston Rockets (22:00 VET)** pasa a **Houston Rockets (-1.5)** (confianza **79.0%**, total ajustado a **220.5**) por balance de *DRtg*, rebote y control de posesiones.
+  2. **Recalibración por Varianza:** **Detroit Pistons vs. Toronto Raptors (19:30 VET)** mantiene a **Detroit Pistons**, con convicción ajustada a **78.5%** y total en **221.5**.
 
-#### 🎯 Jugada Fija Preliminar (Convicción Alta — Sujeta a Corte 18:00)
-*   **Oklahoma City Thunder vs. New Orleans Pelicans (20:00 VE)**
-    *   *Pick Preliminar:* **Oklahoma City Thunder (-6.5)** ⭐ *Total (O/U):* 225.0 | *Confianza:* `88.5%`
+#### 🎯 Jugada Fija Confirmada (18:00 VET)
+*   **Oklahoma City Thunder vs. New Orleans Pelicans (20:00 VET)**
+    *   *Pick Oficial:* **Oklahoma City Thunder (-6.5)** ⭐ *Total (O/U):* 225.0 | *Confianza:* `89.0%`
 
-#### 📋 Resto de la Cartelera por Nivel de Convicción (20/11/2026)
-*   **Convicción Alta:** Orlando Magic (-6.0 vs. Nets, 85.5%) | Phoenix Suns (-5.5 vs. Jazz, 85.0%).
-*   **Convicción Media-Alta:** Cleveland Cavaliers (-4.5 vs. Pacers, 84.0%) | Atlanta Hawks (-4.0 vs. Hornets, 83.5%) | Chicago Bulls (-5.0 vs. Wizards, 83.0%).
-*   **Convicción Media (Alta Varianza):** Detroit Pistons (-2.5 vs. Raptors, 81.0%) | Denver Nuggets (-2.0 vs. Rockets, 80.5%) | Sacramento Kings (-2.5 vs. Lakers, 80.0%).
+#### 📋 Resumen de la Cartelera Final (20/11/2026)
+*   **19:00 VET — Atlanta Hawks vs. Charlotte Hornets:** Atlanta Hawks (-4.0, O/U 231.5) | Conf: 84.0% [Confirmado]
+*   **19:30 VET — Brooklyn Nets vs. Orlando Magic:** Orlando Magic (-6.0, O/U 218.5) | Conf: 85.5% [Confirmado]
+*   **19:30 VET — Cleveland Cavaliers vs. Indiana Pacers:** Cleveland Cavaliers (-4.5, O/U 233.0) | Conf: 84.0% [Confirmado]
+*   **19:30 VET — Detroit Pistons vs. Toronto Raptors:** Detroit Pistons (-2.0, O/U 221.5) | Conf: 78.5% [Ajustado]
+*   **20:00 VET — Chicago Bulls vs. Washington Wizards:** Chicago Bulls (-5.0, O/U 234.5) | Conf: 83.0% [Confirmado]
+*   **20:00 VET — Oklahoma City Thunder vs. New Orleans Pelicans:** Oklahoma City Thunder (-6.5, O/U 225.0) | Conf: 89.0% [⭐ Jugada Fija Confirmada]
+*   **21:30 VET — Utah Jazz vs. Phoenix Suns:** Phoenix Suns (-5.5, O/U 230.0) | Conf: 85.0% [Confirmado]
+*   **22:00 VET — Denver Nuggets vs. Houston Rockets:** Houston Rockets (-1.5, O/U 220.5) | Conf: 79.0% [Variado a Houston]
+*   **22:00 VET — Los Angeles Lakers vs. Sacramento Kings:** Sacramento Kings (-2.5, O/U 232.5) | Conf: 80.0% [Confirmado / Varianza]
 
 ---
 
-### 🇬🇧 ENGLISH: Gameday Preview (November 20) — Expanded 4-Layer Sabermetric Model
-Following the November 19 reconciliation (**1/4, 25.0%**; hitting the **Lock of the Day** with **New York Knicks 102-99** and global season accuracy at **70.1%**, 89/127), today **November 20** we roll out our **expanded 4-layer sabermetric engine** (Traditional & L5-L10 Form + Four Factors/ORtg/DRtg + Situational/Rest Filter + Conviction Tiers) across a **9-game slate**.
-* ⏰ **Daily Pre-Tip Cutoff Protocol:** Mandatory check at **6:00 PM (18:00)** —or 1 hour before the first tip-off on early slates— to incorporate injury reports, rotations, and line moves.
+### 🇬🇧 ENGLISH: Official 6:00 PM Final Check (November 20) — 4-Layer Model
+We completed our **6:00 PM VET** final review (one hour ahead of the **7:00 PM VET** first tip-off) across all **9 games** tonight under our **expanded 4-layer sabermetric model**:
+* **7 picks confirmed** and **2 tactical adjustments** from variance and advanced metric screening:
+  1. **Pick Shift:** **Denver Nuggets vs. Houston Rockets (10:00 PM VET)** shifts to **Houston Rockets (-1.5)** (**79.0%** confidence, total adjusted to **220.5**) on *DRtg*, rebounding, and possession control.
+  2. **Variance Recalibration:** **Detroit Pistons vs. Toronto Raptors (7:30 PM VET)** keeps **Detroit Pistons**, with confidence adjusted to **78.5%** and total at **221.5**.
 
-#### 🎯 Preliminary Lock of the Day (High Conviction — Subject to 6:00 PM Check)
-*   **Oklahoma City Thunder vs. New Orleans Pelicans (8:00 PM ET / VE)**
-    *   *Preliminary Pick:* **Oklahoma City Thunder (-6.5)** ⭐ *Total (O/U):* 225.0 | *Confidence:* `88.5%`
+#### 🎯 Confirmed Lock of the Day (6:00 PM VET)
+*   **Oklahoma City Thunder vs. New Orleans Pelicans (8:00 PM VET)**
+    *   *Official Pick:* **Oklahoma City Thunder (-6.5)** ⭐ *Total (O/U):* 225.0 | *Confidence:* `89.0%`
 
-#### 📋 Remaining Slate by Conviction Tier (11/20/2026)
-*   **High Conviction:** Orlando Magic (-6.0 vs. Nets, 85.5%) | Phoenix Suns (-5.5 vs. Jazz, 85.0%).
-*   **Medium-High Conviction:** Cleveland Cavaliers (-4.5 vs. Pacers, 84.0%) | Atlanta Hawks (-4.0 vs. Hornets, 83.5%) | Chicago Bulls (-5.0 vs. Wizards, 83.0%).
-*   **Medium Conviction (High Variance):** Detroit Pistons (-2.5 vs. Raptors, 81.0%) | Denver Nuggets (-2.0 vs. Rockets, 80.5%) | Sacramento Kings (-2.5 vs. Lakers, 80.0%).
+#### 📋 Final Slate Summary (11/20/2026)
+*   **7:00 PM VET — Atlanta Hawks vs. Charlotte Hornets:** Atlanta Hawks (-4.0, O/U 231.5) | Conf: 84.0% [Confirmed]
+*   **7:30 PM VET — Brooklyn Nets vs. Orlando Magic:** Orlando Magic (-6.0, O/U 218.5) | Conf: 85.5% [Confirmed]
+*   **7:30 PM VET — Cleveland Cavaliers vs. Indiana Pacers:** Cleveland Cavaliers (-4.5, O/U 233.0) | Conf: 84.0% [Confirmed]
+*   **7:30 PM VET — Detroit Pistons vs. Toronto Raptors:** Detroit Pistons (-2.0, O/U 221.5) | Conf: 78.5% [Adjusted]
+*   **8:00 PM VET — Chicago Bulls vs. Washington Wizards:** Chicago Bulls (-5.0, O/U 234.5) | Conf: 83.0% [Confirmed]
+*   **8:00 PM VET — Oklahoma City Thunder vs. New Orleans Pelicans:** Oklahoma City Thunder (-6.5, O/U 225.0) | Conf: 89.0% [⭐ Confirmed Lock]
+*   **9:30 PM VET — Utah Jazz vs. Phoenix Suns:** Phoenix Suns (-5.5, O/U 230.0) | Conf: 85.0% [Confirmed]
+*   **10:00 PM VET — Denver Nuggets vs. Houston Rockets:** Houston Rockets (-1.5, O/U 220.5) | Conf: 79.0% [Shifted to Houston]
+*   **10:00 PM VET — Los Angeles Lakers vs. Sacramento Kings:** Sacramento Kings (-2.5, O/U 232.5) | Conf: 80.0% [Confirmed / Watch]
