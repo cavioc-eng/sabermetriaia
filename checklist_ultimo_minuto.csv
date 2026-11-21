@@ -1,4 +1,7 @@
 partido,estado,alerta_notas,cambio_perspectiva
-Philadelphia 76ers vs Milwaukee Bucks,⏰ Corte Adelantado 12:00 VET (1h antes del juego de las 13:00),"Como el primer partido inicia a las 13:00 VET, el corte se adelanta a las 12:00 VET. Aplicar regla de no cambiar ganador salvo lesión confirmada.",Sujeto a validación de quintetos a las 12:00 VET.
-San Antonio Spurs vs New Orleans Pelicans,⭐ Jugada Fija Preliminar (Corte 12:00 VET),Pelicans en back-to-back tras caer 120-126 ante OKC; San Antonio viene de ganar 124-112 a Clippers.,Sujeto a confirmación médica al mediodía.
-Sacramento Kings vs Boston Celtics,⚠️ Filtro Situacional B2B + Viaje (Corte 12:00 VET),Sacramento jugó ayer (104-106 vs Lakers) y enfrenta a Boston con alto factor de desgaste.,Monitorear disponibilidad de titulares antes de las 12:00 VET.
+Philadelphia 76ers vs Milwaukee Bucks,✅ Chequeo Previo Completado (Sin Cambio de Ganador),Se mantiene Milwaukee Bucks bajo regla de no-rotación sin baja médica confirmada; validar quintetos oficiales antes del salto inicial.,Sin cambio de ganador proyectado.
+New York Knicks vs Portland Trail Blazers,✅ Confirmado en Chequeo Previo,"New York Knicks ratificado por estructura defensiva, control de posesiones y descanso.",Sin cambio de ganador proyectado.
+Dallas Mavericks vs Los Angeles Clippers,✅ Confirmado en Chequeo Previo,Dallas Mavericks ratificado por eficiencia ofensiva y contexto del rival.,Sin cambio de ganador proyectado.
+Minnesota Timberwolves vs Memphis Grizzlies,✅ Confirmado en Chequeo Previo,"Memphis Grizzlies ratificado por ritmo, impulso reciente y localía.",Sin cambio de ganador proyectado.
+San Antonio Spurs vs New Orleans Pelicans,⭐ Destacado Confirmado en Chequeo Previo,San Antonio Spurs ratificado con ventaja situacional (Pelicans en back-to-back tras jugar ayer 20/11).,Sin cambio de ganador proyectado.
+Sacramento Kings vs Boston Celtics,✅ Confirmado en Chequeo Previo (B2B Rival),Boston Celtics ratificado frente a unos Kings que jugaron ayer 20/11.,Sin cambio de ganador proyectado.
