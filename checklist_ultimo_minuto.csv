@@ -1,7 +1,5 @@
 partido,estado,alerta_notas,cambio_perspectiva
-Philadelphia 76ers vs Milwaukee Bucks,✅ Chequeo Previo Completado (Sin Cambio de Ganador),Se mantiene Milwaukee Bucks bajo regla de no-rotación sin baja médica confirmada; validar quintetos oficiales antes del salto inicial.,Sin cambio de ganador proyectado.
-New York Knicks vs Portland Trail Blazers,✅ Confirmado en Chequeo Previo,"New York Knicks ratificado por estructura defensiva, control de posesiones y descanso.",Sin cambio de ganador proyectado.
-Dallas Mavericks vs Los Angeles Clippers,✅ Confirmado en Chequeo Previo,Dallas Mavericks ratificado por eficiencia ofensiva y contexto del rival.,Sin cambio de ganador proyectado.
-Minnesota Timberwolves vs Memphis Grizzlies,✅ Confirmado en Chequeo Previo,"Memphis Grizzlies ratificado por ritmo, impulso reciente y localía.",Sin cambio de ganador proyectado.
-San Antonio Spurs vs New Orleans Pelicans,⭐ Destacado Confirmado en Chequeo Previo,San Antonio Spurs ratificado con ventaja situacional (Pelicans en back-to-back tras jugar ayer 20/11).,Sin cambio de ganador proyectado.
-Sacramento Kings vs Boston Celtics,✅ Confirmado en Chequeo Previo (B2B Rival),Boston Celtics ratificado frente a unos Kings que jugaron ayer 20/11.,Sin cambio de ganador proyectado.
+Atlanta Hawks vs Detroit Pistons,⏰ Corte Adelantado 14:30 VET (1h antes del inicio a las 15:30),Primer juego de hoy a las 15:30 VET; aplicar regla de no rotar ganador salvo lesión confirmada.,Sujeto a chequeo previo de las 14:30 VET.
+Utah Jazz vs Dallas Mavericks,⚠️ Monitoreo B2B Dallas (Jugó ayer 21/11 vs Clippers),No sobreponderar el B2B de forma automática; evaluar ritmo y rotación al corte previo.,Se mantiene Dallas Mavericks como proyección base.
+New York Knicks vs Indiana Pacers,⚠️ Monitoreo B2B Knicks (Jugó ayer 21/11 vs Trail Blazers),Cruce con posible paridad y desgaste de segunda noche consecutiva.,Se mantiene New York Knicks como proyección base.
+Golden State Warriors vs Boston Celtics,⚠️ Monitoreo B2B Boston (Cayó ayer 96-97 vs Kings),Alta exigencia competitiva; vigilar ritmo y varianza por cuartos.,Se mantiene Boston Celtics como proyección base.
