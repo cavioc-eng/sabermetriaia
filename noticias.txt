@@ -1,25 +1,22 @@
-## 📰 Boletín Sabermétrico NBA & Auditoría de la Jornada (20 Nov) | NBA Sabermetric Bulletin & Gameday Audit
-*Actualizado / Updated: 21 de Noviembre / November 21*
+## 📰 Boletín Sabermétrico NBA & Auditoría de la Jornada (21 Nov) | NBA Sabermetric Bulletin & Gameday Audit
+*Actualizado / Updated: 22 de Noviembre / November 22*
 
 ---
 
-### 🇪🇸 ESPAÑOL: Auditoría y Conciliación de la Jornada (20 de Noviembre)
-Tras estrenar el **modelo sabermétrico ampliado en 4 capas**, cerramos la jornada del **20 de noviembre** con **5 aciertos en 9 partidos (55.6% de efectividad)** —frente al **66.7% (6/9)** que habríamos alcanzado manteniendo el pronóstico inicial previo al corte de las 18:00—, acertando nuevamente nuestra **Jugada Fija** con **Oklahoma City Thunder** (**126 - 120** ante New Orleans Pelicans). Con esta jornada, el **acumulado global de temporada se sitúa en 69.1% (94 aciertos en 136 partidos)**.
+### 🇪🇸 ESPAÑOL: Auditoría de la Jornada (21 de Noviembre)
+Cerramos la jornada del **21 de noviembre** con **3 aciertos en 6 partidos (50.0% de efectividad)**, destacando el acierto de nuestra proyección principal con **San Antonio Spurs** (**114 - 91** ante New Orleans Pelicans, aprovechando el *back-to-back* de Pelicans) y **New York Knicks** (**97 - 96** ante Portland Trail Blazers) y **Dallas Mavericks** (**110 - 100** ante LA Clippers). Con este cierre, el **acumulado global de temporada se ubica en 68.3% (97 aciertos en 142 partidos)**.
 
-#### 🎯 Aciertos de la Jornada (5/9)
-1. **Oklahoma City Thunder vs. New Orleans Pelicans (⭐ Jugada Fija):** **ACIERTO ✅** (Thunder 126 - 120 Pelicans).
-2. **Atlanta Hawks vs. Charlotte Hornets:** **ACIERTO ✅** (Hawks 111 - 97 Hornets).
-3. **Brooklyn Nets vs. Orlando Magic:** **ACIERTO ✅** (Magic 113 - 111 Nets).
-4. **Cleveland Cavaliers vs. Indiana Pacers:** **ACIERTO ✅** (Cavaliers 128 - 119 Pacers).
-5. **Utah Jazz vs. Phoenix Suns:** **ACIERTO ✅** (Suns 111 - 101 Jazz).
+#### 🎯 Aciertos de la Jornada (3/6)
+1. **San Antonio Spurs vs. New Orleans Pelicans (⭐ Principal):** **ACIERTO ✅** (Spurs 114 - 91 Pelicans).
+2. **New York Knicks vs. Portland Trail Blazers:** **ACIERTO ✅** (Knicks 97 - 96 Trail Blazers).
+3. **Dallas Mavericks vs. Los Angeles Clippers:** **ACIERTO ✅** (Mavericks 110 - 100 Clippers).
 
-#### 📉 Conciliación de los 4 Desvíos y Evaluación del Corte 18:00
-* **Denver Nuggets vs. Houston Rockets (Cambio 18:00):** **FALLO ❌** (Nuggets 133 - 124 Rockets). La variación de última hora hacia Houston (-1.5) resultó contraproducente; Denver impuso su ritmo ofensivo (37 y 34 puntos en 3C y 4C).
-* **Detroit Pistons vs. Toronto Raptors (Ajuste 18:00):** **FALLO ❌** (Raptors 105 - 102 Pistons). La alerta de varianza y total bajo (221.5 vs. 207 reales) fue acertada, pero Toronto defendió su casa en cierre apretado.
-* **Chicago Bulls vs. Washington Wizards:** **FALLO ❌** (Wizards 98 - 94 Bulls). Colapso ofensivo de Chicago en el tercer cuarto (apenas 9 puntos).
-* **Los Angeles Lakers vs. Sacramento Kings:** **FALLO ❌** (Lakers 106 - 104 Kings). Partido cerrado donde Sacramento perdió el control en la segunda mitad (42 puntos combinados).
+#### 📉 Revisión de los 3 Desvíos (21/11)
+* **Philadelphia 76ers vs. Milwaukee Bucks:** **FALLO ❌** (76ers 132 - 129 Bucks). Duelo de altísimo anotaje (261 puntos combinados frente a 225.5 proyectados) que Filadelfia cerró en el último cuarto (38 y 34 puntos).
+* **Minnesota Timberwolves vs. Memphis Grizzlies:** **FALLO ❌** (Timberwolves 104 - 95 Grizzlies). Minnesota controló el ritmo y el cierre en casa de Memphis tras el segundo cuarto.
+* **Sacramento Kings vs. Boston Celtics:** **FALLO ❌** (Kings 97 - 96 Celtics). A pesar del *back-to-back* y viaje de Sacramento, los Kings resistieron por un punto (97-96) tras remontar en el tercer cuarto (35-13).
 
 ---
 
-### 🇬🇧 ENGLISH: Gameday Audit & Reconciliation (November 20)
-In the debut of our **expanded 4-layer sabermetric model**, we finished the **November 20** slate at **5 wins out of 9 games (55.6% accuracy)** —compared to **66.7% (6/9)** under the initial pre-6:00 PM model— once again hitting our **Lock of the Day** with the **Oklahoma City Thunder** (**126 - 120** over the New Orleans Pelicans). Our **global season accumulator now stands at 69.1% (94 wins out of 136 games)**.
+### 🇬🇧 ENGLISH: Gameday Audit (November 21)
+We finished the **November 21** slate at **3 wins in 6 games (50.0% accuracy)**, hitting our featured projection with the **San Antonio Spurs** (**114 - 91** over the New Orleans Pelicans on New Orleans' back-to-back) along with the **New York Knicks** (**97 - 96** over Portland) and **Dallas Mavericks** (**110 - 100** over the Clippers). Our **global season accumulator stands at 68.3% (97 wins out of 142 games)**.
