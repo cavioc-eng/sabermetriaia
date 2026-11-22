@@ -1,26 +1,20 @@
-## 📰 Boletín Sabermétrico NFL & Auditoría del Monday Night Football | NFL Sabermetric Bulletin & MNF Audit
-*Actualizado / Updated: 17 de Noviembre / November 17*
+## 🏈 Boletín Sabermétrico NFL — Previa de la Jornada (22 Nov) | NFL Sabermetric Bulletin — Gameday Preview
+*Actualizado / Updated: 22 de Noviembre / November 22*
 
 ---
 
-### 🇪🇸 ESPAÑOL: Auditoría y Lección del Monday Night Football (16 de Noviembre)
-¡Transparencia absoluta en el emparrillado! En el *Monday Night Football* de la Semana 10, los **Los Angeles Chargers** dieron la sorpresa y vencieron 23-20 a los **Baltimore Ravens** en el SoFi Stadium. A pesar de nuestro pronóstico en los Ravens (-3.0), la ejecución clutch de Los Ángeles inclinó la balanza.
+### 🇪🇸 ESPAÑOL: Modelo Sabermétrico NFL en 4 Capas (11 Encuentros)
+Transferimos toda nuestra metodología de análisis estadístico a los **11 partidos de la NFL** de hoy **domingo 22 de noviembre**, adaptando las métricas clave al fútbol americano (*EPA/Play*, *Success Rate*, eficiencia en zona roja, diferencial de pérdidas y control de trincheras) y aplicando nuestra **regla de disciplina previa**: respetar la salida matemática del modelo base salvo reporte oficial de jugadores inactivos (90 minutos antes del *kickoff* de las **13:00 VET**).
 
-#### 🎯 Resultado del Monday Night Football
-*   **Los Angeles Chargers 23 vs. Baltimore Ravens 20** (Spread: -3.0)
-    *   *Pronóstico del Modelo:* Baltimore Ravens (-3.0) ⭐ Jugada Fija ❌ FALLO.
-    *   *Análisis:* La varianza defensiva y los paradas clave en el último cuarto le dieron la victoria a los Chargers. Nuestro acumulado global en la NFL se ajusta a **61.5% (8 aciertos en 13 partidos)**.
-
-> 🚨 **Aviso de Cartelera:** No hay partidos programados en la NFL hasta el próximo **19 de noviembre de 2026**. Nuestros modelos se encuentran afinando coeficientes.
+#### 🎯 Proyección Principal de la Jornada (Convicción Alta)
+*   **Carolina Panthers vs. Baltimore Ravens (13:00 VET):** Proyección favorable a **Baltimore Ravens** ⭐ (**89.0%** de convicción), respaldado por dominio en *Rushing EPA*, tiempo de posesión y eficiencia en zona roja.
+*   **Kansas City Chiefs vs. Arizona Cardinals (13:00 VET):** Proyección favorable a **Kansas City Chiefs** (**86.5%** de convicción) por ejecución en tercera oportunidad y ajuste defensivo.
 
 ---
 
-### 🇬🇧 ENGLISH: Monday Night Football Audit & Gameday Update (November 16)
-Absolute transparency on the gridiron! On *Monday Night Football*, the **Los Angeles Chargers** pulled off a 23-20 upset against the **Baltimore Ravens** at SoFi Stadium. Despite our pick on the Ravens (-3.0), Los Angeles' clutch execution sealed the win.
+### 🇬🇧 ENGLISH: NFL 4-Layer Sabermetric Model (11-Game Slate)
+We apply our 4-layer analytical framework to today's **11-game NFL slate (November 22)** using football-specific efficiency metrics (*EPA/Play*, *Success Rate*, *Red Zone TD%*, turnover differential, and trench control) under our pre-game discipline rule: honor the mathematical model unless official inactive reports (90 minutes before the **1:00 PM VET** kickoff) alter key availability.
 
-#### 🎯 Monday Night Football Result
-*   **Los Angeles Chargers 23 vs. Baltimore Ravens 20** (Spread: -3.0)
-    *   *Model Pick:* Baltimore Ravens (-3.0) ⭐ Lock of the Day ❌ LOSS.
-    *   *Analysis:* Defensive variance and clutch fourth-quarter stops gave the Chargers the edge. Our global NFL accumulator adjusts to **61.5% (8 correct picks out of 13 games)**.
-
-> 🚨 **Schedule Notice:** There are no NFL games scheduled until **November 19, 2026**. Our predictive engines are actively recalibrating.
+#### 🎯 Top Gameday Projections (High Conviction)
+*   **Carolina Panthers vs. Baltimore Ravens (1:00 PM VET):** Projected winner **Baltimore Ravens** ⭐ (**89.0%** conviction) on *Rushing EPA*, time of possession, and red-zone efficiency.
+*   **Kansas City Chiefs vs. Arizona Cardinals (1:00 PM VET):** Projected winner **Kansas City Chiefs** (**86.5%** conviction) on 3rd-down conversion and second-half defensive adjustments.
