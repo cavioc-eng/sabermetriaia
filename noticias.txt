@@ -1,22 +1,23 @@
-## 📰 Boletín Sabermétrico NBA & Auditoría de la Jornada (21 Nov) | NBA Sabermetric Bulletin & Gameday Audit
-*Actualizado / Updated: 22 de Noviembre / November 22*
+## 📰 Boletín Sabermétrico NBA — Cierre de Jornada (22 Nov) | NBA Sabermetric Bulletin — Final Recap
+*Actualizado / Updated: 23 de Noviembre / November 23*
 
 ---
 
-### 🇪🇸 ESPAÑOL: Auditoría de la Jornada (21 de Noviembre)
-Cerramos la jornada del **21 de noviembre** con **3 aciertos en 6 partidos (50.0% de efectividad)**, destacando el acierto de nuestra proyección principal con **San Antonio Spurs** (**114 - 91** ante New Orleans Pelicans, aprovechando el *back-to-back* de Pelicans) y **New York Knicks** (**97 - 96** ante Portland Trail Blazers) y **Dallas Mavericks** (**110 - 100** ante LA Clippers). Con este cierre, el **acumulado global de temporada se ubica en 68.3% (97 aciertos en 142 partidos)**.
+### 🇪🇸 ESPAÑOL: Auditoría Definitiva NBA (22 de Noviembre)
+Cerramos la jornada del **domingo 22 de noviembre** con **4 aciertos en 7 partidos (57.1%)**, ubicando nuestro **acumulado global NBA en 101 aciertos en 149 partidos (67.8%)**.
 
-#### 🎯 Aciertos de la Jornada (3/6)
-1. **San Antonio Spurs vs. New Orleans Pelicans (⭐ Principal):** **ACIERTO ✅** (Spurs 114 - 91 Pelicans).
-2. **New York Knicks vs. Portland Trail Blazers:** **ACIERTO ✅** (Knicks 97 - 96 Trail Blazers).
-3. **Dallas Mavericks vs. Los Angeles Clippers:** **ACIERTO ✅** (Mavericks 110 - 100 Clippers).
+#### 🎯 Aciertos de la Jornada (4/7)
+* **Atlanta Hawks vs. Detroit Pistons (107-97):** **ACIERTO ✅** (cierre dominante de Atlanta en el 4.º cuarto con 33-12).
+* **Chicago Bulls vs. Denver Nuggets (145-151 en prórroga):** **ACIERTO ✅** (Denver impuso su ley en el tiempo extra 20-14 en un duelo de 296 puntos).
+* **Utah Jazz vs. Dallas Mavericks (114-116):** **ACIERTO ✅** (Dallas sostuvo el triunfo como visitante pese al back-to-back).
+* **New York Knicks vs. Indiana Pacers (113-106):** **ACIERTO ✅** (Knicks ganó en back-to-back apoyado en su 3.er cuarto de 34 puntos).
 
-#### 📉 Revisión de los 3 Desvíos (21/11)
-* **Philadelphia 76ers vs. Milwaukee Bucks:** **FALLO ❌** (76ers 132 - 129 Bucks). Duelo de altísimo anotaje (261 puntos combinados frente a 225.5 proyectados) que Filadelfia cerró en el último cuarto (38 y 34 puntos).
-* **Minnesota Timberwolves vs. Memphis Grizzlies:** **FALLO ❌** (Timberwolves 104 - 95 Grizzlies). Minnesota controló el ritmo y el cierre en casa de Memphis tras el segundo cuarto.
-* **Sacramento Kings vs. Boston Celtics:** **FALLO ❌** (Kings 97 - 96 Celtics). A pesar del *back-to-back* y viaje de Sacramento, los Kings resistieron por un punto (97-96) tras remontar en el tercer cuarto (35-13).
+#### 📉 Desvíos del Día (3)
+* **Miami Heat vs. Oklahoma City Thunder (123-113):** **FALLO ❌** (Miami anotó 36 en el 1.er cuarto y mantuvo ritmo alto todo el partido).
+* **Washington Wizards vs. Orlando Magic (116-96):** **FALLO ❌** (Washington dominó el 1.er cuarto 38-21 y el 3.er cuarto 34-26).
+* **Golden State Warriors vs. Boston Celtics (88-87):** **FALLO ❌** (duelo de baja anotación definido por 1 punto tras el back-to-back de Boston).
 
 ---
 
-### 🇬🇧 ENGLISH: Gameday Audit (November 21)
-We finished the **November 21** slate at **3 wins in 6 games (50.0% accuracy)**, hitting our featured projection with the **San Antonio Spurs** (**114 - 91** over the New Orleans Pelicans on New Orleans' back-to-back) along with the **New York Knicks** (**97 - 96** over Portland) and **Dallas Mavericks** (**110 - 100** over the Clippers). Our **global season accumulator stands at 68.3% (97 wins out of 142 games)**.
+### 🇬🇧 ENGLISH: Final NBA Gameday Audit (November 22)
+We closed the **Sunday, November 22** NBA slate at **4 wins in 7 games (57.1%)**, placing our **cumulative NBA record at 101 wins in 149 games (67.8%)**.
