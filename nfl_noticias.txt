@@ -1,20 +1,17 @@
-## 🏈 Boletín Sabermétrico NFL — Previa de la Jornada (22 Nov) | NFL Sabermetric Bulletin — Gameday Preview
-*Actualizado / Updated: 22 de Noviembre / November 22*
+## 🏈 Boletín Sabermétrico NFL — Cierre de Jornada (22 Nov) | NFL Sabermetric Bulletin — Final Recap
+*Actualizado / Updated: 23 de Noviembre / November 23*
 
 ---
 
-### 🇪🇸 ESPAÑOL: Modelo Sabermétrico NFL en 4 Capas (11 Encuentros)
-Transferimos toda nuestra metodología de análisis estadístico a los **11 partidos de la NFL** de hoy **domingo 22 de noviembre**, adaptando las métricas clave al fútbol americano (*EPA/Play*, *Success Rate*, eficiencia en zona roja, diferencial de pérdidas y control de trincheras) y aplicando nuestra **regla de disciplina previa**: respetar la salida matemática del modelo base salvo reporte oficial de jugadores inactivos (90 minutos antes del *kickoff* de las **13:00 VET**).
+### 🇪🇸 ESPAÑOL: Auditoría Definitiva NFL (22 de Noviembre)
+Cerramos la jornada del **domingo 22 de noviembre** con **8 aciertos en 11 partidos (72.7%)**, elevando nuestro **acumulado global en la NFL a 15 aciertos en 23 partidos (65.2%)** (junto al **7/12 — 58.3%** del **15/11**).
 
-#### 🎯 Proyección Principal de la Jornada (Convicción Alta)
-*   **Carolina Panthers vs. Baltimore Ravens (13:00 VET):** Proyección favorable a **Baltimore Ravens** ⭐ (**89.0%** de convicción), respaldado por dominio en *Rushing EPA*, tiempo de posesión y eficiencia en zona roja.
-*   **Kansas City Chiefs vs. Arizona Cardinals (13:00 VET):** Proyección favorable a **Kansas City Chiefs** (**86.5%** de convicción) por ejecución en tercera oportunidad y ajuste defensivo.
+#### 🔍 Puntos Clave de la Jornada
+* **Aciertos contundentes en bloque:** **San Francisco 49ers** (35-10), **Kansas City Chiefs** (34-7), **Dallas Cowboys** (51-30), **Buffalo Bills** (26-9), **Denver Broncos** (38-24), **Detroit Lions** (31-21) y **Chicago Bears** (21-13) respaldaron la lectura de eficiencia y control de trincheras.
+* **Cierre ajustado en Filadelfia:** **Philadelphia Eagles** superó 19-16 a Pittsburgh Steelers en partido físico de baja anotación.
+* **Desvíos del día (3):** **Carolina Panthers** 35-33 **Baltimore Ravens** (margen de 2 puntos), **New York Jets** 27-24 **Los Angeles Chargers** (margen de 3 puntos) y **New York Giants** 23-18 **Jacksonville Jaguars** (margen de 5 puntos).
 
 ---
 
-### 🇬🇧 ENGLISH: NFL 4-Layer Sabermetric Model (11-Game Slate)
-We apply our 4-layer analytical framework to today's **11-game NFL slate (November 22)** using football-specific efficiency metrics (*EPA/Play*, *Success Rate*, *Red Zone TD%*, turnover differential, and trench control) under our pre-game discipline rule: honor the mathematical model unless official inactive reports (90 minutes before the **1:00 PM VET** kickoff) alter key availability.
-
-#### 🎯 Top Gameday Projections (High Conviction)
-*   **Carolina Panthers vs. Baltimore Ravens (1:00 PM VET):** Projected winner **Baltimore Ravens** ⭐ (**89.0%** conviction) on *Rushing EPA*, time of possession, and red-zone efficiency.
-*   **Kansas City Chiefs vs. Arizona Cardinals (1:00 PM VET):** Projected winner **Kansas City Chiefs** (**86.5%** conviction) on 3rd-down conversion and second-half defensive adjustments.
+### 🇬🇧 ENGLISH: Final NFL Gameday Audit (November 22)
+We closed the **Sunday, November 22** slate at **8 wins in 11 games (72.7%)**, bringing our **cumulative NFL record to 15 wins in 23 games (65.2%)** (alongside our **7/12 — 58.3%** opener on **11/15**).
