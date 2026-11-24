@@ -1,12 +1,21 @@
-## 📰 Boletín Sabermétrico NBA — Previa de la Jornada (24 Nov) | NBA Sabermetric Bulletin — Gameday Preview
+## 📰 Boletín Sabermétrico NBA — Cierre de Jornada (23 Nov) | NBA Sabermetric Bulletin — Final Recap
 *Actualizado / Updated: 24 de Noviembre / November 24*
 
 ---
 
-### 🇪🇸 ESPAÑOL: Cartelera NBA de Hoy (24 de Noviembre — 3 Encuentros)
-Tras cerrar ayer **23/11** con **7/10 (70.0%)** y sostener el **acumulado global NBA en 67.9% (108/159)**, revisamos los **3 encuentros de hoy martes 24 de noviembre** (arranque a las **19:00 VET**).
+### 🇪🇸 ESPAÑOL: Auditoría Definitiva NBA (23 de Noviembre)
+Cerramos la jornada del **lunes 23 de noviembre** con **7 aciertos en 10 partidos (70.0%)**, ubicando nuestro **acumulado global NBA en 108 aciertos en 159 partidos (67.9%)**.
 
-#### 🎯 Proyecciones Destacadas de Hoy
-* **Washington Wizards vs. Boston Celtics (20:00 VET):** proyección favorable a **Boston Celtics** ⭐ (**86.5%** de convicción).
-* **Denver Nuggets vs. Dallas Mavericks (22:00 VET):** proyección favorable a **Denver Nuggets** (**84.5%** de convicción).
-* **Orlando Magic vs. Detroit Pistons (19:00 VET):** proyección favorable a **Detroit Pistons** (**81.0%** de convicción).
+#### 🎯 Aciertos de la Jornada (7/10)
+* **Charlotte Hornets vs. Memphis Grizzlies (111-117):** **ACIERTO ✅** (Memphis respondió como local tras descansar ayer).
+* **Minnesota Timberwolves vs. Brooklyn Nets (142-116):** **ACIERTO ✅** (dominio contundente de Minnesota con 142 puntos).
+* **Toronto Raptors vs. Milwaukee Bucks (111-116):** **ACIERTO ✅** (Milwaukee cerró con 36 puntos en el 3.er cuarto para asegurar en casa).
+* **New Orleans Pelicans vs. Phoenix Suns (prórroga, 123 Suns):** **ACIERTO ✅** (Phoenix se impuso en tiempo extra 14-10).
+* **Houston Rockets vs. Los Angeles Clippers (116-104):** **ACIERTO ✅** (Houston tomó ventaja en el 2.º y 3.er cuarto y controló el cierre).
+* **Los Angeles Lakers vs. Utah Jazz (109-94):** **ACIERTO ✅** (Lakers dominó el último cuarto 31-17 frente a Utah en back-to-back).
+* **Sacramento Kings vs. San Antonio Spurs (107-123):** **ACIERTO ✅** (San Antonio marcó diferencia en el 2.º cuarto con 41-23).
+
+#### 📉 Desvíos del Día (3)
+* **Philadelphia 76ers vs. Portland Trail Blazers (111-128):** **FALLO ❌** (Portland anotó 39 en el 2.º cuarto y 32 en el 3.º como local).
+* **Indiana Pacers vs. Oklahoma City Thunder (125-120):** **FALLO ❌** (Indiana cerró con 29-29 en el 4.º cuarto tras un 40-40 en el 3.º, superando a OKC en back-to-back).
+* **Chicago Bulls vs. Cleveland Cavaliers (122-108):** **FALLO ❌** (pese a jugar ayer con prórroga, Chicago explotó con 45 puntos en el 2.º cuarto y limitó a Cleveland a 19 en el último).
