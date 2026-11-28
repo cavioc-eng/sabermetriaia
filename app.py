@@ -475,15 +475,47 @@ elif "Clasificación" in menu or "Standings" in menu:
         df_clf = pd.read_csv(clasificacion_path)
         if not df_clf.empty:
             cols_available = list(df_clf.columns)
-            group_col = "conferencia" if "conferencia" in cols_available else ("division" if "division" in cols_available else None)
-            if group_col:
-                groups = ["Todos / All"] + sorted(df_clf[group_col].dropna().unique().tolist())
-                sel_group = st.selectbox(
-                    "Filtrar por grupo / conferencia:" if lang_code == "es" else "Filter by group / conference:",
-                    groups,
-                )
-                if sel_group != "Todos / All":
-                    df_clf = df_clf[df_clf[group_col] == sel_group]
+            fcol1, fcol2 = st.columns(2)
+            if "conferencia" in cols_available:
+                confs = ["Todos / All"] + sorted(df_clf["conferencia"].dropna().unique().tolist())
+                with fcol1:
+                    sel_conf = st.selectbox(
+                        "Conferencia:" if lang_code == "es" else "Conference:",
+                        confs,
+                        key="clf_conf_filter",
+                    )
+                if sel_conf != "Todos / All":
+                    df_clf = df_clf[df_clf["conferencia"] == sel_conf]
+            else:
+                sel_conf = "Todos / All"
+
+            if "division" in cols_available:
+                divs = ["Todas / All"] + sorted(df_clf["division"].dropna().unique().tolist())
+                with fcol2:
+                    sel_div = st.selectbox(
+                        "División:" if lang_code == "es" else "Division:",
+                        divs,
+                        key="clf_div_filter",
+                    )
+                if sel_div != "Todas / All":
+                    df_clf = df_clf[df_clf["division"] == sel_div]
+
+            m1, m2, m3 = st.columns(3)
+            with m1:
+                st.metric("Equipos en Vista / Teams", len(df_clf))
+            with m2:
+                top_team = df_clf.sort_values(by=["pos", "pct"], ascending=[True, False]).iloc[0]
+                st.metric("Líder / Leader", f"{top_team.get('equipo', 'N/A')} ({top_team.get('pct', '')})")
+            with m3:
+                if "ppg" in df_clf.columns:
+                    avg_off = round(df_clf["ppg"].mean(), 1)
+                    st.metric("Prom. Anotación / PPG", f"{avg_off}")
+                elif "pf_pg" in df_clf.columns:
+                    avg_pf = round(df_clf["pf_pg"].mean(), 1)
+                    st.metric("Prom. Puntos a Favor / PPG", f"{avg_pf}")
+                else:
+                    st.metric("PCT Promedio / Avg", f"{round(df_clf['pct'].mean(), 3)}" if "pct" in df_clf.columns else "N/A")
+
             st.dataframe(df_clf, use_container_width=True, hide_index=True)
         else:
             st.info(
