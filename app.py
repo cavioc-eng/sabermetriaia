@@ -81,9 +81,40 @@ st.markdown(
             background: linear-gradient(180deg, #0b1320 0%, #0f1c2e 55%, #0c1824 100%);
             color: #f8fafc;
         }
+        .stApp h1, .stApp h2, .stApp h3, .stApp h4,
+        .stApp p, .stApp li, .stApp label,
+        [data-testid="stMetricLabel"] *, [data-testid="stMetricValue"] * {
+            color: #f8fafc !important;
+        }
+        .stApp [data-baseweb="select"] * {
+            color: #0f172a !important;
+        }
+        .stApp input, .stApp textarea {
+            color: #0f172a !important;
+        }
+        .stApp button, .stApp button * {
+            color: #0f172a !important;
+        }
         [data-testid="stSidebar"] {
             background-color: #09101c;
             border-right: 1px solid rgba(16, 185, 129, 0.25);
+        }
+        [data-testid="stSidebar"] label,
+        [data-testid="stSidebar"] p,
+        [data-testid="stSidebar"] span,
+        [data-testid="stSidebar"] h1,
+        [data-testid="stSidebar"] h2,
+        [data-testid="stSidebar"] h3,
+        [data-testid="stSidebar"] div[role="radiogroup"] * {
+            color: #f8fafc !important;
+        }
+        [data-testid="stSidebar"] [data-baseweb="select"] * {
+            color: #0f172a !important;
+        }
+        [data-testid="stSidebar"] code {
+            color: #fbbf24 !important;
+            background-color: rgba(245, 158, 11, 0.18) !important;
+            border: 1px solid rgba(245, 158, 11, 0.45) !important;
         }
         .hero-banner {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.18) 0%, rgba(15, 23, 42, 0.95) 60%, rgba(245, 158, 11, 0.14) 100%);
@@ -95,11 +126,11 @@ st.markdown(
         .hero-title {
             font-size: 1.55rem;
             font-weight: 800;
-            color: #ffffff;
+            color: #ffffff !important;
             margin: 0 0 6px 0;
         }
         .hero-sub {
-            color: #cbd5e1;
+            color: #cbd5e1 !important;
             font-size: 0.95rem;
             margin: 0;
         }
@@ -115,13 +146,13 @@ st.markdown(
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.04em;
-            color: #94a3b8;
+            color: #94a3b8 !important;
             margin-bottom: 4px;
         }
         .kpi-val {
             font-size: 1.35rem;
             font-weight: 700;
-            color: #fbbf24;
+            color: #fbbf24 !important;
         }
         .lock-card {
             background: linear-gradient(145deg, rgba(16, 185, 129, 0.14), rgba(15, 23, 42, 0.96));
@@ -142,7 +173,7 @@ st.markdown(
         .badge-pill {
             display: inline-block;
             background: rgba(245, 158, 11, 0.18);
-            color: #fbbf24;
+            color: #fbbf24 !important;
             border: 1px solid rgba(245, 158, 11, 0.45);
             border-radius: 999px;
             padding: 3px 10px;
@@ -316,10 +347,10 @@ if "Cartelera" in menu or "Schedule" in menu:
                         f"""
                         <div class="lock-card">
                             <div class="badge-pill">⭐ {"PROYECCIÓN PRINCIPAL DEL DÍA" if lang_code == "es" else "TOP PROJECTION OF THE DAY"}</div>
-                            <h4 style="color:#ffffff; margin:0 0 6px 0; font-size:1.25rem;">{match_name}</h4>
-                            <p style="color:#cbd5e1; margin:0 0 6px 0;">⏰ <b>{"Hora (VE)" if lang_code == "es" else "Time (VE)"}:</b> {hora_v} &nbsp;|&nbsp; 🏟️ <b>{"Sede" if lang_code == "es" else "Venue"}:</b> {sede_v}</p>
-                            <p style="color:#fbbf24; margin:0 0 10px 0;">🎯 <b>{"Ganador Proyectado" if lang_code == "es" else "Projected Winner"}:</b> {ganador_v} &nbsp;|&nbsp; 📊 <b>{"Referencia Total" if lang_code == "es" else "Total Ref"}:</b> {total_v}</p>
-                            <div style="color:#e2e8f0; font-size:0.93rem; line-height:1.55;">{html_analisis}</div>
+                            <h4 style="color:#ffffff !important; margin:0 0 6px 0; font-size:1.25rem;">{match_name}</h4>
+                            <p style="color:#cbd5e1 !important; margin:0 0 6px 0;">⏰ <b>{"Hora (VE)" if lang_code == "es" else "Time (VE)"}:</b> {hora_v} &nbsp;|&nbsp; 🏟️ <b>{"Sede" if lang_code == "es" else "Venue"}:</b> {sede_v}</p>
+                            <p style="color:#fbbf24 !important; margin:0 0 10px 0;">🎯 <b>{"Ganador Proyectado" if lang_code == "es" else "Projected Winner"}:</b> {ganador_v} &nbsp;|&nbsp; 📊 <b>{"Referencia Total" if lang_code == "es" else "Total Ref"}:</b> {total_v}</p>
+                            <div style="color:#e2e8f0 !important; font-size:0.93rem; line-height:1.55;">{html_analisis}</div>
                         </div>
                         """,
                         unsafe_allow_html=True,
@@ -351,10 +382,10 @@ if "Cartelera" in menu or "Schedule" in menu:
                     st.markdown(
                         f"""
                         <div class="game-card">
-                            <h4 style="color:#ffffff; margin:0 0 6px 0;">{match_title}</h4>
-                            <p style="color:#cbd5e1; margin:0 0 6px 0;">⏰ <b>{"Hora (VE)" if lang_code == "es" else "Time (VE)"}:</b> {row.get("hora", "")} &nbsp;|&nbsp; 🏟️ <b>{"Sede" if lang_code == "es" else "Venue"}:</b> {row.get("sede", "")}</p>
-                            <p style="color:#34d399; margin:0 0 10px 0;">🎯 <b>{"Ganador Proyectado" if lang_code == "es" else "Projected Winner"}:</b> {row.get("ganador", "")} &nbsp;|&nbsp; 📊 <b>{"Referencia Total" if lang_code == "es" else "Total Ref"}:</b> {row.get("total_puntos", "")}</p>
-                            <div style="color:#e2e8f0; font-size:0.93rem; line-height:1.55;">{html_item}</div>
+                            <h4 style="color:#ffffff !important; margin:0 0 6px 0;">{match_title}</h4>
+                            <p style="color:#cbd5e1 !important; margin:0 0 6px 0;">⏰ <b>{"Hora (VE)" if lang_code == "es" else "Time (VE)"}:</b> {row.get("hora", "")} &nbsp;|&nbsp; 🏟️ <b>{"Sede" if lang_code == "es" else "Venue"}:</b> {row.get("sede", "")}</p>
+                            <p style="color:#34d399 !important; margin:0 0 10px 0;">🎯 <b>{"Ganador Proyectado" if lang_code == "es" else "Projected Winner"}:</b> {row.get("ganador", "")} &nbsp;|&nbsp; 📊 <b>{"Referencia Total" if lang_code == "es" else "Total Ref"}:</b> {row.get("total_puntos", "")}</p>
+                            <div style="color:#e2e8f0 !important; font-size:0.93rem; line-height:1.55;">{html_item}</div>
                         </div>
                         """,
                         unsafe_allow_html=True,
@@ -421,10 +452,10 @@ elif "Checklist" in menu:
             st.markdown(
                 f"""
                 <div class="game-card">
-                    <h4 style="color:#ffffff; margin:0 0 6px 0;">{row.get("partido", "")}</h4>
-                    <p style="color:#fbbf24; margin:0 0 4px 0;"><b>{"Estado" if lang_code == "es" else "Status"}:</b> {row.get("estado", "")}</p>
-                    <p style="color:#e2e8f0; margin:0 0 4px 0;"><b>{"Notas / Filtro" if lang_code == "es" else "Notes / Filter"}:</b> {row.get("alerta_notas", "")}</p>
-                    <p style="color:#94a3b8; margin:0;"><b>{"Ajuste" if lang_code == "es" else "Adjustment"}:</b> {row.get("cambio_perspectiva", "")}</p>
+                    <h4 style="color:#ffffff !important; margin:0 0 6px 0;">{row.get("partido", "")}</h4>
+                    <p style="color:#fbbf24 !important; margin:0 0 4px 0;"><b>{"Estado" if lang_code == "es" else "Status"}:</b> {row.get("estado", "")}</p>
+                    <p style="color:#e2e8f0 !important; margin:0 0 4px 0;"><b>{"Notas / Filtro" if lang_code == "es" else "Notes / Filter"}:</b> {row.get("alerta_notas", "")}</p>
+                    <p style="color:#94a3b8 !important; margin:0;"><b>{"Ajuste" if lang_code == "es" else "Adjustment"}:</b> {row.get("cambio_perspectiva", "")}</p>
                 </div>
                 """,
                 unsafe_allow_html=True,
