@@ -517,6 +517,104 @@ elif "Clasificación" in menu or "Standings" in menu:
                     st.metric("PCT Promedio / Avg", f"{round(df_clf['pct'].mean(), 3)}" if "pct" in df_clf.columns else "N/A")
 
             st.dataframe(df_clf, use_container_width=True, hide_index=True)
+
+            st.markdown("---")
+            if sport_prefix == "nba":
+                if lang_code == "es":
+                    st.markdown(
+                        """
+                        <div class="game-card" style="margin-top:12px;">
+                            <div style="font-weight:700; color:#fbbf24 !important; margin-bottom:6px;">📌 Guía de Indicadores — Clasificación NBA</div>
+                            <div style="color:#e2e8f0 !important; font-size:0.88rem; line-height:1.55;">
+                                <b>pos:</b> Posición en la tabla &nbsp;|&nbsp;
+                                <b>zona:</b> Situación competitiva (Playoffs Directos, Play-In o Fuera de Play-In) &nbsp;|&nbsp;
+                                <b>pj:</b> Partidos jugados &nbsp;|&nbsp;
+                                <b>g:</b> Ganados &nbsp;|&nbsp;
+                                <b>p:</b> Perdidos &nbsp;|&nbsp;
+                                <b>pct:</b> Porcentaje de victorias &nbsp;|&nbsp;
+                                <b>pt:</b> Puntos a favor : Puntos en contra &nbsp;|&nbsp;
+                                <b>dif:</b> Diferencial de puntos acumulado &nbsp;|&nbsp;
+                                <b>ppg:</b> Promedio de puntos anotados por juego &nbsp;|&nbsp;
+                                <b>papg:</b> Promedio de puntos permitidos por juego &nbsp;|&nbsp;
+                                <b>racha_5:</b> Victorias en los últimos 5 juegos &nbsp;|&nbsp;
+                                <b>forma:</b> Secuencia reciente de resultados (G = Ganado, P = Perdido)
+                            </div>
+                        </div>
+                        """,
+                        unsafe_allow_html=True,
+                    )
+                else:
+                    st.markdown(
+                        """
+                        <div class="game-card" style="margin-top:12px;">
+                            <div style="font-weight:700; color:#fbbf24 !important; margin-bottom:6px;">📌 Indicator Legend — NBA Standings</div>
+                            <div style="color:#e2e8f0 !important; font-size:0.88rem; line-height:1.55;">
+                                <b>pos:</b> Standing rank &nbsp;|&nbsp;
+                                <b>zona:</b> Playoff / Play-In status &nbsp;|&nbsp;
+                                <b>pj:</b> Games played &nbsp;|&nbsp;
+                                <b>g:</b> Wins &nbsp;|&nbsp;
+                                <b>p:</b> Losses &nbsp;|&nbsp;
+                                <b>pct:</b> Winning percentage &nbsp;|&nbsp;
+                                <b>pt:</b> Points scored : Points allowed &nbsp;|&nbsp;
+                                <b>dif:</b> Cumulative point differential &nbsp;|&nbsp;
+                                <b>ppg:</b> Points per game &nbsp;|&nbsp;
+                                <b>papg:</b> Points allowed per game &nbsp;|&nbsp;
+                                <b>racha_5:</b> Wins in last 5 games &nbsp;|&nbsp;
+                                <b>forma:</b> Recent form (G = Win, P = Loss)
+                            </div>
+                        </div>
+                        """,
+                        unsafe_allow_html=True,
+                    )
+            else:
+                if lang_code == "es":
+                    st.markdown(
+                        """
+                        <div class="game-card" style="margin-top:12px;">
+                            <div style="font-weight:700; color:#fbbf24 !important; margin-bottom:6px;">📌 Guía de Indicadores — Clasificación NFL</div>
+                            <div style="color:#e2e8f0 !important; font-size:0.88rem; line-height:1.55;">
+                                <b>pos:</b> Posición en la división &nbsp;|&nbsp;
+                                <b>estado:</b> Situación divisional (Líder Div., Contendiente o En Busca) &nbsp;|&nbsp;
+                                <b>pj:</b> Partidos jugados &nbsp;|&nbsp;
+                                <b>g:</b> Ganados &nbsp;|&nbsp;
+                                <b>p:</b> Perdidos &nbsp;|&nbsp;
+                                <b>e:</b> Empates &nbsp;|&nbsp;
+                                <b>pct:</b> Porcentaje de victorias &nbsp;|&nbsp;
+                                <b>pf_pc:</b> Puntos a favor : Puntos en contra &nbsp;|&nbsp;
+                                <b>dif:</b> Diferencial de puntos acumulado &nbsp;|&nbsp;
+                                <b>pf_pg:</b> Promedio de puntos a favor por juego &nbsp;|&nbsp;
+                                <b>pa_pg:</b> Promedio de puntos en contra por juego &nbsp;|&nbsp;
+                                <b>racha_5:</b> Victorias en los últimos 5 juegos &nbsp;|&nbsp;
+                                <b>forma:</b> Secuencia reciente de resultados (G = Ganado, P = Perdido)
+                            </div>
+                        </div>
+                        """,
+                        unsafe_allow_html=True,
+                    )
+                else:
+                    st.markdown(
+                        """
+                        <div class="game-card" style="margin-top:12px;">
+                            <div style="font-weight:700; color:#fbbf24 !important; margin-bottom:6px;">📌 Indicator Legend — NFL Standings</div>
+                            <div style="color:#e2e8f0 !important; font-size:0.88rem; line-height:1.55;">
+                                <b>pos:</b> Division rank &nbsp;|&nbsp;
+                                <b>estado:</b> Division status &nbsp;|&nbsp;
+                                <b>pj:</b> Games played &nbsp;|&nbsp;
+                                <b>g:</b> Wins &nbsp;|&nbsp;
+                                <b>p:</b> Losses &nbsp;|&nbsp;
+                                <b>e:</b> Ties &nbsp;|&nbsp;
+                                <b>pct:</b> Winning percentage &nbsp;|&nbsp;
+                                <b>pf_pc:</b> Points for : Points against &nbsp;|&nbsp;
+                                <b>dif:</b> Cumulative point differential &nbsp;|&nbsp;
+                                <b>pf_pg:</b> Points for per game &nbsp;|&nbsp;
+                                <b>pa_pg:</b> Points against per game &nbsp;|&nbsp;
+                                <b>racha_5:</b> Wins in last 5 games &nbsp;|&nbsp;
+                                <b>forma:</b> Recent form (G = Win, P = Loss)
+                            </div>
+                        </div>
+                        """,
+                        unsafe_allow_html=True,
+                    )
         else:
             st.info(
                 "Aún no hay tabla de clasificación cargada para este deporte. Puedes subirla desde el Panel de Administración."
