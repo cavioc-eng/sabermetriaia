@@ -1,0 +1,9 @@
+conferencia,division,pos,equipo,pj,g,p,e,pf_pc,pct,forma
+AFC,AFC Este,1,Buffalo Bills,11,9,2,0,318:214,0.818,G-G-P-G-G
+AFC,AFC Norte,1,Pittsburgh Steelers,11,8,3,0,256:202,0.727,G-G-G-P-G
+AFC,AFC Sur,1,Houston Texans,12,8,4,0,279:235,0.667,P-G-G-G-P
+AFC,AFC Oeste,1,Kansas City Chiefs,11,10,1,0,284:198,0.909,G-G-G-G-G
+NFC,NFC Este,1,Philadelphia Eagles,11,9,2,0,295:194,0.818,G-G-G-G-G
+NFC,NFC Norte,1,Detroit Lions,11,10,1,0,362:196,0.909,G-G-G-G-G
+NFC,NFC Sur,1,Atlanta Falcons,11,6,5,0,241:252,0.545,P-P-G-P-G
+NFC,NFC Oeste,1,Arizona Cardinals,11,6,5,0,248:239,0.545,G-P-G-G-P

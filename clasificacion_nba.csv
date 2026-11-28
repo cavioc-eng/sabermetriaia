@@ -1,0 +1,17 @@
+conferencia,pos,equipo,pj,g,p,pt,pct,forma
+Oeste,1,San Antonio Spurs,20,16,4,2327:2110,0.8,G-P-G-G-G
+Oeste,2,Los Angeles Lakers,19,15,4,2245:2128,0.789,P-G-G-P-G
+Oeste,3,Memphis Grizzlies,20,15,5,2395:2212,0.75,G-G-G-P-G
+Oeste,4,Houston Rockets,19,14,5,2242:2088,0.737,G-G-P-G-P
+Oeste,5,Minnesota Timberwolves,20,14,6,2317:2124,0.7,P-G-G-G-P
+Oeste,6,Portland Trail Blazers,19,13,6,2218:2081,0.684,G-G-G-P-G
+Oeste,7,Denver Nuggets,17,11,6,1976:1955,0.647,G-P-G-G-G
+Oeste,8,Dallas Mavericks,19,12,7,2144:2122,0.632,G-G-G-G-G
+Oeste,9,Oklahoma City Thunder,19,10,9,2147:2097,0.526,P-P-P-G-P
+Oeste,10,Golden State Warriors,19,10,9,2114:2131,0.526,P-G-G-P-P
+Oeste,11,Phoenix Suns,18,9,9,2044:2069,0.5,P-P-G-G-G
+Este,1,Boston Celtics,19,15,4,2235:2042,0.789,G-G-P-G-G
+Este,2,Cleveland Cavaliers,20,15,5,2340:2150,0.75,G-G-G-G-P
+Este,3,New York Knicks,19,13,6,2190:2085,0.684,P-G-G-G-G
+Este,4,Orlando Magic,19,12,7,2095:2010,0.632,G-P-G-G-P
+Este,5,Miami Heat,18,10,8,1985:1950,0.556,P-G-P-G-G
