@@ -270,10 +270,8 @@ def get_match_pdf_bytes(match_title, hora, sede, pick, total_ou, analisis, sport
 
     clean_text = (
         str(analisis)
-        .replace("<br>", "
-")
-        .replace("<br/>", "
-")
+        .replace("<br>", "\n")
+        .replace("<br/>", "\n")
         .replace("<b>", "")
         .replace("</b>", "")
         .replace("<strong>", "")
@@ -313,8 +311,7 @@ if "Cartelera" in menu or "Schedule" in menu:
                     if lang_code == "en" and "analisis_en" in row_fija and pd.notna(row_fija["analisis_en"]):
                         analisis_v = row_fija["analisis_en"]
 
-                    html_analisis = str(analisis_v).replace("
-", "<br>")
+                    html_analisis = str(analisis_v).replace("\n", "<br>")
                     st.markdown(
                         f"""
                         <div class="lock-card">
@@ -350,8 +347,7 @@ if "Cartelera" in menu or "Schedule" in menu:
                     analisis_content = row.get("analisis_es", row.get("analisis", ""))
                     if lang_code == "en" and "analisis_en" in row and pd.notna(row["analisis_en"]):
                         analisis_content = row["analisis_en"]
-                    html_item = str(analisis_content).replace("
-", "<br>")
+                    html_item = str(analisis_content).replace("\n", "<br>")
                     st.markdown(
                         f"""
                         <div class="game-card">
