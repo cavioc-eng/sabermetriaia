@@ -26,34 +26,36 @@ sport = st.sidebar.selectbox(
 )
 sport_prefix = "nba" if "Básquetbol" in sport else "nfl"
 
-# Visitor Counter (persisted safely when writable)
+import threading
+
+@st.cache_resource
+def _get_visitor_store(file_path: str):
+    lock = threading.Lock()
+    initial = 0
+    if os.path.exists(file_path):
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                initial = int(f.read().strip() or "0")
+        except Exception:
+            initial = 0
+    return {"lock": lock, "count": initial}
+
 visitor_file = os.path.join(current_dir, "visitas.txt")
-if not os.path.exists(visitor_file):
-    try:
-        with open(visitor_file, "w", encoding="utf-8") as f:
-            f.write("0")
-    except Exception:
-        pass
+_vstore = _get_visitor_store(visitor_file)
 
 if "visited" not in st.session_state:
     st.session_state.visited = True
-    try:
-        with open(visitor_file, "r", encoding="utf-8") as f:
-            count = int(f.read().strip() or "0")
-    except Exception:
-        count = 0
-    count += 1
-    try:
-        with open(visitor_file, "w", encoding="utf-8") as f:
-            f.write(str(count))
-    except Exception:
-        pass
+    with _vstore["lock"]:
+        _vstore["count"] += 1
+        count = _vstore["count"]
+        try:
+            with open(visitor_file, "w", encoding="utf-8") as f:
+                f.write(str(count))
+        except Exception:
+            pass
 else:
-    try:
-        with open(visitor_file, "r", encoding="utf-8") as f:
-            count = int(f.read().strip() or "0")
-    except Exception:
-        count = 0
+    with _vstore["lock"]:
+        count = _vstore["count"]
 
 st.sidebar.markdown("---")
 st.sidebar.markdown(f"👁️ **{'Visitas Totales' if lang_code == 'es' else 'Total Visits'}:** `{count:,}`")
