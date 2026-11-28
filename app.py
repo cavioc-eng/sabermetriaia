@@ -69,6 +69,7 @@ menu = st.sidebar.radio(
         "📊 Cartelera de Partidos" if lang_code == "es" else "📊 Match Schedule",
         "📈 Apuestas USA & Métricas" if lang_code == "es" else "📈 USA Betting & Metrics",
         "🧭 Checklist de Último Minuto" if lang_code == "es" else "🧭 Last-Minute Checklist",
+        "🏆 Clasificación" if lang_code == "es" else "🏆 Standings",
         "📰 Noticias & Análisis" if lang_code == "es" else "📰 News & Analysis",
         "📖 Diccionario Sabermétrico" if lang_code == "es" else "📖 Sabermetric Dictionary",
         "⚙️ Panel de Administración" if lang_code == "es" else "⚙️ Admin Panel",
@@ -195,12 +196,14 @@ if sport_prefix == "nba":
     efectividad_path = os.path.join(current_dir, "historial_efectividad.csv")
     checklist_path = os.path.join(current_dir, "checklist_ultimo_minuto.csv")
     noticias_path = os.path.join(current_dir, "noticias.txt")
+    clasificacion_path = os.path.join(current_dir, "clasificacion_nba.csv")
 else:
     cartelera_path = os.path.join(current_dir, "nfl_cartelera_juegos.csv")
     apuestas_path = os.path.join(current_dir, "nfl_apuestas_usa.csv")
     efectividad_path = os.path.join(current_dir, "nfl_historial_efectividad.csv")
     checklist_path = os.path.join(current_dir, "nfl_checklist_ultimo_minuto.csv")
     noticias_path = os.path.join(current_dir, "nfl_noticias.txt")
+    clasificacion_path = os.path.join(current_dir, "clasificacion_nfl.csv")
 
 # --- Effectiveness Calculation ---
 if os.path.exists(efectividad_path):
@@ -465,6 +468,36 @@ elif "Checklist" in menu:
     else:
         st.warning("No se encontró el checklist." if lang_code == "es" else "Checklist file not found.")
 
+# --- Section: Clasificación / Standings ---
+elif "Clasificación" in menu or "Standings" in menu:
+    st.markdown(f"## 🏆 {'Clasificación de Equipos' if lang_code == 'es' else 'Team Standings'} [{sport}]")
+    if os.path.exists(clasificacion_path):
+        df_clf = pd.read_csv(clasificacion_path)
+        if not df_clf.empty:
+            cols_available = list(df_clf.columns)
+            group_col = "conferencia" if "conferencia" in cols_available else ("division" if "division" in cols_available else None)
+            if group_col:
+                groups = ["Todos / All"] + sorted(df_clf[group_col].dropna().unique().tolist())
+                sel_group = st.selectbox(
+                    "Filtrar por grupo / conferencia:" if lang_code == "es" else "Filter by group / conference:",
+                    groups,
+                )
+                if sel_group != "Todos / All":
+                    df_clf = df_clf[df_clf[group_col] == sel_group]
+            st.dataframe(df_clf, use_container_width=True, hide_index=True)
+        else:
+            st.info(
+                "Aún no hay tabla de clasificación cargada para este deporte. Puedes subirla desde el Panel de Administración."
+                if lang_code == "es"
+                else "No standings table loaded for this sport yet. You can upload it from the Admin Panel."
+            )
+    else:
+        st.info(
+            f"Crea o sube {os.path.basename(clasificacion_path)} desde el Panel de Administración para mostrar la clasificación de {sport}."
+            if lang_code == "es"
+            else f"Upload {os.path.basename(clasificacion_path)} from the Admin Panel to display {sport} standings."
+        )
+
 # --- Section 4: Noticias & Análisis ---
 elif "Noticias" in menu or "News" in menu:
     st.markdown(f"## 📰 {'Noticias & Análisis Avanzado' if lang_code == 'es' else 'News & Advanced Analysis'}")
@@ -545,6 +578,13 @@ elif "Administración" in menu or "Admin" in menu:
         if os.path.exists(noticias_path):
             with open(noticias_path, "r", encoding="utf-8") as f:
                 current_news = f.read()
+
+        st.markdown("---")
+        st.subheader("📊 2b. Cargar / Actualizar Clasificación (CSV)" if lang_code == "es" else "📊 2b. Upload / Update Standings (CSV)")
+        up_clf = st.file_uploader("Clasificación (CSV)", type=["csv"], key="up_clf")
+        if up_clf is not None:
+            pd.read_csv(up_clf).to_csv(clasificacion_path, index=False, encoding="utf-8")
+            st.success("Clasificación actualizada." if lang_code == "es" else "Standings updated.")
 
         news_input = st.text_area("Boletín (Markdown):", value=current_news, height=220)
         if st.button("Guardar Noticias" if lang_code == "es" else "Save News"):
